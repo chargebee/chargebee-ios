@@ -28,12 +28,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tokenize() {
-        let cardInfo = CardInfo(number: "4000002760003184", expiryMonth: "09", cvc: "123", expiryYear: "2029")
-        let cardInfo2 = CardInfo(number: self.cardTextField.text!,
+        let cardInfo = CardInfo(number: self.cardTextField.text!,
                 expiryMonth: self.expiryMonthField.text!,
                 cvc: self.cvcField.text!,
                 expiryYear: self.expiryYearField.text!)
-        let details = SubscriptionOptions(currency: "USD", type: "card", cardInfo: cardInfo2)
+        let details = SubscriptionOptions(currency: "USD", type: "card", cardInfo: cardInfo)
         CBManager().getTemporaryToken(details: details) { token in
             self.resultLabel.text = token!
         }
