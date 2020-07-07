@@ -7,18 +7,17 @@ import Foundation
 @available(macCatalyst 13.0, *)
 class AddonResource: APIResource {
     typealias ModelType = AddonWrapper
-    var headers: [String: String]
     var authHeader: String
     var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2"
+    var methodPath: String = "/addons"
 
-    init() {
-        self.authHeader = "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah".data(using: .utf8)?.base64EncodedString() ?? ""
-        self.headers = ["Authorization": "Basic \(self.authHeader)"]
+    init(key: String) {
+        let encodedKey = key.data(using: .utf8)?.base64EncodedString() ?? ""
+        self.authHeader = "Basic \(encodedKey)"
     }
 
     func setAddon(_ addonId: String) {
         self.methodPath = self.methodPath + "/\(addonId)"
     }
 
-    private(set) var methodPath: String = "/addons"
 }

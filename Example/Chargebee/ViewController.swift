@@ -25,15 +25,17 @@ class ViewController: UIViewController {
 
 
     @IBAction func tokenize() {
-        print("Tokenizing result")
-//        CBManager().getTemporaryToken() { s in
-//            print("Final CB Token \(s)")
-//            self.resultLabel.text = s!
-//        }
-
-        CBManager().getPlan("cb-demo-no-trial") { res in
-            print("Plan Details", res)
+        let card = CBCard(cardNumber: "4242424242424242", expiryMonth: "09", expiryYear: "29", cvc: "123")
+        let paymentDetail = CBPaymentDetail(type: "card", currencyCode: "USD", card: card)
+        
+        CBManager().getTemporaryToken(paymentDetail: paymentDetail) { s in
+            print("Final CB Token \(s)")
+            self.resultLabel.text = s!
         }
+
+//        CBManager().getPlan("cb-demo-no-trial") { res in
+//            print("Plan Details", res)
+//        }
 
 //        CBManager().getAddon("cbdemo_setuphelp") { res in
 //            print("Addon Details", res)

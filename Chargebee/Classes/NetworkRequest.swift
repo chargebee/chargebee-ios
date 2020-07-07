@@ -9,7 +9,6 @@ protocol NetworkRequest {
     associatedtype ModelType
     func decode(_ data: Data) -> ModelType?
     func load(withCompletion completion: @escaping (ModelType?) -> Void)
-    func create(body: [String: String], withCompletion completion: @escaping (ModelType?) -> Void)
 }
 
 @available(macCatalyst 13.0, *)
@@ -18,12 +17,9 @@ extension NetworkRequest {
         makeRequest(urlRequest: urlRequest, completion: completion)
     }
 
-    func create(_ urlRequest: URLRequest, headers: [String: String], body: [String: String], withCompletion completion: @escaping (ModelType?) -> Void) {
+    func create(_ urlRequest: URLRequest, body: [String: String], withCompletion completion: @escaping (ModelType?) -> Void) {
         let url: URL? = urlRequest.url
         var request = URLRequest(url: url!)
-        headers.forEach { key, value in
-            request.addValue(value, forHTTPHeaderField: key)
-        }
         request.addValue("XMLHttpRequest", forHTTPHeaderField: "X-Requested-With")
         request.httpMethod = "post"
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -40,13 +36,10 @@ extension NetworkRequest {
     private func makeRequest(urlRequest: URLRequest, completion: @escaping (ModelType?) -> ()) {
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
         let task = session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            print("Before decode", response)
             guard let data = data else {
-                print("Empty")
                 completion(nil)
                 return
             }
-            print("valid value", data)
             completion(self.decode(data))
         })
         task.resume()

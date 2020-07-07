@@ -5,7 +5,12 @@
 
 import Foundation
 
-public class CBWrapper: Decodable {
+struct CBGatewayDetail {
+    let clientId: String
+    let gatewayId: String
+}
+
+class CBWrapper: Decodable {
     let apmConfig: [String: PaymentConfigs]
     let currencies: [String]
     let defaultCurrency: String
@@ -14,6 +19,15 @@ public class CBWrapper: Decodable {
         case apmConfig = "apm_config"
         case currencies = "currency_list"
         case defaultCurrency = "default_currency"
+    }
+    
+    func getPaymentProviderConfig(_ currencyCode: String,_ paymentType: String) -> CBGatewayDetail? {
+        let paymentMethod: PaymentMethod? = self.apmConfig[currencyCode]?
+                .paymentMethods.first(where: { $0.type == paymentType && $0.gatewayName == "STRIPE" })
+        if let clientId = paymentMethod?.tokenizationConfig.STRIPE.clientId, let gatewayId = paymentMethod?.id {
+            return CBGatewayDetail(clientId: clientId, gatewayId: gatewayId)
+        }
+        return nil
     }
 }
 
