@@ -1,6 +1,0 @@
-framework module Chargebee {
-  umbrella header "Chargebee-umbrella.h"
-
-  export *
-  module * { export * }
-}
