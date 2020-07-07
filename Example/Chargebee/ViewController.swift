@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Chargebee
 
 class ViewController: UIViewController {
+    @IBOutlet weak var resultLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+//        print(ShowMe().message())
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,5 +23,21 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-}
 
+    @IBAction func tokenize() {
+        print("Tokenizing result")
+//        CBManager().getTemporaryToken() { s in
+//            print("Final CB Token \(s)")
+//            self.resultLabel.text = s!
+//        }
+
+        CBManager().getPlan("cb-demo-no-trial") { res in
+            print("Plan Details", res)
+        }
+
+//        CBManager().getAddon("cbdemo_setuphelp") { res in
+//            print("Addon Details", res)
+//        }
+//        resultLabel.text = "Clicked value"
+    }
+}
