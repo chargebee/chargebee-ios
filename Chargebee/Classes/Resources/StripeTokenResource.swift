@@ -8,6 +8,11 @@ protocol URLEncodedRequestBody {
     func toFormBody() -> [String: String]
 }
 
+struct StripeToken: Decodable {
+  let id: String
+  let type: String
+}
+
 struct StripeCard: URLEncodedRequestBody {
     let number: String
     let expiryMonth: String

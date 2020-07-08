@@ -80,7 +80,20 @@ class CBTemporaryToken {
             if res != nil {
                 handler(res?.token.id)
             }
-        }, onError: onError)   
+        }, onError: onError)
     }
 }
 
+struct TempTokenBody: URLEncodedRequestBody {
+    let paymentMethodType: String
+    let token: String
+    let gatewayId: String
+    
+    func toFormBody() -> [String : String] {
+        return [
+            "payment_method_type": paymentMethodType,
+            "id_at_vault": token,
+            "gateway_account_id": gatewayId,
+        ]
+    }
+}

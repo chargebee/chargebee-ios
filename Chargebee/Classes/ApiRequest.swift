@@ -82,35 +82,3 @@ extension APIRequest: NetworkRequest {
         load(resource.create(body: body), withCompletion: completion, onError: onError)
     }
 }
-
-struct TempTokenBody: URLEncodedRequestBody {
-    let paymentMethodType: String
-    let token: String
-    let gatewayId: String
-    
-    func toFormBody() -> [String : String] {
-        return [
-            "payment_method_type": paymentMethodType,
-            "id_at_vault": token,
-            "gateway_account_id": gatewayId,
-        ]
-    }
-}
-
-@available(macCatalyst 13.0, *)
-class CBTokenResource: APIResource {
-    typealias ModelType = TokenWrapper
-    typealias ErrorType = CBErrorDetail
-
-    var authHeader: String
-    var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2/tokens/create_using_temp_token"
-    let methodPath: String = ""
-
-    init() {
-        let encodedKey = "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah".data(using: .utf8)?.base64EncodedString() ?? ""
-        self.authHeader = "Basic \(encodedKey)"
-    }
-    
-}
-
-

@@ -131,13 +131,13 @@
 		F0EC1E8DF64700838C1BC79AFEC93A1C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF04F4FD5FCD4631F104CE9DB393AD2 /* World.swift */; };
 		F2879D2ED08204999EAB760DE2A2E200 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAA80FF2C63B9886F4440CCDB308DCB /* Closures.swift */; };
 		F630B376ABE2B76BD06716E25EC25606 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEC5CCE7BEDDE5F9088F1B6E292F746 /* Expression.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		F66B8A5124B59DFA00A98CA2 /* CBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B8A5024B59DFA00A98CA2 /* CBError.swift */; };
+		F66B8A5424B61E7C00A98CA2 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B8A5324B61E7C00A98CA2 /* Error.swift */; };
+		F66B8A5624B61EFB00A98CA2 /* CBPaymentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B8A5524B61EFB00A98CA2 /* CBPaymentDetail.swift */; };
+		F66B8A5824B6204700A98CA2 /* CBTokenReource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B8A5724B6204700A98CA2 /* CBTokenReource.swift */; };
 		F8EA3B6B23173D51461F920F77B3C6BE /* Stringers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3326DE447DD9522EC2436AFCFE32F3E7 /* Stringers.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		F93310609CA1D35157D85EFAB3808763 /* Quick.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFA9CCAA5DEFECA4FE699122BF21EDF /* Quick.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F9BC8BA921B346AF546AF68CB87D5BEC /* StripeToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B364A3983B44E0FE6F25DE331586E11 /* StripeToken.swift */; };
 		FA5A1BA48BC7F11F18E7EB2C61FB2054 /* CwlBadInstructionException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24961798DB3B3EE088E1F42C3C64E158 /* CwlBadInstructionException.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		FAB210037DEE6DDF3679C07D48D9E8DD /* ExampleMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5B6B441B570E71901FC406551E34B /* ExampleMetadata.swift */; };
-		FB3B749C18A3C32314FCA1E0DAE8CCFD /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4D3987FFE24F56893AD5B9CB1D63E4 /* Coupon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,10 +192,9 @@
 		1581729B7C5C85351FA7BD57E714B770 /* NMBExceptionCapture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NMBExceptionCapture.h; path = Sources/NimbleObjectiveC/NMBExceptionCapture.h; sourceTree = "<group>"; };
 		15C89B2DC4D79FB8F6A690175A35A6DF /* Callsite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Callsite.swift; path = Sources/Quick/Callsite.swift; sourceTree = "<group>"; };
 		1866343C24F621FBB162D51477CC231A /* Chargebee-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Chargebee-prefix.pch"; sourceTree = "<group>"; };
-		1B364A3983B44E0FE6F25DE331586E11 /* StripeToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StripeToken.swift; path = Chargebee/Classes/StripeToken.swift; sourceTree = "<group>"; };
 		1E14314C688B5AF0B465EE2700A160B6 /* BeLessThanOrEqual.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeLessThanOrEqual.swift; path = Sources/Nimble/Matchers/BeLessThanOrEqual.swift; sourceTree = "<group>"; };
 		1E89BC3567E15EF156798F100A73DC84 /* Nimble-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Nimble-dummy.m"; sourceTree = "<group>"; };
-		211181A83ABD6F8AB464F788B3CF1855 /* Addon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Addon.swift; path = Chargebee/Classes/Addon.swift; sourceTree = "<group>"; };
+		211181A83ABD6F8AB464F788B3CF1855 /* Addon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Addon.swift; sourceTree = "<group>"; };
 		21AD60BB0DDB897810A61AD8D6C45CB0 /* CwlCatchBadInstruction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CwlCatchBadInstruction.swift; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlPreconditionTesting/CwlCatchBadInstruction.swift; sourceTree = "<group>"; };
 		22425C07C59D2CF4D1B1C4E5632D8FB0 /* Nimble-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-prefix.pch"; sourceTree = "<group>"; };
 		2253F7742A6212245AF43054AA060B21 /* mach_excServer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mach_excServer.h; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/mach_excServer.h; sourceTree = "<group>"; };
@@ -221,7 +220,7 @@
 		443710DF869945EC3BF2E518468FC4B3 /* HaveCount.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HaveCount.swift; path = Sources/Nimble/Matchers/HaveCount.swift; sourceTree = "<group>"; };
 		45BD733243A8A86CB1459D5F1240BD87 /* Pods-Chargebee_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Chargebee_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		483E03815233C312602C93E24992735A /* ExampleHooks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExampleHooks.swift; path = Sources/Quick/Hooks/ExampleHooks.swift; sourceTree = "<group>"; };
-		4901963797950BF4914F9A5DA940BB0B /* PlanResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlanResource.swift; path = Chargebee/Classes/PlanResource.swift; sourceTree = "<group>"; };
+		4901963797950BF4914F9A5DA940BB0B /* PlanResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PlanResource.swift; sourceTree = "<group>"; };
 		49A76AD53A23DF1F3B57AB63C9862044 /* Quick-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Quick-Info.plist"; sourceTree = "<group>"; };
 		4AB9EC60B6A92E5BC46FE86B1D776B9C /* Nimble.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Nimble.h; path = Sources/Nimble/Nimble.h; sourceTree = "<group>"; };
 		4BC0A4AB79443BE37AC1290DB3B49D9E /* ContainElementSatisfying.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContainElementSatisfying.swift; path = Sources/Nimble/Matchers/ContainElementSatisfying.swift; sourceTree = "<group>"; };
@@ -261,7 +260,7 @@
 		7FA531194861D0A8FFC1CE57D9B68E31 /* FailureMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FailureMessage.swift; path = Sources/Nimble/FailureMessage.swift; sourceTree = "<group>"; };
 		7FB445D0D789E457AF2CB5BD9FBFF1A6 /* AssertionDispatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AssertionDispatcher.swift; path = Sources/Nimble/Adapters/AssertionDispatcher.swift; sourceTree = "<group>"; };
 		82AA79B38ED13FD8695CCF2879D4EF1A /* Nimble-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Nimble-Info.plist"; sourceTree = "<group>"; };
-		83081BB3DF8DC272487BFF472CA69EA3 /* CBTypes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CBTypes.swift; path = Chargebee/Classes/CBTypes.swift; sourceTree = "<group>"; };
+		83081BB3DF8DC272487BFF472CA69EA3 /* CBTypes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBTypes.swift; sourceTree = "<group>"; };
 		890CA32B61E93A336C2575B6B9F52E53 /* NimbleEnvironment.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleEnvironment.swift; path = Sources/Nimble/Adapters/NimbleEnvironment.swift; sourceTree = "<group>"; };
 		8AC6ED696E5BC0DC2072CB7D8E75B3F7 /* Chargebee-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Chargebee-Info.plist"; sourceTree = "<group>"; };
 		8BAE63F6C6E2795DA6CC74A86002A713 /* QuickConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QuickConfiguration.m; path = Sources/QuickObjectiveC/Configuration/QuickConfiguration.m; sourceTree = "<group>"; };
@@ -270,7 +269,6 @@
 		976474E7D7496B4A4E5D33D4C8BF5A02 /* SatisfyAnyOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SatisfyAnyOf.swift; path = Sources/Nimble/Matchers/SatisfyAnyOf.swift; sourceTree = "<group>"; };
 		9A0A596263132F1867404273262BABF4 /* Pods-Chargebee_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Chargebee_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9A62D0C97CA01FB568E53F30CC5E60BB /* CwlCatchException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CwlCatchException.h; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchExceptionSupport/include/CwlCatchException.h; sourceTree = "<group>"; };
-		9B4D3987FFE24F56893AD5B9CB1D63E4 /* Coupon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Coupon.swift; path = Chargebee/Classes/Coupon.swift; sourceTree = "<group>"; };
 		9C531FF657A43F5FB7364CC7CC10C016 /* QuickTestSuite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickTestSuite.swift; path = Sources/Quick/QuickTestSuite.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E1BDCAD60312625744438EFC3CFBFCB /* Quick-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quick-dummy.m"; sourceTree = "<group>"; };
@@ -296,7 +294,7 @@
 		B8C5F64D03075691404D76199140494B /* QuickSpecBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QuickSpecBase.h; path = Sources/QuickSpecBase/include/QuickSpecBase.h; sourceTree = "<group>"; };
 		B93F204C6DD5BC20D1D410594A73E463 /* DSL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DSL.h; path = Sources/NimbleObjectiveC/DSL.h; sourceTree = "<group>"; };
 		BAE263041362D074978BB3B577DF0A05 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BBE8AF7DD887824D1F955B8B871B5076 /* StripeTokenResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StripeTokenResource.swift; path = Chargebee/Classes/StripeTokenResource.swift; sourceTree = "<group>"; };
+		BBE8AF7DD887824D1F955B8B871B5076 /* StripeTokenResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StripeTokenResource.swift; sourceTree = "<group>"; };
 		BBEC5CCE7BEDDE5F9088F1B6E292F746 /* Expression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Expression.swift; path = Sources/Nimble/Expression.swift; sourceTree = "<group>"; };
 		BC32ADD4781C6B7B0998E52BA3E7EBA1 /* BeLogical.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeLogical.swift; path = Sources/Nimble/Matchers/BeLogical.swift; sourceTree = "<group>"; };
 		BD5D2196B1829A3EDBFB102126D560EF /* Match.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Match.swift; path = Sources/Nimble/Matchers/Match.swift; sourceTree = "<group>"; };
@@ -307,9 +305,9 @@
 		C3C45B76797C3907FFE84432868F1793 /* BeCloseTo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeCloseTo.swift; path = Sources/Nimble/Matchers/BeCloseTo.swift; sourceTree = "<group>"; };
 		C686B6EB8659B8D68F26E5F1C948F911 /* BeVoid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeVoid.swift; path = Sources/Nimble/Matchers/BeVoid.swift; sourceTree = "<group>"; };
 		C9446A65840B908911DFEFADA2D17AAA /* NMBExpectation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NMBExpectation.swift; path = Sources/Nimble/Adapters/NMBExpectation.swift; sourceTree = "<group>"; };
-		CA4CE6EE63F955A2256B91C9E205269A /* AddonResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddonResource.swift; path = Chargebee/Classes/AddonResource.swift; sourceTree = "<group>"; };
+		CA4CE6EE63F955A2256B91C9E205269A /* AddonResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddonResource.swift; sourceTree = "<group>"; };
 		CB5F1D7E8F69F2E11F96177F6F022DC6 /* Pods-Chargebee_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Chargebee_Example.release.xcconfig"; sourceTree = "<group>"; };
-		CD1F1E897596878063E196C5F95BEE88 /* CBPaymentConfigResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CBPaymentConfigResource.swift; path = Chargebee/Classes/CBPaymentConfigResource.swift; sourceTree = "<group>"; };
+		CD1F1E897596878063E196C5F95BEE88 /* CBPaymentConfigResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBPaymentConfigResource.swift; sourceTree = "<group>"; };
 		CD7698716C194CE62F9DF5A46CC562DE /* NetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkRequest.swift; path = Chargebee/Classes/NetworkRequest.swift; sourceTree = "<group>"; };
 		CEFA9CCAA5DEFECA4FE699122BF21EDF /* Quick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Quick.h; path = Sources/QuickObjectiveC/Quick.h; sourceTree = "<group>"; };
 		CF60A06FE3A0FF28EF98697B78A7B672 /* BeNil.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeNil.swift; path = Sources/Nimble/Matchers/BeNil.swift; sourceTree = "<group>"; };
@@ -335,7 +333,9 @@
 		F015EAC24336E1AC22AAD0156739F928 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F14F362D20D22AB767A99754DF9FE9BD /* CBTokenizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CBTokenizer.swift; path = Chargebee/Classes/CBTokenizer.swift; sourceTree = "<group>"; };
 		F48BBC2EEA8A445932E1D47F6F40C1C7 /* RaisesException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RaisesException.swift; path = Sources/Nimble/Matchers/RaisesException.swift; sourceTree = "<group>"; };
-		F66B8A5024B59DFA00A98CA2 /* CBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBError.swift; sourceTree = "<group>"; };
+		F66B8A5324B61E7C00A98CA2 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		F66B8A5524B61EFB00A98CA2 /* CBPaymentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBPaymentDetail.swift; sourceTree = "<group>"; };
+		F66B8A5724B6204700A98CA2 /* CBTokenReource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBTokenReource.swift; sourceTree = "<group>"; };
 		F9A94CDCB33A101D63AA1765A1CFBDA3 /* XCTestObservationCenter+Register.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+Register.m"; path = "Sources/NimbleObjectiveC/XCTestObservationCenter+Register.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -499,22 +499,14 @@
 		71653081539CA90BD08D4C3BE076F118 /* Chargebee */ = {
 			isa = PBXGroup;
 			children = (
-				211181A83ABD6F8AB464F788B3CF1855 /* Addon.swift */,
-				CA4CE6EE63F955A2256B91C9E205269A /* AddonResource.swift */,
 				AB99441061E4FAEC36F5E060CA60E064 /* ApiRequest.swift */,
 				D5321750893D168BDAE4666D7CC4BC1B /* CBManager.swift */,
-				CD1F1E897596878063E196C5F95BEE88 /* CBPaymentConfigResource.swift */,
 				F14F362D20D22AB767A99754DF9FE9BD /* CBTokenizer.swift */,
-				83081BB3DF8DC272487BFF472CA69EA3 /* CBTypes.swift */,
-				9B4D3987FFE24F56893AD5B9CB1D63E4 /* Coupon.swift */,
 				CD7698716C194CE62F9DF5A46CC562DE /* NetworkRequest.swift */,
-				4901963797950BF4914F9A5DA940BB0B /* PlanResource.swift */,
-				1B364A3983B44E0FE6F25DE331586E11 /* StripeToken.swift */,
-				BBE8AF7DD887824D1F955B8B871B5076 /* StripeTokenResource.swift */,
 				C0D42D6D90BA2A30B81F9B9D14C875C6 /* Models */,
 				373542D23075F9F9AE4E038C8F0227FC /* Pod */,
+				F66B8A5224B61E3700A98CA2 /* Resources */,
 				460B1049408486C908A4AE3630201F94 /* Support Files */,
-				F66B8A5024B59DFA00A98CA2 /* CBError.swift */,
 			);
 			name = Chargebee;
 			path = ../..;
@@ -640,7 +632,11 @@
 		C0D42D6D90BA2A30B81F9B9D14C875C6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				83081BB3DF8DC272487BFF472CA69EA3 /* CBTypes.swift */,
+				211181A83ABD6F8AB464F788B3CF1855 /* Addon.swift */,
 				33019D919F5C0B78863C1F5A31761FA9 /* Plan.swift */,
+				F66B8A5324B61E7C00A98CA2 /* Error.swift */,
+				F66B8A5524B61EFB00A98CA2 /* CBPaymentDetail.swift */,
 			);
 			name = Models;
 			path = Chargebee/Classes/Models;
@@ -688,6 +684,19 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Quick";
+			sourceTree = "<group>";
+		};
+		F66B8A5224B61E3700A98CA2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CA4CE6EE63F955A2256B91C9E205269A /* AddonResource.swift */,
+				CD1F1E897596878063E196C5F95BEE88 /* CBPaymentConfigResource.swift */,
+				F66B8A5724B6204700A98CA2 /* CBTokenReource.swift */,
+				4901963797950BF4914F9A5DA940BB0B /* PlanResource.swift */,
+				BBE8AF7DD887824D1F955B8B871B5076 /* StripeTokenResource.swift */,
+			);
+			name = Resources;
+			path = Chargebee/Classes/Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -919,6 +928,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F66B8A5424B61E7C00A98CA2 /* Error.swift in Sources */,
 				BF62B6195B9388FCA8922FB626855AE5 /* Addon.swift in Sources */,
 				17DB6D4338D7E5B3CBDA09DC245E7E24 /* AddonResource.swift in Sources */,
 				72B2DCF708ADD7BB42402DC1826B86BC /* ApiRequest.swift in Sources */,
@@ -927,13 +937,12 @@
 				3BD131E97C61DAD24A9814D1102D66BB /* CBTokenizer.swift in Sources */,
 				AD8AA49F18973F313876EB26C1886E42 /* CBTypes.swift in Sources */,
 				CF2F69AF49FA2BCD46863161F9E20CE8 /* Chargebee-dummy.m in Sources */,
-				FB3B749C18A3C32314FCA1E0DAE8CCFD /* Coupon.swift in Sources */,
+				F66B8A5824B6204700A98CA2 /* CBTokenReource.swift in Sources */,
 				EC34EA1722A6011EE73F0CA303A16382 /* NetworkRequest.swift in Sources */,
 				94C5068A96E268C54D7107466EEB615D /* Plan.swift in Sources */,
 				E38BDE88F80DCFCF488CD81BE779DFFE /* PlanResource.swift in Sources */,
-				F9BC8BA921B346AF546AF68CB87D5BEC /* StripeToken.swift in Sources */,
 				BEAB8AEB4E8C338A81D1C78CD0CF2885 /* StripeTokenResource.swift in Sources */,
-				F66B8A5124B59DFA00A98CA2 /* CBError.swift in Sources */,
+				F66B8A5624B61EFB00A98CA2 /* CBPaymentDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
