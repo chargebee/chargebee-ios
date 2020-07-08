@@ -6,19 +6,30 @@ import Foundation
 
 protocol APIResource {
     associatedtype ModelType: Decodable
+    associatedtype ErrorType: Decodable
+    
     var methodPath: String { get }
     var baseUrl: String { get set }
     var authHeader: String { get set }
+    var header: [String:String]? { get }
     var url: URLRequest { get }
 }
 
 @available(macCatalyst 13.0, *)
 extension APIResource {
+    var header: [String: String]? {
+        get {
+            nil
+        }
+    }
+    
     var url: URLRequest {
         let url = URL(string: baseUrl + methodPath)!
         var urlRequest = URLRequest(url: url)
         urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
-        urlRequest.addValue("XMLHttpRequest", forHTTPHeaderField: "X-Requested-With")
+        header?.forEach({ (key, value) in
+            urlRequest.addValue(value, forHTTPHeaderField: key)
+        })
         return urlRequest
     }
 
@@ -26,7 +37,9 @@ extension APIResource {
         let url = URL(string: baseUrl + methodPath)!
         var urlRequest = URLRequest(url: url)
         urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
-        urlRequest.addValue("XMLHttpRequest", forHTTPHeaderField: "X-Requested-With")
+        header?.forEach({ (key, value) in
+            urlRequest.addValue(value, forHTTPHeaderField: key)
+        })
         urlRequest.httpMethod = "post"
         if isUrlEncoded {
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -55,14 +68,18 @@ extension APIRequest: NetworkRequest {
         return try? JSONDecoder().decode(Resource.ModelType.self, from: data)
     }
 
-    func load(withCompletion completion: @escaping (Resource.ModelType?) -> Void) {
-        print("got this url \(resource.url)")
-        load(resource.url, withCompletion: completion)
+    func decodeError(_ data: Data) -> Resource.ErrorType? {
+        return try? JSONDecoder().decode(Resource.ErrorType.self, from: data)
+    }
+    
+    func load(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) -> Void) {
+        print("got this load url \(resource.url)")
+        load(resource.url, withCompletion: completion, onError: onError)
     }
 
-    func create<T: URLEncodedRequestBody>(body: T, withCompletion completion: @escaping (Resource.ModelType?) -> Void) {
-        print("got this url \(resource.url)")
-        load(resource.create(body: body), withCompletion: completion)
+    func create<T: URLEncodedRequestBody>(body: T, withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) ->Void) {
+        print("got this create url \(resource.url)")
+        load(resource.create(body: body), withCompletion: completion, onError: onError)
     }
 }
 
@@ -82,16 +99,17 @@ struct TempTokenBody: URLEncodedRequestBody {
 
 @available(macCatalyst 13.0, *)
 class CBTokenResource: APIResource {
+    typealias ModelType = TokenWrapper
+    typealias ErrorType = CBErrorDetail
+
     var authHeader: String
     var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2/tokens/create_using_temp_token"
-    typealias ModelType = TokenWrapper
     let methodPath: String = ""
 
     init() {
         let encodedKey = "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah".data(using: .utf8)?.base64EncodedString() ?? ""
         self.authHeader = "Basic \(encodedKey)"
     }
-
     
 }
 

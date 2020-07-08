@@ -7,6 +7,8 @@ import Foundation
 @available(macCatalyst 13.0, *)
 class AddonResource: APIResource {
     typealias ModelType = AddonWrapper
+    typealias ErrorType = CBErrorDetail
+    
     var authHeader: String
     var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2"
     var methodPath: String = "/addons"

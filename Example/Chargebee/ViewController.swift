@@ -28,10 +28,10 @@ class ViewController: UIViewController {
         let card = CBCard(cardNumber: "4242424242424242", expiryMonth: "09", expiryYear: "29", cvc: "123")
         let paymentDetail = CBPaymentDetail(type: "card", currencyCode: "USD", card: card)
         
-        CBManager().getTemporaryToken(paymentDetail: paymentDetail) { s in
+        CBManager().getTemporaryToken(paymentDetail: paymentDetail, completion: { s in
             print("Final CB Token \(s)")
             self.resultLabel.text = s!
-        }
+        })
 
 //        CBManager().getPlan("cb-demo-no-trial") { res in
 //            print("Plan Details", res)

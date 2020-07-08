@@ -6,7 +6,10 @@ import Foundation
 
 @available(macCatalyst 13.0, *)
 class PlanResource: APIResource {
+    
     typealias ModelType = PlanWrapper
+    typealias ErrorType = CBErrorDetail
+    
     var authHeader: String
     var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2"
     let methodPath: String

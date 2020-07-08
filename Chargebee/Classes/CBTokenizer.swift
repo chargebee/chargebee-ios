@@ -42,23 +42,23 @@ class CBTokenizer {
         
     }
     
-    func tokenize(options: CBPaymentDetail, completion handler: @escaping (String?) -> Void) {
-//        1. Retreive CB Config
-//                - FIlter
-        retrieveCBPaymentConfig(options) { gatewayDetail in
-            self.createPaymentGatewayToken(options, gatewayDetail: gatewayDetail) { (cbToken) in
-                print("cbToken   \(cbToken)")
-                handler(cbToken)
-            }
-        }
-//        2. Create Payment GW Token
-//        3. Create CB Temp token from GW Token
+    func tokenize(options: CBPaymentDetail, completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
+        retrieveCBPaymentConfig(options, handler: { gatewayDetail in
+            self.createPaymentGatewayToken(options, gatewayDetail: gatewayDetail, handler: { (stripeToken) in
+                if let stripeToken = stripeToken {
+                    CBTemporaryToken().createToken(gatewayToken: stripeToken, paymentMethodType: options.type, gatewayId: gatewayDetail.gatewayId, completion: { cbToken in
+                        handler(cbToken)
+                    }, onError: onError)
+                }
+            }, onError: onError)
+        },
+        onError: onError)
     }
     
-    func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void) {
+    func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
         let paymentConfigResource = CBPaymentConfigResource(key: merchantKey)
         let request = APIRequest(resource: paymentConfigResource)
-        request.load() { paymentConfig in
+        request.load(withCompletion: { paymentConfig in
             guard (paymentConfig != nil) else {
                 return
             }
@@ -68,21 +68,14 @@ class CBTokenizer {
             }
             handler(paymentProviderKey!)
             return
-        }
+        },
+                     onError: onError)
     }
     
-    func createPaymentGatewayToken(_ paymentDetail: CBPaymentDetail, gatewayDetail: CBGatewayDetail, handler: @escaping (String?) -> Void) {
-        StripeTokenizer(card: paymentDetail.card, paymentProviderKey: gatewayDetail.clientId).tokenize() { stripeToken in
-            print("stripe======\(stripeToken)")
-            if stripeToken != nil {
-                CBTemporaryToken().createToken(gatewayToken: stripeToken!, paymentMethodType: paymentDetail.type, gatewayId: gatewayDetail.gatewayId) { cbToken in
-                    handler(cbToken)
-                }
-            }
-        }
+    func createPaymentGatewayToken(_ paymentDetail: CBPaymentDetail, gatewayDetail: CBGatewayDetail, handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
+        StripeTokenizer(card: paymentDetail.card, paymentProviderKey: gatewayDetail.clientId).tokenize(completion: {stripeToken in
+            handler(stripeToken)
+        }, onError: onError)
     }
     
-//    func createCBToken(stripeToken: String, gateWayInfo: CBWrapper) -> {
-//
-//    }
 }
