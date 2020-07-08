@@ -5,11 +5,6 @@
 
 import Foundation
 
-struct SubscriptionOptions {
-    let currency: String
-    let type: String
-}
-
 let merchantKey = "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah"
 
 
@@ -40,12 +35,6 @@ public class CBManager {
         CBTokenizer().tokenize(options: paymentDetail, completion: handler)
     }
 
-
-}
-
-struct StripeResponse: Decodable {
-    let id: String
-    let object: String
 }
 
 @available(macCatalyst 13.0, *)
