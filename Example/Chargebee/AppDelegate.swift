@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application
         
         // Configure the Chargebee site and Api Key
-        CBManager.configure(site: "test-ashwin1-test", apiKey: "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah")
+        Chargebee.configure(site: "test-ashwin1-test", apiKey: "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah")
 
         return true
     }

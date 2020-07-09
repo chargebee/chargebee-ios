@@ -16,11 +16,9 @@ class CBTokenizer {
     func tokenize(options: CBPaymentDetail, completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
         retrieveCBPaymentConfig(options, handler: { gatewayDetail in
             self.createPaymentGatewayToken(options, gatewayDetail: gatewayDetail, handler: { (stripeToken) in
-//                if let stripeToken = stripeToken {
                 CBTemporaryToken().createToken(gatewayToken: stripeToken, paymentMethodType: options.type, gatewayId: gatewayDetail.gatewayId, completion: { cbToken in
                     handler(cbToken)
                 }, onError: onError)
-//                }
             }, onError: onError)
         },
                 onError: onError)
@@ -29,7 +27,7 @@ class CBTokenizer {
     func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
         let paymentConfigResource = CBPaymentConfigResource()
         let request = APIRequest(resource: paymentConfigResource)
-        request.load(withCompletion: { paymentConfig in
+        request.load(withCompletion: { (paymentConfig: CBMerchantPaymentConfig?) in
             guard (paymentConfig != nil) else {
                 return
             }

@@ -7,12 +7,13 @@ import Foundation
 protocol APIResource {
     associatedtype ModelType: Decodable
     associatedtype ErrorType: Decodable
-    
+
     var methodPath: String { get }
     var baseUrl: String { get set }
     var authHeader: String { get set }
     var header: [String:String]? { get }
     var url: URLRequest { get }
+    var requestBody: URLEncodedRequestBody? { get }
 }
 
 @available(macCatalyst 13.0, *)
@@ -26,8 +27,13 @@ extension APIResource {
     var url: URLRequest {
         buildBaseRequest()
     }
+    var requestBody: URLEncodedRequestBody? {
+        get {
+            nil
+        }
+    }
 
-    func create<T: URLEncodedRequestBody>(body: T, isUrlEncoded: Bool = true) -> URLRequest {
+    func create(isUrlEncoded: Bool = true) -> URLRequest {
         var urlRequest = buildBaseRequest()
 
         urlRequest.httpMethod = "post"
@@ -36,7 +42,7 @@ extension APIResource {
         }
 
         var bodyComponents = URLComponents()
-        bodyComponents.queryItems = body.toFormBody().map({ (key, value) -> URLQueryItem in
+        bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
             URLQueryItem(name: key, value: value)
         })
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
@@ -80,8 +86,8 @@ extension APIRequest: NetworkRequest {
         load(resource.url, withCompletion: completion, onError: onError)
     }
 
-    func create<T: URLEncodedRequestBody>(body: T, withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) ->Void) {
+    func create(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) ->Void) {
         print("Post request url: \(resource.url)")
-        load(resource.create(body: body), withCompletion: completion, onError: onError)
+        load(resource.create(), withCompletion: completion, onError: onError)
     }
 }

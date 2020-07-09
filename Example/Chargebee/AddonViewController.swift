@@ -19,7 +19,7 @@ class AddonViewController: UIViewController {
 
     @IBAction func getAddonDetail() {
         clearAllFields()
-        CBManager().getAddon(addonCode.text!, completion: { (addon) in
+        Chargebee().getAddon(addonCode.text!, completion: { (addon) in
             self.addonName.text = addon.name
             self.addonStatus.text = addon.status
             self.addonCurrencyCode.text = addon.currencyCode

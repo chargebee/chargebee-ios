@@ -23,14 +23,18 @@ public struct CBCard {
     
 }
 
+public enum CBPaymentType: String {
+    case Card = "card"
+}
+
 public struct CBPaymentDetail {
-    public init(type: String, currencyCode: String, card: CBCard) {
+    public init(type: CBPaymentType, currencyCode: String, card: CBCard) {
         self.type = type
         self.currencyCode = currencyCode
         self.card = card
     }
     
-    let type: String
+    let type: CBPaymentType
     let currencyCode: String
     let card: CBCard
 }

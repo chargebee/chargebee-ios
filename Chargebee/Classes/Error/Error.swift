@@ -15,7 +15,7 @@ public enum CBError: Error {
     
     static func defaultSytemError(statusCode: Int, message: String = "") -> CBError {
         let errorDetail = CBErrorDetail(message: message, type: "", apiErrorCode: "", param: "", httpStatusCode: statusCode)
-        return CBError.operationFailed(errorResponse: errorDetail)
+        return errorDetail.toCBError(statusCode)
     }
 }
 

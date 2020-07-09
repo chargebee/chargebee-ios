@@ -1,16 +1,31 @@
 //
-// Created by Mac Book on 5/7/20.
-// Copyright (c) 2020 chargebee. All rights reserved.
+// Created by Mac Book on 7/7/20.
 //
 
 import Foundation
+
+class CBPaymentConfigResource: APIResource {
+    typealias ModelType = CBMerchantPaymentConfig
+    typealias ErrorType = CBInternalErrorWrapper
+
+    var baseUrl: String
+    var authHeader: String
+    var methodPath: String = "/internal/component/retrieve_config"
+    var header: [String: String]? = ["X-Requested-With":"XMLHttpRequest"]
+
+    init() {
+        self.authHeader = "Basic \(CBEnvironment.apiKey)"
+        self.baseUrl = CBEnvironment.baseUrl
+    }
+
+}
 
 struct CBGatewayDetail {
     let clientId: String
     let gatewayId: String
 }
 
-class CBWrapper: Decodable {
+class CBMerchantPaymentConfig: Decodable {
     let apmConfig: [String: PaymentConfigs]
     let currencies: [String]
     let defaultCurrency: String
@@ -20,10 +35,10 @@ class CBWrapper: Decodable {
         case currencies = "currency_list"
         case defaultCurrency = "default_currency"
     }
-    
-    func getPaymentProviderConfig(_ currencyCode: String,_ paymentType: String) -> CBGatewayDetail? {
+
+    func getPaymentProviderConfig(_ currencyCode: String,_ paymentType: CBPaymentType) -> CBGatewayDetail? {
         let paymentMethod: PaymentMethod? = self.apmConfig[currencyCode]?
-                .paymentMethods.first(where: { $0.type == paymentType && $0.gatewayName == "STRIPE" })
+                .paymentMethods.first(where: { $0.type == paymentType.rawValue && $0.gatewayName == "STRIPE" })
         if let clientId = paymentMethod?.tokenizationConfig.STRIPE.clientId, let gatewayId = paymentMethod?.id {
             return CBGatewayDetail(clientId: clientId, gatewayId: gatewayId)
         }
@@ -39,10 +54,6 @@ extension PaymentConfigs: Decodable {
     enum CodingKeys: String, CodingKey {
         case paymentMethods = "pm_list"
     }
-}
-
-enum CardTypes: String, Decodable {
-    case STRIPE = "STRIPE"
 }
 
 struct PaymentMethod {
@@ -77,8 +88,4 @@ struct PaymentProviderConfig: Decodable {
     enum CodingKeys: String, CodingKey {
         case clientId = "client_id"
     }
-}
-
-protocol URLEncodedRequestBody {
-    func toFormBody() -> [String: String]
 }

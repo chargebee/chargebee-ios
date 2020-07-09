@@ -28,9 +28,9 @@ class TokenViewController: UIViewController {
                 expiryYear: self.expiryYear.text!,
                 cvc: self.cvc.text!)
         print(card, "card details")
-        let paymentDetail = CBPaymentDetail(type: "card", currencyCode: "USD", card: card)
+        let paymentDetail = CBPaymentDetail(type: CBPaymentType.Card, currencyCode: "USD", card: card)
 
-        CBManager().getTemporaryToken(paymentDetail: paymentDetail, completion: { s in
+        Chargebee().getTemporaryToken(paymentDetail: paymentDetail, completion: { s in
             print("Final CB Token \(s)")
             self.resultLabel.text = s
         }, onError: { (error) in
