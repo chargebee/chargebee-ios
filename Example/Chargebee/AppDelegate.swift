@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Chargebee
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        CBManager.configure(site: "test-ashwin1-test", apiKey: "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah")
+
         return true
     }
 

@@ -28,7 +28,6 @@ class ViewController: UIViewController {
         let card = CBCard(cardNumber: "4242424242424242", expiryMonth: "09", expiryYear: "29", cvc: "123")
         let paymentDetail = CBPaymentDetail(type: "card", currencyCode: "USD", card: card)
 
-        CBManager.configure(site: "test-ashwin1-test", apiKey: "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah")
         CBManager().getTemporaryToken(paymentDetail: paymentDetail, completion: { s in
             print("Final CB Token \(s)")
             self.resultLabel.text = s!
