@@ -9,25 +9,25 @@ struct AddonWrapper: Decodable {
 }
 
 public struct Addon: Decodable {
-    let id: String
-    let name: String
-    let invoiceName: String
-    let description: String
-    let pricingModel: String
-    let chargeType: String
-    let price: Int
-    let periodUnit: String
-    let status: String
-    let enabledInPortal: Bool
-    let isShippable: Bool
-    let updatedAt: UInt64
-    let resourceVersion: UInt64
-    let object: String
-    let currencyCode: String
-    let taxable: Bool
-    let type: String
-    let showDescriptionInInvoices: Bool
-    let showDescriptionInQuotes: Bool
+    public let id: String
+    public let name: String
+    public let invoiceName: String
+    public let description: String
+    public let pricingModel: String
+    public let chargeType: String
+    public let price: Int
+    public let periodUnit: String
+    public let status: String
+    public let enabledInPortal: Bool
+    public let isShippable: Bool
+    public let updatedAt: UInt64
+    public let resourceVersion: UInt64
+    public let object: String
+    public let currencyCode: String
+    public let taxable: Bool
+    public let type: String
+    public let showDescriptionInInvoices: Bool
+    public let showDescriptionInQuotes: Bool
 
     enum CodingKeys: String, CodingKey {
         case id =  "id"

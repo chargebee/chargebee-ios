@@ -17,6 +17,6 @@ class PlanResource: APIResource {
     init(_ planId: String) {
         self.authHeader = "Basic \(CBEnvironment.encodedApiKey)"
         self.baseUrl = CBEnvironment.baseUrl
-        self.methodPath = "/\(planId)"
+        self.methodPath += "/\(planId)"
     }
 }

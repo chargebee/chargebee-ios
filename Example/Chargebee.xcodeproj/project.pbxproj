@@ -16,6 +16,8 @@
 		62B3F4F6713321E11E4A68BB /* Pods_Chargebee_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */; };
 		B4B53B3895933E8EA41816D8 /* Pods_Chargebee_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */; };
 		FA3ECF3524B6FA6C00643E63 /* TokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3424B6FA6C00643E63 /* TokenViewController.swift */; };
+		FA3ECF3724B6FDE300643E63 /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3624B6FDE300643E63 /* PlanViewController.swift */; };
+		FA3ECF3924B6FDED00643E63 /* AddonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3824B6FDED00643E63 /* AddonViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chargebee_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3ECF3424B6FA6C00643E63 /* TokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewController.swift; sourceTree = "<group>"; };
+		FA3ECF3624B6FDE300643E63 /* PlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
+		FA3ECF3824B6FDED00643E63 /* AddonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddonViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,8 @@
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				FA3ECF3424B6FA6C00643E63 /* TokenViewController.swift */,
+				FA3ECF3624B6FDE300643E63 /* PlanViewController.swift */,
+				FA3ECF3824B6FDED00643E63 /* AddonViewController.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -355,7 +361,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA3ECF3924B6FDED00643E63 /* AddonViewController.swift in Sources */,
 				FA3ECF3524B6FA6C00643E63 /* TokenViewController.swift in Sources */,
+				FA3ECF3724B6FDE300643E63 /* PlanViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);

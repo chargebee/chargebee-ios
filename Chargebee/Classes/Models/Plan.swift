@@ -9,26 +9,26 @@ public struct PlanWrapper: Decodable {
 }
 
 public struct Plan: Decodable {
-    let addonApplicability: String
-    let chargeModel: String
-    let currencyCode: String
-    let enabledInHostedPages: Bool
-    let enabledInPortal: Bool
-    let freeQuantity: Int
-    let giftable: Bool
-    let id: String
-    let invoiceName: String
-    let isShippable: Bool
-    let name: String
-    let object: String
-    let period: Int
-    let periodUnit: String
-    let price: Int
-    let pricingModel: String
-    let resourceVersion: UInt64
-    let status: String
-    let taxable: Bool
-    let updatedAt: UInt64
+    public let addonApplicability: String
+    public let chargeModel: String
+    public let currencyCode: String
+    public let enabledInHostedPages: Bool
+    public let enabledInPortal: Bool
+    public let freeQuantity: Int
+    public let giftable: Bool
+    public let id: String
+    public let invoiceName: String
+    public let isShippable: Bool
+    public let name: String
+    public let object: String
+    public let period: Int
+    public let periodUnit: String
+    public let price: Int
+    public let pricingModel: String
+    public let resourceVersion: UInt64
+    public let status: String
+    public let taxable: Bool
+    public let updatedAt: UInt64
 
     enum CodingKeys: String, CodingKey {
         case addonApplicability = "addon_applicability"

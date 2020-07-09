@@ -7,9 +7,9 @@ import Foundation
 
 let merchantKey = "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah"
 
-public typealias PlanHandler = (Plan?) -> Void
-public typealias AddonHandler = (Addon?) -> Void
-public typealias TokenHandler = (String?) -> Void
+public typealias PlanHandler = (Plan) -> Void
+public typealias AddonHandler = (Addon) -> Void
+public typealias TokenHandler = (String) -> Void
 public typealias ErrorHandler = (Error) -> Void
 
 public func defaultErrorHandler(_ error: Error) -> Void {
@@ -28,7 +28,7 @@ public class CBManager {
         let planResource = PlanResource(planId)
         let request = APIRequest(resource: planResource)
         request.load(withCompletion: { planWrapper in
-            handler(planWrapper?.plan)
+            handler(planWrapper!.plan)
         }, onError: onError)
     }
 
@@ -37,7 +37,7 @@ public class CBManager {
         addonResource.setAddon(addonId)
         let request = APIRequest(resource: addonResource)
         request.load(withCompletion: { planWrapper in
-            handler(planWrapper?.addon)
+            handler(planWrapper!.addon)
         }, onError: onError)
     }
 
@@ -61,7 +61,7 @@ class StripeTokenizer {
     func tokenize(completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
         let request = APIRequest(resource: StripeTokenResource(paymentProviderKey))
         request.create(body: self.card, withCompletion: { (stripeToken) in
-            handler(stripeToken?.id)
+            handler(stripeToken!.id)
         }, onError: onError)
     }
 }
@@ -82,7 +82,7 @@ class CBTemporaryToken {
         let body = TempTokenBody(paymentMethodType: paymentMethodType, token: gatewayToken, gatewayId: gatewayId)
         request.create(body: body, withCompletion: { (res: TokenWrapper?) in
             if res != nil {
-                handler(res?.token.id)
+                handler(res!.token.id)
             }
         }, onError: onError)
     }

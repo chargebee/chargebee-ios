@@ -38,11 +38,11 @@ protocol ErrorDetail {
 
 public struct CBErrorDetail: Decodable, ErrorDetail {
 
-    let message: String
-    let type: String?
-    let apiErrorCode: String?
-    let param: String?
-    let httpStatusCode: Int?
+    public let message: String
+    public let type: String?
+    public let apiErrorCode: String?
+    public let param: String?
+    public let httpStatusCode: Int?
     
     enum CodingKeys: String, CodingKey {
         case message = "message"

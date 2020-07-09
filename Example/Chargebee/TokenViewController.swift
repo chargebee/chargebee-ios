@@ -32,7 +32,7 @@ class TokenViewController: UIViewController {
 
         CBManager().getTemporaryToken(paymentDetail: paymentDetail, completion: { s in
             print("Final CB Token \(s)")
-            self.resultLabel.text = s!
+            self.resultLabel.text = s
         }, onError: {(error) in
             print("Error\(error)")
             self.resultLabel.text = error.localizedDescription
