@@ -502,6 +502,7 @@
 			isa = PBXGroup;
 			children = (
 				AB99441061E4FAEC36F5E060CA60E064 /* ApiRequest.swift */,
+				312EAD3FCEF2B751A6DD49E4 /* CBEnvironment.swift */,
 				D5321750893D168BDAE4666D7CC4BC1B /* CBManager.swift */,
 				F14F362D20D22AB767A99754DF9FE9BD /* CBTokenizer.swift */,
 				CD7698716C194CE62F9DF5A46CC562DE /* NetworkRequest.swift */,
@@ -509,7 +510,6 @@
 				373542D23075F9F9AE4E038C8F0227FC /* Pod */,
 				F66B8A5224B61E3700A98CA2 /* Resources */,
 				460B1049408486C908A4AE3630201F94 /* Support Files */,
-				312EAD3FCEF2B751A6DD49E4 /* CBEnvironment.swift */,
 			);
 			name = Chargebee;
 			path = ../..;

@@ -6,7 +6,7 @@ import Foundation
 
 class CBPaymentConfigResource: APIResource {
     typealias ModelType = CBWrapper
-    typealias ErrorType = CBErrorDetail
+    typealias ErrorType = CBInternalErrorWrapper
 
     var baseUrl: String
     var authHeader: String

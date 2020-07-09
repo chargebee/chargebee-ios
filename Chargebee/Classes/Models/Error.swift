@@ -12,6 +12,11 @@ public enum CBError: Error {
     case operationFailed(errorResponse: CBErrorDetail)
     case invalidRequest(errorResponse: CBErrorDetail)
     case paymentFailed(errorResponse: CBErrorDetail)
+    
+    static func defaultSytemError(statusCode: Int, message: String = "") -> CBError {
+        let errorDetail = CBErrorDetail(message: message, type: "", apiErrorCode: "", param: "", httpStatusCode: statusCode)
+        return CBError.operationFailed(errorResponse: errorDetail)
+    }
 }
 
 extension CBError: LocalizedError {
@@ -28,7 +33,7 @@ extension CBError: LocalizedError {
 }
 
 protocol ErrorDetail {
-    func toCBError(_ statusCode: Int?) -> CBError
+    func toCBError(_ statusCode: Int) -> CBError
 }
 
 public struct CBErrorDetail: Decodable, ErrorDetail {
@@ -47,10 +52,10 @@ public struct CBErrorDetail: Decodable, ErrorDetail {
         case httpStatusCode = "http_status_code"
     }
     
-    func toCBError(_ statusCode: Int?) -> CBError {
-        switch httpStatusCode {
-        case .none:
-            return CBError.operationFailed(errorResponse: self)
+    func toCBError(_ statusCode: Int) -> CBError {
+        switch statusCode {
+        case (400...499):
+            return CBError.invalidRequest(errorResponse: self)
         default:
             return CBError.operationFailed(errorResponse: self)
         }
@@ -69,7 +74,23 @@ public struct StripeErrorWrapper: Decodable, ErrorDetail {
 
     let error: StripeError
     
-    func toCBError(_ statusCode: Int?) -> CBError {
+    func toCBError(_ statusCode: Int) -> CBError {
         return CBError.paymentFailed(errorResponse: CBErrorDetail(message: error.message, type: error.type, apiErrorCode: error.code, param: error.param, httpStatusCode: statusCode))
     }
 }
+
+struct CBInternalErrorDetail: Decodable {
+    let message: String
+}
+
+struct CBInternalErrorWrapper: Decodable, ErrorDetail {
+    
+    let errors: [CBInternalErrorDetail]?
+    
+    func toCBError(_ statusCode: Int) -> CBError {
+        let message = errors?.first?.message ?? ""
+        return CBError.defaultSytemError(statusCode: statusCode, message: message)
+    }
+    
+}
+

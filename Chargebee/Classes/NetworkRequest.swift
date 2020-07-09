@@ -24,7 +24,7 @@ extension NetworkRequest {
                 return
             }
             if let response = response as? HTTPURLResponse, response.statusCode >= 400 {
-                onError(self.getCBError(data, statusCode: response.statusCode))
+                onError(self.buildCBError(data, statusCode: response.statusCode))
                 return
             }
             guard let data = data else {
@@ -36,15 +36,11 @@ extension NetworkRequest {
         task.resume()
     }
     
-    private func getCBError(_ data: Data?, statusCode: Int) -> CBError {
+    private func buildCBError(_ data: Data?, statusCode: Int) -> CBError {
         guard let data = data else {
-            return CBError.operationFailed(errorResponse: serverUnreachableError(statusCode: statusCode))
+            return CBError.defaultSytemError(statusCode: statusCode)
         }
         let errorDetail = self.decodeError(data)
-        return (errorDetail as? ErrorDetail)?.toCBError(statusCode) ?? CBError.operationFailed(errorResponse: serverUnreachableError(statusCode: statusCode))
+        return (errorDetail as? ErrorDetail)?.toCBError(statusCode) ?? CBError.defaultSytemError(statusCode: statusCode)
     }
-}
-
-func serverUnreachableError(statusCode: Int) -> CBErrorDetail {
-  return CBErrorDetail(message: "", type: "", apiErrorCode: "", param: "", httpStatusCode: statusCode)
 }
