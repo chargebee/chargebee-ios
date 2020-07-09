@@ -22,21 +22,25 @@ class PlanViewController: UIViewController {
     }
 
     @IBAction func getPlan() {
+        clearAllFields()
         CBManager().getPlan(self.planCode.text!, completion: { (s: Plan) in
             print(s)
 
             self.planName.text = s.name
             self.planStatus.text = s.status
             self.planCurrencyCode.text = s.currencyCode
-            self.planError.text = ""
         }, onError: { (error) in
             print("Error\(error)")
 
             self.planError.text = error.localizedDescription
-            self.planName.text = ""
-            self.planStatus.text = ""
-            self.planCurrencyCode.text = ""
         })
+    }
+
+    func clearAllFields() -> Void {
+        self.planName.text = ""
+        self.planStatus.text = ""
+        self.planCurrencyCode.text = ""
+        self.planError.text = ""
     }
 
 }

@@ -45,7 +45,7 @@
                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
-                                    <segue destination="eMQ-rK-DUv" kind="show" id="8fM-1v-cTa"/>
+                                    <segue destination="ah4-wv-074" kind="show" id="dle-0U-svr"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -61,44 +61,29 @@
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
         <!--Addon View Controller-->
-        <scene sceneID="hvf-jN-frT">
+        <scene sceneID="CN9-Q4-ZpQ">
             <objects>
-                <viewController id="eMQ-rK-DUv" customClass="AddonViewController" customModule="Chargebee_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ah4-wv-074" customClass="AddonViewController" customModule="Chargebee_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fhe-7j-Tu9"/>
-                        <viewControllerLayoutGuide type="bottom" id="kbl-Sd-V6L"/>
+                        <viewControllerLayoutGuide type="top" id="i00-KA-kmU"/>
+                        <viewControllerLayoutGuide type="bottom" id="yyz-fz-Vkj"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="87h-FH-R9T">
+                    <view key="view" contentMode="scaleToFill" id="lUS-O2-4pA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlQ-qD-p33">
-                                <rect key="frame" x="152" y="176" width="49" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="getAddonDetail:" destination="eMQ-rK-DUv" eventType="touchUpInside" id="VdR-mQ-N0z"/>
-                                    <action selector="getPlan" destination="Kpy-5I-MrH" eventType="touchUpInside" id="nud-og-qzy"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add-on Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fxy-4q-Kuw">
-                                <rect key="frame" x="16" y="106" width="343" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CtJ-vg-qd8">
-                                <rect key="frame" x="-4" y="234" width="383" height="179"/>
+                                <rect key="frame" x="0.0" y="220" width="363" height="179"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTB-kc-7Rd">
-                                        <rect key="frame" x="20" y="59" width="88" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTB-kc-7Rd">
+                                        <rect key="frame" x="20" y="59" width="50" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ks0-Dr-Tya">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ks0-Dr-Tya">
                                         <rect key="frame" x="103" y="59" width="260" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -119,21 +104,21 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Currency Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgE-fI-Gud">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgE-fI-Gud">
                                         <rect key="frame" x="103" y="98" width="260" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJs-JV-dP5">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJs-JV-dP5">
                                         <rect key="frame" x="103" y="20" width="260" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GID-9a-h9y">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GID-9a-h9y">
                                         <rect key="frame" x="102" y="138" width="260" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -150,22 +135,43 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlQ-qD-p33">
+                                <rect key="frame" x="152" y="162" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="getAddonDetail" destination="ah4-wv-074" eventType="touchUpInside" id="qJU-XH-fI8"/>
+                                    <action selector="getPlan" destination="Kpy-5I-MrH" eventType="touchUpInside" id="nud-og-qzy"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add-on Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fxy-4q-Kuw">
+                                <rect key="frame" x="16" y="92" width="343" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Get Addon Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjm-Oy-1Sn">
+                                <rect key="frame" x="110" y="41" width="155" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="i7t-d0-8sB"/>
+                    <navigationItem key="navigationItem" id="kHC-PH-uPw"/>
                     <connections>
-                        <outlet property="addonCode" destination="fxy-4q-Kuw" id="k1r-pI-dkT"/>
-                        <outlet property="addonCurrencyCode" destination="hgE-fI-Gud" id="qVk-UC-mfU"/>
-                        <outlet property="addonDescription" destination="Ks0-Dr-Tya" id="6re-Q7-Nud"/>
-                        <outlet property="addonError" destination="GID-9a-h9y" id="SwX-3N-KD6"/>
-                        <outlet property="addonName" destination="GJs-JV-dP5" id="50m-TN-rHd"/>
-                        <outlet property="getAddonDetail" destination="dlQ-qD-p33" id="plE-TO-E8L"/>
+                        <outlet property="addonCode" destination="fxy-4q-Kuw" id="e42-G4-Hnz"/>
+                        <outlet property="addonCurrencyCode" destination="hgE-fI-Gud" id="RL3-76-aie"/>
+                        <outlet property="addonError" destination="GID-9a-h9y" id="Y5c-WF-wmu"/>
+                        <outlet property="addonName" destination="GJs-JV-dP5" id="KhZ-uE-eaE"/>
+                        <outlet property="addonStatus" destination="Ks0-Dr-Tya" id="KZv-rv-ThH"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FBP-5w-B1V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oa0-Ag-ORM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1203" y="-643"/>
+            <point key="canvasLocation" x="1222" y="-561"/>
         </scene>
         <!--Token View Controller-->
         <scene sceneID="tzz-8C-ToB">
