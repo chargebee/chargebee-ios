@@ -25,7 +25,7 @@ struct StripeCard: URLEncodedRequestBody {
 
 class StripeTokenResource: APIResource {
     typealias ModelType = StripeToken
-    typealias ErrorType = CBErrorDetail
+    typealias ErrorType = StripeErrorWrapper
 
     private(set) var methodPath: String = "/tokens"
     var baseUrl: String = "https://api.stripe.com/v1"

@@ -7,25 +7,36 @@
 
 import Foundation
 
+
 public enum CBError: Error {
-    case unknown(String? = nil)
-    case authenticationError
-    case resourceNotFound
+    case operationFailed(errorResponse: CBErrorDetail)
+    case invalidRequest(errorResponse: CBErrorDetail)
+    case paymentFailed(errorResponse: CBErrorDetail)
+}
+
+extension CBError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .operationFailed(let errorResponse):
+            return errorResponse.message
+        case .invalidRequest(let errorResponse):
+            return errorResponse.message
+        case .paymentFailed(let errorResponse):
+            return errorResponse.message
+        }
+    }
 }
 
 protocol ErrorDetail {
-    func toCBError() -> CBError
+    func toCBError(_ statusCode: Int?) -> CBError
 }
 
-struct CBErrorDetail: Decodable, ErrorDetail {
+public struct CBErrorDetail: Decodable, ErrorDetail {
 
-    let message: String?
+    let message: String
     let type: String?
     let apiErrorCode: String?
     let param: String?
-    let errorCode: String?
-    let errorMsg: String?
-    let errorParam: String?
     let httpStatusCode: Int?
     
     enum CodingKeys: String, CodingKey {
@@ -33,26 +44,32 @@ struct CBErrorDetail: Decodable, ErrorDetail {
         case type = "type"
         case apiErrorCode = "api_error_code"
         case param = "param"
-        case errorCode = "error_code"
-        case errorMsg = "error_msg"
-        case errorParam = "error_param"
         case httpStatusCode = "http_status_code"
     }
     
-    func toCBError() -> CBError {
-        
+    func toCBError(_ statusCode: Int?) -> CBError {
         switch httpStatusCode {
         case .none:
-            return CBError.unknown()
-        case .some(let status):
-            switch status {
-            case 401:
-                return CBError.authenticationError
-            case 404:
-                return CBError.resourceNotFound
-            default:
-                return CBError.unknown()
-            }
+            return CBError.operationFailed(errorResponse: self)
+        default:
+            return CBError.operationFailed(errorResponse: self)
         }
+    }
+    
+}
+
+struct StripeError: Decodable {
+    let code: String?
+    let message: String
+    let param: String?
+    let type: String
+}
+
+public struct StripeErrorWrapper: Decodable, ErrorDetail {
+
+    let error: StripeError
+    
+    func toCBError(_ statusCode: Int?) -> CBError {
+        return CBError.paymentFailed(errorResponse: CBErrorDetail(message: error.message, type: error.type, apiErrorCode: error.code, param: error.param, httpStatusCode: statusCode))
     }
 }
