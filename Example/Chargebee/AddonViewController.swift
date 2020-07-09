@@ -7,23 +7,26 @@
 //
 
 import UIKit
+import Chargebee
 
 class AddonViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
+    @IBOutlet weak var addonCode: UITextField!
+    @IBOutlet weak var addonName: UILabel!
+    @IBOutlet weak var addonDescription: UILabel!
+    @IBOutlet weak var addonCurrencyCode: UILabel!
+    @IBOutlet weak var addonError: UILabel!
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func getAddonDetail() {
+        CBManager().getAddon(addonCode.text!, completion: { (addon) in
+            self.addonName.text = addon.name
+            self.addonDescription.text = addon.description
+            self.addonCurrencyCode.text = addon.currencyCode
+        }) { (error) in
+            self.addonError.text = error.localizedDescription
+        }
     }
-    */
-
+    
+    
 }

@@ -12,17 +12,6 @@ import Chargebee
 class ViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-//        print(ShowMe().message())
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
     @IBAction func tokenize() {
         let card = CBCard(cardNumber: "4242424242424242", expiryMonth: "09", expiryYear: "29", cvc: "123")
