@@ -44,8 +44,10 @@ extension APIResource {
     }
 
     private func buildBaseRequest() -> URLRequest {
-        let url = URL(string: baseUrl + methodPath)!
-        var urlRequest = URLRequest(url: url)
+        var components = URLComponents(string: baseUrl)
+        components!.path += methodPath
+
+        var urlRequest = URLRequest(url: components!.url!)
         urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
         header?.forEach({ (key, value) in
             urlRequest.addValue(value, forHTTPHeaderField: key)
