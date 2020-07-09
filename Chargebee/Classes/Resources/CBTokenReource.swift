@@ -13,12 +13,12 @@ class CBTokenResource: APIResource {
     typealias ErrorType = CBErrorDetail
 
     var authHeader: String
-    var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2/tokens/create_using_temp_token"
-    let methodPath: String = ""
+    var baseUrl: String
+    let methodPath: String = "/v2/tokens/create_using_temp_token"
 
     init() {
-        let encodedKey = "test_1PDU9iynvhEcPMgWAJ0QZw90d2Aw92ah".data(using: .utf8)?.base64EncodedString() ?? ""
-        self.authHeader = "Basic \(encodedKey)"
+        self.authHeader = "Basic \(CBEnvironment.encodedApiKey)"
+        self.baseUrl = CBEnvironment.baseUrl
     }
     
 }

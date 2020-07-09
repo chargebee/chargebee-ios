@@ -24,31 +24,32 @@ extension APIResource {
     }
     
     var url: URLRequest {
-        let url = URL(string: baseUrl + methodPath)!
-        var urlRequest = URLRequest(url: url)
-        urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
-        header?.forEach({ (key, value) in
-            urlRequest.addValue(value, forHTTPHeaderField: key)
-        })
-        return urlRequest
+        buildBaseRequest()
     }
 
     func create<T: URLEncodedRequestBody>(body: T, isUrlEncoded: Bool = true) -> URLRequest {
-        let url = URL(string: baseUrl + methodPath)!
-        var urlRequest = URLRequest(url: url)
-        urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
-        header?.forEach({ (key, value) in
-            urlRequest.addValue(value, forHTTPHeaderField: key)
-        })
+        var urlRequest = buildBaseRequest()
+
         urlRequest.httpMethod = "post"
         if isUrlEncoded {
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         }
+
         var bodyComponents = URLComponents()
         bodyComponents.queryItems = body.toFormBody().map({ (key, value) -> URLQueryItem in
             URLQueryItem(name: key, value: value)
         })
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
+        return urlRequest
+    }
+
+    private func buildBaseRequest() -> URLRequest {
+        let url = URL(string: baseUrl + methodPath)!
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
+        header?.forEach({ (key, value) in
+            urlRequest.addValue(value, forHTTPHeaderField: key)
+        })
         return urlRequest
     }
 }
@@ -73,12 +74,12 @@ extension APIRequest: NetworkRequest {
     }
     
     func load(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) -> Void) {
-        print("got this load url \(resource.url)")
+        print("Get Request url: \(resource.url)")
         load(resource.url, withCompletion: completion, onError: onError)
     }
 
     func create<T: URLEncodedRequestBody>(body: T, withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) ->Void) {
-        print("got this create url \(resource.url)")
+        print("Post request url: \(resource.url)")
         load(resource.create(body: body), withCompletion: completion, onError: onError)
     }
 }

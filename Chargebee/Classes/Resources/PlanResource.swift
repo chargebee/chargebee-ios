@@ -11,12 +11,12 @@ class PlanResource: APIResource {
     typealias ErrorType = CBErrorDetail
     
     var authHeader: String
-    var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2"
-    let methodPath: String
+    var baseUrl: String
+    var methodPath: String = "/v2/plans"
     
-    init(key: String, _ planId: String) {
-        let encodedKey = key.data(using: .utf8)?.base64EncodedString() ?? ""
-        self.authHeader = "Basic \(encodedKey)"
-        self.methodPath = "/plans/\(planId)"
+    init(_ planId: String) {
+        self.authHeader = "Basic \(CBEnvironment.encodedApiKey)"
+        self.baseUrl = CBEnvironment.baseUrl
+        self.methodPath = "/\(planId)"
     }
 }

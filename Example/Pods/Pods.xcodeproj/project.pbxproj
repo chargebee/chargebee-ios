@@ -29,6 +29,7 @@
 		2D57849BBE4DB509C70D6DC48E6E21B3 /* ToSucceed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C2E58D114AC181F6245906914BC378 /* ToSucceed.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		2DB69F7E002062406226921C0BF4750D /* CBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5321750893D168BDAE4666D7CC4BC1B /* CBManager.swift */; };
 		2EA6B2E10F38275D4CEB37B7ADDAE0E0 /* QuickConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BAE63F6C6E2795DA6CC74A86002A713 /* QuickConfiguration.m */; };
+		312EA5F3E8339C2C4583CC11 /* CBEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312EAD3FCEF2B751A6DD49E4 /* CBEnvironment.swift */; };
 		3722B93E1E8BF31C11CDF45AA815A767 /* QuickTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C531FF657A43F5FB7364CC7CC10C016 /* QuickTestSuite.swift */; };
 		38B72051F26368B657ACE1CDEA474D88 /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 01B00F5B76F8274E949CD00EC7199C0F /* mach_excServer.c */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		3B324746542B5868C6AA793F2EF93FEB /* Await.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4116551DDC267A0E3EEE55391513FBE /* Await.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -204,6 +205,7 @@
 		2C01817616E76F935FF930FF509BA72F /* Pods-Chargebee_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Chargebee_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2C061463250766C9C05995AB8EE63E66 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3049ACFF04304D5A69F83457B0C750D8 /* CwlMachBadInstructionHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CwlMachBadInstructionHandler.m; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/CwlMachBadInstructionHandler.m; sourceTree = "<group>"; };
+		312EAD3FCEF2B751A6DD49E4 /* CBEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CBEnvironment.swift; path = Chargebee/Classes/CBEnvironment.swift; sourceTree = "<group>"; };
 		31E0B323EBDB86405D253135E2BE94B5 /* BeLessThan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeLessThan.swift; path = Sources/Nimble/Matchers/BeLessThan.swift; sourceTree = "<group>"; };
 		324A91F3CDC99F08532F74261122C6B5 /* Pods-Chargebee_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Chargebee_Tests-Info.plist"; sourceTree = "<group>"; };
 		33019D919F5C0B78863C1F5A31761FA9 /* Plan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				373542D23075F9F9AE4E038C8F0227FC /* Pod */,
 				F66B8A5224B61E3700A98CA2 /* Resources */,
 				460B1049408486C908A4AE3630201F94 /* Support Files */,
+				312EAD3FCEF2B751A6DD49E4 /* CBEnvironment.swift */,
 			);
 			name = Chargebee;
 			path = ../..;
@@ -943,6 +946,7 @@
 				E38BDE88F80DCFCF488CD81BE779DFFE /* PlanResource.swift in Sources */,
 				BEAB8AEB4E8C338A81D1C78CD0CF2885 /* StripeTokenResource.swift in Sources */,
 				F66B8A5624B61EFB00A98CA2 /* CBPaymentDetail.swift in Sources */,
+				312EA5F3E8339C2C4583CC11 /* CBEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,12 +10,12 @@ class AddonResource: APIResource {
     typealias ErrorType = CBErrorDetail
     
     var authHeader: String
-    var baseUrl: String = "https://test-ashwin1-test.chargebee.com/api/v2"
-    var methodPath: String = "/addons"
+    var baseUrl: String
+    var methodPath: String = "/v2/addons"
 
-    init(key: String) {
-        let encodedKey = key.data(using: .utf8)?.base64EncodedString() ?? ""
-        self.authHeader = "Basic \(encodedKey)"
+    init() {
+        self.authHeader = "Basic \(CBEnvironment.encodedApiKey)"
+        self.baseUrl = CBEnvironment.baseUrl
     }
 
     func setAddon(_ addonId: String) {

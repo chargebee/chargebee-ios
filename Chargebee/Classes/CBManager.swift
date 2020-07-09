@@ -12,16 +12,20 @@ public typealias AddonHandler = (Addon?) -> Void
 public typealias TokenHandler = (String?) -> Void
 public typealias ErrorHandler = (Error) -> Void
 
-public func defaultErrorHandler(_ error: Error) -> Void {}
+public func defaultErrorHandler(_ error: Error) -> Void {
+}
 
 @available(macCatalyst 13.0, *)
 public class CBManager {
     public init() {
-        
+    }
+
+    public static func configure(site: String, apiKey: String) {
+        CBEnvironment.configure(site: site, apiKey: apiKey)
     }
 
     public func getPlan(_ planId: String, completion handler: @escaping PlanHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
-        let planResource = PlanResource(key: merchantKey, planId)
+        let planResource = PlanResource(planId)
         let request = APIRequest(resource: planResource)
         request.load(withCompletion: { planWrapper in
             handler(planWrapper?.plan)
@@ -29,7 +33,7 @@ public class CBManager {
     }
 
     public func getAddon(_ addonId: String, completion handler: @escaping AddonHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
-        let addonResource = AddonResource(key: merchantKey)
+        let addonResource = AddonResource()
         addonResource.setAddon(addonId)
         let request = APIRequest(resource: addonResource)
         request.load(withCompletion: { planWrapper in
@@ -48,12 +52,12 @@ class StripeTokenizer {
     let paymentConfigUrl = "https://api.stripe.com/v1/tokens"
     let card: StripeCard
     let paymentProviderKey: String
-    
+
     init(card: CBCard, paymentProviderKey: String) {
         self.card = StripeCard(number: card.cardNumber, expiryMonth: card.expiryMonth, expiryYear: card.expiryYear, cvc: card.cvc)
         self.paymentProviderKey = paymentProviderKey
     }
-    
+
     func tokenize(completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
         let request = APIRequest(resource: StripeTokenResource(paymentProviderKey))
         request.create(body: self.card, withCompletion: { (stripeToken) in
@@ -88,8 +92,8 @@ struct TempTokenBody: URLEncodedRequestBody {
     let paymentMethodType: String
     let token: String
     let gatewayId: String
-    
-    func toFormBody() -> [String : String] {
+
+    func toFormBody() -> [String: String] {
         return [
             "payment_method_type": paymentMethodType,
             "id_at_vault": token,

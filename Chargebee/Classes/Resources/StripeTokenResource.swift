@@ -4,10 +4,6 @@
 
 import Foundation
 
-protocol URLEncodedRequestBody {
-    func toFormBody() -> [String: String]
-}
-
 struct StripeToken: Decodable {
   let id: String
   let type: String
@@ -20,7 +16,7 @@ struct StripeCard: URLEncodedRequestBody {
     let cvc: String
 
     func toFormBody() -> [String: String] {
-        return ["card[number]": number,
+        ["card[number]": number,
          "card[exp_month]": expiryMonth,
          "card[exp_year]": expiryYear,
          "card[cvc]": cvc]
@@ -33,7 +29,7 @@ class StripeTokenResource: APIResource {
 
     private(set) var methodPath: String = "/tokens"
     var baseUrl: String = "https://api.stripe.com/v1"
-    var authHeader: String = ""
+    var authHeader: String
 
     init(_ apiKey: String) {
         self.authHeader = "Bearer \(apiKey)"

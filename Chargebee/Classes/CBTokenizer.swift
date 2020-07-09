@@ -27,7 +27,7 @@ class CBTokenizer {
     }
     
     func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
-        let paymentConfigResource = CBPaymentConfigResource(key: merchantKey)
+        let paymentConfigResource = CBPaymentConfigResource()
         let request = APIRequest(resource: paymentConfigResource)
         request.load(withCompletion: { paymentConfig in
             guard (paymentConfig != nil) else {

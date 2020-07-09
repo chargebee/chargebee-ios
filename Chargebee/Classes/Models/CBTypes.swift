@@ -78,3 +78,7 @@ struct PaymentProviderConfig: Decodable {
         case clientId = "client_id"
     }
 }
+
+protocol URLEncodedRequestBody {
+    func toFormBody() -> [String: String]
+}
