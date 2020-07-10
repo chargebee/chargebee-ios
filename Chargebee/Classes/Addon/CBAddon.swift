@@ -61,7 +61,7 @@ public class CBAddon: Decodable {
         }
         let request = APIRequest(resource: AddonResource(addonId))
         request.load(withCompletion: { addonWrapper in
-            onSuccess(addonWrapper!.addon)
+            onSuccess(addonWrapper.addon)
         }, onError: onError)
     }
 }

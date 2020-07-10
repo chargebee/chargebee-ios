@@ -69,14 +69,11 @@ class APIRequest<Resource: APIResource> {
         self.resource = resource
     }
     
-    deinit {
-        print("Api request of \(self.resource.url.url?.absoluteURL) deinit called ")
-    }
 }
 
 @available(macCatalyst 13.0, *)
 extension APIRequest: NetworkRequest {
-
+    
     func decode(_ data: Data) -> Resource.ModelType? {
         return try? JSONDecoder().decode(Resource.ModelType.self, from: data)
     }
@@ -85,13 +82,11 @@ extension APIRequest: NetworkRequest {
         return try? JSONDecoder().decode(Resource.ErrorType.self, from: data)
     }
     
-    func load(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (CBError) -> Void) {
-        print("Get Request url: \(resource.url)")
+    func load(withCompletion completion: @escaping (Resource.ModelType) -> Void, onError: @escaping (CBError) -> Void) {
         load(resource.url, withCompletion: completion, onError: onError)
     }
 
-    func create(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (CBError) ->Void) {
-        print("Post request url: \(resource.url)")
+    func create(withCompletion completion: @escaping (Resource.ModelType) -> Void, onError: @escaping (CBError) ->Void) {
         load(resource.create(), withCompletion: completion, onError: onError)
     }
 }

@@ -63,7 +63,7 @@ public class CBPlan: Decodable {
 
         let request = APIRequest(resource: PlanResource(planId))
         request.load(withCompletion: { planWrapper in
-            onSuccess(planWrapper!.plan)
+            onSuccess(planWrapper.plan)
         }, onError: onError)
     }
 

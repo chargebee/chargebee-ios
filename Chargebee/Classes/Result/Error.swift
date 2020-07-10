@@ -60,24 +60,8 @@ public struct CBErrorDetail: Decodable, ErrorDetail {
             return CBError.operationFailed(errorResponse: self)
         }
     }
-    
 }
 
-struct StripeError: Decodable {
-    let code: String?
-    let message: String
-    let param: String?
-    let type: String
-}
-
-public struct StripeErrorWrapper: Decodable, ErrorDetail {
-
-    let error: StripeError
-    
-    func toCBError(_ statusCode: Int) -> CBError {
-        return CBError.paymentFailed(errorResponse: CBErrorDetail(message: error.message, type: error.type, apiErrorCode: error.code, param: error.param, httpStatusCode: statusCode))
-    }
-}
 
 struct CBInternalErrorDetail: Decodable {
     let message: String
@@ -91,6 +75,4 @@ struct CBInternalErrorWrapper: Decodable, ErrorDetail {
         let message = errors?.first?.message ?? ""
         return CBError.defaultSytemError(statusCode: statusCode, message: message)
     }
-    
 }
-

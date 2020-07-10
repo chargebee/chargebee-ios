@@ -29,15 +29,12 @@ public class CBToken {
     private static func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
         let paymentConfigResource = CBPaymentConfigResource()
         let request = APIRequest(resource: paymentConfigResource)
-        request.load(withCompletion: { (paymentConfig: CBMerchantPaymentConfig?) in
-            guard (paymentConfig != nil) else {
-                return
+        request.load(withCompletion: { (paymentConfig: CBMerchantPaymentConfig) in
+            guard let paymentProviderKey = paymentConfig.getPaymentProviderConfig(paymentDetail.currencyCode, paymentDetail.type)
+                else {
+                    return onError(CBError.defaultSytemError(statusCode: 400, message: "Unable to retrieve gateway info for given payment details"))
             }
-            let paymentProviderKey: CBGatewayDetail? = paymentConfig!.getPaymentProviderConfig(paymentDetail.currencyCode, paymentDetail.type)
-            guard paymentProviderKey != nil else {
-                return
-            }
-            return handler(paymentProviderKey!)
+            return handler(paymentProviderKey)
         },
                      onError: onError)
     }

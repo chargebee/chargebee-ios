@@ -466,14 +466,13 @@
 		3C9E2B216883E214C867EA3505CECC4E /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				F63A1ED224B8AD0F000A3044 /* Stripe */,
 				A756458F5A7CA539E17B9A647E884655 /* CBPaymentConfigResource.swift */,
 				4420D30AABBAC258886F1FB428EAA51B /* CBPaymentDetail.swift */,
 				CDA9A24F5FC40E4AF307D2757047F1B7 /* CBTemporaryToken.swift */,
 				2BBE2E5455209B512E2E6AAE208A18F6 /* CBToken.swift */,
 				822F9376F7530BF2688F6D90039096CA /* CBTokenResource.swift */,
 				FCD6148EA2D39951FC1EED01945B92B4 /* CBTypes.swift */,
-				FE4E1BC1331C9F2D99AE81AF6508AE20 /* StripeTokenizer.swift */,
-				642E89C224F77A6D7D9F5020CAED71A2 /* StripeTokenResource.swift */,
 			);
 			name = Token;
 			path = Chargebee/Classes/Token;
@@ -726,6 +725,15 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Quick";
+			sourceTree = "<group>";
+		};
+		F63A1ED224B8AD0F000A3044 /* Stripe */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E1BC1331C9F2D99AE81AF6508AE20 /* StripeTokenizer.swift */,
+				642E89C224F77A6D7D9F5020CAED71A2 /* StripeTokenResource.swift */,
+			);
+			path = Stripe;
 			sourceTree = "<group>";
 		};
 		F7A50D7D8F76C46C7C0D84EE827CE25C /* Result */ = {
