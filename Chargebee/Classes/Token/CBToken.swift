@@ -8,12 +8,13 @@
 import Foundation
 
 
-class CBTokenizer {
-    init() {
+public class CBToken {
 
+    public static func createTempToken(paymentDetail: CBPaymentDetail, completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
+        tokenize(options: paymentDetail, completion: handler, onError: onError)
     }
-
-    func tokenize(options: CBPaymentDetail, completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
+    
+    private static func tokenize(options: CBPaymentDetail, completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
         retrieveCBPaymentConfig(options, handler: { gatewayDetail in
             self.createPaymentGatewayToken(options, gatewayDetail: gatewayDetail, handler: { (stripeToken) in
                 CBTemporaryToken().createToken(gatewayToken: stripeToken, paymentMethodType: options.type, gatewayId: gatewayDetail.gatewayId, completion: { cbToken in
@@ -24,7 +25,7 @@ class CBTokenizer {
                 onError: onError)
     }
 
-    func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
+    private static func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
         let paymentConfigResource = CBPaymentConfigResource()
         let request = APIRequest(resource: paymentConfigResource)
         request.load(withCompletion: { (paymentConfig: CBMerchantPaymentConfig?) in
@@ -41,10 +42,9 @@ class CBTokenizer {
                 onError: onError)
     }
 
-    func createPaymentGatewayToken(_ paymentDetail: CBPaymentDetail, gatewayDetail: CBGatewayDetail, handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
+    private static func createPaymentGatewayToken(_ paymentDetail: CBPaymentDetail, gatewayDetail: CBGatewayDetail, handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
         StripeTokenizer(card: paymentDetail.card, paymentProviderKey: gatewayDetail.clientId).tokenize(completion: { stripeToken in
             handler(stripeToken)
         }, onError: onError)
     }
-
 }

@@ -23,7 +23,7 @@ class PlanViewController: UIViewController {
 
     @IBAction func getPlan() {
         clearAllFields()
-        Chargebee().getPlan(self.planCode.text!, completion: { (s: Plan) in
+        CBPlan.retrieve(self.planCode.text!, completion: { (s: CBPlan) in
             print(s)
 
             self.planName.text = s.name

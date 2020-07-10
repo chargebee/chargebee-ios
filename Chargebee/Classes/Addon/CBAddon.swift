@@ -4,11 +4,13 @@
 
 import Foundation
 
+public typealias AddonHandler = (CBAddon) -> Void
+
 struct AddonWrapper: Decodable {
-    let addon: Addon
+    let addon: CBAddon
 }
 
-public struct Addon: Decodable {
+public class CBAddon: Decodable {
     public let id: String
     public let name: String
     public let invoiceName: String
@@ -50,4 +52,15 @@ public struct Addon: Decodable {
         case showDescriptionInInvoices =  "show_description_in_invoices"
         case showDescriptionInQuotes =  "show_description_in_quotes"
     }
+    
+    public static func retrieve(_ addonId: String, completion handler: @escaping AddonHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
+        if addonId.isEmpty {
+            return onError(CBError.defaultSytemError(statusCode: 400, message: "Addon id is empty"))
+        }
+        let request = APIRequest(resource: AddonResource(addonId))
+        request.load(withCompletion: { addonWrapper in
+            handler(addonWrapper!.addon)
+        }, onError: onError)
+    }
 }
+

@@ -68,6 +68,10 @@ class APIRequest<Resource: APIResource> {
     init(resource: Resource) {
         self.resource = resource
     }
+    
+    deinit {
+        print("Api request of \(self.resource.url.url?.absoluteURL) deinit called ")
+    }
 }
 
 @available(macCatalyst 13.0, *)

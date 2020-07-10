@@ -5,10 +5,10 @@
 import Foundation
 
 public struct PlanWrapper: Decodable {
-    let plan: Plan
+    let plan: CBPlan
 }
 
-public struct Plan: Decodable {
+public class CBPlan: Decodable {
     public let addonApplicability: String
     public let chargeModel: String
     public let currencyCode: String
@@ -52,4 +52,16 @@ public struct Plan: Decodable {
         case taxable = "taxable"
         case updatedAt = "updated_at"
     }
+    
+    public static func retrieve(_ planId: String, completion handler: @escaping PlanHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
+        if planId.isEmpty {
+            return onError(CBError.defaultSytemError(statusCode: 400, message: "Plan id is empty"))
+        }
+
+        let request = APIRequest(resource: PlanResource(planId))
+        request.load(withCompletion: { planWrapper in
+            handler(planWrapper!.plan)
+        }, onError: onError)
+    }
+
 }
