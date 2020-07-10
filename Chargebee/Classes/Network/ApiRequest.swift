@@ -85,12 +85,12 @@ extension APIRequest: NetworkRequest {
         return try? JSONDecoder().decode(Resource.ErrorType.self, from: data)
     }
     
-    func load(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) -> Void) {
+    func load(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (CBError) -> Void) {
         print("Get Request url: \(resource.url)")
         load(resource.url, withCompletion: completion, onError: onError)
     }
 
-    func create(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (Error) ->Void) {
+    func create(withCompletion completion: @escaping (Resource.ModelType?) -> Void, onError: @escaping (CBError) ->Void) {
         print("Post request url: \(resource.url)")
         load(resource.create(), withCompletion: completion, onError: onError)
     }

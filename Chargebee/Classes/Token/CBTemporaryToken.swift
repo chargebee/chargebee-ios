@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias TokenHandler = (String) -> Void
+
 struct TokenWrapper: Decodable {
     let token: TemporaryToken
 }

@@ -23,17 +23,18 @@ class PlanViewController: UIViewController {
 
     @IBAction func getPlan() {
         clearAllFields()
-        CBPlan.retrieve(self.planCode.text!, completion: { (s: CBPlan) in
-            print(s)
-
-            self.planName.text = s.name
-            self.planStatus.text = s.status
-            self.planCurrencyCode.text = s.currencyCode
-        }, onError: { (error) in
-            print("Error\(error)")
-
-            self.planError.text = error.localizedDescription
-        })
+        CBPlan.retrieve(self.planCode.text!) { (planResult) in
+            switch planResult {
+            case .success(let plan):
+                print(plan)
+                self.planName.text = plan.name
+                self.planStatus.text = plan.status
+                self.planCurrencyCode.text = plan.currencyCode
+            case .error(let error):
+                print("Error\(error)")
+                self.planError.text = error.localizedDescription
+            }
+        }
     }
 
     func clearAllFields() -> Void {

@@ -4,6 +4,8 @@
 
 import Foundation
 
+public typealias PlanHandler = (CBResult<CBPlan>) -> Void
+
 public struct PlanWrapper: Decodable {
     let plan: CBPlan
 }
@@ -53,14 +55,15 @@ public class CBPlan: Decodable {
         case updatedAt = "updated_at"
     }
     
-    public static func retrieve(_ planId: String, completion handler: @escaping PlanHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
+    public static func retrieve(_ planId: String, completion handler: @escaping PlanHandler) {
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler)
         if planId.isEmpty {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Plan id is empty"))
         }
 
         let request = APIRequest(resource: PlanResource(planId))
         request.load(withCompletion: { planWrapper in
-            handler(planWrapper!.plan)
+            onSuccess(planWrapper!.plan)
         }, onError: onError)
     }
 

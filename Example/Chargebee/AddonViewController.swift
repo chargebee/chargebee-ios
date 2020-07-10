@@ -19,12 +19,17 @@ class AddonViewController: UIViewController {
 
     @IBAction func getAddonDetail() {
         clearAllFields()
-        CBAddon.retrieve(addonCode.text!, completion: { (addon) in
-            self.addonName.text = addon.name
-            self.addonStatus.text = addon.status
-            self.addonCurrencyCode.text = addon.currencyCode
-        }) { (error) in
-            self.addonError.text = error.localizedDescription
+        CBAddon.retrieve(addonCode.text!) { (addonResult) in
+            switch addonResult {
+            case .success(let addon):
+                print(addon)
+                self.addonName.text = addon.name
+                self.addonStatus.text = addon.status
+                self.addonCurrencyCode.text = addon.currencyCode
+            case .error(let error):
+                print("Error\(error)")
+                self.addonError.text = error.localizedDescription
+            }
         }
     }
 

@@ -29,12 +29,15 @@ class TokenViewController: UIViewController {
                 cvc: self.cvc.text!)
         print(card, "card details")
         let paymentDetail = CBPaymentDetail(type: CBPaymentType.Card, currencyCode: "USD", card: card)
-        CBToken.createTempToken(paymentDetail: paymentDetail, completion: { s in
-            print("Final CB Token \(s)")
-            self.resultLabel.text = s
-        }, onError: { (error) in
-            print("Error\(error)")
-            self.resultLabel.text = error.localizedDescription
+        CBToken.createTempToken(paymentDetail: paymentDetail, completion: { tokenResult in
+            switch tokenResult {
+            case .success(let token):
+                print("Final CB Token \(token)")
+                self.resultLabel.text = token
+            case .error(let error):
+                print("Error\(error)")
+                self.resultLabel.text = error.localizedDescription
+            }
         })
     }
 

@@ -11,16 +11,16 @@ protocol NetworkRequest {
     
     func decode(_ data: Data) -> ModelType?
     func decodeError(_ data: Data) -> ErrorType?
-    func load(withCompletion completion: @escaping (ModelType?) -> Void, onError: @escaping (Error) -> Void)
+    func load(withCompletion completion: @escaping (ModelType?) -> Void, onError: @escaping (CBError) -> Void)
 }
 
 @available(macCatalyst 13.0, *)
 extension NetworkRequest {
-    func load(_ urlRequest: URLRequest, withCompletion completion: @escaping (ModelType?) -> Void, onError: @escaping (Error) ->Void) {
+    func load(_ urlRequest: URLRequest, withCompletion completion: @escaping (ModelType?) -> Void, onError: @escaping (CBError) ->Void) {
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
         let task = session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             if let error = error{
-                onError(error)
+                onError(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
                 return
             }
             if let response = response as? HTTPURLResponse, response.statusCode >= 400 {

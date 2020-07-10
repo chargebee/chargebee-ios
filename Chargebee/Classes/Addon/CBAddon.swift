@@ -4,7 +4,7 @@
 
 import Foundation
 
-public typealias AddonHandler = (CBAddon) -> Void
+public typealias AddonHandler = (CBResult<CBAddon>) -> Void
 
 struct AddonWrapper: Decodable {
     let addon: CBAddon
@@ -53,13 +53,15 @@ public class CBAddon: Decodable {
         case showDescriptionInQuotes =  "show_description_in_quotes"
     }
     
-    public static func retrieve(_ addonId: String, completion handler: @escaping AddonHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
+    public static func retrieve(_ addonId: String, completion handler: @escaping AddonHandler) {
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler)
+        
         if addonId.isEmpty {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Addon id is empty"))
         }
         let request = APIRequest(resource: AddonResource(addonId))
         request.load(withCompletion: { addonWrapper in
-            handler(addonWrapper!.addon)
+            onSuccess(addonWrapper!.addon)
         }, onError: onError)
     }
 }

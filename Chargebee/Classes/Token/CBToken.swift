@@ -9,9 +9,10 @@ import Foundation
 
 
 public class CBToken {
-
-    public static func createTempToken(paymentDetail: CBPaymentDetail, completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler = defaultErrorHandler) {
-        tokenize(options: paymentDetail, completion: handler, onError: onError)
+    
+    public static func createTempToken(paymentDetail: CBPaymentDetail, completion handler: @escaping (CBResult<String>) -> Void) {
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler)
+        tokenize(options: paymentDetail, completion: onSuccess, onError: onError)
     }
     
     private static func tokenize(options: CBPaymentDetail, completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
@@ -22,9 +23,9 @@ public class CBToken {
                 }, onError: onError)
             }, onError: onError)
         },
-                onError: onError)
+                                onError: onError)
     }
-
+    
     private static func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
         let paymentConfigResource = CBPaymentConfigResource()
         let request = APIRequest(resource: paymentConfigResource)
@@ -36,12 +37,11 @@ public class CBToken {
             guard paymentProviderKey != nil else {
                 return
             }
-            handler(paymentProviderKey!)
-            return
+            return handler(paymentProviderKey!)
         },
-                onError: onError)
+                     onError: onError)
     }
-
+    
     private static func createPaymentGatewayToken(_ paymentDetail: CBPaymentDetail, gatewayDetail: CBGatewayDetail, handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
         StripeTokenizer(card: paymentDetail.card, paymentProviderKey: gatewayDetail.clientId).tokenize(completion: { stripeToken in
             handler(stripeToken)

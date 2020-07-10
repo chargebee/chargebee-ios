@@ -5,13 +5,6 @@
 
 import Foundation
 
-public typealias PlanHandler = (CBPlan) -> Void
-public typealias TokenHandler = (String) -> Void
-public typealias ErrorHandler = (Error) -> Void
-
-public func defaultErrorHandler(_ error: Error) -> Void {
-}
-
 @available(macCatalyst 13.0, *)
 public class Chargebee {
     public init() {
