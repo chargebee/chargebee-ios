@@ -32,7 +32,7 @@ public class CBToken {
         request.load(withCompletion: { (paymentConfig: CBMerchantPaymentConfig) in
             guard let paymentProviderKey = paymentConfig.getPaymentProviderConfig(paymentDetail.currencyCode, paymentDetail.type)
                 else {
-                    return onError(CBError.defaultSytemError(statusCode: 400, message: "Unable to retrieve gateway info for given payment details"))
+                    return onError(CBError.defaultSytemError(statusCode: 400, message: "Currency/gateway not yet supported in the SDK"))
             }
             return handler(paymentProviderKey)
         },
