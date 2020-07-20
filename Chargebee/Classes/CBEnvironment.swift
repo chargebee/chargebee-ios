@@ -9,10 +9,12 @@ class CBEnvironment {
     static var publishableApiKey: String = ""
     static var encodedApiKey: String = ""
     static var baseUrl: String = ""
+    static var allowErrorLogging: Bool = true
 
-    static func configure(site: String, publishableApiKey: String) {
+    static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool) {
         CBEnvironment.site = site
         CBEnvironment.publishableApiKey = publishableApiKey
+        CBEnvironment.allowErrorLogging = allowErrorLogging
         CBEnvironment.encodedApiKey = CBEnvironment.publishableApiKey.data(using: .utf8)?.base64EncodedString() ?? ""
         CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
     }
