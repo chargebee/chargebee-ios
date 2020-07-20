@@ -9,12 +9,15 @@ class CBPaymentConfigResource: APIResource {
     typealias ErrorType = CBInternalErrorWrapper
 
     var baseUrl: String
-    var authHeader: String
+    var authHeader: String? {
+        get {
+            "Basic \(CBEnvironment.publishableApiKey)"
+        }
+    }
     var methodPath: String = "/internal/component/retrieve_config"
     var header: [String: String]? = ["X-Requested-With":"XMLHttpRequest"]
 
     init() {
-        self.authHeader = "Basic \(CBEnvironment.apiKey)"
         self.baseUrl = CBEnvironment.baseUrl
     }
 

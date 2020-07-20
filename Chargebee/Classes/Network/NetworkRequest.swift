@@ -11,25 +11,28 @@ protocol NetworkRequest {
     
     func decode(_ data: Data) -> ModelType?
     func decodeError(_ data: Data) -> ErrorType?
-    func load(withCompletion completion: @escaping (ModelType) -> Void, onError: @escaping (CBError) -> Void)
+    func load(withCompletion completion: SuccessHandler<ModelType>?, onError: ErrorHandler?)
 }
 
 @available(macCatalyst 13.0, *)
 extension NetworkRequest {
-    func load(_ urlRequest: URLRequest, withCompletion completion: @escaping (ModelType) -> Void, onError: @escaping (CBError) ->Void) {
+    func load(_ urlRequest: URLRequest, withCompletion completion: SuccessHandler<ModelType>? = nil, onError: ErrorHandler? = nil) {
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
         let task = session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             if let error = error{
-                return onError(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
+                onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
+                return
             }
             if let response = response as? HTTPURLResponse, response.statusCode >= 400 {
-                return onError(self.buildCBError(data, statusCode: response.statusCode))
+                onError?(self.buildCBError(data, statusCode: response.statusCode))
+                return
             }
             guard let data = data,
                 let decodedData = self.decode(data) else {
-                    return onError(CBError.defaultSytemError(statusCode: 400, message: "Response has no/invalid body"))
+                    onError?(CBError.defaultSytemError(statusCode: 400, message: "Response has no/invalid body"))
+                    return
             }
-            completion(decodedData)
+            completion?(decodedData)
         })
         task.resume()
     }
