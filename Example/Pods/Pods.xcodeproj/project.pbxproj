@@ -138,6 +138,8 @@
 		F2879D2ED08204999EAB760DE2A2E200 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAA80FF2C63B9886F4440CCDB308DCB /* Closures.swift */; };
 		F630B376ABE2B76BD06716E25EC25606 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEC5CCE7BEDDE5F9088F1B6E292F746 /* Expression.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		F63A1ED124B89B3C000A3044 /* CBResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A1ED024B89B3C000A3044 /* CBResult.swift */; };
+		F6D3A36524C56BB400D22E92 /* LoggerResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3A36424C56BB400D22E92 /* LoggerResource.swift */; };
+		F6D3A36724C5D94C00D22E92 /* CBLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3A36624C5D94C00D22E92 /* CBLogger.swift */; };
 		F8EA3B6B23173D51461F920F77B3C6BE /* Stringers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3326DE447DD9522EC2436AFCFE32F3E7 /* Stringers.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		F93310609CA1D35157D85EFAB3808763 /* Quick.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFA9CCAA5DEFECA4FE699122BF21EDF /* Quick.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA5A1BA48BC7F11F18E7EB2C61FB2054 /* CwlBadInstructionException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24961798DB3B3EE088E1F42C3C64E158 /* CwlBadInstructionException.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -341,6 +343,8 @@
 		F183E51CF9918904A15DC145057ACAB2 /* Chargebee.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Chargebee.debug.xcconfig; sourceTree = "<group>"; };
 		F48BBC2EEA8A445932E1D47F6F40C1C7 /* RaisesException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RaisesException.swift; path = Sources/Nimble/Matchers/RaisesException.swift; sourceTree = "<group>"; };
 		F63A1ED024B89B3C000A3044 /* CBResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBResult.swift; sourceTree = "<group>"; };
+		F6D3A36424C56BB400D22E92 /* LoggerResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerResource.swift; sourceTree = "<group>"; };
+		F6D3A36624C5D94C00D22E92 /* CBLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBLogger.swift; sourceTree = "<group>"; };
 		F9A94CDCB33A101D63AA1765A1CFBDA3 /* XCTestObservationCenter+Register.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+Register.m"; path = "Sources/NimbleObjectiveC/XCTestObservationCenter+Register.m"; sourceTree = "<group>"; };
 		FB3E8C56930D17473788D13B8DEBD474 /* Chargebee-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Chargebee-Info.plist"; sourceTree = "<group>"; };
 		FCD6148EA2D39951FC1EED01945B92B4 /* CBTypes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBTypes.swift; sourceTree = "<group>"; };
@@ -642,10 +646,11 @@
 				6F4901384EB653BE330134DDE5E6C331 /* CBEnvironment.swift */,
 				79B0658BC707A143F3993D79EEC68F30 /* Chargebee.swift */,
 				C718BD3FAA9E12CF6B7DE75599DE0D81 /* Addon */,
-				F7A50D7D8F76C46C7C0D84EE827CE25C /* Result */,
+				F6D3A36324C56B3B00D22E92 /* Logger */,
 				29081797E861A44B39EAAFECCBF66DC2 /* Network */,
 				DE816D026DD16B0FBD7B70D645DC870D /* Plan */,
 				E661D5A6A74AD9A1489ED2C7F0867270 /* Pod */,
+				F7A50D7D8F76C46C7C0D84EE827CE25C /* Result */,
 				6F78065597E590008C66D9EF3FC29017 /* Support Files */,
 				3C9E2B216883E214C867EA3505CECC4E /* Token */,
 			);
@@ -734,6 +739,16 @@
 				642E89C224F77A6D7D9F5020CAED71A2 /* StripeTokenResource.swift */,
 			);
 			path = Stripe;
+			sourceTree = "<group>";
+		};
+		F6D3A36324C56B3B00D22E92 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				F6D3A36424C56BB400D22E92 /* LoggerResource.swift */,
+				F6D3A36624C5D94C00D22E92 /* CBLogger.swift */,
+			);
+			name = Logger;
+			path = Chargebee/Classes/Logger;
 			sourceTree = "<group>";
 		};
 		F7A50D7D8F76C46C7C0D84EE827CE25C /* Result */ = {
@@ -981,12 +996,14 @@
 				5DE2618F7CA5D33E9203792B23715F7E /* CBEnvironment.swift in Sources */,
 				0F90CB65F450346831DEF9FF2D511443 /* CBPaymentConfigResource.swift in Sources */,
 				3957C792EBCF33A0861D197FBEF24DAB /* CBPaymentDetail.swift in Sources */,
+				F6D3A36724C5D94C00D22E92 /* CBLogger.swift in Sources */,
 				F63A1ED124B89B3C000A3044 /* CBResult.swift in Sources */,
 				41D39A8E467333F1A48C18876A05C955 /* CBTemporaryToken.swift in Sources */,
 				D77BFEEAF3B106405B3FF60D73ED2112 /* CBToken.swift in Sources */,
 				8C3B7F94BC8053696A8D2D9D7C19A7B4 /* CBTokenResource.swift in Sources */,
 				1956B827CF1AB84302DF1B1D83634850 /* CBTypes.swift in Sources */,
 				3C75D040D59B7F60C39EFE10C56C0515 /* Chargebee-dummy.m in Sources */,
+				F6D3A36524C56BB400D22E92 /* LoggerResource.swift in Sources */,
 				D6A6AABC8A6E792C94D87DD4195055D9 /* Chargebee.swift in Sources */,
 				939D4D5E76C22CA2FBFC166199E961B5 /* Error.swift in Sources */,
 				087C6493A29B160013F5ED3124D3D484 /* NetworkRequest.swift in Sources */,

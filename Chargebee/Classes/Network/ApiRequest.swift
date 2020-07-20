@@ -89,11 +89,11 @@ extension APIRequest: NetworkRequest {
         return try? JSONDecoder().decode(Resource.ErrorType.self, from: data)
     }
     
-    func load(withCompletion completion: SuccessHandler<Resource.ModelType>?, onError: ErrorHandler?) {
+    func load(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
         load(resource.url, withCompletion: completion, onError: onError)
     }
 
-    func create(withCompletion completion: SuccessHandler<Resource.ModelType>?, onError: ErrorHandler?) {
+    func create(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
         load(resource.create(), withCompletion: completion, onError: onError)
     }
 }

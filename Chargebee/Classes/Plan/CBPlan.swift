@@ -56,11 +56,11 @@ public class CBPlan: Decodable {
     }
     
     public static func retrieve(_ planId: String, completion handler: @escaping PlanHandler) {
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler)
+        let logger = CBLogger(name: "plan", action: "retreive_plan")
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         if planId.isEmpty {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Plan id is empty"))
         }
-
         let request = APIRequest(resource: PlanResource(planId))
         request.load(withCompletion: { planWrapper in
             onSuccess(planWrapper.plan)
