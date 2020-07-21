@@ -16,11 +16,16 @@ class LoggerResource: APIResource {
     var methodPath: String = "/internal/track_info_error"
     private var logDetail: LogDetail
     
+    func create() -> URLRequest {
+        return self.url
+    }
+    
     var url: URLRequest {
         get {
             var components = URLComponents(string: baseUrl)
             components!.path += methodPath
             var urlRequest = URLRequest(url: components!.url!)
+            urlRequest.httpMethod = "post"
             urlRequest.httpBody = try? JSONEncoder().encode(self.logDetail)
             urlRequest.addValue("application/json", forHTTPHeaderField: "content-type")
             return urlRequest

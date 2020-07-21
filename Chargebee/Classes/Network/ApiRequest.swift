@@ -14,6 +14,8 @@ protocol APIResource {
     var header: [String: String]? { get }
     var url: URLRequest { get }
     var requestBody: URLEncodedRequestBody? { get }
+    
+    func create() -> URLRequest
 }
 
 extension APIResource {
@@ -38,14 +40,10 @@ extension APIResource {
         buildBaseRequest()
     }
 
-    func create(isUrlEncoded: Bool = true) -> URLRequest {
+    func create() -> URLRequest {
         var urlRequest = buildBaseRequest()
-
         urlRequest.httpMethod = "post"
-        if isUrlEncoded {
-            urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        }
-
+        urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         var bodyComponents = URLComponents()
         bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
             URLQueryItem(name: key, value: value)
