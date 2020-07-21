@@ -21,17 +21,16 @@ Pod::Spec.new do |s|
 Chargebee iOS SDK aims at simplifying recurring payments integration
                        DESC
 
-  s.homepage         = 'https://github.com/chargebee/chargebee-ios'
+  s.homepage         = 'https://www.chargebee.com'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'cb-prabu' => 'meetprabu88@gmail.com' }
   s.source           = { :git => 'https://github.com/chargebee/chargebee-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
   
   s.source_files = 'Chargebee/Classes/**/*'
-  
+  s.swift_version = '5.0'
   # s.resource_bundles = {
   #   'Chargebee' => ['Chargebee/Assets/*.png']
   # }
