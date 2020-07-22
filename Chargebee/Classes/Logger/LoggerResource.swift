@@ -57,6 +57,6 @@ struct LogDetail: Codable {
 }
 
 enum LogType: String {
-    case Error = "ERROR"
-    case Info = "INFO"
+    case Error = "error"
+    case Info = "info"
 }
