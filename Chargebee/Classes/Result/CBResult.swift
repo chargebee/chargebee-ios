@@ -23,13 +23,11 @@ public enum CBResult<T> {
     }
     
     private static func logError(_ error: CBError, _ logger: CBLogger?) {
-        if CBEnvironment.allowErrorLogging {
-            switch error {
-            case .invalidRequest(let errorResponse),
-                 .operationFailed(errorResponse: let errorResponse),
-                 .paymentFailed(errorResponse: let errorResponse):
-                logger?.error(message: errorResponse.message, code: errorResponse.httpStatusCode)
-            }
+        switch error {
+        case .invalidRequest(let errorResponse),
+             .operationFailed(errorResponse: let errorResponse),
+             .paymentFailed(errorResponse: let errorResponse):
+            logger?.error(message: errorResponse.message, code: errorResponse.httpStatusCode)
         }
     }
     

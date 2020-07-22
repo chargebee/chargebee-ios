@@ -18,19 +18,22 @@ class CBLogger {
     }
     
     func error(message: String, code: Int? = nil) {
-        let request = APIRequest(resource: LoggerResource(
-            action: action,
-            type: LogType.Error,
-            errorMessage: message,
-            errorCode: code))
-        request.create()
+        postLog(LogType.Error, message, code)
     }
     
     func info() {
-        let request = APIRequest(resource: LoggerResource(
-            action: action,
-            type: LogType.Info))
-        request.create()
+        postLog(LogType.Info)
+    }
+    
+    private func postLog(_ type: LogType, _ message: String? = nil, _ code: Int? = nil) {
+        if CBEnvironment.allowErrorLogging {
+            let request = APIRequest(resource: LoggerResource(
+                action: action,
+                type: type,
+                errorMessage: message,
+                errorCode: code))
+            request.create()
+        }
     }
     
 }
