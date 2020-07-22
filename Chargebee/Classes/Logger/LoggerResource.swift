@@ -32,17 +32,20 @@ class LoggerResource: APIResource {
         }
     }
     
-    init(action: String, type: LogType, error_message: String, error_code: Int?) {
-        self.logDetail = LogDetail(data: [
-            "key": "cb.logging",
-            "ref_module": "cb_ios_sdk",
-            "site": CBEnvironment.site,
-            "action": action,
-            "log_data_type": type.rawValue,
-            "error_message": error_message,
-            "error_code": "\(error_code ?? 0)"
-        ])
+    init(action: String, type: LogType, errorMessage: String? = nil, errorCode: Int? = nil) {
+        var data =  ["key": "cb.logging",
+                     "ref_module": "cb_ios_sdk",
+                     "site": CBEnvironment.site,
+                     "action": action,
+                     "log_data_type": type.rawValue]
+        if let errorMessage = errorMessage {
+            data["error_message"] = errorMessage
+        }
+        if let errorCode = errorCode {
+            data["error_code"] = "\(errorCode)"
+        }
         self.baseUrl = CBEnvironment.baseUrl
+        self.logDetail = LogDetail(data: data)
     }
 }
 
@@ -55,4 +58,5 @@ struct LogDetail: Codable {
 
 enum LogType: String {
     case Error = "ERROR"
+    case Info = "INFO"
 }

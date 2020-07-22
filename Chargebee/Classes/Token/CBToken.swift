@@ -12,6 +12,7 @@ public class CBToken {
     
     public static func createTempToken(paymentDetail: CBPaymentDetail, completion handler: @escaping (CBResult<String>) -> Void) {
         let logger = CBLogger(name: "cb_temp_token", action: "create_temp_token")
+        logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         tokenize(options: paymentDetail, completion: onSuccess, onError: onError)
     }

@@ -21,8 +21,16 @@ class CBLogger {
         let request = APIRequest(resource: LoggerResource(
             action: action,
             type: LogType.Error,
-            error_message: message,
-            error_code: code))
+            errorMessage: message,
+            errorCode: code))
         request.create()
     }
+    
+    func info() {
+        let request = APIRequest(resource: LoggerResource(
+            action: action,
+            type: LogType.Info))
+        request.create()
+    }
+    
 }

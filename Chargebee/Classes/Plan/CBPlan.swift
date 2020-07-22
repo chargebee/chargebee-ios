@@ -57,6 +57,7 @@ public class CBPlan: Decodable {
     
     public static func retrieve(_ planId: String, completion handler: @escaping PlanHandler) {
         let logger = CBLogger(name: "plan", action: "retrieve_plan")
+        logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         if planId.isEmpty {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Plan id is empty"))
