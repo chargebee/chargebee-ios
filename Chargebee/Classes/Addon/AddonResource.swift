@@ -9,12 +9,15 @@ class AddonResource: APIResource {
     typealias ModelType = AddonWrapper
     typealias ErrorType = CBErrorDetail
     
-    var authHeader: String
+    var authHeader: String? {
+        get {
+            "Basic \(CBEnvironment.encodedApiKey)"
+        }
+    }
     var baseUrl: String
     var methodPath: String = "/v2/addons"
 
     init(_ addonId: String) {
-        self.authHeader = "Basic \(CBEnvironment.encodedApiKey)"
         self.baseUrl = CBEnvironment.baseUrl
         self.methodPath += "/\(addonId)"
     }

@@ -8,12 +8,18 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
+### Github
+The Chargebee iOS can be installed directly from github, by adding this to the Podfile:
+
+    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios':tag => '0.1.0'
+
+### CocoaPods
+
 Chargebee is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-```
-pod 'Chargebee'
-```
+    pod 'Chargebee'
+
 
 ## Usage
 
@@ -48,7 +54,7 @@ CBAddon.retrieve("addonCode") { (addonResult) in
     switch addonResult {
     case .success(let addon):
         print("Addon Name: \(addon.name)")
-        // Use plan details here
+        // Use addon details here
     case .error(let error):
         // Handle error here
     }

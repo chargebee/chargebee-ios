@@ -10,12 +10,15 @@ class PlanResource: APIResource {
     typealias ModelType = PlanWrapper
     typealias ErrorType = CBErrorDetail
     
-    var authHeader: String
+    var authHeader: String? {
+        get {
+          "Basic \(CBEnvironment.encodedApiKey)"
+        }
+    }
     var baseUrl: String
     var methodPath: String = "/v2/plans"
     
     init(_ planId: String) {
-        self.authHeader = "Basic \(CBEnvironment.encodedApiKey)"
         self.baseUrl = CBEnvironment.baseUrl
         self.methodPath += "/\(planId)"
     }

@@ -54,8 +54,9 @@ public class CBAddon: Decodable {
     }
     
     public static func retrieve(_ addonId: String, completion handler: @escaping AddonHandler) {
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler)
-        
+        let logger = CBLogger(name: "addon", action: "retrieve_addon")
+        logger.info()
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         if addonId.isEmpty {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Addon id is empty"))
         }

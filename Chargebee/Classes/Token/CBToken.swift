@@ -11,7 +11,9 @@ import Foundation
 public class CBToken {
     
     public static func createTempToken(paymentDetail: CBPaymentDetail, completion handler: @escaping (CBResult<String>) -> Void) {
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler)
+        let logger = CBLogger(name: "cb_temp_token", action: "create_temp_token")
+        logger.info()
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         tokenize(options: paymentDetail, completion: onSuccess, onError: onError)
     }
     
@@ -32,7 +34,7 @@ public class CBToken {
         request.load(withCompletion: { (paymentConfig: CBMerchantPaymentConfig) in
             guard let paymentProviderKey = paymentConfig.getPaymentProviderConfig(paymentDetail.currencyCode, paymentDetail.type)
                 else {
-                    return onError(CBError.defaultSytemError(statusCode: 400, message: "Unable to retrieve gateway info for given payment details"))
+                    return onError(CBError.defaultSytemError(statusCode: 400, message: "Currency/gateway not yet supported in the SDK"))
             }
             return handler(paymentProviderKey)
         },

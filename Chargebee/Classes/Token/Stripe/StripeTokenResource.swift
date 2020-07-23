@@ -9,12 +9,17 @@ class StripeTokenResource: APIResource {
     typealias ErrorType = StripeErrorWrapper
 
     private(set) var methodPath: String = "/tokens"
+    private let apiKey: String
     var baseUrl: String = "https://api.stripe.com/v1"
-    var authHeader: String
+    var authHeader: String? {
+        get {
+            "Bearer \(apiKey)"
+        }
+    }
     var requestBody: URLEncodedRequestBody?
 
     init(apiKey: String, card: StripeCard) {
-        self.authHeader = "Bearer \(apiKey)"
+        self.apiKey = apiKey
         self.requestBody = card
     }
 }

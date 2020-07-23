@@ -9,16 +9,28 @@ protocol APIResource {
     associatedtype ErrorType: Decodable
 
     var methodPath: String { get }
-    var baseUrl: String { get set }
-    var authHeader: String { get set }
-    var header: [String:String]? { get }
+    var baseUrl: String { get }
+    var authHeader: String? { get }
+    var header: [String: String]? { get }
     var url: URLRequest { get }
     var requestBody: URLEncodedRequestBody? { get }
+    
+    func create() -> URLRequest
 }
 
-@available(macCatalyst 13.0, *)
 extension APIResource {
+    var authHeader: String? {
+        get {
+            nil
+        }
+    }
     var header: [String: String]? {
+        get {
+            nil
+        }
+    }
+    
+    var requestBody: URLEncodedRequestBody? {
         get {
             nil
         }
@@ -27,20 +39,11 @@ extension APIResource {
     var url: URLRequest {
         buildBaseRequest()
     }
-    var requestBody: URLEncodedRequestBody? {
-        get {
-            nil
-        }
-    }
 
-    func create(isUrlEncoded: Bool = true) -> URLRequest {
+    func create() -> URLRequest {
         var urlRequest = buildBaseRequest()
-
         urlRequest.httpMethod = "post"
-        if isUrlEncoded {
-            urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        }
-
+        urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         var bodyComponents = URLComponents()
         bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
             URLQueryItem(name: key, value: value)
@@ -50,11 +53,14 @@ extension APIResource {
     }
 
     private func buildBaseRequest() -> URLRequest {
+        // TODO: Remove force unwrapping
         var components = URLComponents(string: baseUrl)
         components!.path += methodPath
 
         var urlRequest = URLRequest(url: components!.url!)
-        urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
+        if let authHeader = authHeader {
+            urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
+        }
         header?.forEach({ (key, value) in
             urlRequest.addValue(value, forHTTPHeaderField: key)
         })
@@ -71,7 +77,6 @@ class APIRequest<Resource: APIResource> {
     
 }
 
-@available(macCatalyst 13.0, *)
 extension APIRequest: NetworkRequest {
     
     func decode(_ data: Data) -> Resource.ModelType? {
@@ -82,11 +87,11 @@ extension APIRequest: NetworkRequest {
         return try? JSONDecoder().decode(Resource.ErrorType.self, from: data)
     }
     
-    func load(withCompletion completion: @escaping (Resource.ModelType) -> Void, onError: @escaping (CBError) -> Void) {
+    func load(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
         load(resource.url, withCompletion: completion, onError: onError)
     }
 
-    func create(withCompletion completion: @escaping (Resource.ModelType) -> Void, onError: @escaping (CBError) ->Void) {
+    func create(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
         load(resource.create(), withCompletion: completion, onError: onError)
     }
 }
