@@ -11,25 +11,25 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ### Github
 The Chargebee iOS can be installed directly from github, by adding this to the Podfile:
 
-    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '0.2.0'
+    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '0.3.0'
 
 ### CocoaPods
 
 Chargebee is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-    pod 'Chargebee', '~> 0.2'
+    pod 'Chargebee', '~> 0.3'
 
 
 ## Usage
 
 ### Configure
-To use the Chargebee iOS SDK, you must initialize the SDK with your Chargebee Site Code and API key. You can initialize during your app startup by including this in your app delegate.
+To use the Chargebee iOS SDK, you must initialize the SDK with your Chargebee Site Code and Publishable API key. You can initialize during your app startup by including this in your app delegate.
 
 ```swift
 import Chargebee
 
-Chargebee.configure(site: "site-code", apiKey: "api_key")
+Chargebee.configure(site: "site-code", publishableApiKey: "api_key")
 
 ```
 
