@@ -11,14 +11,14 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ### Github
 The Chargebee iOS can be installed directly from github, by adding this to the Podfile:
 
-    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios':tag => '0.1.0'
+    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '0.2.0'
 
 ### CocoaPods
 
 Chargebee is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-    pod 'Chargebee'
+    pod 'Chargebee', '~> 0.2'
 
 
 ## Usage
