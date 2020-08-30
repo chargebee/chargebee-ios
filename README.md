@@ -9,13 +9,13 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Installation
 
 ### Github
-The Chargebee iOS can be installed directly from github, by adding this to the Podfile:
+The Chargebee iOS SDK can be installed directly from github, by adding this to the Podfile:
 
     pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '0.3.0'
 
 ### CocoaPods
 
-Chargebee is available through [CocoaPods](https://cocoapods.org). To install
+It's also available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
     pod 'Chargebee', '~> 0.3'
@@ -24,19 +24,19 @@ it, simply add the following line to your Podfile:
 ## Usage
 
 ### Configure
-To use the Chargebee iOS SDK, you must initialize the SDK with your Chargebee Site Code and Publishable API key. You can initialize during your app startup by including this in your app delegate.
+To use the Chargebee iOS SDK, you must initialize the SDK with your Chargebee Site and Publishable API key. You can initialize during your app startup by including this in your app delegate.
 
 ```swift
 import Chargebee
 
-Chargebee.configure(site: "site-code", publishableApiKey: "api_key")
+Chargebee.configure(site: "your-site", publishableApiKey: "api_key")
 
 ```
 
 ### Get Plan Details
 
 ```swift
-CBPlan.retrieve("planCode") { (planResult) in
+CBPlan.retrieve("planId") { (planResult) in
     switch planResult {
     case .success(let plan):
         print("Plan Name: \(plan.name)")
@@ -50,7 +50,7 @@ CBPlan.retrieve("planCode") { (planResult) in
 ### Get Addon Details
 
 ```swift
-CBAddon.retrieve("addonCode") { (addonResult) in
+CBAddon.retrieve("addonId") { (addonResult) in
     switch addonResult {
     case .success(let addon):
         print("Addon Name: \(addon.name)")
@@ -81,6 +81,15 @@ CBToken.createTempToken(paymentDetail: paymentDetail) { tokenResult in
     }
 }
 ```
+### Use the Chargebee Token
+
+Once your customer’s card data is processed and stored, and a Chargebee token reference is returned to you, you can use the token in subsequent API calls to process transactions. The following are some endpoints that accept Chargebee tokens for processing.
+
+- [Create a Payment Source for the customer](https://apidocs.chargebee.com/docs/api/payment_sources#create_using_chargebee_token)
+- [Create a Subscription](https://apidocs.chargebee.com/docs/api/subscriptions#create_a_subscription)
+- [Update a Subscription](https://apidocs.chargebee.com/docs/api/subscriptions#update_a_subscription)
+
+Please refer to the [Chargebee API Docs](https://apidocs.chargebee.com/docs/api) for subsequent integration steps.
 
 ## License
 
