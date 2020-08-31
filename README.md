@@ -5,6 +5,8 @@
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
+- iOS 8+
+- Swift 5+
 
 ## Installation
 
@@ -15,7 +17,7 @@ The Chargebee iOS SDK can be installed directly from github, by adding this to t
 
 ### CocoaPods
 
-It's also available through [CocoaPods](https://cocoapods.org). To install
+It's also available through [CocoaPods](https://cocoapods.org/pods/Chargebee). To install
 it, simply add the following line to your Podfile:
 
     pod 'Chargebee', '~> 0.3'
