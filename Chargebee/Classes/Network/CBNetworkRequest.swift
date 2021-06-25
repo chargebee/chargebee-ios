@@ -4,8 +4,7 @@
 
 import Foundation
 
-@available(macCatalyst 13.0, *)
-protocol NetworkRequest {
+protocol CBNetworkRequest {
     associatedtype ModelType: Decodable
     associatedtype ErrorType: Decodable
     
@@ -15,10 +14,15 @@ protocol NetworkRequest {
 }
 
 @available(macCatalyst 13.0, *)
-extension NetworkRequest {
+extension CBNetworkRequest {
     func load(_ urlRequest: URLRequest, withCompletion completion: SuccessHandler<ModelType>? = nil, onError: ErrorHandler? = nil) {
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
+        
+        print("UrL request \(urlRequest)")
+        let session = URLSession.shared
+
         let task = session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+
+            
             if let error = error{
                 onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
                 return
@@ -36,6 +40,7 @@ extension NetworkRequest {
         })
         task.resume()
     }
+
     
     private func buildCBError(_ data: Data?, statusCode: Int) -> CBError {
         guard let data = data else {

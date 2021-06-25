@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol APIResource {
+protocol CBAPIResource {
     associatedtype ModelType: Decodable
     associatedtype ErrorType: Decodable
 
@@ -18,7 +18,7 @@ protocol APIResource {
     func create() -> URLRequest
 }
 
-extension APIResource {
+extension CBAPIResource {
     var authHeader: String? {
         get {
             nil
@@ -68,7 +68,7 @@ extension APIResource {
     }
 }
 
-class APIRequest<Resource: APIResource> {
+class CBAPIRequest<Resource: CBAPIResource> {
     let resource: Resource
 
     init(resource: Resource) {
@@ -77,7 +77,7 @@ class APIRequest<Resource: APIResource> {
     
 }
 
-extension APIRequest: NetworkRequest {
+extension CBAPIRequest: CBNetworkRequest {
     
     func decode(_ data: Data) -> Resource.ModelType? {
         return try? JSONDecoder().decode(Resource.ModelType.self, from: data)

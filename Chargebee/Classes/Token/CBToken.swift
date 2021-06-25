@@ -8,7 +8,7 @@
 import Foundation
 
 
-public class CBToken {
+public final class CBToken {
     
     public static func createTempToken(paymentDetail: CBPaymentDetail, completion handler: @escaping (CBResult<String>) -> Void) {
         let logger = CBLogger(name: "cb_temp_token", action: "create_temp_token")
@@ -30,7 +30,7 @@ public class CBToken {
     
     private static func retrieveCBPaymentConfig(_ paymentDetail: CBPaymentDetail, handler: @escaping (CBGatewayDetail) -> Void, onError: @escaping ErrorHandler) {
         let paymentConfigResource = CBPaymentConfigResource()
-        let request = APIRequest(resource: paymentConfigResource)
+        let request = CBAPIRequest(resource: paymentConfigResource)
         request.load(withCompletion: { (paymentConfig: CBMerchantPaymentConfig) in
             guard let paymentProviderKey = paymentConfig.getPaymentProviderConfig(paymentDetail.currencyCode, paymentDetail.type)
                 else {

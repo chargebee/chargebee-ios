@@ -7,8 +7,7 @@
 
 import Foundation
 
-@available(macCatalyst 13.0, *)
-class CBTokenResource: APIResource {
+final class CBTokenResource: CBAPIResource {
     typealias ModelType = TokenWrapper
     typealias ErrorType = CBErrorDetail
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CBSDKProductTableViewCell" rowHeight="91" id="KGk-i7-Jjw" customClass="CBSDKProductTableViewCell" customModule="Chargebee_Example" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="360" height="91"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="360" height="91"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OR0-Oj-9Qf">
+                        <rect key="frame" x="10" y="10" width="262" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="262" id="Vbo-8I-M4m"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4CO-vd-YBe">
+                        <rect key="frame" x="10" y="47.5" width="252" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="252" id="TS2-RO-Zxg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QW-DW-jJR">
+                        <rect key="frame" x="320" y="30.5" width="30" height="30"/>
+                        <state key="normal" title="Buy"/>
+                        <connections>
+                            <action selector="actionBtnClicked:" destination="KGk-i7-Jjw" eventType="touchDown" id="pDB-ry-0eC"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="OR0-Oj-9Qf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="3xF-7j-M71"/>
+                    <constraint firstItem="OR0-Oj-9Qf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BZR-Z4-lDI"/>
+                    <constraint firstAttribute="trailing" secondItem="1QW-DW-jJR" secondAttribute="trailing" constant="10" id="JkD-jZ-g7I"/>
+                    <constraint firstItem="4CO-vd-YBe" firstAttribute="top" secondItem="OR0-Oj-9Qf" secondAttribute="bottom" constant="14.5" id="KHY-Lt-QsM"/>
+                    <constraint firstItem="1QW-DW-jJR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OGD-y1-07m"/>
+                    <constraint firstItem="4CO-vd-YBe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Tll-Zi-pWF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="btnAction" destination="1QW-DW-jJR" id="rSj-Dp-Zai"/>
+                <outlet property="priceLabel" destination="4CO-vd-YBe" id="bx5-Gg-Ofx"/>
+                <outlet property="titleLabel" destination="OR0-Oj-9Qf" id="iBu-IP-yoS"/>
+            </connections>
+            <point key="canvasLocation" x="166.66666666666669" y="146.31696428571428"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -7,52 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20CCB493265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */; };
+		20CCB4B5265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACD81AFB9204008FA782 /* CBSDKOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* CBSDKOptionsViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		62B3F4F6713321E11E4A68BB /* Pods_Chargebee_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */; };
-		B4B53B3895933E8EA41816D8 /* Pods_Chargebee_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */; };
-		FA3ECF3524B6FA6C00643E63 /* TokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3424B6FA6C00643E63 /* TokenViewController.swift */; };
-		FA3ECF3724B6FDE300643E63 /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3624B6FDE300643E63 /* PlanViewController.swift */; };
-		FA3ECF3924B6FDED00643E63 /* AddonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3824B6FDED00643E63 /* AddonViewController.swift */; };
+		72CD6DE82662856000E17CFE /* CBSDKPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */; };
+		72CD6DEF2663F0B500E17CFE /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 72CD6DEE2663F0B500E17CFE /* Configuration.storekit */; };
+		851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */; };
+		851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */; };
+		851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */; };
+		FA3ECF3524B6FA6C00643E63 /* CBSDKTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */; };
+		FA3ECF3724B6FDE300643E63 /* CBSDKPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */; };
+		FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = Chargebee;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		11D26FE36CF981E946EE2FFA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKProductsTableViewController.swift; sourceTree = "<group>"; };
+		20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKSubscriptionStatusViewController.swift; sourceTree = "<group>"; };
 		2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chargebee_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		372AB47A894F58E78F9AFA7C /* Pods-Chargebee_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Chargebee_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chargebee_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* CBSDKOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKOptionsViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* Chargebee_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Chargebee_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6099F4CF2EFB42746EEA3CFC /* Chargebee.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chargebee.podspec; path = ../Chargebee.podspec; sourceTree = "<group>"; };
 		63558CE279E046838F75D3E6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		72CD6DEE2663F0B500E17CFE /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKProductTableViewCell.swift; sourceTree = "<group>"; };
+		851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CBSDKProductTableViewCell.xib; sourceTree = "<group>"; };
+		851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKConfigurationViewController.swift; sourceTree = "<group>"; };
+		854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPurchaseViewController.swift; sourceTree = "<group>"; };
 		880524BD03DBC913F225A876 /* Pods-Chargebee_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C7F2A43A1A9BBA92A21E3458 /* Pods-Chargebee_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chargebee_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA3ECF3424B6FA6C00643E63 /* TokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewController.swift; sourceTree = "<group>"; };
-		FA3ECF3624B6FDE300643E63 /* PlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
-		FA3ECF3824B6FDED00643E63 /* AddonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddonViewController.swift; sourceTree = "<group>"; };
+		FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKTokenViewController.swift; sourceTree = "<group>"; };
+		FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPlanViewController.swift; sourceTree = "<group>"; };
+		FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKAddonViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,17 +65,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		607FACE21AFB9204008FA782 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B4B53B3895933E8EA41816D8 /* Pods_Chargebee_Tests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		201D6DAF26858E9F00EE8DF4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				201D6DB126858EB700EE8DF4 /* Cell */,
+				607FACD91AFB9204008FA782 /* Main.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		201D6DB026858EA900EE8DF4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD71AFB9204008FA782 /* CBSDKOptionsViewController.swift */,
+				FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */,
+				FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */,
+				FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */,
+				854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */,
+				20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */,
+				20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */,
+				851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		201D6DB126858EB700EE8DF4 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */,
+				851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		201D6DB326858EEE00EE8DF4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				72CD6DEE2663F0B500E17CFE /* Configuration.storekit */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		2F12FF6EE59CE359AA610724 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,7 +136,6 @@
 			isa = PBXGroup;
 			children = (
 				607FACD01AFB9204008FA782 /* Chargebee_Example.app */,
-				607FACE51AFB9204008FA782 /* Chargebee_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,12 +143,10 @@
 		607FACD21AFB9204008FA782 /* Example for Chargebee */ = {
 			isa = PBXGroup;
 			children = (
+				201D6DB326858EEE00EE8DF4 /* Resources */,
+				201D6DB026858EA900EE8DF4 /* Controller */,
+				201D6DAF26858E9F00EE8DF4 /* Views */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				FA3ECF3424B6FA6C00643E63 /* TokenViewController.swift */,
-				FA3ECF3624B6FDE300643E63 /* PlanViewController.swift */,
-				FA3ECF3824B6FDED00643E63 /* AddonViewController.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -190,26 +221,6 @@
 			productReference = 607FACD01AFB9204008FA782 /* Chargebee_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* Chargebee_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chargebee_Tests" */;
-			buildPhases = (
-				A5535FAED93DD8FC8AE351FD /* [CP] Check Pods Manifest.lock */,
-				607FACE11AFB9204008FA782 /* Sources */,
-				607FACE21AFB9204008FA782 /* Frameworks */,
-				607FACE31AFB9204008FA782 /* Resources */,
-				E1F773DF9599FDD9A7A6F288 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
-			);
-			name = Chargebee_Tests;
-			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* Chargebee_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -222,12 +233,9 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5QPY897A4W;
 						LastSwiftMigration = 0900;
-					};
-					607FACE41AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
-						TestTargetID = 607FACCF1AFB9204008FA782;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -246,7 +254,6 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* Chargebee_Example */,
-				607FACE41AFB9204008FA782 /* Chargebee_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -257,15 +264,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				72CD6DEF2663F0B500E17CFE /* Configuration.storekit in Resources */,
+				851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE31AFB9204008FA782 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,48 +314,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A5535FAED93DD8FC8AE351FD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Chargebee_Tests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1F773DF9599FDD9A7A6F288 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -361,31 +321,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA3ECF3924B6FDED00643E63 /* AddonViewController.swift in Sources */,
-				FA3ECF3524B6FA6C00643E63 /* TokenViewController.swift in Sources */,
-				FA3ECF3724B6FDE300643E63 /* PlanViewController.swift in Sources */,
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				72CD6DE82662856000E17CFE /* CBSDKPurchaseViewController.swift in Sources */,
+				FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */,
+				851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */,
+				FA3ECF3524B6FA6C00643E63 /* CBSDKTokenViewController.swift in Sources */,
+				851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */,
+				FA3ECF3724B6FDE300643E63 /* CBSDKPlanViewController.swift in Sources */,
+				607FACD81AFB9204008FA782 /* CBSDKOptionsViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE11AFB9204008FA782 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				20CCB493265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift in Sources */,
+				20CCB4B5265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* Chargebee_Example */;
-			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
@@ -452,7 +401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -498,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -511,11 +460,18 @@
 			baseConfigurationReference = 880524BD03DBC913F225A876 /* Pods-Chargebee_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 04;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Chargebee/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chargebee.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -526,53 +482,20 @@
 			baseConfigurationReference = D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 04;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Chargebee/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chargebee.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		607FACF31AFB9204008FA782 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 372AB47A894F58E78F9AFA7C /* Pods-Chargebee_Tests.debug.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chargebee_Example.app/Chargebee_Example";
-			};
-			name = Debug;
-		};
-		607FACF41AFB9204008FA782 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7F2A43A1A9BBA92A21E3458 /* Pods-Chargebee_Tests.release.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chargebee_Example.app/Chargebee_Example";
 			};
 			name = Release;
 		};
@@ -593,15 +516,6 @@
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
 				607FACF11AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chargebee_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				607FACF31AFB9204008FA782 /* Debug */,
-				607FACF41AFB9204008FA782 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

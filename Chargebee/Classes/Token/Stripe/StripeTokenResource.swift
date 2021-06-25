@@ -4,7 +4,7 @@
 
 import Foundation
 
-class StripeTokenResource: APIResource {
+class StripeTokenResource: CBAPIResource {
     typealias ModelType = StripeToken
     typealias ErrorType = StripeErrorWrapper
 

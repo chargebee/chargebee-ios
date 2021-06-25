@@ -6,8 +6,7 @@
 //
 import Foundation
 
-@available(macCatalyst 13.0, *)
-class LoggerResource: APIResource {
+class CBLoggerResource: CBAPIResource {
     
     typealias ModelType = String?
     typealias ErrorType = String?

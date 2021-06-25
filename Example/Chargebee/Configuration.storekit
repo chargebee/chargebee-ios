@@ -1,0 +1,135 @@
+{
+  "identifier" : "60120FC8",
+  "nonRenewingSubscriptions" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "2E6B0939",
+      "localizations" : [
+        {
+          "description" : "desc",
+          "displayName" : "Non Renewing Subscription",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "Chargebee04",
+      "referenceName" : "nonrenewing",
+      "type" : "NonRenewingSubscription"
+    }
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "E4C623B5",
+      "localizations" : [
+        {
+          "description" : "This is a gem type purchase",
+          "displayName" : "Consumable",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "Chargebee02",
+      "referenceName" : "consumable",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "A486AA7C",
+      "localizations" : [
+        {
+          "description" : "description",
+          "displayName" : "Non Consumable",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "Chargebee03",
+      "referenceName" : "nonconsumable",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "3C436A13",
+      "localizations" : [
+
+      ],
+      "name" : "Group1",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+            {
+              "internalID" : "DACBA5BC",
+              "offerID" : "Promo01",
+              "paymentMode" : "free",
+              "referenceName" : "Promo offer 1",
+              "subscriptionPeriod" : "P3D"
+            }
+          ],
+          "displayPrice" : "1.4",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "36F5EB2A",
+          "introductoryOffer" : {
+            "internalID" : "B84B2EEC",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "descc",
+              "displayName" : "Group1",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "Chargebee05",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "Group1Item1",
+          "subscriptionGroupID" : "3C436A13",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+            {
+              "internalID" : "C8B4D14E",
+              "offerID" : "Promo02",
+              "paymentMode" : "free",
+              "referenceName" : "Promo02",
+              "subscriptionPeriod" : "P1W"
+            }
+          ],
+          "displayPrice" : "20",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "59A5772D",
+          "introductoryOffer" : {
+            "displayPrice" : "4",
+            "internalID" : "4B285910",
+            "paymentMode" : "payUpFront",
+            "subscriptionPeriod" : "P2M"
+          },
+          "localizations" : [
+            {
+              "description" : "desc",
+              "displayName" : "Group  1 Item 2",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "Chargebee06",
+          "recurringSubscriptionPeriod" : "P6M",
+          "referenceName" : "Group1Item2",
+          "subscriptionGroupID" : "3C436A13",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 0
+  }
+}

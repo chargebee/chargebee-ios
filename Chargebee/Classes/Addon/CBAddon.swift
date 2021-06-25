@@ -60,7 +60,7 @@ public class CBAddon: Decodable {
         if addonId.isEmpty {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Addon id is empty"))
         }
-        let request = APIRequest(resource: AddonResource(addonId))
+        let request = CBAPIRequest(resource: CBAddOnResource(addonId))
         request.load(withCompletion: { addonWrapper in
             onSuccess(addonWrapper.addon)
         }, onError: onError)

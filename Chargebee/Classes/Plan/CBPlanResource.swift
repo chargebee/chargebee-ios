@@ -4,10 +4,9 @@
 
 import Foundation
 
-@available(macCatalyst 13.0, *)
-class PlanResource: APIResource {
+final class CBPlanResource: CBAPIResource {
     
-    typealias ModelType = PlanWrapper
+    typealias ModelType = CBPlanWrapper
     typealias ErrorType = CBErrorDetail
     
     var authHeader: String? {

@@ -17,7 +17,7 @@ class StripeTokenizer {
     }
 
     func tokenize(completion handler: @escaping TokenHandler, onError: @escaping ErrorHandler) {
-        let request = APIRequest(resource: self.resource)
+        let request = CBAPIRequest(resource: self.resource)
         request.create(withCompletion: { (stripeToken) in
             handler(stripeToken.id)
         }, onError: onError)

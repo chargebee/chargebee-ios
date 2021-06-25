@@ -3,10 +3,10 @@ use_frameworks!
 target 'Chargebee_Example' do
   pod 'Chargebee', :path => '../'
 
-  target 'Chargebee_Tests' do
-    inherit! :search_paths
-
-    pod 'Quick', '~> 1.2.0'
-    pod 'Nimble', '~> 7.0'
-  end
+#  target 'Chargebee_Tests' do
+#    inherit! :search_paths
+#
+#    pod 'Quick', '~> 1.2.0'
+#    pod 'Nimble', '~> 7.0'
+#  end
 end

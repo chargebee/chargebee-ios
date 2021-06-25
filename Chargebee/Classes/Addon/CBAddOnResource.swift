@@ -4,8 +4,7 @@
 
 import Foundation
 
-@available(macCatalyst 13.0, *)
-class AddonResource: APIResource {
+class CBAddOnResource: CBAPIResource {
     typealias ModelType = AddonWrapper
     typealias ErrorType = CBErrorDetail
     

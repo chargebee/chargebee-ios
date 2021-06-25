@@ -6,7 +6,7 @@ import Foundation
 
 public typealias PlanHandler = (CBResult<CBPlan>) -> Void
 
-public struct PlanWrapper: Decodable {
+public struct CBPlanWrapper: Decodable {
     let plan: CBPlan
 }
 
@@ -62,7 +62,7 @@ public class CBPlan: Decodable {
         if planId.isEmpty {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Plan id is empty"))
         }
-        let request = APIRequest(resource: PlanResource(planId))
+        let request = CBAPIRequest(resource: CBPlanResource(planId))
         request.load(withCompletion: { planWrapper in
             onSuccess(planWrapper.plan)
         }, onError: onError)
