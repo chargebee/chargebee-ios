@@ -35,6 +35,23 @@ Chargebee.configure(site: "your-site", publishableApiKey: "api_key")
 
 ```
 
+
+### Configure In App Purchase SDK
+To use the Chargebee iOS SDK, you must initialize the SDK with your Chargebee Site and Publishable API key. You can initialize during your app startup by including this in your app delegate.
+
+```swift
+import Chargebee
+
+Chargebee.configure(site: "your-site",
+                    publishableApiKey: "api_key",
+                    sdkKey: "sdk_key",
+                    customerID: "customerID",
+                    allowErrorLogging: true)
+}
+
+```
+
+
 ### Get Plan Details
 
 ```swift
@@ -92,6 +109,19 @@ Once your customer’s card data is processed and stored, and a Chargebee token 
 - [Update a Subscription](https://apidocs.chargebee.com/docs/api/subscriptions#update_a_subscription)
 
 Please refer to the [Chargebee API Docs](https://apidocs.chargebee.com/docs/api) for subsequent integration steps.
+
+### Get Subsription Status
+```swift
+CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
+    switch result {
+    case let .success(result):
+        print("Status \(result.status)")
+    case let .error(error):
+        // Handle error here
+    }
+}
+```
+
 
 ## License
 
