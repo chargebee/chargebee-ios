@@ -45,42 +45,13 @@ final class CBSDKConfigurationViewController: UIViewController {
     
     @IBAction private func initializeClicked(_ sender: UIButton) {
         guard canInitialise() else { return }
-        self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-
         Chargebee.configure(site: siteNameTextField.unwrappedText,
                             publishableApiKey: apiKeyTextField.unwrappedText,
                             sdkKey: sdkKeyTextField.unwrappedText,
                             customerID: customerIDTextField.unwrappedText,
                             allowErrorLogging: true)
-        
-        CBAuthenticationManager.authenticate(forSDKKey: sdkKeyTextField.unwrappedText) { result in
-            
-            switch result {
-            case .success(let status):
-                print(status)
-                DispatchQueue.main.async {
-                    let alertController = UIAlertController(title: "Chargebee", message: "Configuration Added.", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
-                    self.view.activityStopAnimating()
-
-                }
-
-                
-            case .error(let error):
-                print(error)
-                DispatchQueue.main.async {
-                    let alertController = UIAlertController(title: "Chargebee", message: "Configuration Failed.", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
-                    self.view.activityStopAnimating()
-                }
-
-
-            }
         }
     }
-}
 
 extension UITextField {
     var unwrappedText: String {

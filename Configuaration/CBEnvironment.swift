@@ -25,7 +25,16 @@ class CBEnvironment {
         CBEnvironment.baseUrl = "https://\(CBEnvironment.site)/api"
 
         CBEnvironment.sdkKey = sdkKey
-
+        //Verify SDK key
+        CBAuthenticationManager.authenticate(forSDKKey: sdkKey) { result in
+            switch result {
+            case .success(let status):
+                debugPrint(status)
+            case .error(let error):
+                debugPrint(error)
+            }
+            
+        }
     }
   
 }
