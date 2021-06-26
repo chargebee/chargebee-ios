@@ -20,7 +20,7 @@ final class CBAuthenticationResource: CBAPIResource {
     var requestBody: URLEncodedRequestBody?
     var methodPath: String {
         get {
-            return "/v2/in_app_details"
+            return "/v2/in_app_details/\(CBEnvironment.sdkKey)/verify_app_detail"
         }
     }
 

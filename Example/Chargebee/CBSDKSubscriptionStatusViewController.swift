@@ -26,36 +26,22 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
     
     @IBAction func fetchSubscribtionStatus(_ sender: UIButton) {
         
-      /*
-        let url = URL(string: "https://omnichannel-test.predev37.in/api/v2/subscriptions/cbdemo_john-sub")!
-     
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Basic dGVzdF9OSmVSQkJLUGNCZllBS1ZPSHM3MUhMclZmRTUzN01YZg==", forHTTPHeaderField: "Authorization")
-
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            print(response)
-            
-            print(String(data: data!, encoding: .utf8)) //Try this too!
-        }.resume() */
         self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
 
         guard let subscriptionID = subscriptioniDTextField.text , subscriptionID.isNotEmpty else {
             return
         }
-        CBSubscriptionManager.fetchSubscriptionStatusGet(forID: subscriptionID) { result in
+        CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
             switch result {
             case let .success(statusResult):
                 debugPrint("Subscribtion Status Fetched: \(statusResult)")
-                if let status = statusResult.subscription.status, let amount = statusResult.subscription.planAmount {
-                    let alertController = UIAlertController(title: "Chargebee", message: "Status :\(status)\n Plan amount:\(amount).", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
-                }
-                
                 DispatchQueue.main.async {
+                    if let status = statusResult.subscription.status, let amount = statusResult.subscription.planAmount {
+                        let alertController = UIAlertController(title: "Chargebee", message: "Status :\(status)\n Plan amount:\(amount).", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
                     self.view.activityStopAnimating()
-
                 }
             case let .error(error):
                 debugPrint("Error Fetched: \(error)")

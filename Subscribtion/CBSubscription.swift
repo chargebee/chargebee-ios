@@ -84,33 +84,7 @@ public extension CBSubscriptionManager {
         }, onError: onError)
     }
     
-    static func fetchSubscriptionStatusGet(forID id: String, handler: @escaping CBSubscriptionHandler) {
-        let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")
-        logger.info()
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-
-        func didReceiveResult(_ result: Result<CBSubscriptionStatus, Error>) {
-            switch result {
-            case let .success(status):
-                print(status)
-                onSuccess(status)
-            case let .failure(error):
-                print(error)
-                onError(CBError.defaultSytemError(statusCode: 400, message: "Unable to get Status"))
-                //ToDO handle error case
-            }
-        }
-
-        WebService.shared.getStatus(subscritionId: id) { result in
-            DispatchQueue.main.async {
-                didReceiveResult(result)
-            }
-        }
-            
-    }
 }
-
-
 
 
 extension String {
@@ -122,57 +96,3 @@ extension String {
 
 
 
-enum ApiRequestError: Error {
-    case noInternetConnection
-    case timeOutConnection
-    case incorrectResponseFormat
-    case incorrectUrlFormat
-    case incorrectParameters
-    case notFound // 404
-    case badRequest //400
-    case unknowErrorCode(errorCode: Int)
-    case unknown
-    case custom(String)
-}
-
-class WebService {
-    
-    static let shared = WebService()
-    
-    private init() {}
-    
-    @discardableResult
-    func fetch<T: Decodable>(
-        request: URLRequest,
-        completion: @escaping (Result<T, Error>) -> Void
-    ) -> URLSessionDataTask {
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else {
-                let error = error ?? ApiRequestError.unknown
-                completion(.failure(error))
-                return
-            }
-            do {
-                let parsedData = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(parsedData))
-            } catch {
-                if let dict = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any], let errorMessage = dict?["error_msg"] as? String {
-                    completion(.failure(ApiRequestError.custom(errorMessage)))
-                } else {
-                    completion(.failure(error))
-                }
-            }
-        }
-        dataTask.resume()
-        return dataTask
-    }
-}
-
-extension WebService {
-    func getStatus(subscritionId: String, completion: @escaping (Result<CBSubscriptionStatus, Error>) -> Void) {
-        let url = "\(CBEnvironment.baseUrl)/v2/subscriptions/\(subscritionId)"
-        var urlRequest = URLRequest(url: URL(string:url)!)
-        urlRequest.addValue("Basic \(CBEnvironment.encodedApiKey)", forHTTPHeaderField: "Authorization")
-        fetch(request: urlRequest, completion: completion)
-    }
-}

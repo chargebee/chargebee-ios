@@ -30,12 +30,13 @@ final class CBSubscriptionResource: CBAPIResource {
             var components = URLComponents(string: baseUrl)
             components!.path += methodPath
             var urlRequest = URLRequest(url: components!.url!)
-            urlRequest.httpMethod = "GET"
-            
+            urlRequest.httpMethod = "get"
             urlRequest.addValue(authHeader!, forHTTPHeaderField: "Authorization")
+            urlRequest.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            urlRequest.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")
             return urlRequest
         }
     }
 
-}
 
+}
