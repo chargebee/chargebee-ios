@@ -72,7 +72,7 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
         }
         guard CBAuthenticationManager.isSDKKeyPresent() else { return } // do handle if SDK Key wasn't been set
         self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-        CBAuthenticationManager.isSDKValid {[weak self] status in
+        CBAuthenticationManager.isSDKKeyValid {[weak self] status in
             guard let self = self else { return }
             if status {
                 CBPurchaseManager.shared.buy(product: withProdct) { result in

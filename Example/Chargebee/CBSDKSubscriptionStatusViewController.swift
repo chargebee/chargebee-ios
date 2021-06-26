@@ -43,19 +43,17 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
         guard let subscriptionID = subscriptioniDTextField.text , subscriptionID.isNotEmpty else {
             return
         }
-        CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
+        CBSubscriptionManager.fetchSubscriptionStatusGet(forID: subscriptionID) { result in
             switch result {
             case let .success(statusResult):
                 debugPrint("Subscribtion Status Fetched: \(statusResult)")
+                if let status = statusResult.subscription.status, let amount = statusResult.subscription.planAmount {
+                    let alertController = UIAlertController(title: "Chargebee", message: "Status :\(status)\n Plan amount:\(amount).", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                }
                 
                 DispatchQueue.main.async {
-                    
-                    if let status = statusResult.subscription.status, let amount = statusResult.subscription.planAmount {
-                        let alertController = UIAlertController(title: "Chargebee", message: "Status :\(status)\n Plan amount:\(amount).", preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alertController, animated: true, completion: nil)
-                    }
-
                     self.view.activityStopAnimating()
 
                 }

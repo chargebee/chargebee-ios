@@ -14,7 +14,7 @@ final class CBSDKConfigurationViewController: UIViewController {
     @IBOutlet private weak var siteNameTextField: UITextField!
     @IBOutlet private weak var sdkKeyTextField: UITextField!
     @IBOutlet private weak var apiKeyTextField: UITextField!
-    @IBOutlet weak var customerIDTextField: UITextField!
+    @IBOutlet private weak var customerIDTextField: UITextField!
     
     // MARK: - Life cycle Methods
     override func viewDidLoad() {
@@ -28,13 +28,57 @@ final class CBSDKConfigurationViewController: UIViewController {
         return siteNameTextField.isNotEmpty && sdkKeyTextField.isNotEmpty && apiKeyTextField.isNotEmpty && customerIDTextField.isNotEmpty
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case siteNameTextField:
+            sdkKeyTextField.becomeFirstResponder()
+        case sdkKeyTextField:
+            apiKeyTextField.becomeFirstResponder()
+        case apiKeyTextField:
+            customerIDTextField.becomeFirstResponder()
+        default:
+            textField.resignFirstResponder()
+            return true
+        }
+        return false
+    }
+    
     @IBAction private func initializeClicked(_ sender: UIButton) {
         guard canInitialise() else { return }
+        self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+
         Chargebee.configure(site: siteNameTextField.unwrappedText,
                             publishableApiKey: apiKeyTextField.unwrappedText,
                             sdkKey: sdkKeyTextField.unwrappedText,
                             customerID: customerIDTextField.unwrappedText,
                             allowErrorLogging: true)
+        
+        CBAuthenticationManager.authenticate(forSDKKey: sdkKeyTextField.unwrappedText) { result in
+            
+            switch result {
+            case .success(let status):
+                print(status)
+                DispatchQueue.main.async {
+                    let alertController = UIAlertController(title: "Chargebee", message: "Configuration Added.", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                    self.view.activityStopAnimating()
+
+                }
+
+                
+            case .error(let error):
+                print(error)
+                DispatchQueue.main.async {
+                    let alertController = UIAlertController(title: "Chargebee", message: "Configuration Failed.", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                    self.view.activityStopAnimating()
+                }
+
+
+            }
+        }
     }
 }
 

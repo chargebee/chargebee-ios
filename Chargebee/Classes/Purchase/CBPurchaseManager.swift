@@ -20,7 +20,7 @@ public class CBPurchaseManager: NSObject {
     public var buyProductHandler: ((Result<Bool, Error>) -> Void)?
     private var restoredPurchasesCount = 0
     var datasource: CBPurchaseDataSource?
-    private var currentBuyProduct: SKProduct?
+    private var activeProduct: SKProduct?
     
     // MARK: - Init
     private override init() {
@@ -73,7 +73,7 @@ public extension CBPurchaseManager {
     //Buy the product
     func buy(product: CBProduct, completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
         buyProductHandler = handler
-        currentBuyProduct = product.product
+        activeProduct = product.product
         if !CBPurchaseManager.shared.canMakePayments() {
             handler(.failure(CBPurchaseError.cannotMakePayments))
         } else {
@@ -129,9 +129,13 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
         transactions.forEach { (transaction) in
             switch transaction.transactionState {
             case .purchased:
-//                buyProductHandler?(.success(true))
                 SKPaymentQueue.default().finishTransaction(transaction)
-                processReceiptFromApple()
+                if let productId = activeProduct?.productIdentifier,
+                   let price = activeProduct?.price,
+                   let currencyCode = activeProduct?.priceLocale.currencyCode {
+                    let priceValue : Int = Int((price.doubleValue) * Double(100))
+                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, completion: buyProductHandler)
+                }
             case .restored:
                 restoredPurchasesCount += 1
                 SKPaymentQueue.default().finishTransaction(transaction)
@@ -166,50 +170,43 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
 }
 
 //chargebee methods
-extension CBPurchaseManager {
-    fileprivate func processReceiptFromApple() {
-    
-        // Get the receipt if it's available
-        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-           FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
-            do {
-                let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-                print(receiptData)
-                
-                let receiptString = receiptData.base64EncodedString(options: [])
-                let price : Int = Int((currentBuyProduct?.price.doubleValue ?? 0.0) * Double(100));
-                print(receiptString)
-                print(price)
-                print(currentBuyProduct?.priceLocale.currencyCode ?? "nil")
-  
-                CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: currentBuyProduct?.productIdentifier ?? "", price: String(price), currencyCode: currentBuyProduct?.priceLocale.currencyCode ?? "USD", customerId: CBEnvironment.customerID ) {
-                    (receiptResult) in DispatchQueue.main.async {
-                        switch receiptResult {
-                        case .success(let receipt):
-                            print(receipt)
-                            if receipt.subscriptionId.isEmpty || !receipt.isValid {
-                                self.buyProductHandler?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
-                                return
-                            }
-                            CBSubscriptionManager.fetchSubscriptionStatus(forID: receipt.subscriptionId) { subscriptionStatusResult in
-                                switch subscriptionStatusResult {
-                                case .success(let status):
-                                    self.buyProductHandler?(.success(true))
-                                    break
-                                case .error(let error):
-                                    self.buyProductHandler?(.failure(error))
-                                    break
-                                }
-                            }
-                        case .error(let error):
-                            self.buyProductHandler?(.failure(error))
-                            break
+public extension CBPurchaseManager {
+    func validateReceipt(for productID: String, _ price: String, currencyCode: String, completion: ((Result<Bool, Error>) -> Void)?) {
+        guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+              FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
+            debugPrint("No receipt Exist")
+            return
+        }
+        do {
+            let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+            print(receiptData)
+            
+            let receiptString = receiptData.base64EncodedString(options: [])
+
+            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, price: price, currencyCode: currencyCode, customerId: CBEnvironment.customerID ) {
+                (receiptResult) in DispatchQueue.main.async {
+                    switch receiptResult {
+                    case .success(let receipt):
+                        debugPrint("Receipt: \(receipt)")
+                        if receipt.subscriptionId.isEmpty || !receipt.isValid {
+                            completion?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
+                            return
                         }
+                        CBSubscriptionManager.fetchSubscriptionStatus(forID: receipt.subscriptionId) { subscriptionStatusResult in
+                            switch subscriptionStatusResult {
+                            case .success:
+                                completion?(.success(true))
+                            case .error(let error):
+                                completion?(.failure(error))
+                            }
+                        }
+                    case .error(let error):
+                        completion?(.failure(error))
                     }
                 }
-                
             }
-            catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
+            
         }
+        catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
     }
 }

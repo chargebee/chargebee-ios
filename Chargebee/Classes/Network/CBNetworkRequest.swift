@@ -21,8 +21,8 @@ extension CBNetworkRequest {
         let session = URLSession.shared
 
         let task = session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+          
 
-            
             if let error = error{
                 onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
                 return
@@ -33,6 +33,7 @@ extension CBNetworkRequest {
             }
             guard let data = data,
                 let decodedData = self.decode(data) else {
+                
                     onError?(CBError.defaultSytemError(statusCode: 400, message: "Response has no/invalid body"))
                     return
             }

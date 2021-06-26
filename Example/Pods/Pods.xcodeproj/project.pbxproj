@@ -477,22 +477,22 @@
 			path = Chargebee/Classes/Purchase;
 			sourceTree = "<group>";
 		};
-		20CCB496265B7861003E7AAD /* Subscription */ = {
+		20CCB496265B7861003E7AAD /* Subscribtion */ = {
 			isa = PBXGroup;
 			children = (
 				20CCB497265B787C003E7AAD /* CBSubscriptionResource.swift */,
 				20CCB4AD265B7912003E7AAD /* CBSubscription.swift */,
 			);
-			path = Subscription;
+			path = Subscribtion;
 			sourceTree = "<group>";
 		};
-		20FB8AB62685C08F0050AB9C /* Configuration */ = {
+		20FB8AB62685C08F0050AB9C /* Configuaration */ = {
 			isa = PBXGroup;
 			children = (
 				6F4901384EB653BE330134DDE5E6C331 /* CBEnvironment.swift */,
 				79B0658BC707A143F3993D79EEC68F30 /* Chargebee.swift */,
 			);
-			path = Configuration;
+			path = Configuaration;
 			sourceTree = "<group>";
 		};
 		278B699E0245FFFA3AD0FD68BF277F70 /* Support Files */ = {
@@ -705,10 +705,10 @@
 		C5EC76D094A9612E1A82765FA10F9F20 /* Chargebee */ = {
 			isa = PBXGroup;
 			children = (
-				20FB8AB62685C08F0050AB9C /* Configuration */,
+				20FB8AB62685C08F0050AB9C /* Configuaration */,
 				201D6DC62685BE8900EE8DF4 /* ReceiptValidation */,
 				855410D626826AB500430224 /* Authentication */,
-				20CCB496265B7861003E7AAD /* Subscription */,
+				20CCB496265B7861003E7AAD /* Subscribtion */,
 				20CCB483265AB209003E7AAD /* Purchase */,
 				C718BD3FAA9E12CF6B7DE75599DE0D81 /* Addon */,
 				F6D3A36324C56B3B00D22E92 /* Logger */,

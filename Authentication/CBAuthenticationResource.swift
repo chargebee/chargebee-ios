@@ -20,9 +20,10 @@ final class CBAuthenticationResource: CBAPIResource {
     var requestBody: URLEncodedRequestBody?
     var methodPath: String {
         get {
-            return "/v2/in_app_details/\(CBEnvironment.sdkKey)/verify_app_detail"
+            return "/v2/in_app_details"
         }
     }
+
     var url: URLRequest {
         get {
             var components = URLComponents(string: baseUrl)
@@ -77,11 +78,8 @@ public struct CBAuthenticationStatus: Codable {
 public struct CBAuthentication: Codable {
     
     public let appId: String?
-    public let status: String?
-
     
     enum CodingKeys: String, CodingKey  {
         case appId = "app_id"
-        case status
     }
 }
