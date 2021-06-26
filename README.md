@@ -110,7 +110,7 @@ Once your customer’s card data is processed and stored, and a Chargebee token 
 
 Please refer to the [Chargebee API Docs](https://apidocs.chargebee.com/docs/api) for subsequent integration steps.
 
-### Get Subsription Status
+### Get Subscription Status
 ```swift
 CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
     switch result {
