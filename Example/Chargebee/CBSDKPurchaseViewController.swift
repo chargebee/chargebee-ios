@@ -26,7 +26,6 @@ final class CBSDKPurchaseViewController: UIViewController, UITextFieldDelegate {
         return false
     }
         
-        
     @IBAction private func submitBtnClicked(_ sender: Any) {
         func hideLoader() {
             DispatchQueue.main.async {

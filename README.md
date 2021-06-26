@@ -121,6 +121,30 @@ CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
     }
 }
 ```
+### List Products From Apple
+```swift
+CBPurchaseManager.shared.retrieveProducts { result in
+    switch result {
+    case let .success(products):
+    print("array of Products \(products)")
+    case let .error(error):
+    // Handle error here
+}
+}
+```
+
+### Buy / Subscribe  Product
+```swift
+CBPurchaseManager.shared.buy(product: withProdct) { result in
+    switch result {
+    case let .success:
+        print("success")
+    case let .error(error):
+    // Handle error here
+}
+}
+```
+
 
 
 ## License

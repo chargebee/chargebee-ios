@@ -70,31 +70,25 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
                 self.view.activityStopAnimating()
             }
         }
-        guard CBAuthenticationManager.isSDKKeyPresent() else { return } // do handle if SDK Key wasn't been set
         self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-        CBAuthenticationManager.isSDKKeyValid {[weak self] status in
-            guard let self = self else { return }
-            if status {
-                CBPurchaseManager.shared.buy(product: withProdct) { result in
-                    debugPrint(result)
-                    print(result)
-                    switch result {
-                    case .success:
-                        hideLoader()
-                        let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alertController, animated: true, completion: nil)
-                    case .failure(let error):
-                        hideLoader()
-                        print(error.localizedDescription)
-                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alertController, animated: true, completion: nil)
-                    }
-                }
-            } else {
+
+        CBPurchaseManager.shared.buy(product: withProdct) { result in
+            debugPrint(result)
+            print(result)
+            switch result {
+            case .success:
                 hideLoader()
+                let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+            case .failure(let error):
+                hideLoader()
+                print(error.localizedDescription)
+                let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
             }
         }
+
     }
 }

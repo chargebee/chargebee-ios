@@ -74,11 +74,23 @@ public extension CBPurchaseManager {
     func buy(product: CBProduct, completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
+        guard CBAuthenticationManager.isSDKKeyPresent() else {
+            handler(.failure(CBPurchaseError.cannotMakePayments))
+            return
+        }
+        
         if !CBPurchaseManager.shared.canMakePayments() {
             handler(.failure(CBPurchaseError.cannotMakePayments))
         } else {
-            let payment = SKPayment(product: product.product)
-            SKPaymentQueue.default().add(payment)
+            CBAuthenticationManager.isSDKKeyValid { status in
+                if status {
+                    let payment = SKPayment(product: product.product)
+                    SKPaymentQueue.default().add(payment)
+
+                } else {
+                    handler(.failure(CBPurchaseError.cannotMakePayments))
+                }
+            }
         }
     }
     
