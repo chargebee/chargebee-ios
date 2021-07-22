@@ -44,7 +44,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
              .processReceipt:
             performSegue(withIdentifier: selectedAction.title, sender: self)
         case .getProducts:
-            CBPurchaseManager.shared.retrieveProducts { result in
+            CBPurchaseManager.shared.fetchProductsfromStore { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(products):

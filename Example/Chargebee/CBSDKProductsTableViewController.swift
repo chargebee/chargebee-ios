@@ -72,7 +72,7 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
         }
         self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
 
-        CBPurchaseManager.shared.buy(product: withProdct) { result in
+        CBPurchaseManager.shared.purchaseProduct(product: withProdct) { result in
             debugPrint(result)
             print(result)
             switch result {

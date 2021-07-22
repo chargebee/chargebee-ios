@@ -47,8 +47,7 @@ final class CBSDKConfigurationViewController: UIViewController {
         guard canInitialise() else { return }
         Chargebee.configure(site: siteNameTextField.unwrappedText,
                             publishableApiKey: apiKeyTextField.unwrappedText,
-                            sdkKey: sdkKeyTextField.unwrappedText,
-                            customerID: customerIDTextField.unwrappedText,
+                            //sdkKey: sdkKeyTextField.unwrappedText,
                             allowErrorLogging: true)
         }
     }

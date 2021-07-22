@@ -69,7 +69,7 @@ public typealias CBSubscriptionHandler = (CBResult<CBSubscriptionStatus>) -> Voi
 public class CBSubscriptionManager {}
 
 public extension CBSubscriptionManager {
-    static func fetchSubscriptionStatus(forID id: String, handler: @escaping CBSubscriptionHandler) {
+    static func fetchSubscription(forID id: String, handler: @escaping CBSubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")
         logger.info()
         
