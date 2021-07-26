@@ -12,8 +12,7 @@ import Chargebee
 final class CBSDKOptionsViewController: UIViewController {
     
     private var products: [CBProduct] = []
-    private var items : [CBItemWrapper] = []
-    private lazy var actions: [ClientAction] = [.getPlan, .getAddon, .createToken, .initializeInApp, .getProducts, .getSubscribtionStatus, .processReceipt, .getItems , .getItem]
+    private lazy var actions: [ClientAction] = [.getPlan, .getAddon, .createToken, .initializeInApp, .getProducts, .getSubscribtionStatus, .processReceipt]
     
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -42,9 +41,8 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
              .createToken,
              .getSubscribtionStatus,
              .initializeInApp,
-             .processReceipt,
-             .getItem:
-              performSegue(withIdentifier: selectedAction.title, sender: self)
+             .processReceipt:
+            performSegue(withIdentifier: selectedAction.title, sender: self)
         case .getProducts:
             CBPurchaseManager.shared.fetchProductsfromStore { result in
                 DispatchQueue.main.async {
@@ -54,19 +52,6 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         debugPrint("products: \(products)")
                         self.performSegue(withIdentifier: "productList", sender: self)
                     case let .failure(error):
-                        debugPrint("Error: \(error.localizedDescription)")
-                    }
-                }
-            }
-        case .getItems:
-            CBItem.getAllItems { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case let .success(itemLst):
-                        self.items =  itemLst.list
-                        debugPrint("items: \(self.items)")
-                        self.performSegue(withIdentifier: "itemList", sender: self)
-                    case let .error(error):
                         debugPrint("Error: \(error.localizedDescription)")
                     }
                 }
@@ -81,14 +66,9 @@ extension CBSDKOptionsViewController {
             if let destinationVC = segue.destination as? CBSDKProductsTableViewController {
                 destinationVC.products = self.products
             }
-        } else if segue.identifier == "itemList" {
-           if let destinationVC = segue.destination as?
-                CBSDKItemsTableViewController {
-                destinationVC.items = self.items
-            }
         }
     }
-    
+
 }
 
 enum ClientAction {
@@ -99,8 +79,6 @@ enum ClientAction {
     case getProducts
     case getSubscribtionStatus
     case processReceipt
-    case getItems
-    case getItem
 }
 
 extension ClientAction {
@@ -120,13 +98,7 @@ extension ClientAction {
             return "Verify Receipt"
         case .initializeInApp:
             return "Configure"
-        case .getItems:
-            return "V2 Get Items"
-        case .getItem:
-            return "V2 Get Item"
-            
         }
-        
     }
 }
 
@@ -138,7 +110,7 @@ extension String {
 
 
 @IBDesignable extension UIButton {
-    
+
     @IBInspectable var borderWidth: CGFloat {
         set {
             layer.borderWidth = newValue
@@ -147,7 +119,7 @@ extension String {
             return layer.borderWidth
         }
     }
-    
+
     @IBInspectable var cornerRadius: CGFloat {
         set {
             layer.cornerRadius = newValue
@@ -156,7 +128,7 @@ extension String {
             return layer.cornerRadius
         }
     }
-    
+
     @IBInspectable var borderColor: UIColor? {
         set {
             guard let uiColor = newValue else { return }
@@ -171,7 +143,7 @@ extension String {
 
 
 extension UIView{
-    
+
     func activityStartAnimating(activityColor: UIColor, backgroundColor: UIColor) {
         let backgroundView = UIView()
         backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
@@ -188,10 +160,10 @@ extension UIView{
         self.isUserInteractionEnabled = false
         
         backgroundView.addSubview(activityIndicator)
-        
+
         self.addSubview(backgroundView)
     }
-    
+
     func activityStopAnimating() {
         if let background = viewWithTag(475647){
             background.removeFromSuperview()
