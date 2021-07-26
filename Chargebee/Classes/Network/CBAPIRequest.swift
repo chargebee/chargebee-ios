@@ -49,6 +49,7 @@ extension CBAPIResource {
             URLQueryItem(name: key, value: value)
         })
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
+//        print(bodyComponents.query?.data(using: .utf8))
         return urlRequest
     }
 

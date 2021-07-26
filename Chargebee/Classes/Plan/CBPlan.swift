@@ -67,5 +67,5 @@ public class CBPlan: Decodable {
             onSuccess(planWrapper.plan)
         }, onError: onError)
     }
-
+    
 }
