@@ -60,7 +60,9 @@ public class CBItem: Decodable {
         logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         
-        let request = CBAPIRequest(resource: CBItemListResource())
+        let request = CBAPIRequest(resource: CBItemListResource(queryParams : [
+            "limit": "3"
+        ]))
         
         request.load(withCompletion: { itemListWrapper in
             onSuccess(itemListWrapper)

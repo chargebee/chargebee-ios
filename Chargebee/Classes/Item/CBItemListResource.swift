@@ -19,9 +19,13 @@ final class CBItemListResource: CBAPIResource {
     }
     var baseUrl: String
     var methodPath: String = "/v2/items"
+    var queryParams : [String:String]? = nil
     
-    init() {
+    init(queryParams : [String:String]? = nil) {
         self.baseUrl = CBEnvironment.baseUrl
+        if let queryParams = queryParams{
+            self.queryParams = queryParams
+        }
     }
     
    

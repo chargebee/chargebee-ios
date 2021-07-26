@@ -14,11 +14,13 @@ protocol CBAPIResource {
     var header: [String: String]? { get }
     var url: URLRequest { get }
     var requestBody: URLEncodedRequestBody? { get }
-    
     func create() -> URLRequest
+    var queryParams: [String: String]? { set get}
 }
 
 extension CBAPIResource {
+    
+    
     var authHeader: String? {
         get {
             nil
@@ -28,6 +30,10 @@ extension CBAPIResource {
         get {
             nil
         }
+    }
+    
+    var queryParams :[String: String]? {
+        get { return nil } set {}
     }
     
     var requestBody: URLEncodedRequestBody? {
@@ -57,7 +63,11 @@ extension CBAPIResource {
         // TODO: Remove force unwrapping
         var components = URLComponents(string: baseUrl)
         components!.path += methodPath
-
+        
+        if let queryParams = queryParams{
+            components?.queryItems = queryItems(dictionary: queryParams)
+        }
+        
         var urlRequest = URLRequest(url: components!.url!)
         if let authHeader = authHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
@@ -65,6 +75,7 @@ extension CBAPIResource {
         header?.forEach({ (key, value) in
             urlRequest.addValue(value, forHTTPHeaderField: key)
         })
+       
         return urlRequest
     }
 }
@@ -96,3 +107,12 @@ extension CBAPIRequest: CBNetworkRequest {
         load(resource.create(), withCompletion: completion, onError: onError)
     }
 }
+
+func queryItems(dictionary: [String:String]) -> [URLQueryItem] {
+    return dictionary.map {
+        // Swift 4
+        URLQueryItem(name: $0.0, value: $0.1)
+    }
+}
+
+

@@ -23,9 +23,8 @@ class CBEnvironment {
         //Fix Me : For internal testing
         CBEnvironment.baseUrl = "https://\(CBEnvironment.site)/api"
         
-        if sdkKey != nil {
-            CBEnvironment.sdkKey = sdkKey!
-            
+        if let sdkKey = sdkKey {
+            CBEnvironment.sdkKey = sdkKey
             // Verify SDK Key
             CBAuthenticationManager.authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
                 switch result {
@@ -35,7 +34,7 @@ class CBEnvironment {
                     print(error)
                 }
             }
-        }
+        } 
         
         
     }
