@@ -37,7 +37,7 @@ Chargebee iOS SDK aims at simplifying recurring payments integration
   #   'Chargebee' => ['Chargebee/Assets/*.png']
   # }
 
-  # pod
+  # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
