@@ -11,7 +11,6 @@ public typealias ItemListHandler = (CBResult<CBItemListWrapper>) -> Void
 
 public typealias ItemHandler = (CBResult<CBItem>) -> Void
 
-
 public struct CBItemListWrapper: Decodable {
     public let list: [CBItemWrapper]
 }
