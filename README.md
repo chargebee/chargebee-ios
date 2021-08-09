@@ -52,33 +52,40 @@ Chargebee.configure(site: "your-site",
 ```
 
 
-### Get Plan Details
+### Get Items
 
 ```swift
-CBPlan.retrieve("planId") { (planResult) in
-    switch planResult {
-    case .success(let plan):
-        print("Plan Name: \(plan.name)")
-        // Use plan details here
-    case .error(let error):
-        // Handle error here
-    }
-}
+CBItem.getAllItems { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .success(itemLst):
+                        self.items =  itemLst.list
+                        debugPrint("items: \(self.items)")
+                        self.performSegue(withIdentifier: "itemList", sender: self)
+                    case let .error(error):
+                        debugPrint("Error: \(error.localizedDescription)")
+                    }
+                }
+            }
 ```
 
-### Get Addon Details
+### Get Item Details
 
 ```swift
-CBAddon.retrieve("addonId") { (addonResult) in
-    switch addonResult {
-    case .success(let addon):
-        print("Addon Name: \(addon.name)")
-        // Use addon details here
-    case .error(let error):
-        // Handle error here
-    }
-}
+CBItem.getItem(self.ItemId.text!){ (itemResult) in
+            switch itemResult {
+            case .success(let item):
+                print(item)
+                self.itemName.text = item.name
+                self.itemStatus.text = item.status
+                
+            case .error(let error):
+                print("Error\(error)")
+                self.error.text = error.localizedDescription
+            }
+        }
 ```
+
 
 ### Get Payment Token
 ```swift
