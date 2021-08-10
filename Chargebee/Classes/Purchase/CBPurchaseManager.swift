@@ -53,20 +53,25 @@ public extension CBPurchaseManager {
     func fetchProductsfromStore(withProductID productID: String = "", completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
-//        var productIDs: [String] = []
-//        if productID.count > 0 {
-//            productIDs = [productID]
-//        } else {
-//            // Get the product identifiers.
-//            guard let productIDArray = datasource?.productIDs() else {
-//                receiveProductsHandler(.failure(.productIDNotFound))
-//                return
-//            }
-//            productIDs = productIDArray
-//        }
+        // To Be commented for Local testing of Get Products
+        var productIDs: [String] = []
+        if productID.count > 0 {
+            productIDs = [productID]
+        } else {
+            // Get the product identifiers.
+            guard let productIDArray = datasource?.productIDs() else {
+                receiveProductsHandler(.failure(.productIDNotFound))
+                return
+            }
+            productIDs = productIDArray
+        }
  
-        //let request = SKProductsRequest(productIdentifiers: Set(productIDs))
-        let request = SKProductsRequest(productIdentifiers: Set(["Chargebee02","Chargebee03","Chargebee04", "Chargebee05", "Chargebee06"]))
+        let request = SKProductsRequest(productIdentifiers: Set(productIDs))
+        // End of To Be Commented region for Local testing of Get Products
+        
+        // To Be uncommented for Local testing of Get Products
+        //let request = SKProductsRequest(productIdentifiers: Set(["Chargebee02","Chargebee03","Chargebee04", "Chargebee05", "Chargebee06"]))
+        // End of To Be uncommented for Local testing of Get Products
         request.delegate = self
         request.start()
     }
