@@ -44,9 +44,9 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
              .initializeInApp,
              .processReceipt,
              .getItem:
-              performSegue(withIdentifier: selectedAction.title, sender: self)
+            performSegue(withIdentifier: selectedAction.title, sender: self)
         case .getProducts:
-            CBPurchaseManager.shared.fetchProductsfromStore { result in
+            CBPurchaseManager.shared.fetchProductsfromStore(withProductID : ["Chargebee02","Chargebee03"],completion: { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(products):
@@ -57,7 +57,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         debugPrint("Error: \(error.localizedDescription)")
                     }
                 }
-            }
+            })
         case .getItems:
             CBItem.getAllItems(queryParams :["limit": "8","sort_by[desc]" : "name"], completion:  { result in
                 DispatchQueue.main.async {
@@ -82,7 +82,7 @@ extension CBSDKOptionsViewController {
                 destinationVC.products = self.products
             }
         } else if segue.identifier == "itemList" {
-           if let destinationVC = segue.destination as?
+            if let destinationVC = segue.destination as?
                 CBSDKItemsTableViewController {
                 destinationVC.items = self.items
             }

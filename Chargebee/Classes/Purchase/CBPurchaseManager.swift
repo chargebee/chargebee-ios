@@ -50,23 +50,23 @@ public extension CBPurchaseManager {
     //MARK: - Public methods
     //MARK: Purchase methods
     //Get the products
-    func fetchProductsfromStore(withProductID productID: String = "", completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
+    func fetchProductsfromStore(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
         // To Be commented for Local testing of Get Products
-        var productIDs: [String] = []
-        if productID.count > 0 {
-            productIDs = [productID]
+        var _productIDs: [String] = []
+        if productIDs.count > 0 {
+            _productIDs = productIDs
         } else {
             // Get the product identifiers.
             guard let productIDArray = datasource?.productIDs() else {
                 receiveProductsHandler(.failure(.productIDNotFound))
                 return
             }
-            productIDs = productIDArray
+            _productIDs = productIDArray
         }
  
-        let request = SKProductsRequest(productIdentifiers: Set(productIDs))
+        let request = SKProductsRequest(productIdentifiers: Set(_productIDs))
         // End of To Be Commented region for Local testing of Get Products
         
         // To Be uncommented for Local testing of Get Products
