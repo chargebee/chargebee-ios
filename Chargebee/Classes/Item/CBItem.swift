@@ -54,14 +54,16 @@ public class CBItem: Decodable {
         
     }
     
-    public static func getAllItems(completion handler: @escaping ItemListHandler) {
+    public static func getAllItems(queryParams : [String:String]? = nil ,completion handler: @escaping ItemListHandler) {
         let logger = CBLogger(name: "item", action: "getAllItems")
         logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         
-        let request = CBAPIRequest(resource: CBItemListResource(queryParams : [
-            "limit": "3"
-        ]))
+//        let request = CBAPIRequest(resource: CBItemListResource(queryParams : [
+//            "limit": "3"
+//        ]))
+        
+        let request = CBAPIRequest(resource: CBItemListResource(queryParams :queryParams ))
         
         request.load(withCompletion: { itemListWrapper in
             onSuccess(itemListWrapper)

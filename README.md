@@ -55,7 +55,7 @@ Chargebee.configure(site: "your-site",
 ### Get Items
 
 ```swift
-CBItem.getAllItems { result in
+CBItem.getAllItems(queryParams :["limit": "8","sort_by[desc]" : "name"], completion:  { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(itemLst):
@@ -66,7 +66,7 @@ CBItem.getAllItems { result in
                         debugPrint("Error: \(error.localizedDescription)")
                     }
                 }
-            }
+            })
 ```
 
 ### Get Item Details
