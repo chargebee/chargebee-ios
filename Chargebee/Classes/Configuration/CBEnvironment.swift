@@ -12,8 +12,6 @@ class CBEnvironment {
     static var allowErrorLogging: Bool = true
     static var sdkKey : String = ""
     
-
-    
     static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
         CBEnvironment.site = site
         CBEnvironment.publishableApiKey = publishableApiKey

@@ -73,7 +73,6 @@ extension CBAPIResource {
         header?.forEach({ (key, value) in
             urlRequest.addValue(value, forHTTPHeaderField: key)
         })
-       
         return urlRequest
     }
 }
@@ -112,5 +111,3 @@ func queryItems(dictionary: [String:String]) -> [URLQueryItem] {
         URLQueryItem(name: $0.0, value: $0.1)
     }
 }
-
-
