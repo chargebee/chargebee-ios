@@ -50,31 +50,37 @@ public extension CBPurchaseManager {
     //MARK: - Public methods
     //MARK: Purchase methods
     //Get the products
-    func fetchProductsfromStore(withProductID productID: String = "", completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
+    func fetchProductsfromStore(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
-//        var productIDs: [String] = []
-//        if productID.count > 0 {
-//            productIDs = [productID]
-//        } else {
-//            // Get the product identifiers.
-//            guard let productIDArray = datasource?.productIDs() else {
-//                receiveProductsHandler(.failure(.productIDNotFound))
-//                return
-//            }
-//            productIDs = productIDArray
-//        }
+        // To Be commented for Local testing of Get Products
+        var _productIDs: [String] = []
+        if productIDs.count > 0 {
+            _productIDs = productIDs
+        } else {
+            // Get the product identifiers.
+            guard let productIDArray = datasource?.productIDs() else {
+                receiveProductsHandler(.failure(.productIDNotFound))
+                return
+            }
+            _productIDs = productIDArray
+        }
  
-        //let request = SKProductsRequest(productIdentifiers: Set(productIDs))
-        let request = SKProductsRequest(productIdentifiers: Set(["Chargebee02","Chargebee03","Chargebee04", "Chargebee05", "Chargebee06"]))
+        let request = SKProductsRequest(productIdentifiers: Set(_productIDs))
+        // End of To Be Commented region for Local testing of Get Products
+        
+        // To Be uncommented for Local testing of Get Products
+        //let request = SKProductsRequest(productIdentifiers: Set(["Chargebee02","Chargebee03","Chargebee04", "Chargebee05", "Chargebee06"]))
+        // End of To Be uncommented for Local testing of Get Products
         request.delegate = self
         request.start()
     }
     
     //Buy the product
-    func purchaseProduct(product: CBProduct, completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId : String ,completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
+        customerID = customerId
         guard CBAuthenticationManager.isSDKKeyPresent() else {
             handler(.failure(CBPurchaseError.cannotMakePayments))
             return
@@ -147,7 +153,7 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
                    let price = activeProduct?.price,
                    let currencyCode = activeProduct?.priceLocale.currencyCode {
                     let priceValue : Int = Int((price.doubleValue) * Double(100))
-                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, customerID: customerID,completion: buyProductHandler)
+                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, customerID:customerID,completion: buyProductHandler)
                 }
             case .restored:
                 restoredPurchasesCount += 1

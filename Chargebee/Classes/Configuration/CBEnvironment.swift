@@ -11,7 +11,8 @@ class CBEnvironment {
     static var baseUrl: String = ""
     static var allowErrorLogging: Bool = true
     static var sdkKey : String = ""
-    //static var customerID: String = ""
+    static var customerID: String = ""
+    
     
     static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
         CBEnvironment.site = site
@@ -22,19 +23,20 @@ class CBEnvironment {
         //Fix Me : For internal testing
         CBEnvironment.baseUrl = "https://\(CBEnvironment.site)/api"
         
-        //Verify SDK key
-        if let _sdkKey = sdkKey {
-            CBEnvironment.sdkKey = _sdkKey
-            CBAuthenticationManager.authenticate(forSDKKey: sdkKey!) { result in
+        if let sdkKey = sdkKey {
+            CBEnvironment.sdkKey = sdkKey
+            // Verify SDK Key
+            CBAuthenticationManager.authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
                 switch result {
                 case .success(let status):
-                    debugPrint(status)
+                    print(status)
                 case .error(let error):
-                    debugPrint(error)
+                    print(error)
                 }
-                
             }
-        }
+        } 
+        
+        
     }
     
 }
