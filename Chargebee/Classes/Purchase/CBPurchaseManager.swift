@@ -21,6 +21,7 @@ public class CBPurchaseManager: NSObject {
     private var restoredPurchasesCount = 0
     var datasource: CBPurchaseDataSource?
     private var activeProduct: SKProduct?
+    var customerID : String = ""
     
     // MARK: - Init
     private override init() {
@@ -49,7 +50,7 @@ public extension CBPurchaseManager {
     //MARK: - Public methods
     //MARK: Purchase methods
     //Get the products
-    func retrieveProducts(withProductID productID: String = "", completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
+    func fetchProductsfromStore(withProductID productID: String = "", completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
 //        var productIDs: [String] = []
@@ -71,7 +72,7 @@ public extension CBPurchaseManager {
     }
     
     //Buy the product
-    func buy(product: CBProduct, completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
         guard CBAuthenticationManager.isSDKKeyPresent() else {
@@ -146,7 +147,7 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
                    let price = activeProduct?.price,
                    let currencyCode = activeProduct?.priceLocale.currencyCode {
                     let priceValue : Int = Int((price.doubleValue) * Double(100))
-                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, completion: buyProductHandler)
+                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, customerID: customerID,completion: buyProductHandler)
                 }
             case .restored:
                 restoredPurchasesCount += 1
@@ -183,7 +184,7 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
 
 //chargebee methods
 public extension CBPurchaseManager {
-    func validateReceipt(for productID: String, _ price: String, currencyCode: String, completion: ((Result<Bool, Error>) -> Void)?) {
+    func validateReceipt(for productID: String, _ price: String, currencyCode: String, customerID :String,completion: ((Result<Bool, Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
               FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
@@ -195,7 +196,7 @@ public extension CBPurchaseManager {
             
             let receiptString = receiptData.base64EncodedString(options: [])
 
-            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, price: price, currencyCode: currencyCode, customerId: CBEnvironment.customerID ) {
+            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, price: price, currencyCode: currencyCode, customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
                     case .success(let receipt):
@@ -204,7 +205,7 @@ public extension CBPurchaseManager {
                             completion?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
                             return
                         }
-                        CBSubscriptionManager.fetchSubscriptionStatus(forID: receipt.subscriptionId) { subscriptionStatusResult in
+                        CBSubscriptionManager.fetchSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
                             switch subscriptionStatusResult {
                             case .success:
                                 completion?(.success(true))

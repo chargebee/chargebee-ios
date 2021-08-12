@@ -31,7 +31,7 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
         guard let subscriptionID = subscriptioniDTextField.text , subscriptionID.isNotEmpty else {
             return
         }
-        CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
+        CBSubscriptionManager.fetchSubscription(forID: subscriptionID) { result in
             switch result {
             case let .success(statusResult):
                 debugPrint("Subscribtion Status Fetched: \(statusResult)")

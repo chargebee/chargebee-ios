@@ -42,7 +42,7 @@ final class CBSDKPurchaseViewController: UIViewController, UITextFieldDelegate {
         self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
         CBAuthenticationManager.isSDKKeyValid { status in
             if status {
-                CBPurchaseManager.shared.validateReceipt(for: productId, price, currencyCode: "USD") { result in
+                CBPurchaseManager.shared.validateReceipt(for: productId, price, currencyCode: "USD",customerID: "") { result in
                     switch result {
                     case let .success(status):
                         debugPrint("Successfully validated. \(status)")
