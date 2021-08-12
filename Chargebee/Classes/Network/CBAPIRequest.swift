@@ -19,8 +19,6 @@ protocol CBAPIResource {
 }
 
 extension CBAPIResource {
-    
-    
     var authHeader: String? {
         get {
             nil

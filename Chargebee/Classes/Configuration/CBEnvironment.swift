@@ -11,8 +11,8 @@ class CBEnvironment {
     static var baseUrl: String = ""
     static var allowErrorLogging: Bool = true
     static var sdkKey : String = ""
-    static var customerID: String = ""
     
+
     
     static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
         CBEnvironment.site = site

@@ -153,7 +153,7 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
                    let price = activeProduct?.price,
                    let currencyCode = activeProduct?.priceLocale.currencyCode {
                     let priceValue : Int = Int((price.doubleValue) * Double(100))
-                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, customerID:customerID,completion: buyProductHandler)
+                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
                 }
             case .restored:
                 restoredPurchasesCount += 1
@@ -190,7 +190,7 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
 
 //chargebee methods
 public extension CBPurchaseManager {
-    func validateReceipt(for productID: String, _ price: String, currencyCode: String, customerID :String,completion: ((Result<Bool, Error>) -> Void)?) {
+    func validateReceipt(for productID: String, _ price: String, currencyCode: String, customerId :String,completion: ((Result<Bool, Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
               FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")

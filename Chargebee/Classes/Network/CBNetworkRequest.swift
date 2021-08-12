@@ -21,15 +21,10 @@ extension CBNetworkRequest {
         let session = URLSession.shared
         
         let task = session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            
-            
             if let error = error{
                 onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
                 return
             }
-            
-            //print(response)
-            
             if let response = response as? HTTPURLResponse, response.statusCode >= 400 {
                 onError?(self.buildCBError(data, statusCode: response.statusCode))
                 return
