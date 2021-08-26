@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Chargebee'
-  s.version          = '0.3.2'
+  s.version          = '0.3.3'
   s.summary          = 'Chargebee iOS SDK'
 
 # This description is used to generate tags and improve search results.
@@ -36,7 +36,7 @@ Chargebee iOS SDK aims at simplifying recurring payments integration
   # s.resource_bundles = {
   #   'Chargebee' => ['Chargebee/Assets/*.png']
   # }
-  
+
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'

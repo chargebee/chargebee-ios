@@ -20,6 +20,10 @@
 		851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */; };
 		851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */; };
 		851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */; };
+		90C8D07C26A9C7980004EE81 /* CBSDKItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C8D07B26A9C7980004EE81 /* CBSDKItemTableViewCell.xib */; };
+		90C8D07E26A9CB260004EE81 /* CBSDKItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */; };
+		90C8D08026A9CDC10004EE81 /* CBSDKItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D07F26A9CDC10004EE81 /* CBSDKItemsTableViewController.swift */; };
+		90C8D08626AAA8480004EE81 /* CBSDKItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */; };
 		FA3ECF3524B6FA6C00643E63 /* CBSDKTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */; };
 		FA3ECF3724B6FDE300643E63 /* CBSDKPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */; };
 		FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */; };
@@ -48,6 +52,10 @@
 		851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKConfigurationViewController.swift; sourceTree = "<group>"; };
 		854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPurchaseViewController.swift; sourceTree = "<group>"; };
 		880524BD03DBC913F225A876 /* Pods-Chargebee_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		90C8D07B26A9C7980004EE81 /* CBSDKItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CBSDKItemTableViewCell.xib; sourceTree = "<group>"; };
+		90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemTableViewCell.swift; sourceTree = "<group>"; };
+		90C8D07F26A9CDC10004EE81 /* CBSDKItemsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemsTableViewController.swift; sourceTree = "<group>"; };
+		90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemViewController.swift; sourceTree = "<group>"; };
 		C7F2A43A1A9BBA92A21E3458 /* Pods-Chargebee_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chargebee_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +96,8 @@
 				20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */,
 				20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */,
 				851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */,
+				90C8D07F26A9CDC10004EE81 /* CBSDKItemsTableViewController.swift */,
+				90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -97,6 +107,8 @@
 			children = (
 				851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */,
 				851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */,
+				90C8D07B26A9C7980004EE81 /* CBSDKItemTableViewCell.xib */,
+				90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -265,6 +277,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				72CD6DEF2663F0B500E17CFE /* Configuration.storekit in Resources */,
+				90C8D07C26A9C7980004EE81 /* CBSDKItemTableViewCell.xib in Resources */,
 				851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -326,10 +339,13 @@
 				851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */,
 				FA3ECF3524B6FA6C00643E63 /* CBSDKTokenViewController.swift in Sources */,
 				851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */,
+				90C8D07E26A9CB260004EE81 /* CBSDKItemTableViewCell.swift in Sources */,
 				FA3ECF3724B6FDE300643E63 /* CBSDKPlanViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* CBSDKOptionsViewController.swift in Sources */,
+				90C8D08626AAA8480004EE81 /* CBSDKItemViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				20CCB493265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift in Sources */,
+				90C8D08026A9CDC10004EE81 /* CBSDKItemsTableViewController.swift in Sources */,
 				20CCB4B5265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

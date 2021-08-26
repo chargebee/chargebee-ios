@@ -80,6 +80,41 @@ CBAddon.retrieve("addonId") { (addonResult) in
 }
 ```
 
+### Get all Items
+
+```swift
+  CBItem.getAllItems(queryParams :["limit": "8","sort_by[desc]" : "name"], completion:  { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .success(itemLst):
+                        self.items =  itemLst.list
+                        debugPrint("items: \(self.items)")
+                        self.performSegue(withIdentifier: "itemList", sender: self)
+                    case let .error(error):
+                        debugPrint("Error: \(error.localizedDescription)")
+                    }
+                }
+            })
+
+```
+
+### Get Item
+
+```swift
+CBItem.getItem(self.ItemId.text!){ (itemResult) in
+            switch itemResult {
+            case .success(let item):
+                print(item)
+                self.itemName.text = item.name
+                self.itemStatus.text = item.status
+                
+            case .error(let error):
+                print("Error\(error)")
+                self.error.text = error.localizedDescription
+            }
+        }
+```
+
 ### Get Payment Token
 ```swift
 let card = CBCard(
