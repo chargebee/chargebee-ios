@@ -8,11 +8,11 @@
 import Foundation
 
 public struct CBSubscriptionStatus: Codable {
-    public let subscription: CBSubscription
+    public let subscription: CBSubscriptionData
     public let customer: CBCustomer
 }
 
-public struct CBSubscription: Codable {
+public struct CBSubscriptionData: Codable {
     public let activatedAt: Double?
     public let status: String?
     public let planAmount: Double?
@@ -66,10 +66,10 @@ public struct CBAddress: Codable {
 
 public typealias CBSubscriptionHandler = (CBResult<CBSubscriptionStatus>) -> Void
 
-public class CBSubscriptionManager {}
+public class CBSubscription {}
 
-public extension CBSubscriptionManager {
-    static func fetchSubscription(forID id: String, handler: @escaping CBSubscriptionHandler) {
+public extension CBSubscription {
+    static func retrieveSubscription(forID id: String, handler: @escaping CBSubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")
         logger.info()
         

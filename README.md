@@ -147,7 +147,7 @@ Please refer to the [Chargebee API Docs](https://apidocs.chargebee.com/docs/api)
 
 ### Get Subscription Status
 ```swift
-CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
+CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
     switch result {
     case let .success(result):
         print("Status \(result.status)")
@@ -158,19 +158,21 @@ CBSubscriptionManager.fetchSubscriptionStatus(forID: subscriptionID) { result in
 ```
 ### List Products From Apple
 ```swift
-CBPurchaseManager.shared.retrieveProducts { result in
+CBPurchase.shared.fetchProductsfromStore(withProductID : ["Product ID from Apple"],completion: { result in
     switch result {
     case let .success(products):
-    print("array of Products \(products)")
+        print("array of Products \(products)")
     case let .error(error):
-    // Handle error here
+        // Handle error here
 }
 }
+
+
 ```
 
 ### Buy / Subscribe  Product
 ```swift
-CBPurchaseManager.shared.buy(product: withProdct) { result in
+CBPurchase.shared.buy(product: withProdct) { result in
     switch result {
     case let .success:
         print("success")

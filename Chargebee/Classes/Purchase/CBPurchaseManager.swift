@@ -12,8 +12,8 @@ protocol CBPurchaseDataSource {
     func productIDs() -> [String]
 }
 
-public class CBPurchaseManager: NSObject {
-    public static let shared = CBPurchaseManager()
+public class CBPurchase: NSObject {
+    public static let shared = CBPurchase()
     
     private var productIDs: [String] = []
     public var receiveProductsHandler: ((_ result: Result<[CBProduct], CBPurchaseError>) -> Void)?
@@ -46,7 +46,7 @@ extension SKProduct {
     }
 }
 
-public extension CBPurchaseManager {
+public extension CBPurchase {
     //MARK: - Public methods
     //MARK: Purchase methods
     //Get the products
@@ -86,7 +86,7 @@ public extension CBPurchaseManager {
             return
         }
         
-        if !CBPurchaseManager.shared.canMakePayments() {
+        if !CBPurchase.shared.canMakePayments() {
             handler(.failure(CBPurchaseError.cannotMakePayments))
         } else {
             CBAuthenticationManager.isSDKKeyValid { status in
@@ -110,7 +110,7 @@ public extension CBPurchaseManager {
 }
 
 //MARK: - Private methods
-extension CBPurchaseManager {
+extension CBPurchase {
     private func startPaymentQueueObserver() {
         SKPaymentQueue.default().add(self)
     }
@@ -125,7 +125,7 @@ extension CBPurchaseManager {
 }
 
 //MARK: - SKProductsRequestDelegate methods
-extension CBPurchaseManager: SKProductsRequestDelegate {
+extension CBPurchase: SKProductsRequestDelegate {
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         debugPrint("response: \(response)")
         let products = response.products.cbProducts
@@ -143,7 +143,7 @@ extension CBPurchaseManager: SKProductsRequestDelegate {
 }
 
 // MARK: - SKPaymentTransactionObserver delegates
-extension CBPurchaseManager: SKPaymentTransactionObserver {
+extension CBPurchase: SKPaymentTransactionObserver {
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach { (transaction) in
             switch transaction.transactionState {
@@ -189,7 +189,7 @@ extension CBPurchaseManager: SKPaymentTransactionObserver {
 }
 
 //chargebee methods
-public extension CBPurchaseManager {
+public extension CBPurchase {
     func validateReceipt(for productID: String, _ price: String, currencyCode: String, customerId :String,completion: ((Result<Bool, Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
               FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
@@ -211,7 +211,7 @@ public extension CBPurchaseManager {
                             completion?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
                             return
                         }
-                        CBSubscriptionManager.fetchSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
+                        CBSubscription.retrieveSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
                             switch subscriptionStatusResult {
                             case .success:
                                 completion?(.success(true))

@@ -69,7 +69,7 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             
-            CBPurchaseManager.shared.purchaseProduct(product: withProdct,customerId: customerID) { result in
+            CBPurchase.shared.purchaseProduct(product: withProdct,customerId: customerID) { result in
                 print(result)
                 switch result {
                 case .success:
