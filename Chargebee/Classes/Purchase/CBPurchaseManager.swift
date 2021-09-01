@@ -95,7 +95,7 @@ public extension CBPurchaseManager {
                     SKPaymentQueue.default().add(payment)
 
                 } else {
-                    handler(.failure(CBPurchaseError.cannotMakePayments))
+                    handler(.failure(CBPurchaseError.invalidSDKKey))
                 }
             }
         }

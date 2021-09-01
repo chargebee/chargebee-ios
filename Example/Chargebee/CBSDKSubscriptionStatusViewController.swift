@@ -45,10 +45,10 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
                 }
             case let .error(error):
                 debugPrint("Error Fetched: \(error)")
-                self.statusLabel.text = error.localizedDescription
-                self.subscriptioniDTextField.resignFirstResponder()
                 DispatchQueue.main.async {
                     self.view.activityStopAnimating()
+                    self.statusLabel.text = error.localizedDescription
+                    self.subscriptioniDTextField.resignFirstResponder()
 
                 }
 

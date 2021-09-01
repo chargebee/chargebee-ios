@@ -9,7 +9,7 @@
 import UIKit
 import Chargebee
 
-final class CBSDKProductsTableViewController: UITableViewController {
+final class CBSDKProductsTableViewController: UITableViewController, UITextFieldDelegate {
     
     var products: [CBProduct] = []
 
@@ -63,32 +63,50 @@ static func registerCellXib(with tableview: UITableView){
 
 
 extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
-    
+        
     func buyClicked(withProdct: CBProduct) {
-        func hideLoader() {
-            DispatchQueue.main.async {
-                self.view.activityStopAnimating()
-            }
-        }
-        self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
 
-        CBPurchaseManager.shared.purchaseProduct(product: withProdct,customerId: "") { result in
-            debugPrint(result)
-            print(result)
-            switch result {
-            case .success:
-                hideLoader()
-                let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alertController, animated: true, completion: nil)
-            case .failure(let error):
-                hideLoader()
-                print(error.localizedDescription)
-                let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alertController, animated: true, completion: nil)
+        func purchase(customerID: String) {
+            self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+            
+            CBPurchaseManager.shared.purchaseProduct(product: withProdct,customerId: customerID) { result in
+                print(result)
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                        
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
             }
         }
+        
+        let alert = UIAlertController(title: "",
+                                      message: "Please enter customerID",
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (action) in
+            if let textFields = alert.textFields, let customerTextField = textFields.first {
+                purchase(customerID: customerTextField.text ?? "")
+            }
+        }
+        defaultAction.isEnabled = true
+        alert.addAction(defaultAction)
+        alert.addTextField { (textField) in
+             textField.delegate = self
+        }
+        present(alert, animated: true, completion: nil)
+
 
     }
 }
