@@ -31,7 +31,7 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
         guard let subscriptionID = subscriptioniDTextField.text , subscriptionID.isNotEmpty else {
             return
         }
-        CBSubscriptionManager.fetchSubscription(forID: subscriptionID) { result in
+        CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
             switch result {
             case let .success(statusResult):
                 debugPrint("Subscribtion Status Fetched: \(statusResult)")
@@ -45,10 +45,10 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
                 }
             case let .error(error):
                 debugPrint("Error Fetched: \(error)")
-                self.statusLabel.text = error.localizedDescription
-                self.subscriptioniDTextField.resignFirstResponder()
                 DispatchQueue.main.async {
                     self.view.activityStopAnimating()
+                    self.statusLabel.text = error.localizedDescription
+                    self.subscriptioniDTextField.resignFirstResponder()
 
                 }
 

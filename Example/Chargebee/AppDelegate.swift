@@ -19,8 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application
         
         // Configure the Chargebee site and Api Key
-        Chargebee.configure(site: "[sitename]",
-                            publishableApiKey: "[apikey]")
+        Chargebee.configure(site: "christopherselvaraj-test",
+                            publishableApiKey: "test_FVK4gS1DfkVnuvQVW5mr2p3U4DDcuLQ2E",sdkKey: "cb-b22l33j4bve3ngf7k3hnfacvqm")
+
+        //        Chargebee.configure(site: "[sitename]",
+//                            publishableApiKey: "[apikey]")
         // pass in SDK Key if available
         // https://omnichannel-test.predev37.in/subscriptions/289013/details
         return true

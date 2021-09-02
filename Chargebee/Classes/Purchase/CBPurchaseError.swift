@@ -14,6 +14,9 @@ public enum CBPurchaseError: Error {
     case skRequestFailed
     case cannotMakePayments
     case noProductToRestore
+    case invalidSDKKey
+    case invalidCustomerId
+
 }
 
 extension CBPurchaseError: LocalizedError {
@@ -24,6 +27,8 @@ extension CBPurchaseError: LocalizedError {
         case .skRequestFailed: return "Request Failed. Please try again."
         case .cannotMakePayments: return "User cannot make payments"
         case .noProductToRestore: return "No products found to restore."
+        case .invalidSDKKey:return "SDK key is invalid"
+        case .invalidCustomerId: return "Customer Id is invalid"
         }
     }
 }

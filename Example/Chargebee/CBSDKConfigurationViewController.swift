@@ -34,8 +34,6 @@ final class CBSDKConfigurationViewController: UIViewController {
             sdkKeyTextField.becomeFirstResponder()
         case sdkKeyTextField:
             apiKeyTextField.becomeFirstResponder()
-        case apiKeyTextField:
-            customerIDTextField.becomeFirstResponder()
         default:
             textField.resignFirstResponder()
             return true
@@ -44,10 +42,10 @@ final class CBSDKConfigurationViewController: UIViewController {
     }
     
     @IBAction private func initializeClicked(_ sender: UIButton) {
-        guard canInitialise() else { return }
+//        guard canInitialise() else { return }
         Chargebee.configure(site: siteNameTextField.unwrappedText,
                             publishableApiKey: apiKeyTextField.unwrappedText,
-                            //sdkKey: sdkKeyTextField.unwrappedText,
+                            sdkKey: sdkKeyTextField.unwrappedText,
                             allowErrorLogging: true)
         }
     }
