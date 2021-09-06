@@ -50,7 +50,7 @@ public extension CBPurchase {
     //MARK: - Public methods
     //MARK: Purchase methods
     //Get the products
-    func fetchProductsfromStore(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
+    func retrieveProducts(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
         // To Be commented for Local testing of Get Products

@@ -45,7 +45,6 @@ import Chargebee
 Chargebee.configure(site: "your-site",
                     publishableApiKey: "api_key",
                     sdkKey: "sdk_key",
-                    customerID: "customerID",
                     allowErrorLogging: true)
 }
 
@@ -158,7 +157,7 @@ CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
 ```
 ### List Products From Apple
 ```swift
-CBPurchase.shared.fetchProductsfromStore(withProductID : ["Product ID from Apple"],completion: { result in
+CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],completion: { result in
     switch result {
     case let .success(products):
         print("array of Products \(products)")
