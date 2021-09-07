@@ -171,14 +171,16 @@ CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],com
 
 ### Buy / Subscribe  Product
 ```swift
-CBPurchase.shared.buy(product: withProdct) { result in
+
+CBPurchase.shared.purchase(product: withProdct,customerId: customerID) { result in
     switch result {
-    case let .success:
-        print("success")
-    case let .error(error):
-    // Handle error here
+        case .success:
+            print("success")
+        case .failure(let error):
+            // Handle error here
+    }
 }
-}
+
 ```
 
 
