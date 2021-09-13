@@ -24,6 +24,10 @@
 		90C8D07E26A9CB260004EE81 /* CBSDKItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */; };
 		90C8D08026A9CDC10004EE81 /* CBSDKItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D07F26A9CDC10004EE81 /* CBSDKItemsTableViewController.swift */; };
 		90C8D08626AAA8480004EE81 /* CBSDKItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */; };
+		D4FAC01426EA7BCC00577895 /* CBSDKPlansViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FAC01326EA7BCC00577895 /* CBSDKPlansViewController.swift */; };
+		D4FAC01726EA7D0400577895 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FAC01626EA7D0400577895 /* UIView.swift */; };
+		D4FAC01A26EA7D3D00577895 /* CBSDKPlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FAC01826EA7D3D00577895 /* CBSDKPlanTableViewCell.swift */; };
+		D4FAC01B26EA7D3D00577895 /* CBSDKPlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4FAC01926EA7D3D00577895 /* CBSDKPlanTableViewCell.xib */; };
 		FA3ECF3524B6FA6C00643E63 /* CBSDKTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */; };
 		FA3ECF3724B6FDE300643E63 /* CBSDKPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */; };
 		FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */; };
@@ -58,6 +62,10 @@
 		90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemViewController.swift; sourceTree = "<group>"; };
 		C7F2A43A1A9BBA92A21E3458 /* Pods-Chargebee_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.release.xcconfig"; sourceTree = "<group>"; };
+		D4FAC01326EA7BCC00577895 /* CBSDKPlansViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPlansViewController.swift; sourceTree = "<group>"; };
+		D4FAC01626EA7D0400577895 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		D4FAC01826EA7D3D00577895 /* CBSDKPlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPlanTableViewCell.swift; sourceTree = "<group>"; };
+		D4FAC01926EA7D3D00577895 /* CBSDKPlanTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CBSDKPlanTableViewCell.xib; sourceTree = "<group>"; };
 		F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chargebee_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKTokenViewController.swift; sourceTree = "<group>"; };
 		FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPlanViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +89,7 @@
 			children = (
 				201D6DB126858EB700EE8DF4 /* Cell */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				D4FAC01626EA7D0400577895 /* UIView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -90,7 +99,6 @@
 			children = (
 				607FACD71AFB9204008FA782 /* CBSDKOptionsViewController.swift */,
 				FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */,
-				FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */,
 				FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */,
 				854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */,
 				20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */,
@@ -98,6 +106,8 @@
 				851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */,
 				90C8D07F26A9CDC10004EE81 /* CBSDKItemsTableViewController.swift */,
 				90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */,
+				FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */,
+				D4FAC01326EA7BCC00577895 /* CBSDKPlansViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -109,6 +119,8 @@
 				851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */,
 				90C8D07B26A9C7980004EE81 /* CBSDKItemTableViewCell.xib */,
 				90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */,
+				D4FAC01826EA7D3D00577895 /* CBSDKPlanTableViewCell.swift */,
+				D4FAC01926EA7D3D00577895 /* CBSDKPlanTableViewCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -277,6 +289,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				72CD6DEF2663F0B500E17CFE /* Configuration.storekit in Resources */,
+				D4FAC01B26EA7D3D00577895 /* CBSDKPlanTableViewCell.xib in Resources */,
 				90C8D07C26A9C7980004EE81 /* CBSDKItemTableViewCell.xib in Resources */,
 				851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
@@ -335,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72CD6DE82662856000E17CFE /* CBSDKPurchaseViewController.swift in Sources */,
+				D4FAC01426EA7BCC00577895 /* CBSDKPlansViewController.swift in Sources */,
 				FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */,
 				851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */,
 				FA3ECF3524B6FA6C00643E63 /* CBSDKTokenViewController.swift in Sources */,
@@ -343,7 +357,9 @@
 				FA3ECF3724B6FDE300643E63 /* CBSDKPlanViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* CBSDKOptionsViewController.swift in Sources */,
 				90C8D08626AAA8480004EE81 /* CBSDKItemViewController.swift in Sources */,
+				D4FAC01726EA7D0400577895 /* UIView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				D4FAC01A26EA7D3D00577895 /* CBSDKPlanTableViewCell.swift in Sources */,
 				20CCB493265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift in Sources */,
 				90C8D08026A9CDC10004EE81 /* CBSDKItemsTableViewController.swift in Sources */,
 				20CCB4B5265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift in Sources */,

@@ -13,7 +13,9 @@ final class CBSDKOptionsViewController: UIViewController {
     
     private var products: [CBProduct] = []
     private var items : [CBItemWrapper] = []
-    private lazy var actions: [ClientAction] = [.getPlan, .getAddon, .createToken, .initializeInApp, .getProducts, .getSubscribtionStatus, .processReceipt, .getItems , .getItem]
+    private var plans : [CBPlan] = []
+
+    private lazy var actions: [ClientAction] = [.initializeInApp,.getAllPlan, .getPlan, .getItems , .getItem, .getAddon, .createToken, .getProducts, .getSubscribtionStatus, .processReceipt,]
     
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -71,6 +73,24 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     }
                 }
             })
+        case .getAllPlan:
+            print("List All Plans")
+            CBPlan.retrieveAllPlans(queryParams: ["limit": "20","sort_by[desc]" : "name"]) { result in
+                switch result {
+                case let .success(plansList):
+                    self.plans =  plansList
+                    debugPrint("items: \(self.plans)")
+                    DispatchQueue.main.async {
+                        let vc = CBSDKPlansViewController()
+                        vc.render(self.plans)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    
+                case let .error(error):
+                    debugPrint("Error: \(error.localizedDescription)")
+                }
+
+            }
         }
     }
 }
@@ -93,6 +113,7 @@ extension CBSDKOptionsViewController {
 
 enum ClientAction {
     case getPlan
+    case getAllPlan
     case getAddon
     case createToken
     case initializeInApp
@@ -106,8 +127,10 @@ enum ClientAction {
 extension ClientAction {
     var title: String {
         switch self {
+        case .getAllPlan:
+            return "Get Plans"
         case .getPlan:
-            return "Get Plan Details"
+            return "Get Plan"
         case .getAddon:
             return "Get Addon Details"
         case .createToken:
@@ -121,10 +144,9 @@ extension ClientAction {
         case .initializeInApp:
             return "Configure"
         case .getItems:
-            return "V2 Get Items"
+            return "Get Items"
         case .getItem:
-            return "V2 Get Item"
-            
+            return "Get Item"
         }
         
     }

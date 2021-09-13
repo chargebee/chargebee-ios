@@ -22,3 +22,28 @@ final class CBPlanResource: CBAPIResource {
         self.methodPath += "/\(planId)"
     }
 }
+
+
+final class CBPlansResource: CBAPIResource {
+    
+    typealias ModelType = CBPlansWrapper
+    typealias ErrorType = CBErrorDetail
+    
+    var authHeader: String? {
+        get {
+          "Basic \(CBEnvironment.encodedApiKey)"
+        }
+    }
+    var baseUrl: String
+    var methodPath: String = "/v2/plans"
+    var queryParams : [String:String]? = nil
+    
+    init(queryParams : [String:String]? = nil) {
+        self.baseUrl = CBEnvironment.baseUrl
+        if let queryParams = queryParams{
+            self.queryParams = queryParams
+        }
+    }
+    
+   
+}
