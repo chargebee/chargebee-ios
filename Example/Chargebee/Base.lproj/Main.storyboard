@@ -21,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jKq-VE-dts">
-                                <rect key="frame" x="0.0" y="50" width="320" height="430"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="ZPv-w8-T7k"/>
@@ -40,7 +40,7 @@
                     <navigationItem key="navigationItem" title="Chargebee SDK Actions" id="Wl9-hn-X0B"/>
                     <connections>
                         <outlet property="tableView" destination="jKq-VE-dts" id="r0C-1p-ZB0"/>
-                        <segue destination="Kpy-5I-MrH" kind="show" identifier="Get Plan Details" id="z9r-t2-j7P"/>
+                        <segue destination="Kpy-5I-MrH" kind="show" identifier="Get Plan" id="z9r-t2-j7P"/>
                         <segue destination="ah4-wv-074" kind="show" identifier="Get Addon Details" id="457-fd-be7"/>
                         <segue destination="JW3-oZ-09N" kind="show" identifier="Create Tokens" id="Rgm-KG-Ifz"/>
                         <segue destination="qNR-Ua-rbz" kind="show" identifier="productList" id="1Mc-6E-6AN"/>
@@ -48,12 +48,12 @@
                         <segue destination="Sls-MC-oXs" kind="show" identifier="Configure" id="fE1-Vb-gkt"/>
                         <segue destination="B8C-V9-hWh" kind="show" identifier="Verify Receipt" id="ana-5k-mKS"/>
                         <segue destination="LbW-EZ-ePK" kind="show" identifier="itemList" id="UiJ-cT-2l0"/>
-                        <segue destination="wEf-AV-KAf" kind="show" identifier="V2 Get Item" id="Bw1-MS-1nH"/>
+                        <segue destination="wEf-AV-KAf" kind="show" identifier="Get Item" id="Bw1-MS-1nH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1005" y="663"/>
+            <point key="canvasLocation" x="943" y="389"/>
         </scene>
         <!--Addon View Controller-->
         <scene sceneID="CN9-Q4-ZpQ">
@@ -302,7 +302,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jEJ-il-A4R">
-                                <rect key="frame" x="16" y="70" width="288" height="100"/>
+                                <rect key="frame" x="16" y="64" width="288" height="100"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Product ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sz4-cn-vPz">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="45"/>
@@ -336,7 +336,7 @@
                     <navigationItem key="navigationItem" id="wCj-2e-j9y">
                         <barButtonItem key="rightBarButtonItem" title="Submit" style="plain" id="XPx-Jd-Eph">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="dCH-oa-AsL">
-                                <rect key="frame" x="233" y="10" width="71" height="30"/>
+                                <rect key="frame" x="233" y="7" width="71" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
@@ -367,7 +367,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000000807994664" borderStyle="bezel" placeholder="Enter subscrption ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="df7-rF-eRZ">
-                                <rect key="frame" x="20" y="130" width="280" height="50"/>
+                                <rect key="frame" x="20" y="124" width="280" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Uic-GY-NBO"/>
                                 </constraints>
@@ -379,7 +379,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Atd-Mt-dUa">
-                                <rect key="frame" x="76" y="219" width="168" height="50"/>
+                                <rect key="frame" x="76" y="213" width="168" height="50"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
                                 <state key="normal" title="Fetch Status">
                                     <color key="titleColor" systemColor="linkColor"/>
@@ -400,13 +400,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKO-je-Ica">
-                                <rect key="frame" x="20" y="289" width="280" height="0.0"/>
+                                <rect key="frame" x="20" y="283" width="280" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXE-b8-Ivf">
-                                <rect key="frame" x="26" y="60" width="268" height="0.0"/>
+                                <rect key="frame" x="26" y="54" width="268" height="0.0"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -460,7 +460,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Plan Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pts-Yq-Xae">
-                                <rect key="frame" x="10" y="60" width="300" height="34"/>
+                                <rect key="frame" x="10" y="54" width="300" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -511,7 +511,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRB-Ya-XQV">
-                                        <rect key="frame" x="102" y="138" width="260" height="21"/>
+                                        <rect key="frame" x="102" y="138" width="209" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -546,7 +546,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcC-fP-KTN">
-                                <rect key="frame" x="136" y="113" width="49" height="30"/>
+                                <rect key="frame" x="136" y="107" width="49" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="QRB-08-5sc"/>
                                     <constraint firstAttribute="width" constant="49" id="iU7-Hc-2BX"/>
@@ -576,7 +576,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="abU-96-UBo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1820" y="-579"/>
+            <point key="canvasLocation" x="1818.75" y="-580"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wJl-1a-RdX">
@@ -609,7 +609,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Oqr-m8-wRn">
-                                <rect key="frame" x="10" y="54" width="300" height="330"/>
+                                <rect key="frame" x="10" y="54" width="300" height="260"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="christopherselvaraj-test.chargebee.com" borderStyle="bezel" placeholder="Site Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="trh-K1-nlK">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
@@ -647,16 +647,8 @@
                                             <outlet property="delegate" destination="407-cl-LgO" id="Msk-qh-Ht2"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="thomhgfstests" borderStyle="bezel" placeholder="Customer ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UOa-qj-5sY">
-                                        <rect key="frame" x="0.0" y="210" width="300" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="bqL-yR-nzv"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                                    </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Nh-4k-BMz">
-                                        <rect key="frame" x="0.0" y="280" width="300" height="50"/>
+                                        <rect key="frame" x="0.0" y="210" width="300" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="4mP-h1-sXm"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="wV3-yN-slQ"/>
@@ -694,7 +686,6 @@
                     <navigationItem key="navigationItem" id="el8-2R-GJg"/>
                     <connections>
                         <outlet property="apiKeyTextField" destination="dhb-ZC-bdh" id="629-AG-lCb"/>
-                        <outlet property="customerIDTextField" destination="UOa-qj-5sY" id="Ver-ij-JnO"/>
                         <outlet property="sdkKeyTextField" destination="U1B-fG-uXf" id="uiA-Ba-tgn"/>
                         <outlet property="siteNameTextField" destination="trh-K1-nlK" id="dDv-ry-o54"/>
                     </connections>
@@ -745,7 +736,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Item Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dh5-4b-iwT">
-                                <rect key="frame" x="10" y="70" width="300" height="34"/>
+                                <rect key="frame" x="10" y="64" width="300" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>

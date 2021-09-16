@@ -5,10 +5,21 @@
 import Foundation
 
 public typealias PlanHandler = (CBResult<CBPlan>) -> Void
+public typealias AllPlanHandler = (CBResult<[CBPlan]>) -> Void
 
 public struct CBPlanWrapper: Decodable {
     let plan: CBPlan
 }
+public struct CBPlansWrapper: Decodable {
+    let list: [CBPlanWrapper]
+    let nextOffset: String
+    
+    enum CodingKeys: String, CodingKey {
+        case list
+        case nextOffset = "next_offset"
+    }
+}
+
 
 public class CBPlan: Decodable {
     public let addonApplicability: String
@@ -19,13 +30,13 @@ public class CBPlan: Decodable {
     public let freeQuantity: Int
     public let giftable: Bool
     public let id: String
-    public let invoiceName: String
+    public let invoiceName: String?
     public let isShippable: Bool
     public let name: String
     public let object: String
     public let period: Int
     public let periodUnit: String
-    public let price: Int
+    public let price: Int?
     public let pricingModel: String
     public let resourceVersion: UInt64
     public let status: String
@@ -65,6 +76,20 @@ public class CBPlan: Decodable {
         let request = CBAPIRequest(resource: CBPlanResource(planId))
         request.load(withCompletion: { planWrapper in
             onSuccess(planWrapper.plan)
+        }, onError: onError)
+    }
+
+    public static func retrieveAllPlans(queryParams : [String:String]? = nil, completion handler: @escaping AllPlanHandler) {
+        let logger = CBLogger(name: "plan", action: "getAllPlans")
+        logger.info()
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+        let request = CBAPIRequest(resource: CBPlansResource(queryParams :queryParams ))
+        request.load(withCompletion: { planListWrapper in
+            var plans  = [CBPlan]()
+            for plan in  planListWrapper.list {
+                plans.append(plan.plan)
+            }
+            onSuccess(plans)
         }, onError: onError)
     }
 
