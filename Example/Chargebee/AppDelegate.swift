@@ -22,8 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        Chargebee.configure(site: "christopherselvaraj-test",
 //                            publishableApiKey: "test_FVK4gS1DfkVnuvQVW5mr2p3U4DDcuLQ2E",sdkKey: "cb-b22l33j4bve3ngf7k3hnfacvqm")
 
-        Chargebee.configure(site: "cb-imay-test",
-                            publishableApiKey: "test_EojsGoGFeHoc3VpGPQDOZGAxYy3d0FF3",sdkKey: "cb-b22l33j4bve3ngf7k3hnfacvqm")
+//        Chargebee.configure(site: "cb-imay-test",
+//                            publishableApiKey: "test_EojsGoGFeHoc3VpGPQDOZGAxYy3d0FF3",sdkKey: "cb-b22l33j4bve3ngf7k3hnfacvqm")
+        
+        Chargebee.configure(site: "omni2-test.predev37.in",
+                            publishableApiKey: "test_uM0iFFcuI9cuXboD7Sk5zJngcuuhQj8xB8V",sdkKey: "cb-by2r5fbedvbplf437nypryewry")
+        
+//        Chargebee.configure(site: "omni1-test.predev37.in",
+//                            publishableApiKey: "test_rpKneFyplowONFtdHgnlpxh6ccdcQXNUcu",sdkKey: "cb-ixctshwbbfezvde7ry7ryt566a")
+//
+        
+        
 //
         //        Chargebee.configure(site: "[sitename]",
 //                            publishableApiKey: "[apikey]")

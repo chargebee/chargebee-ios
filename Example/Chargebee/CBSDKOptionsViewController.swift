@@ -9,13 +9,13 @@
 import UIKit
 import Chargebee
 
-final class CBSDKOptionsViewController: UIViewController {
+final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
     
     private var products: [CBProduct] = []
     private var items : [CBItemWrapper] = []
     private var plans : [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp,.getAllPlan, .getPlan, .getItems , .getItem, .getAddon, .createToken, .getProducts, .getSubscribtionStatus, .processReceipt,]
+    private lazy var actions: [ClientAction] = [.initializeInApp,.getAllPlan, .getPlan, .getItems , .getItem, .getAddon, .createToken,.getProductIDs, .getProducts, .getSubscribtionStatus,]
     
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -47,21 +47,58 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
              .processReceipt,
              .getItem:
             performSegue(withIdentifier: selectedAction.title, sender: self)
-        case .getProducts:
-            CBPurchase.shared.retrieveProducts(withProductID : ["Chargebee02","Chargebee03","Chargebee04", "Chargebee05", "Chargebee06"],completion: { result in
+        case .getProductIDs:
+            print("Get Product ID's")
+            CBPurchase.shared.retrieveProductIdentifers(queryParams :["limit": "100"], completion:  { result in
                 DispatchQueue.main.async {
                     switch result {
-                    case let .success(products):
-                        self.products = products
-                        debugPrint("products: \(products)")
-                        self.performSegue(withIdentifier: "productList", sender: self)
+                    case let .success(dataWrapper):
+                        debugPrint("items: \(dataWrapper)")
+                        print(dataWrapper.ids)
+                        DispatchQueue.main.async {
+                            self.view.activityStopAnimating()
+                            let alertController = UIAlertController(title: "Chargebee", message: "\(dataWrapper.ids.joined(separator:"\n"))", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alertController, animated: true, completion: nil)
+                            
+                        }
+
                     case let .failure(error):
                         debugPrint("Error: \(error.localizedDescription)")
                     }
                 }
             })
+
+        case .getProducts:
+            let alert = UIAlertController(title: "",
+                                          message: "Please enter Product id's (comma separated)",
+                                          preferredStyle: UIAlertControllerStyle.alert)
+            let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (action) in
+                if let textFields = alert.textFields, let customerTextField = textFields.first {
+                    CBPurchase.shared.retrieveProducts(withProductID : customerTextField.text?.components(separatedBy: ",") ?? [String]() ,completion: { result in
+                        DispatchQueue.main.async {
+                            switch result {
+                            case let .success(products):
+                                self.products = products
+                                debugPrint("products: \(products)")
+                                self.performSegue(withIdentifier: "productList", sender: self)
+                            case let .failure(error):
+                                debugPrint("Error: \(error.localizedDescription)")
+                            }
+                        }
+                    })
+                }
+            }
+            defaultAction.isEnabled = true
+            alert.addAction(defaultAction)
+            alert.addTextField { (textField) in
+                 textField.delegate = self
+            }
+            present(alert, animated: true, completion: nil)
+
+            
         case .getItems:
-            CBItem.getAllItems(queryParams :["limit": "8","sort_by[desc]" : "name"], completion:  { result in
+            CBItem.getAllItems(queryParams :["limit": "8","sort_by[desc]" : "name","channel[is]":"app_store"], completion:  { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(itemLst):
@@ -75,10 +112,14 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             })
         case .getAllPlan:
             print("List All Plans")
-            CBPlan.retrieveAllPlans(queryParams: ["limit": "20","sort_by[desc]" : "name"]) { result in
+            CBPlan.retrieveAllPlans(queryParams: ["sort_by[desc]" : "name","channel[is]":"app_store"   ]) { result in
                 switch result {
                 case let .success(plansList):
-                    self.plans =  plansList
+                    var plans  = [CBPlan]()
+                    for plan in  plansList.list {
+                        plans.append(plan.plan)
+                    }
+                    self.plans = plans
                     debugPrint("items: \(self.plans)")
                     DispatchQueue.main.async {
                         let vc = CBSDKPlansViewController()
@@ -89,7 +130,6 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                 case let .error(error):
                     debugPrint("Error: \(error.localizedDescription)")
                 }
-
             }
         }
     }
@@ -117,6 +157,7 @@ enum ClientAction {
     case getAddon
     case createToken
     case initializeInApp
+    case getProductIDs
     case getProducts
     case getSubscribtionStatus
     case processReceipt
@@ -147,6 +188,8 @@ extension ClientAction {
             return "Get Items"
         case .getItem:
             return "Get Item"
+        case .getProductIDs:
+            return "Get Apple Specific Product Identifiers"
         }
         
     }

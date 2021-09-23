@@ -18,12 +18,16 @@ public extension CBAuthenticationManager {
     static func isSDKKeyPresent() -> Bool {
         return CBEnvironment.sdkKey.isNotEmpty
     }
-    
+   
+    static func isCatalogV1() -> Bool {
+        return CBEnvironment.sdkKey.isNotEmpty
+    }
+
     static func isSDKKeyValid(_ completion: @escaping ((_ status: Bool) -> Void)) {
         authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
             switch result {
             case let .success(data):
-                completion(data.status.appId?.isNotEmpty ?? false)
+                completion(data.details.appId?.isNotEmpty ?? false)
             case .error:
                 completion(false)
             }

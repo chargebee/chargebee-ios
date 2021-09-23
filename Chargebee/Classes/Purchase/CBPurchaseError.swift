@@ -16,6 +16,8 @@ public enum CBPurchaseError: Error {
     case noProductToRestore
     case invalidSDKKey
     case invalidCustomerId
+    case invalidCatalogVersion
+
 
 }
 
@@ -29,6 +31,8 @@ extension CBPurchaseError: LocalizedError {
         case .noProductToRestore: return "No products found to restore."
         case .invalidSDKKey:return "SDK key is invalid"
         case .invalidCustomerId: return "Customer Id is invalid"
+        case .invalidCatalogVersion: return "Invalid Catalog Version"
+
         }
     }
 }

@@ -13,6 +13,11 @@ public typealias ItemHandler = (CBResult<CBItem>) -> Void
 
 public struct CBItemListWrapper: Decodable {
     public let list: [CBItemWrapper]
+    public  let nextOffset: String?
+    enum CodingKeys: String, CodingKey {
+        case list
+        case nextOffset = "next_offset"
+    }
 }
 
 public struct CBItemWrapper: Decodable {
@@ -58,11 +63,6 @@ public class CBItem: Decodable {
         let logger = CBLogger(name: "item", action: "getAllItems")
         logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        
-//        let request = CBAPIRequest(resource: CBItemListResource(queryParams : [
-//            "limit": "3"
-//        ]))
-        
         let request = CBAPIRequest(resource: CBItemListResource(queryParams :queryParams ))
         
         request.load(withCompletion: { itemListWrapper in

@@ -144,18 +144,20 @@ Once your customer’s card data is processed and stored, and a Chargebee token 
 
 Please refer to the [Chargebee API Docs](https://apidocs.chargebee.com/docs/api) for subsequent integration steps.
 
-### Get Subscription Status
+### List ProductID's From Apple Connect
 ```swift
-CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
+func retrieveProductIdentifers(queryParams : [String:String]? = nil, completion handler: @escaping ((_ result: Result<CBProductIDWrapper, Error>) -> Void)) {
     switch result {
-    case let .success(result):
-        print("Status \(result.status)")
-    case let .error(error):
-        // Handle error here
-    }
+        case let .success(products):
+            print("array of Products Id's \(products)")
+        case let .error(error):
+            // Handle error here
+}
+
 }
 ```
-### List Products From Apple
+
+### List Products 
 ```swift
 CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],completion: { result in
     switch result {
@@ -181,6 +183,18 @@ CBPurchase.shared.purchase(product: withProdct,customerId: customerID) { result 
     }
 }
 
+```
+
+### Get Subscription Status
+```swift
+CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
+    switch result {
+    case let .success(result):
+        print("Status \(result.status)")
+    case let .error(error):
+        // Handle error here
+    }
+}
 ```
 
 
