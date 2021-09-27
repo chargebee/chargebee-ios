@@ -49,9 +49,10 @@ extension SKProduct {
 public extension CBPurchase {
     //MARK: - Public methods
     //MARK: Purchase methods
-    //Get the products
+    //Get the products with Product ID's
     func retrieveProducts(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
+        
         
         // To Be commented for Local testing of Get Products
         var _productIDs: [String] = []
@@ -75,7 +76,30 @@ public extension CBPurchase {
         request.delegate = self
         request.start()
     }
+  
+    //Get the products without Product ID's
+    func retrieveProductIdentifers(queryParams : [String:String]? = nil, completion handler: @escaping ((_ result: Result<CBProductIDWrapper, Error>) -> Void)) {
+
+        switch CBEnvironment.version {
+        case .v1:
+            CBProductsV1.getProducts(queryParams: queryParams) { wrapper in
+                handler(.success(wrapper))
+                return
+            }
+        case .v2:
+            CBProductsV2.getProducts(queryParams: queryParams) { wrapper in
+                handler(.success(wrapper))
+                return
+            }
+        case .unknown:
+            handler(.failure(CBPurchaseError.invalidCatalogVersion))
+            return
+
+        }
+        
+    }
     
+
     //Buy the product
     func purchaseProduct(product: CBProduct, customerId : String ,completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
         buyProductHandler = handler

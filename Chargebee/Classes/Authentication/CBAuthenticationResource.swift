@@ -68,18 +68,29 @@ struct CBAuthenticationBody: URLEncodedRequestBody {
 
 public struct CBAuthenticationStatus: Codable {
     
-    public let status: CBAuthentication
+    public let details: CBAuthentication
     
     enum CodingKeys: String, CodingKey  {
-        case status = "in_app_detail"
+        case details = "in_app_detail"
     }
 }
 
+public enum CatalogVersion: String, Codable {
+    case v1
+    case v2
+    case unknown
+
+}
+
 public struct CBAuthentication: Codable {
-    
+
     public let appId: String?
-    
+    public let status: String?
+    public let version: CatalogVersion?
+
     enum CodingKeys: String, CodingKey  {
         case appId = "app_id"
+        case status
+        case version = "product_catalog_version"
     }
 }

@@ -11,13 +11,15 @@ class CBEnvironment {
     static var baseUrl: String = ""
     static var allowErrorLogging: Bool = true
     static var sdkKey : String = ""
-    
+    static var version : CatalogVersion = .unknown
+
     static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
         CBEnvironment.site = site
         CBEnvironment.publishableApiKey = publishableApiKey
         CBEnvironment.allowErrorLogging = allowErrorLogging
         CBEnvironment.encodedApiKey = CBEnvironment.publishableApiKey.data(using: .utf8)?.base64EncodedString() ?? ""
-        CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
+//        CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
+        CBEnvironment.baseUrl = "https://\(CBEnvironment.site)/api"
 
         if let sdkKey = sdkKey {
             CBEnvironment.sdkKey = sdkKey
@@ -25,9 +27,9 @@ class CBEnvironment {
             CBAuthenticationManager.authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
                 switch result {
                 case .success(let status):
-                    print(status)
+                    CBEnvironment.version = status.details.version ?? .unknown
                 case .error(let error):
-                    print(error)
+                    CBEnvironment.version = .unknown
                 }
             }
         } 

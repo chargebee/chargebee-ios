@@ -5,14 +5,14 @@
 import Foundation
 
 public typealias PlanHandler = (CBResult<CBPlan>) -> Void
-public typealias AllPlanHandler = (CBResult<[CBPlan]>) -> Void
+public typealias AllPlanHandler = (CBResult<CBPlansWrapper>) -> Void
 
 public struct CBPlanWrapper: Decodable {
-    let plan: CBPlan
+    public let plan: CBPlan
 }
 public struct CBPlansWrapper: Decodable {
-    let list: [CBPlanWrapper]
-    let nextOffset: String
+    public let list: [CBPlanWrapper]
+    public  let nextOffset: String?
     
     enum CodingKeys: String, CodingKey {
         case list
@@ -85,11 +85,7 @@ public class CBPlan: Decodable {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         let request = CBAPIRequest(resource: CBPlansResource(queryParams :queryParams ))
         request.load(withCompletion: { planListWrapper in
-            var plans  = [CBPlan]()
-            for plan in  planListWrapper.list {
-                plans.append(plan.plan)
-            }
-            onSuccess(plans)
+            onSuccess(planListWrapper)
         }, onError: onError)
     }
 
