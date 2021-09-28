@@ -71,7 +71,7 @@ CBAddon.retrieve("addonId") { (addonResult) in
 ### Get All Plans
 // Sample Query Param "sort_by[desc]" : "name"  , "limit": "100"
 ```swift
-CBPlan.retrieveAllPlansCBPlan.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
+CBPlan.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
     switch result {
     case .success(let plan):
         print("Plan Array: \(plan)")
