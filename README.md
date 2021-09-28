@@ -13,14 +13,14 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ### Github
 The Chargebee iOS SDK can be installed directly from github, by adding this to the Podfile:
 
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '0.3.0'
+    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '0.3.0'
 
 ### CocoaPods
 
 It's also available through [CocoaPods](https://cocoapods.org/pods/Chargebee). To install
 it, simply add the following line to your Podfile:
 
-pod 'Chargebee', '~> 0.3'
+    pod 'Chargebee', '~> 0.3'
 
 
 ## Usage
@@ -43,9 +43,9 @@ To use the Chargebee iOS SDK, you must initialize the SDK with your Chargebee Si
 import Chargebee
 
 Chargebee.configure(site: "your-site",
-publishableApiKey: "api_key",
-sdkKey: "sdk_key",
-allowErrorLogging: true)
+                    publishableApiKey: "api_key",
+                    sdkKey: "sdk_key",
+                    allowErrorLogging: true)
 }
 
 ```
@@ -57,13 +57,13 @@ allowErrorLogging: true)
 
 ```swift
 CBAddon.retrieve("addonId") { (addonResult) in
-switch addonResult {
-case .success(let addon):
-print("Addon Name: \(addon.name)")
-// Use addon details here
-case .error(let error):
-// Handle error here
-}
+    switch addonResult {
+    case .success(let addon):
+        print("Addon Name: \(addon.name)")
+        // Use addon details here
+    case .error(let error):
+        // Handle error here
+    }
 }
 ```
 
@@ -72,74 +72,76 @@ case .error(let error):
 // Sample Query Param "sort_by[desc]" : "name"  , "limit": "100"
 ```swift
 CBPlan.retrieveAllPlansCBPlan.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
-switch result {
-case .success(let plan):
-print("Plan Array: \(plan)")
-// Use plan details here
-case .error(let error):
-// Handle error here
-}
+    switch result {
+    case .success(let plan):
+        print("Plan Array: \(plan)")
+        // Use plan details here
+    case .error(let error):
+        // Handle error here
+    }
 }
 ```
 ### Get Plan Details
 
 ```swift
 CBPlan.retrieve("planId") { (planResult) in
-switch planResult {
-case .success(let plan):
-print("Plan Name: \(plan.name)")
-// Use plan details here
-case .error(let error):
-// Handle error here
-}
+    switch planResult {
+    case .success(let plan):
+        print("Plan Name: \(plan.name)")
+        // Use plan details here
+    case .error(let error):
+        // Handle error here
+    }
 }
 ```
 
 ### Get all Items
+// Sample Query Param "sort_by[desc]" : "name"  , "limit": "100"
 
 ```swift
-CBItem.retrieveAllItems(queryParams :["limit": "8","sort_by[desc]" : "name"], completion:  { result in
-DispatchQueue.main.async {
-switch result {
-case let .success(itemLst):
-self.items =  itemLst.list
-debugPrint("items: \(self.items)")
-self.performSegue(withIdentifier: "itemList", sender: self)
-case let .error(error):
-debugPrint("Error: \(error.localizedDescription)")
-}
-}
-})
+  CBItem.retrieveAllItems(queryParams :["String" : "String"], completion:  { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .success(itemLst):
+                        self.items =  itemLst.list
+                        debugPrint("items: \(self.items)")
+                        self.performSegue(withIdentifier: "itemList", sender: self)
+                    case let .error(error):
+                        debugPrint("Error: \(error.localizedDescription)")
+                    }
+                }
+    })
 
 ```
 
-### Get Item
+### Get Item Details
 
 ```swift
-CBItem.retrieveItem(self.ItemId.text!){ (itemResult) in
-switch itemResult {
-case .success(let item):
-print(item)
-self.itemName.text = item.name
-self.itemStatus.text = item.status
-
-case .error(let error):
-print("Error\(error)")
-self.error.text = error.localizedDescription
-}
-}
+CBItem.retrieveItem("Item ID"){ (itemResult) in
+            switch itemResult {
+            case .success(let item):
+                print(item)
+                self.itemName.text = item.name
+                self.itemStatus.text = item.status
+                
+            case .error(let error):
+                print("Error\(error)")
+                self.error.text = error.localizedDescription
+            }
+        }
 ```
 
 ### List ProductID's From Apple Connect
-```swift
 //Sample query Param : "limit": "100"
+
+```swift
 
 CBPurchase.shared.retrieveProductIdentifers(queryParams :["String": "String"], completion:  { result in
 switch result {
-case let .success(productsID):
-print("array of Products Id's \(products)")
-case let .error(error):
-// Handle error here
+    case let .success(productsID):
+        print("array of Products Id's \(products)")
+    case let .error(error):
+        // Handle error here
 }
 
 })
@@ -149,11 +151,11 @@ case let .error(error):
 ### List Products 
 ```swift
 CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],completion: { result in
-switch result {
-case let .success(products):
-print("array of Products \(products)")
-case let .error(error):
-// Handle error here
+    switch result {
+    case let .success(products):
+        print("array of Products \(products)")
+    case let .error(error):
+        // Handle error here
 }
 }
 
@@ -163,26 +165,26 @@ case let .error(error):
 ### Buy / Subscribe  Product
 ```swift
 
-CBPurchase.shared.purchase(product: withProdct,customerId: customerID) { result in
-switch result {
-case .success:
-print("success")
-case .failure(let error):
-// Handle error here
-}
+CBPurchase.shared.purchase(product: "CBProduct",customerId: "CustomerID") { result in
+    switch result {
+        case .success:
+            print("success")
+        case .failure(let error):
+            // Handle error here
+    }
 }
 
 ```
 
 ### Get Subscription Status
 ```swift
-CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
-switch result {
-case let .success(result):
-print("Status \(result.status)")
-case let .error(error):
-// Handle error here
-}
+CBSubscription.retrieveSubscription(forID: "SubscriptionID") { result in
+    switch result {
+    case let .success(result):
+        print("Status \(result.status)")
+    case let .error(error):
+        // Handle error here
+    }
 }
 ```
 
@@ -191,21 +193,21 @@ case let .error(error):
 ### Get Payment Token
 ```swift
 let card = CBCard(
-cardNumber: "4321567890123456",
-expiryMonth: "12",
-expiryYear: "29",
-cvc: "123")
+        cardNumber: "4321567890123456",
+        expiryMonth: "12",
+        expiryYear: "29",
+        cvc: "123")
 
 let paymentDetail = CBPaymentDetail(type: CBPaymentType.Card, currencyCode: "USD", card: card)
 
 CBToken.createTempToken(paymentDetail: paymentDetail) { tokenResult in
-switch tokenResult {
-case .success(let token):
-print("Chargebee Token \(token)")
-// Use token here
-case .error(let error):
-// Handle error here
-}
+    switch tokenResult {
+    case .success(let token):
+        print("Chargebee Token \(token)")
+        // Use token here
+    case .error(let error):
+        // Handle error here
+    }
 }
 ```
 ### Use the Chargebee Token
