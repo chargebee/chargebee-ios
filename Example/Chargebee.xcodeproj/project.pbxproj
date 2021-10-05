@@ -16,7 +16,6 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		62B3F4F6713321E11E4A68BB /* Pods_Chargebee_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */; };
 		72CD6DE82662856000E17CFE /* CBSDKPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */; };
-		72CD6DEF2663F0B500E17CFE /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 72CD6DEE2663F0B500E17CFE /* Configuration.storekit */; };
 		851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */; };
 		851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */; };
 		851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */; };
@@ -24,6 +23,7 @@
 		90C8D07E26A9CB260004EE81 /* CBSDKItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */; };
 		90C8D08026A9CDC10004EE81 /* CBSDKItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D07F26A9CDC10004EE81 /* CBSDKItemsTableViewController.swift */; };
 		90C8D08626AAA8480004EE81 /* CBSDKItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */; };
+		D4796B65270ACC0500E8313F /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D4796B64270ACC0500E8313F /* Configuration.storekit */; };
 		D4FAC01426EA7BCC00577895 /* CBSDKPlansViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FAC01326EA7BCC00577895 /* CBSDKPlansViewController.swift */; };
 		D4FAC01726EA7D0400577895 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FAC01626EA7D0400577895 /* UIView.swift */; };
 		D4FAC01A26EA7D3D00577895 /* CBSDKPlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FAC01826EA7D3D00577895 /* CBSDKPlanTableViewCell.swift */; };
@@ -50,7 +50,6 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6099F4CF2EFB42746EEA3CFC /* Chargebee.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chargebee.podspec; path = ../Chargebee.podspec; sourceTree = "<group>"; };
 		63558CE279E046838F75D3E6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		72CD6DEE2663F0B500E17CFE /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKProductTableViewCell.swift; sourceTree = "<group>"; };
 		851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CBSDKProductTableViewCell.xib; sourceTree = "<group>"; };
 		851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKConfigurationViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +61,7 @@
 		90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemViewController.swift; sourceTree = "<group>"; };
 		C7F2A43A1A9BBA92A21E3458 /* Pods-Chargebee_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.release.xcconfig"; sourceTree = "<group>"; };
+		D4796B64270ACC0500E8313F /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		D4FAC01326EA7BCC00577895 /* CBSDKPlansViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPlansViewController.swift; sourceTree = "<group>"; };
 		D4FAC01626EA7D0400577895 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		D4FAC01826EA7D3D00577895 /* CBSDKPlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPlanTableViewCell.swift; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 		201D6DB326858EEE00EE8DF4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				72CD6DEE2663F0B500E17CFE /* Configuration.storekit */,
+				D4796B64270ACC0500E8313F /* Configuration.storekit */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -287,8 +287,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4796B65270ACC0500E8313F /* Configuration.storekit in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				72CD6DEF2663F0B500E17CFE /* Configuration.storekit in Resources */,
 				D4FAC01B26EA7D3D00577895 /* CBSDKPlanTableViewCell.xib in Resources */,
 				90C8D07C26A9C7980004EE81 /* CBSDKItemTableViewCell.xib in Resources */,
 				851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */,
@@ -501,7 +501,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chargebee.testpurchase;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chargebee.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -523,7 +523,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chargebee.testpurchase;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chargebee.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;

@@ -19,7 +19,7 @@ class CBEnvironment {
         CBEnvironment.allowErrorLogging = allowErrorLogging
         CBEnvironment.encodedApiKey = CBEnvironment.publishableApiKey.data(using: .utf8)?.base64EncodedString() ?? ""
 //        CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
-        CBEnvironment.baseUrl = "https://\(CBEnvironment.site)/api"
+        CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
 
         if let sdkKey = sdkKey {
             CBEnvironment.sdkKey = sdkKey

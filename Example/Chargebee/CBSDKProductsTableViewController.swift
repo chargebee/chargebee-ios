@@ -25,19 +25,22 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return products.count
     }
-
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100  
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBSDKProductTableViewCell.self), for: indexPath) as! CBSDKProductTableViewCell
         let product: CBProduct = products[indexPath.row]
         cell.product = product
         cell.titleLabel.text = product.product.localizedTitle
-        cell.priceLabel.text = product.product.localizedDescription
+        cell.priceLabel.text = "\(product.product.price)"
         var buttonTitle: String = "Buy"
         cell.delegate = self
         if #available(iOS 11.2, *) {
             if let _ = product.product.subscriptionPeriod {
-                buttonTitle = "Subscripe"
+                buttonTitle = "Subscribe"
             }
         } else {
             // Fallback on earlier versions

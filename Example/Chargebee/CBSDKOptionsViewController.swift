@@ -98,7 +98,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
 
             
         case .getItems:
-            CBItem.getAllItems(queryParams :["limit": "8","sort_by[desc]" : "name","channel[is]":"app_store"], completion:  { result in
+            CBItem.getAllItems(queryParams :["limit": "8","sort_by[desc]" : "name"], completion:  { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(itemLst):

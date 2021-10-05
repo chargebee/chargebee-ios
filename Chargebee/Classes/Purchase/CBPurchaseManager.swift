@@ -79,22 +79,22 @@ public extension CBPurchase {
   
     //Get the products without Product ID's
     func retrieveProductIdentifers(queryParams : [String:String]? = nil, completion handler: @escaping ((_ result: Result<CBProductIDWrapper, Error>) -> Void)) {
-
+        var params = queryParams ?? [String:String]()
+        params["channel[is]"] = "app_store"
         switch CBEnvironment.version {
         case .v1:
-            CBProductsV1.getProducts(queryParams: queryParams) { wrapper in
+            CBProductsV1.getProducts(queryParams: params) { wrapper in
                 handler(.success(wrapper))
                 return
             }
         case .v2:
-            CBProductsV2.getProducts(queryParams: queryParams) { wrapper in
+            CBProductsV2.getProducts(queryParams: params) { wrapper in
                 handler(.success(wrapper))
                 return
             }
         case .unknown:
             handler(.failure(CBPurchaseError.invalidCatalogVersion))
             return
-
         }
         
     }
@@ -185,6 +185,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 
             case .failed:
                 if let error = transaction.error as? SKError {
+                    print(error)
                     buyProductHandler?(.failure(error))
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
@@ -222,7 +223,6 @@ public extension CBPurchase {
         }
         do {
             let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-            print(receiptData)
             
             let receiptString = receiptData.base64EncodedString(options: [])
 
@@ -231,18 +231,23 @@ public extension CBPurchase {
                     switch receiptResult {
                     case .success(let receipt):
                         debugPrint("Receipt: \(receipt)")
-                        if receipt.subscriptionId.isEmpty || !receipt.isValid {
+                        if receipt.subscriptionId.isEmpty {
                             completion?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
                             return
                         }
-                        CBSubscription.retrieveSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
-                            switch subscriptionStatusResult {
-                            case .success:
-                                completion?(.success(true))
-                            case .error(let error):
-                                completion?(.failure(error))
+                        //TODO: API should handle this logic
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            CBSubscription.retrieveSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
+                                switch subscriptionStatusResult {
+                                case .success:
+                                    completion?(.success(true))
+                                case .error(let error):
+                                    completion?(.failure(error))
+                                }
                             }
                         }
+
+
                     case .error(let error):
                         completion?(.failure(error))
                     }

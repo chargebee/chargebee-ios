@@ -14,13 +14,11 @@ struct CBValidateReceiptWrapper: Decodable {
 struct CBValidateReceipt: Decodable {
     public let subscriptionId : String
     public let customerId : String
-    public let isValid : Bool
     public let planId : String
     
     enum CodingKeys: String, CodingKey {
         case subscriptionId =  "subscription_id"
         case customerId =  "customer_id"
-        case isValid =  "is_valid"
         case planId =  "plan_id"
     }
 }
@@ -32,6 +30,9 @@ class CBReceiptValidationManager {
                                        currencyCode : String,
                                        customerId : String,
                                        completion handler: @escaping CBValidateReceiptHandler) {
+        let logger = CBLogger(name: "buy", action: "process_purchase_command")
+        logger.info()
+
     
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler,nil)
         

@@ -24,18 +24,38 @@ class CBValidateReceiptResource: CBAPIResource {
             return "/v2/in_app_subscriptions/\(CBEnvironment.sdkKey)/process_purchase_command"
         }
     }
+    
     var url: URLRequest {
-        get {
-            var components = URLComponents(string: baseUrl)
-            components!.path += methodPath
-            var urlRequest = URLRequest(url: components!.url!)
-            urlRequest.httpMethod = "post"
-            urlRequest.addValue("application/json", forHTTPHeaderField: "content-type")
-            return urlRequest
-        }
+        return createRequest()
     }
 
+    private func buildBaseRequest() -> URLRequest {
+        var components = URLComponents(string: baseUrl)
+        components!.path += methodPath
+        var urlRequest = URLRequest(url: components!.url!)
+        if let authHeader = authHeader {
+            urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
+        }
+        header?.forEach({ (key, value) in
+            urlRequest.addValue(value, forHTTPHeaderField: key)
+        })
+        return urlRequest
+    }
 
+    func createRequest() -> URLRequest {
+        var urlRequest = buildBaseRequest()
+        urlRequest.httpMethod = "post"
+        urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        var bodyComponents = URLComponents()
+        bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
+          URLQueryItem(name: key,
+                 value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "+", with: "%2B"))
+        })
+        urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
+        print(bodyComponents.query ?? "nil")
+        return urlRequest
+      }
+    
     init(receipt: String, productId: String,
          price: String, currencyCode : String,
          customerId : String) {
