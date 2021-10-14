@@ -225,7 +225,7 @@ public extension CBPurchase {
             let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
             
             let receiptString = receiptData.base64EncodedString(options: [])
-
+            print("Receipt String is :\(receiptString)")
             CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, price: price, currencyCode: currencyCode, customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {

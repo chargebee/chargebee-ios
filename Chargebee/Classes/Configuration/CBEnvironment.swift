@@ -29,6 +29,7 @@ class CBEnvironment {
                 case .success(let status):
                     CBEnvironment.version = status.details.version ?? .unknown
                 case .error(let error):
+                    print(error)
                     CBEnvironment.version = .unknown
                 }
             }

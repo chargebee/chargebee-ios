@@ -24,10 +24,6 @@ class CBValidateReceiptResource: CBAPIResource {
             return "/v2/in_app_subscriptions/\(CBEnvironment.sdkKey)/process_purchase_command"
         }
     }
-    
-    var url: URLRequest {
-        return createRequest()
-    }
 
     private func buildBaseRequest() -> URLRequest {
         var components = URLComponents(string: baseUrl)
@@ -41,6 +37,11 @@ class CBValidateReceiptResource: CBAPIResource {
         })
         return urlRequest
     }
+    
+    func create() -> URLRequest {
+        return createRequest()
+
+    }
 
     func createRequest() -> URLRequest {
         var urlRequest = buildBaseRequest()
@@ -51,6 +52,7 @@ class CBValidateReceiptResource: CBAPIResource {
           URLQueryItem(name: key,
                  value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "+", with: "%2B"))
         })
+        
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
         print(bodyComponents.query ?? "nil")
         return urlRequest
