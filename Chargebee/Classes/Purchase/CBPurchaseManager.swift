@@ -53,7 +53,6 @@ public extension CBPurchase {
     func retrieveProducts(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
-        
         // To Be commented for Local testing of Get Products
         var _productIDs: [String] = []
         if productIDs.count > 0 {
@@ -157,6 +156,7 @@ extension CBPurchase: SKProductsRequestDelegate {
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
+        debugPrint("Error: \(error.localizedDescription)")
         receiveProductsHandler?(.failure(.skRequestFailed))
     }
     
@@ -217,7 +217,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
 public extension CBPurchase {
     func validateReceipt(for productID: String, _ price: String, currencyCode: String, customerId :String,completion: ((Result<Bool, Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-              FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
+            FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
             return
         }
@@ -225,7 +225,8 @@ public extension CBPurchase {
             let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
             
             let receiptString = receiptData.base64EncodedString(options: [])
-            print("Receipt String is :\(receiptString)")
+//            print("Receipt String is :\(receiptString)")
+            debugPrint("Apple Purchase - success")
             CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, price: price, currencyCode: currencyCode, customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
@@ -235,7 +236,7 @@ public extension CBPurchase {
                             completion?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
                             return
                         }
-                        //TODO: API should handle this logic
+                        //TODO: Refactor here
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             CBSubscription.retrieveSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
                                 switch subscriptionStatusResult {
@@ -246,14 +247,12 @@ public extension CBPurchase {
                                 }
                             }
                         }
-
-
                     case .error(let error):
+                        debugPrint("Chargebee - Receipt Upload - Failure")
                         completion?(.failure(error))
                     }
                 }
             }
-            
         }
         catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
     }

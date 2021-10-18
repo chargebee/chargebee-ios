@@ -41,8 +41,7 @@ import Chargebee
 
 Chargebee.configure(site: "your-site",
                     publishableApiKey: "api_key",
-                    sdkKey: "sdk_key",
-                    allowErrorLogging: true)
+                    sdkKey: "sdk_key")
 }
 
 ```
@@ -69,9 +68,9 @@ Every In-App Purchase subscription product that you configure in your App Store 
 
 CBPurchase.shared.retrieveProductIdentifers(queryParams :["String": "String"], completion:  { result in
 switch result {
-    case let .success(productsID):
+    case let .success(products):
         print("array of Products Id's \(products)")
-    case let .error(error):
+    case let .failure(error):
         // Handle error here
 }
 
@@ -92,7 +91,7 @@ CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],com
     switch result {
     case let .success(products):
         print("array of Products \(products)")
-    case let .error(error):
+    case let .failure(error):
         // Handle error here
 }
 }

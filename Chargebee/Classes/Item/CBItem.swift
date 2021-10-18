@@ -59,7 +59,7 @@ public class CBItem: Decodable {
         
     }
     
-    public static func getAllItems(queryParams : [String:String]? = nil ,completion handler: @escaping ItemListHandler) {
+    public static func retrieveAllItems(queryParams : [String:String]? = nil ,completion handler: @escaping ItemListHandler) {
         let logger = CBLogger(name: "item", action: "getAllItems")
         logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
@@ -70,7 +70,7 @@ public class CBItem: Decodable {
         }, onError: onError)
     }
     
-    public static func getItem(_ itemId: String,completion handler: @escaping ItemHandler) {
+    public static func retrieveItem(_ itemId: String,completion handler: @escaping ItemHandler) {
         let logger = CBLogger(name: "item", action: "getItem")
         logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)

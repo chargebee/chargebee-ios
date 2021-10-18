@@ -54,7 +54,6 @@ class CBValidateReceiptResource: CBAPIResource {
         })
         
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
-        print(bodyComponents.query ?? "nil")
         return urlRequest
       }
     

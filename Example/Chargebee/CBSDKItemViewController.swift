@@ -27,7 +27,7 @@ final class CBSDKItemViewController: UIViewController {
     @IBAction func getItem() {
         clearAllFields()
         
-        CBItem.getItem(self.ItemId.text!){ (itemResult) in
+        CBItem.retrieveItem(self.ItemId.text!){ (itemResult) in
             switch itemResult {
             case .success(let item):
                 print(item)
