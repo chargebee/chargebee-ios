@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-Chargebee iOS SDK aims at simplifying recurring payments integration
+Chargebee’s iOS SDK now has support for making and managing in-app purchase subscriptions
                        DESC
 
   s.homepage         = 'https://www.chargebee.com'
