@@ -4,7 +4,7 @@
 
 import Foundation
 
-class CBPaymentConfigResource: APIResource {
+final class CBPaymentConfigResource: CBAPIResource {
     typealias ModelType = CBMerchantPaymentConfig
     typealias ErrorType = CBInternalErrorWrapper
 
@@ -28,7 +28,7 @@ struct CBGatewayDetail {
     let gatewayId: String
 }
 
-class CBMerchantPaymentConfig: Decodable {
+final class CBMerchantPaymentConfig: Decodable {
     let apmConfig: [String: PaymentConfigs]
     let currencies: [String]
     let defaultCurrency: String

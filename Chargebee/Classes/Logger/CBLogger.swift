@@ -27,7 +27,7 @@ class CBLogger {
     
     private func postLog(_ type: LogType, _ message: String? = nil, _ code: Int? = nil) {
         if CBEnvironment.allowErrorLogging {
-            let request = APIRequest(resource: LoggerResource(
+            let request = CBAPIRequest(resource: CBLoggerResource(
                 action: action,
                 type: type,
                 errorMessage: message,

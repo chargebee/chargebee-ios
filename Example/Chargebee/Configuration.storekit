@@ -1,0 +1,71 @@
+{
+  "identifier" : "977F8DEF",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "2A19A73C",
+      "localizations" : [
+
+      ],
+      "name" : "CBPremiumPlanGroup",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "84920D8B",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Monthy Subscription",
+              "displayName" : "Monthly Plan - Premium",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "Premium",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "CBPremium",
+          "subscriptionGroupID" : "2A19A73C",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "50.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "3EE23804",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Yearly Subscription",
+              "displayName" : "Yearly Plan - Pro",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "CBPro",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "CBPro - Year Plan",
+          "subscriptionGroupID" : "2A19A73C",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

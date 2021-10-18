@@ -9,19 +9,19 @@
 import UIKit
 import Chargebee
 
-class PlanViewController: UIViewController {
+final class CBSDKPlanViewController: UIViewController {
 
-    @IBOutlet weak var planCode: UITextField!
-    @IBOutlet weak var planName: UILabel!
-    @IBOutlet weak var planStatus: UILabel!
-    @IBOutlet weak var planCurrencyCode: UILabel!
-    @IBOutlet weak var planError: UILabel!
+    @IBOutlet private weak var planCode: UITextField!
+    @IBOutlet private weak var planName: UILabel!
+    @IBOutlet private weak var planStatus: UILabel!
+    @IBOutlet private weak var planCurrencyCode: UILabel!
+    @IBOutlet private weak var planError: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
-    @IBAction func getPlan() {
+    @IBAction private func getPlan() {
         clearAllFields()
         CBPlan.retrieve(self.planCode.text!) { (planResult) in
             switch planResult {
@@ -37,7 +37,7 @@ class PlanViewController: UIViewController {
         }
     }
 
-    func clearAllFields() -> Void {
+    private func clearAllFields() -> Void {
         self.planName.text = ""
         self.planStatus.text = ""
         self.planCurrencyCode.text = ""

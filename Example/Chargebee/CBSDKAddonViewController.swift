@@ -9,15 +9,15 @@
 import UIKit
 import Chargebee
 
-class AddonViewController: UIViewController {
+final class CBSDKAddonViewController: UIViewController {
 
-    @IBOutlet weak var addonCode: UITextField!
-    @IBOutlet weak var addonName: UILabel!
-    @IBOutlet weak var addonStatus: UILabel!
-    @IBOutlet weak var addonCurrencyCode: UILabel!
-    @IBOutlet weak var addonError: UILabel!
+    @IBOutlet private weak var addonCode: UITextField!
+    @IBOutlet private weak var addonName: UILabel!
+    @IBOutlet private weak var addonStatus: UILabel!
+    @IBOutlet private weak var addonCurrencyCode: UILabel!
+    @IBOutlet private weak var addonError: UILabel!
 
-    @IBAction func getAddonDetail() {
+    @IBAction private func getAddonDetail() {
         clearAllFields()
         CBAddon.retrieve(addonCode.text!) { (addonResult) in
             switch addonResult {
@@ -33,7 +33,7 @@ class AddonViewController: UIViewController {
         }
     }
 
-    func clearAllFields() -> Void {
+    private func clearAllFields() -> Void {
         self.addonName.text = ""
         self.addonStatus.text = ""
         self.addonCurrencyCode.text = ""

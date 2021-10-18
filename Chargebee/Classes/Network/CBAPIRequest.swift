@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol APIResource {
+protocol CBAPIResource {
     associatedtype ModelType: Decodable
     associatedtype ErrorType: Decodable
 
@@ -14,11 +14,11 @@ protocol APIResource {
     var header: [String: String]? { get }
     var url: URLRequest { get }
     var requestBody: URLEncodedRequestBody? { get }
-    
     func create() -> URLRequest
+    var queryParams: [String: String]? { set get}
 }
 
-extension APIResource {
+extension CBAPIResource {
     var authHeader: String? {
         get {
             nil
@@ -28,6 +28,10 @@ extension APIResource {
         get {
             nil
         }
+    }
+    
+    var queryParams :[String: String]? {
+        get { return nil } set {}
     }
     
     var requestBody: URLEncodedRequestBody? {
@@ -49,6 +53,7 @@ extension APIResource {
             URLQueryItem(name: key, value: value)
         })
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
+//        print(bodyComponents.query?.data(using: .utf8))
         return urlRequest
     }
 
@@ -56,7 +61,11 @@ extension APIResource {
         // TODO: Remove force unwrapping
         var components = URLComponents(string: baseUrl)
         components!.path += methodPath
-
+        
+        if let queryParams = queryParams{
+            components?.queryItems = queryItems(dictionary: queryParams)
+        }
+        
         var urlRequest = URLRequest(url: components!.url!)
         if let authHeader = authHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
@@ -68,7 +77,7 @@ extension APIResource {
     }
 }
 
-class APIRequest<Resource: APIResource> {
+class CBAPIRequest<Resource: CBAPIResource> {
     let resource: Resource
 
     init(resource: Resource) {
@@ -77,7 +86,7 @@ class APIRequest<Resource: APIResource> {
     
 }
 
-extension APIRequest: NetworkRequest {
+extension CBAPIRequest: CBNetworkRequest {
     
     func decode(_ data: Data) -> Resource.ModelType? {
         return try? JSONDecoder().decode(Resource.ModelType.self, from: data)
@@ -93,5 +102,12 @@ extension APIRequest: NetworkRequest {
 
     func create(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
         load(resource.create(), withCompletion: completion, onError: onError)
+    }
+}
+
+func queryItems(dictionary: [String:String]) -> [URLQueryItem] {
+    return dictionary.map {
+        // Swift 4
+        URLQueryItem(name: $0.0, value: $0.1)
     }
 }

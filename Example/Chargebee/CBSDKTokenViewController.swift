@@ -9,19 +9,19 @@
 import UIKit
 import Chargebee
 
-class TokenViewController: UIViewController {
-    @IBOutlet weak var resultLabel: UILabel!
-    @IBOutlet weak var cardNumber: UITextField!
-    @IBOutlet weak var expiryMonth: UITextField!
-    @IBOutlet weak var expiryYear: UITextField!
-    @IBOutlet weak var cvc: UITextField!
+final class CBSDKTokenViewController: UIViewController {
+    @IBOutlet private weak var resultLabel: UILabel!
+    @IBOutlet private weak var cardNumber: UITextField!
+    @IBOutlet private weak var expiryMonth: UITextField!
+    @IBOutlet private weak var expiryYear: UITextField!
+    @IBOutlet private weak var cvc: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
 
-    @IBAction func tokenize() {
+    @IBAction private func tokenize() {
         let card = CBCard(
                 cardNumber: self.cardNumber.text!,
                 expiryMonth: self.expiryMonth.text!,
