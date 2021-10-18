@@ -15,7 +15,7 @@ jobs:
     - name: Deploy to Cocoapods
       run: |
         set -eo pipefail
-        pod spec lint Chargebee.podspec
+        pod spec lint Chargebee.podspec --allow-warnings
         pod trunk push Chargebee.podspec --allow-warnings 
       env:
         COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
