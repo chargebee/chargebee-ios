@@ -24,6 +24,12 @@ It's also available through [CocoaPods](https://cocoapods.org/pods/Chargebee). T
 it, simply add the following line to your Podfile:
 
     pod 'Chargebee'
+    
+### Swift Package Manager
+
+In Xcode, File → Add Packages… and paste the URL of this Git repository into the search box.
+
+    https://github.com/chargebee/chargebee-ios
 
 ## Example project
 
