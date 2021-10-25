@@ -4,7 +4,7 @@
 //
 //  Created by Haripriyan on 7/20/20.
 //
-import Foundation
+import UIKit
 
 var deviceModelName: String {
     return UIDevice.modelName
