@@ -13,7 +13,7 @@ class CBEnvironment {
     static var sdkKey : String = ""
     static var version : CatalogVersion = .unknown
 
-    static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
+    static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil, completion: (() -> Void)?) {
         CBEnvironment.site = site
         CBEnvironment.publishableApiKey = publishableApiKey
         CBEnvironment.allowErrorLogging = allowErrorLogging
@@ -32,6 +32,7 @@ class CBEnvironment {
                     print(error)
                     CBEnvironment.version = .unknown
                 }
+                completion?()
             }
         } 
         

@@ -9,7 +9,7 @@ public class Chargebee {
     public init() {
     }
 
-    public static func configure(site: String, publishableApiKey: String, sdkKey: String? = nil, allowErrorLogging: Bool = true) {
-        CBEnvironment.configure(site: site, publishableApiKey: publishableApiKey, allowErrorLogging: allowErrorLogging, sdkKey: sdkKey)
+    public static func configure(site: String, publishableApiKey: String, sdkKey: String? = nil, allowErrorLogging: Bool = true, completion: (() -> Void)? = nil) {
+        CBEnvironment.configure(site: site, publishableApiKey: publishableApiKey, allowErrorLogging: allowErrorLogging, sdkKey: sdkKey, completion: completion)
     }
 }
