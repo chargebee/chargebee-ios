@@ -32,6 +32,10 @@ public class CBPurchase: NSObject {
 
 public struct CBProduct {
     public let product: SKProduct
+
+    public init(product: SKProduct) {
+        self.product = product
+    }
 }
 
 extension Array where Element == SKProduct {
