@@ -21,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jKq-VE-dts">
-                                <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                                <rect key="frame" x="0.0" y="50" width="320" height="430"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="ZPv-w8-T7k"/>
@@ -46,7 +46,6 @@
                         <segue destination="qNR-Ua-rbz" kind="show" identifier="productList" id="1Mc-6E-6AN"/>
                         <segue destination="407-cl-LgO" kind="show" identifier="Get Subscription Status" id="k8X-3l-CBK"/>
                         <segue destination="Sls-MC-oXs" kind="show" identifier="Configure" id="fE1-Vb-gkt"/>
-                        <segue destination="B8C-V9-hWh" kind="show" identifier="Verify Receipt" id="ana-5k-mKS"/>
                         <segue destination="LbW-EZ-ePK" kind="show" identifier="itemList" id="UiJ-cT-2l0"/>
                         <segue destination="wEf-AV-KAf" kind="show" identifier="Get Item" id="Bw1-MS-1nH"/>
                     </connections>
@@ -289,71 +288,6 @@
             </objects>
             <point key="canvasLocation" x="1789" y="895"/>
         </scene>
-        <!--Purchase View Controller-->
-        <scene sceneID="BcD-Gx-YAZ">
-            <objects>
-                <viewController id="B8C-V9-hWh" customClass="CBSDKPurchaseViewController" customModule="Chargebee_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="JRT-oO-TuS"/>
-                        <viewControllerLayoutGuide type="bottom" id="1fj-cd-Sn9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="N38-YO-uC4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jEJ-il-A4R">
-                                <rect key="frame" x="16" y="64" width="288" height="100"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Product ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sz4-cn-vPz">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="45"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="B8C-V9-hWh" id="wW5-Jk-F9H"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fur-aG-IZL">
-                                        <rect key="frame" x="0.0" y="55" width="288" height="45"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="B8C-V9-hWh" id="9cf-QB-7sH"/>
-                                        </connections>
-                                    </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="uR9-r6-wsg"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="jEJ-il-A4R" firstAttribute="leading" secondItem="N38-YO-uC4" secondAttribute="leading" constant="16" id="4RL-dE-l3H"/>
-                            <constraint firstItem="jEJ-il-A4R" firstAttribute="top" secondItem="JRT-oO-TuS" secondAttribute="bottom" constant="20" id="BfP-Wo-0UW"/>
-                            <constraint firstAttribute="trailing" secondItem="jEJ-il-A4R" secondAttribute="trailing" constant="16" id="FA1-ad-guT"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="wCj-2e-j9y">
-                        <barButtonItem key="rightBarButtonItem" title="Submit" style="plain" id="XPx-Jd-Eph">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="dCH-oa-AsL">
-                                <rect key="frame" x="233" y="7" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="submitBtnClicked:" destination="B8C-V9-hWh" eventType="touchUpInside" id="scv-pk-Xe4"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="txtPrice" destination="Fur-aG-IZL" id="R2D-gv-Obo"/>
-                        <outlet property="txtproductID" destination="sz4-cn-vPz" id="FxO-LO-iL0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rp8-lr-UJC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2490" y="340"/>
-        </scene>
         <!--Subscription Status View Controller-->
         <scene sceneID="iPx-HX-uph">
             <objects>
@@ -367,7 +301,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000000807994664" borderStyle="bezel" placeholder="Enter subscrption ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="df7-rF-eRZ">
-                                <rect key="frame" x="20" y="124" width="280" height="50"/>
+                                <rect key="frame" x="20" y="130" width="280" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Uic-GY-NBO"/>
                                 </constraints>
@@ -379,7 +313,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Atd-Mt-dUa">
-                                <rect key="frame" x="76" y="213" width="168" height="50"/>
+                                <rect key="frame" x="76" y="219" width="168" height="50"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
                                 <state key="normal" title="Fetch Status">
                                     <color key="titleColor" systemColor="linkColor"/>
@@ -400,13 +334,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKO-je-Ica">
-                                <rect key="frame" x="20" y="283" width="280" height="0.0"/>
+                                <rect key="frame" x="20" y="289" width="280" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXE-b8-Ivf">
-                                <rect key="frame" x="26" y="54" width="268" height="0.0"/>
+                                <rect key="frame" x="26" y="60" width="268" height="0.0"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -460,7 +394,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Plan Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pts-Yq-Xae">
-                                <rect key="frame" x="10" y="54" width="300" height="34"/>
+                                <rect key="frame" x="10" y="60" width="300" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -546,7 +480,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcC-fP-KTN">
-                                <rect key="frame" x="136" y="107" width="49" height="30"/>
+                                <rect key="frame" x="136" y="113" width="49" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="QRB-08-5sc"/>
                                     <constraint firstAttribute="width" constant="49" id="iU7-Hc-2BX"/>
@@ -736,7 +670,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Item Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dh5-4b-iwT">
-                                <rect key="frame" x="10" y="64" width="300" height="34"/>
+                                <rect key="frame" x="10" y="70" width="300" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>

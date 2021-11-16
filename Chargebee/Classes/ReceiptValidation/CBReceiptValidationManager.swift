@@ -26,6 +26,7 @@ struct CBValidateReceipt: Decodable {
 class CBReceiptValidationManager {
     public static func validateReceipt(receipt: String,
                                        productId: String,
+                                       name: String,
                                        price: String,
                                        currencyCode : String,
                                        customerId : String,
@@ -36,7 +37,7 @@ class CBReceiptValidationManager {
     
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler,nil)
         
-        let request = CBAPIRequest(resource: CBValidateReceiptResource(receipt: receipt, productId: productId,
+        let request = CBAPIRequest(resource: CBValidateReceiptResource(receipt: receipt, productId: productId,name: name,
                                                                      price: price, currencyCode : currencyCode,
                                                                      customerId : customerId))
         request.create(withCompletion: { (res: CBValidateReceiptWrapper?) in

@@ -32,6 +32,9 @@ public class CBPurchase: NSObject {
 
 public struct CBProduct {
     public let product: SKProduct
+    init(product: SKProduct) {
+        self.product = product
+    }
 }
 
 extension Array where Element == SKProduct {
@@ -176,8 +179,9 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 if let productId = activeProduct?.productIdentifier,
                    let price = activeProduct?.price,
                    let currencyCode = activeProduct?.priceLocale.currencyCode {
-                    let priceValue : Int = Int((price.doubleValue) * Double(100))
-                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
+                   let priceValue : Int = Int((price.doubleValue) * Double(100))
+                   let name = activeProduct?.localizedTitle ?? productId
+                    validateReceipt(for: productId, name: name, String(priceValue), currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
                 }
             case .restored:
                 restoredPurchasesCount += 1
@@ -215,7 +219,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
 
 //chargebee methods
 public extension CBPurchase {
-    func validateReceipt(for productID: String, _ price: String, currencyCode: String, customerId :String,completion: ((Result<Bool, Error>) -> Void)?) {
+    func validateReceipt(for productID: String,name:String,  _ price: String, currencyCode: String, customerId :String,completion: ((Result<Bool, Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
             FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
@@ -227,7 +231,8 @@ public extension CBPurchase {
             let receiptString = receiptData.base64EncodedString(options: [])
 //            print("Receipt String is :\(receiptString)")
             debugPrint("Apple Purchase - success")
-            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, price: price, currencyCode: currencyCode, customerId: customerID ) {
+
+            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID,name: name, price: price, currencyCode: currencyCode, customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
                     case .success(let receipt):
