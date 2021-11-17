@@ -57,7 +57,6 @@ public extension CBPurchase {
     func retrieveProducts(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
-        // To Be commented for Local testing of Get Products
         var _productIDs: [String] = []
         if productIDs.count > 0 {
             _productIDs = productIDs
@@ -71,35 +70,50 @@ public extension CBPurchase {
         }
  
         let request = SKProductsRequest(productIdentifiers: Set(_productIDs))
-        // End of To Be Commented region for Local testing of Get Products
-        
-        // To Be uncommented for Local testing of Get Products
-        //let request = SKProductsRequest(productIdentifiers: Set(["Chargebee02","Chargebee03","Chargebee04", "Chargebee05", "Chargebee06"]))
-        // End of To Be uncommented for Local testing of Get Products
         request.delegate = self
         request.start()
     }
   
-    //Get the products without Product ID's
+    ///Get the products without Product ID's
     func retrieveProductIdentifers(queryParams : [String:String]? = nil, completion handler: @escaping ((_ result: Result<CBProductIDWrapper, Error>) -> Void)) {
         var params = queryParams ?? [String:String]()
         params["channel[is]"] = "app_store"
-        switch CBEnvironment.version {
-        case .v1:
-            CBProductsV1.getProducts(queryParams: params) { wrapper in
-                handler(.success(wrapper))
+        /// Based on user Cataloge version Plan will fetch from chargebee system
+
+        func retrieveProducts() {
+            switch CBEnvironment.version {
+            case .v1:
+                CBProductsV1.getProducts(queryParams: params) { wrapper in
+                    handler(.success(wrapper))
+                    return
+                }
+            case .v2:
+                CBProductsV2.getProducts(queryParams: params) { wrapper in
+                    handler(.success(wrapper))
+                    return
+                }
+            case .unknown:
+                
+                handler(.failure(CBPurchaseError.invalidCatalogVersion))
                 return
             }
-        case .v2:
-            CBProductsV2.getProducts(queryParams: params) { wrapper in
-                handler(.success(wrapper))
-                return
-            }
-        case .unknown:
-            handler(.failure(CBPurchaseError.invalidCatalogVersion))
-            return
         }
-        
+        /// Check the Environment Version
+    
+        if CBEnvironment.version == .unknown {
+            CBAuthenticationManager.authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
+                switch result {
+                case .success(let status):
+                    CBEnvironment.version = status.details.version ?? .unknown
+                    retrieveProducts()
+                case .error(let error):
+                     print(error)
+                    handler(.failure(CBPurchaseError.invalidCatalogVersion))
+                }
+            }
+        }else {
+            retrieveProducts()
+        }
     }
     
 
@@ -254,7 +268,7 @@ public extension CBPurchase {
                             }
                         }
                     case .error(let error):
-                        debugPrint("Chargebee - Receipt Upload - Failure")
+                        debugPrint(" Chargebee - Receipt Upload - Failure")
                         completion?(.failure(error))
                     }
                 }

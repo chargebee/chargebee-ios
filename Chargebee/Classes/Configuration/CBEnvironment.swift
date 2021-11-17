@@ -18,15 +18,16 @@ class CBEnvironment {
         CBEnvironment.publishableApiKey = publishableApiKey
         CBEnvironment.allowErrorLogging = allowErrorLogging
         CBEnvironment.encodedApiKey = CBEnvironment.publishableApiKey.data(using: .utf8)?.base64EncodedString() ?? ""
-//        CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
         CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
+        CBEnvironment.version = .unknown
 
         if let sdkKey = sdkKey {
             CBEnvironment.sdkKey = sdkKey
-            // Verify SDK Key
+            /// Verify SDK Key and Setup the Environment
             CBAuthenticationManager.authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
                 switch result {
                 case .success(let status):
+                    print("Environment Setup - Completed")
                     CBEnvironment.version = status.details.version ?? .unknown
                 case .error(let error):
                     print(error)
@@ -34,7 +35,6 @@ class CBEnvironment {
                 }
             }
         } 
-        
         
     }
     
