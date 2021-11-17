@@ -17,7 +17,7 @@ public class CBPurchase: NSObject {
     
     private var productIDs: [String] = []
     public var receiveProductsHandler: ((_ result: Result<[CBProduct], CBPurchaseError>) -> Void)?
-    public var buyProductHandler: ((Result<(Bool, CBSubscriptionStatus?), Error>) -> Void)?
+    public var buyProductHandler: ((Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)?
 
     private var restoredPurchasesCount = 0
     var datasource: CBPurchaseDataSource?
@@ -104,7 +104,7 @@ public extension CBPurchase {
     
 
     //Buy the product
-    func purchaseProduct(product: CBProduct, customerId : String ,completion handler: @escaping ((_ result: Result<(Bool, CBSubscriptionStatus?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId : String ,completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
         customerID = customerId
@@ -129,7 +129,7 @@ public extension CBPurchase {
     }
     
     //Restore the purchase
-    func restorePurchases(completion handler: @escaping ((_ result: Result<(Bool, CBSubscriptionStatus?), Error>) -> Void)) {
+    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
         buyProductHandler = handler
         restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
@@ -220,7 +220,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
 
 //chargebee methods
 public extension CBPurchase {
-    func validateReceipt(for productID: String,name:String,  _ price: String, currencyCode: String, customerId :String,completion: ((Result<(Bool, CBSubscriptionStatus?), Error>) -> Void)?) {
+    func validateReceipt(for productID: String,name:String,  _ price: String, currencyCode: String, customerId :String,completion: ((Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
             FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")

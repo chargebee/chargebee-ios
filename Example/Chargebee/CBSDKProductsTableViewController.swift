@@ -76,8 +76,8 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
                 print(result)
                 switch result {
                 case .success(let result):
-                    print(result.0)
-                    print(result.1)
+                    print(result.status)
+                    print(result.subscription)
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
                         let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
