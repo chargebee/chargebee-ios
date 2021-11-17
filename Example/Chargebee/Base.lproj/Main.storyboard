@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HxA-RG-S0a">
-    <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,11 +15,11 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jKq-VE-dts">
-                                <rect key="frame" x="0.0" y="50" width="320" height="430"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="550"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="ZPv-w8-T7k"/>
@@ -63,7 +61,7 @@
                         <viewControllerLayoutGuide type="bottom" id="yyz-fz-Vkj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lUS-O2-4pA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CtJ-vg-qd8">
@@ -176,7 +174,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wJg-k6-L2M"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="X5n-Pd-q20">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aLf-Jf-DHV">
@@ -264,15 +262,15 @@
             <objects>
                 <tableViewController id="qNR-Ua-rbz" customClass="CBSDKProductsTableViewController" customModule="Chargebee_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="w4E-AA-a5O">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CBSDKProductTableViewCell" rowHeight="60" id="5iZ-tR-4Aq" customClass="CBSDKProductTableViewCell" customModule="Chargebee_Example" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="24.5" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5iZ-tR-4Aq" id="WeC-NT-gNJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -297,11 +295,11 @@
                         <viewControllerLayoutGuide type="bottom" id="etc-ao-kpR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Qdi-Xu-nDi">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000000807994664" borderStyle="bezel" placeholder="Enter subscrption ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="df7-rF-eRZ">
-                                <rect key="frame" x="20" y="130" width="280" height="50"/>
+                                <rect key="frame" x="24" y="124" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Uic-GY-NBO"/>
                                 </constraints>
@@ -313,7 +311,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Atd-Mt-dUa">
-                                <rect key="frame" x="76" y="219" width="168" height="50"/>
+                                <rect key="frame" x="134.5" y="213" width="331" height="50"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
                                 <state key="normal" title="Fetch Status">
                                     <color key="titleColor" systemColor="linkColor"/>
@@ -330,17 +328,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="fetchSubscribtionStatus:" destination="407-cl-LgO" eventType="touchUpInside" id="AuY-QS-ABZ"/>
+                                    <action selector="fetchSubscriptionStatus:" destination="407-cl-LgO" eventType="touchUpInside" id="AuY-QS-ABZ"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKO-je-Ica">
-                                <rect key="frame" x="20" y="289" width="280" height="0.0"/>
+                                <rect key="frame" x="24" y="283" width="552" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXE-b8-Ivf">
-                                <rect key="frame" x="26" y="60" width="268" height="0.0"/>
+                                <rect key="frame" x="30" y="54" width="540" height="0.0"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -383,7 +381,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ubS-3y-p1h"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HsP-vH-eFJ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Get Plan Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RoF-BI-0aK">
@@ -394,7 +392,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Plan Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pts-Yq-Xae">
-                                <rect key="frame" x="10" y="60" width="300" height="34"/>
+                                <rect key="frame" x="10" y="60" width="580" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -539,14 +537,14 @@
                         <viewControllerLayoutGuide type="bottom" id="L3C-W1-gbw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EIl-14-wKz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Oqr-m8-wRn">
-                                <rect key="frame" x="10" y="54" width="300" height="260"/>
+                                <rect key="frame" x="10" y="54" width="580" height="260"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="christopherselvaraj-test.chargebee.com" borderStyle="bezel" placeholder="Site Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="trh-K1-nlK">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="580" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="mpN-Ct-Qwm"/>
                                         </constraints>
@@ -558,7 +556,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="cb-b22l33j4bve3ngf7k3hnfacvqm" borderStyle="bezel" placeholder="SDK Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U1B-fG-uXf">
-                                        <rect key="frame" x="0.0" y="70" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="70" width="580" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="xAh-Om-nmG"/>
                                         </constraints>
@@ -570,7 +568,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="test_FVK4gS1DfkVnuvQVW5mr2p3U4DDcuLQ2E" borderStyle="bezel" placeholder="Api Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhb-ZC-bdh">
-                                        <rect key="frame" x="0.0" y="140" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="140" width="580" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="DIV-sL-iND"/>
                                         </constraints>
@@ -582,7 +580,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Nh-4k-BMz">
-                                        <rect key="frame" x="0.0" y="210" width="300" height="50"/>
+                                        <rect key="frame" x="0.0" y="210" width="580" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="4mP-h1-sXm"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="wV3-yN-slQ"/>
@@ -603,7 +601,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="fetchSubscribtionStatus:" destination="407-cl-LgO" eventType="touchUpInside" id="9lv-DI-3B5"/>
+                                            <action selector="fetchSubscriptionStatus:" destination="407-cl-LgO" eventType="touchUpInside" id="9lv-DI-3B5"/>
                                             <action selector="initializeClicked:" destination="Sls-MC-oXs" eventType="touchUpInside" id="LsZ-Ek-yWB"/>
                                         </connections>
                                     </button>
@@ -633,15 +631,15 @@
             <objects>
                 <tableViewController id="LbW-EZ-ePK" customClass="CBSDKItemsTableViewController" customModule="Chargebee_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3QS-Zz-iQq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="MnC-cz-Ze8" customClass="CBSDKItemTableViewCell" customModule="Chargebee_Example" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="320" height="43.5"/>
+                                <rect key="frame" x="0.0" y="24.5" width="600" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MnC-cz-Ze8" id="HrD-JP-RPE">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -666,11 +664,11 @@
                         <viewControllerLayoutGuide type="bottom" id="v8T-aR-Sgi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MH2-Yu-mpO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Item Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dh5-4b-iwT">
-                                <rect key="frame" x="10" y="70" width="300" height="34"/>
+                                <rect key="frame" x="10" y="70" width="580" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
