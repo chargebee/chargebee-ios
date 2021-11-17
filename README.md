@@ -108,8 +108,9 @@ When the user chooses the product to purchase, pass in the product and customer 
 
 CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID") { result in
     switch result {
-        case .success:
-            print("success")
+        case .success(let result):
+            print(result.status)
+            print(result.subscription) // this will print the subscription details object
         case .failure(let error):
             // Handle error here
     }
