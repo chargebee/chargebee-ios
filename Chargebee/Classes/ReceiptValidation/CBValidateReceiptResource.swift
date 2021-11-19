@@ -57,11 +57,11 @@ class CBValidateReceiptResource: CBAPIResource {
         return urlRequest
       }
     
-    init(receipt: String, productId: String,
+    init(receipt: String, productId: String, name: String,
          price: String, currencyCode : String,
          customerId : String) {
         self.baseUrl = CBEnvironment.baseUrl
-        self.requestBody = PayloadBody(receipt: receipt, productId: productId,
+        self.requestBody = PayloadBody(receipt: receipt, productId: productId,name: name,
                                        price: price, currencyCode : currencyCode,
                                        customerId : customerId)
     }
@@ -71,6 +71,7 @@ class CBValidateReceiptResource: CBAPIResource {
 struct PayloadBody: URLEncodedRequestBody {
     let receipt: String
     let productId: String
+    let name: String
     let price: String
     let currencyCode : String
     let customerId : String
@@ -80,6 +81,7 @@ struct PayloadBody: URLEncodedRequestBody {
         [
             "receipt" : receipt,
             "product[id]" : productId,
+            "product[name]": name,
             "product[price]" :price,
             "product[currency_code]" :currencyCode,
             "customer[id]" :customerId,

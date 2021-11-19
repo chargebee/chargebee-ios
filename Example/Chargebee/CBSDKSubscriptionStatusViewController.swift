@@ -24,7 +24,7 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
         fetchSubscriptionutton.isEnabled = shouldEnable
     }
     
-    @IBAction func fetchSubscribtionStatus(_ sender: UIButton) {
+    @IBAction func fetchSubscriptionStatus(_ sender: UIButton) {
         
         self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
 
@@ -34,7 +34,7 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
         CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
             switch result {
             case let .success(statusResult):
-                debugPrint("Subscribtion Status Fetched: \(statusResult)")
+                debugPrint("Subscription Status Fetched: \(statusResult)")
                 DispatchQueue.main.async {
                     if let status = statusResult.subscription.status, let amount = statusResult.subscription.planAmount {
                         let alertController = UIAlertController(title: "Chargebee", message: "Status :\(status)\n Plan amount:\(amount).", preferredStyle: .alert)

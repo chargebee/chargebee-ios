@@ -17,7 +17,8 @@ public class CBPurchase: NSObject {
     
     private var productIDs: [String] = []
     public var receiveProductsHandler: ((_ result: Result<[CBProduct], CBPurchaseError>) -> Void)?
-    public var buyProductHandler: ((Result<Bool, Error>) -> Void)?
+    public var buyProductHandler: ((Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)?
+
     private var restoredPurchasesCount = 0
     var datasource: CBPurchaseDataSource?
     private var activeProduct: SKProduct?
@@ -32,6 +33,9 @@ public class CBPurchase: NSObject {
 
 public struct CBProduct {
     public let product: SKProduct
+    init(product: SKProduct) {
+        self.product = product
+    }
 }
 
 extension Array where Element == SKProduct {
@@ -53,7 +57,6 @@ public extension CBPurchase {
     func retrieveProducts(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
         
-        // To Be commented for Local testing of Get Products
         var _productIDs: [String] = []
         if productIDs.count > 0 {
             _productIDs = productIDs
@@ -67,40 +70,55 @@ public extension CBPurchase {
         }
  
         let request = SKProductsRequest(productIdentifiers: Set(_productIDs))
-        // End of To Be Commented region for Local testing of Get Products
-        
-        // To Be uncommented for Local testing of Get Products
-        //let request = SKProductsRequest(productIdentifiers: Set(["Chargebee02","Chargebee03","Chargebee04", "Chargebee05", "Chargebee06"]))
-        // End of To Be uncommented for Local testing of Get Products
         request.delegate = self
         request.start()
     }
   
-    //Get the products without Product ID's
+    ///Get the products without Product ID's
     func retrieveProductIdentifers(queryParams : [String:String]? = nil, completion handler: @escaping ((_ result: Result<CBProductIDWrapper, Error>) -> Void)) {
         var params = queryParams ?? [String:String]()
         params["channel[is]"] = "app_store"
-        switch CBEnvironment.version {
-        case .v1:
-            CBProductsV1.getProducts(queryParams: params) { wrapper in
-                handler(.success(wrapper))
+        /// Based on user Cataloge version Plan will fetch from chargebee system
+
+        func retrieveProducts() {
+            switch CBEnvironment.version {
+            case .v1:
+                CBProductsV1.getProducts(queryParams: params) { wrapper in
+                    handler(.success(wrapper))
+                    return
+                }
+            case .v2:
+                CBProductsV2.getProducts(queryParams: params) { wrapper in
+                    handler(.success(wrapper))
+                    return
+                }
+            case .unknown:
+                
+                handler(.failure(CBPurchaseError.invalidCatalogVersion))
                 return
             }
-        case .v2:
-            CBProductsV2.getProducts(queryParams: params) { wrapper in
-                handler(.success(wrapper))
-                return
-            }
-        case .unknown:
-            handler(.failure(CBPurchaseError.invalidCatalogVersion))
-            return
         }
-        
+        /// Check the Environment Version
+    
+        if CBEnvironment.version == .unknown {
+            CBAuthenticationManager.authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
+                switch result {
+                case .success(let status):
+                    CBEnvironment.version = status.details.version ?? .unknown
+                    retrieveProducts()
+                case .error(let error):
+                     print(error)
+                    handler(.failure(CBPurchaseError.invalidCatalogVersion))
+                }
+            }
+        }else {
+            retrieveProducts()
+        }
     }
     
 
     //Buy the product
-    func purchaseProduct(product: CBProduct, customerId : String ,completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId : String ,completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
         customerID = customerId
@@ -125,7 +143,7 @@ public extension CBPurchase {
     }
     
     //Restore the purchase
-    func restorePurchases(completion handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
+    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
         buyProductHandler = handler
         restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
@@ -176,8 +194,9 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 if let productId = activeProduct?.productIdentifier,
                    let price = activeProduct?.price,
                    let currencyCode = activeProduct?.priceLocale.currencyCode {
-                    let priceValue : Int = Int((price.doubleValue) * Double(100))
-                    validateReceipt(for: productId, String(priceValue), currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
+                   let priceValue : Int = Int((price.doubleValue) * Double(100))
+                   let name = activeProduct?.localizedTitle ?? productId
+                    validateReceipt(for: productId, name: name, String(priceValue), currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
                 }
             case .restored:
                 restoredPurchasesCount += 1
@@ -200,7 +219,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
     
     public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         if restoredPurchasesCount != 0 {
-            buyProductHandler?(.success(true))
+            buyProductHandler?(.success((true, nil)))
         } else {
             buyProductHandler?(.failure(CBPurchaseError.noProductToRestore))
         }
@@ -215,7 +234,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
 
 //chargebee methods
 public extension CBPurchase {
-    func validateReceipt(for productID: String, _ price: String, currencyCode: String, customerId :String,completion: ((Result<Bool, Error>) -> Void)?) {
+    func validateReceipt(for productID: String,name:String,  _ price: String, currencyCode: String, customerId :String,completion: ((Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
             FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
@@ -227,7 +246,8 @@ public extension CBPurchase {
             let receiptString = receiptData.base64EncodedString(options: [])
 //            print("Receipt String is :\(receiptString)")
             debugPrint("Apple Purchase - success")
-            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, price: price, currencyCode: currencyCode, customerId: customerID ) {
+
+            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID,name: name, price: price, currencyCode: currencyCode, customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
                     case .success(let receipt):
@@ -240,15 +260,15 @@ public extension CBPurchase {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             CBSubscription.retrieveSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
                                 switch subscriptionStatusResult {
-                                case .success:
-                                    completion?(.success(true))
+                                case let .success(statusResult):
+                                    completion?(.success((true, statusResult)))
                                 case .error(let error):
                                     completion?(.failure(error))
                                 }
                             }
                         }
                     case .error(let error):
-                        debugPrint("Chargebee - Receipt Upload - Failure")
+                        debugPrint(" Chargebee - Receipt Upload - Failure")
                         completion?(.failure(error))
                     }
                 }

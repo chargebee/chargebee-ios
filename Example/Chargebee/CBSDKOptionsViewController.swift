@@ -15,7 +15,7 @@ final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
     private var items : [CBItemWrapper] = []
     private var plans : [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp,.getAllPlan, .getPlan, .getItems , .getItem, .getAddon, .createToken,.getProductIDs, .getProducts, .getSubscribtionStatus,]
+    private lazy var actions: [ClientAction] = [.initializeInApp,.getAllPlan, .getPlan, .getItems , .getItem, .getAddon, .createToken,.getProductIDs, .getProducts, .getSubscriptionStatus,]
     
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -42,7 +42,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
         case .getPlan,
              .getAddon,
              .createToken,
-             .getSubscribtionStatus,
+             .getSubscriptionStatus,
              .initializeInApp,
              .processReceipt,
              .getItem:
@@ -159,7 +159,7 @@ enum ClientAction {
     case initializeInApp
     case getProductIDs
     case getProducts
-    case getSubscribtionStatus
+    case getSubscriptionStatus
     case processReceipt
     case getItems
     case getItem
@@ -178,7 +178,7 @@ extension ClientAction {
             return "Create Tokens"
         case .getProducts:
             return "Get Products"
-        case .getSubscribtionStatus:
+        case .getSubscriptionStatus:
             return "Get Subscription Status"
         case .processReceipt:
             return "Verify Receipt"

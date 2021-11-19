@@ -15,7 +15,6 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		62B3F4F6713321E11E4A68BB /* Pods_Chargebee_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */; };
-		72CD6DE82662856000E17CFE /* CBSDKPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */; };
 		851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */; };
 		851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */; };
 		851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */; };
@@ -53,7 +52,6 @@
 		851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKProductTableViewCell.swift; sourceTree = "<group>"; };
 		851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CBSDKProductTableViewCell.xib; sourceTree = "<group>"; };
 		851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKConfigurationViewController.swift; sourceTree = "<group>"; };
-		854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPurchaseViewController.swift; sourceTree = "<group>"; };
 		880524BD03DBC913F225A876 /* Pods-Chargebee_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		90C8D07B26A9C7980004EE81 /* CBSDKItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CBSDKItemTableViewCell.xib; sourceTree = "<group>"; };
 		90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 				607FACD71AFB9204008FA782 /* CBSDKOptionsViewController.swift */,
 				FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */,
 				FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */,
-				854BE17C2653A5E100A9190D /* CBSDKPurchaseViewController.swift */,
 				20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */,
 				20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */,
 				851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */,
@@ -347,7 +344,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72CD6DE82662856000E17CFE /* CBSDKPurchaseViewController.swift in Sources */,
 				D4FAC01426EA7BCC00577895 /* CBSDKPlansViewController.swift in Sources */,
 				FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */,
 				851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */,
