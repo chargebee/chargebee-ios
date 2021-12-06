@@ -48,14 +48,16 @@ class CBValidateReceiptResource: CBAPIResource {
         urlRequest.httpMethod = "post"
         urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         var bodyComponents = URLComponents()
-        bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
-          URLQueryItem(name: key,
-                 value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "+", with: "%2B"))
-        })
-        
+        let bodyData = requestBody?.toFormBody().filter({!$0.value.isEmpty})
+        if let data = bodyData {
+            bodyComponents.queryItems = data.compactMap({ (key, value) -> URLQueryItem in
+                URLQueryItem(name: key,
+                             value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "+", with: "%2B"))
+            })
+        }
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
         return urlRequest
-      }
+    }
     
     init(receipt: String, productId: String, name: String,
          price: String, currencyCode : String,

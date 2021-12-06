@@ -86,6 +86,7 @@ The above function will determine your product catalog version in Chargebee and 
 
 You can then convert these to Apple IAP Product objects with the following function.
 
+
 ```swift
 CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],completion: { result in
     switch result {
@@ -103,6 +104,9 @@ You can present any of the above products to your users for them to purchase.
 #### Buy / Subscribe  Product
 
 When the user chooses the product to purchase, pass in the product and customer identifiers to the following function.
+
+customer id - optional Parameter
+We need the unique ID of your customer for customer_id. If your unique list of customers is maintained in your database or a 3rd party system , send us the unique ID from there. If you rely on Chargebee for the unique list of customers, then you can send us a random unique string for this ID.
 
 ```swift
 

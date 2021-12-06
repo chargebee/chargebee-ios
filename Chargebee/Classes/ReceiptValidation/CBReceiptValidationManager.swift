@@ -29,7 +29,7 @@ class CBReceiptValidationManager {
                                        name: String,
                                        price: String,
                                        currencyCode : String,
-                                       customerId : String,
+                                       customerId : String? = "",
                                        completion handler: @escaping CBValidateReceiptHandler) {
         let logger = CBLogger(name: "buy", action: "process_purchase_command")
         logger.info()
@@ -39,7 +39,7 @@ class CBReceiptValidationManager {
         
         let request = CBAPIRequest(resource: CBValidateReceiptResource(receipt: receipt, productId: productId,name: name,
                                                                      price: price, currencyCode : currencyCode,
-                                                                     customerId : customerId))
+                                                                     customerId : customerId ?? ""))
         request.create(withCompletion: { (res: CBValidateReceiptWrapper?) in
             onSuccess(res!.inAppSubscription)
         }, onError: onError)
