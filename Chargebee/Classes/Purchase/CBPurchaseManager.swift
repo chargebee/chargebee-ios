@@ -247,7 +247,7 @@ public extension CBPurchase {
 //            print("Receipt String is :\(receiptString)")
             debugPrint("Apple Purchase - success")
 
-            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID,name: name, price: price, currencyCode: currencyCode, customerId: customerID ) {
+            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, name: name, price: price, currencyCode: currencyCode, customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
                     case .success(let receipt):
