@@ -192,11 +192,9 @@ extension CBPurchase: SKPaymentTransactionObserver {
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 if let productId = activeProduct?.productIdentifier,
-                   let price = activeProduct?.price,
-                   let currencyCode = activeProduct?.priceLocale.currencyCode {
-                   let priceValue : Int = Int((price.doubleValue) * Double(100))
-                   let name = activeProduct?.localizedTitle ?? productId
-                    validateReceipt(for: productId, name: name, String(priceValue), currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
+                   let currencyCode = activeProduct?.priceLocale.currencyCode,
+                   let price = activeProduct?.price {
+                    validateReceipt(for: productId, name: activeProduct?.localizedTitle ?? productId, "\(price)", currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
                 }
             case .restored:
                 restoredPurchasesCount += 1

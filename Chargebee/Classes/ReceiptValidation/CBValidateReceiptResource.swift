@@ -79,17 +79,15 @@ struct PayloadBody: URLEncodedRequestBody {
     let price: String
     let currencyCode : String
     let customerId : String
-    let channel : String = "app_store"
 
     func toFormBody() -> [String: String] {
         [
             "receipt" : receipt,
             "product[id]" : productId,
             "product[name]": name,
-            "product[price]" :price,
+            "product[price_in_decimal]" :price,
             "product[currency_code]" :currencyCode,
-            "customer[id]" :customerId,
-            "channel": channel
+            "customer[id]" :customerId
         ]
     }
 }

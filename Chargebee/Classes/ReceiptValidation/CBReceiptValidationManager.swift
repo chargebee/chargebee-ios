@@ -36,7 +36,6 @@ class CBReceiptValidationManager {
 
     
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler,nil)
-        
         let request = CBAPIRequest(resource: CBValidateReceiptResource(receipt: receipt, productId: productId,name: name,
                                                                      price: price, currencyCode : currencyCode,
                                                                      customerId : customerId ?? ""))
