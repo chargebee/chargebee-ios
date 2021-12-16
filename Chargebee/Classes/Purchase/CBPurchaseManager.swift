@@ -118,10 +118,10 @@ public extension CBPurchase {
     
 
     //Buy the product
-    func purchaseProduct(product: CBProduct, customerId : String ,completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId : String? = "" ,completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
-        customerID = customerId
+        customerID = customerId ?? ""
         guard CBAuthenticationManager.isSDKKeyPresent() else {
             handler(.failure(CBPurchaseError.cannotMakePayments))
             return
@@ -192,11 +192,9 @@ extension CBPurchase: SKPaymentTransactionObserver {
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 if let productId = activeProduct?.productIdentifier,
-                   let price = activeProduct?.price,
-                   let currencyCode = activeProduct?.priceLocale.currencyCode {
-                   let priceValue : Int = Int((price.doubleValue) * Double(100))
-                   let name = activeProduct?.localizedTitle ?? productId
-                    validateReceipt(for: productId, name: name, String(priceValue), currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
+                   let currencyCode = activeProduct?.priceLocale.currencyCode,
+                   let price = activeProduct?.price {
+                    validateReceipt(for: productId, name: activeProduct?.localizedTitle ?? productId, "\(price)", currencyCode: currencyCode, customerId:customerID,completion: buyProductHandler)
                 }
             case .restored:
                 restoredPurchasesCount += 1
@@ -247,7 +245,7 @@ public extension CBPurchase {
 //            print("Receipt String is :\(receiptString)")
             debugPrint("Apple Purchase - success")
 
-            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID,name: name, price: price, currencyCode: currencyCode, customerId: customerID ) {
+            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, name: name, price: price, currencyCode: currencyCode, customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
                     case .success(let receipt):

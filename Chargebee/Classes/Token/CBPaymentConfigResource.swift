@@ -11,7 +11,7 @@ final class CBPaymentConfigResource: CBAPIResource {
     var baseUrl: String
     var authHeader: String? {
         get {
-            "Basic \(CBEnvironment.publishableApiKey)"
+            "Basic \(CBEnvironment.apiKey)"
         }
     }
     var methodPath: String = "/internal/component/retrieve_config"

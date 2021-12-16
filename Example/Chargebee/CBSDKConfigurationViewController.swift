@@ -44,7 +44,7 @@ final class CBSDKConfigurationViewController: UIViewController {
     @IBAction private func initializeClicked(_ sender: UIButton) {
 //        guard canInitialise() else { return }
         Chargebee.configure(site: siteNameTextField.unwrappedText,
-                            publishableApiKey: apiKeyTextField.unwrappedText,
+                            apiKey: apiKeyTextField.unwrappedText,
                             sdkKey: sdkKeyTextField.unwrappedText,
                             allowErrorLogging: true)
         }

@@ -35,6 +35,8 @@ class CBValidateReceiptResource: CBAPIResource {
         header?.forEach({ (key, value) in
             urlRequest.addValue(value, forHTTPHeaderField: key)
         })
+        urlRequest.addValue(sdkVersion, forHTTPHeaderField: "version")
+        urlRequest.addValue(platform, forHTTPHeaderField: "platform")
         return urlRequest
     }
     
@@ -48,14 +50,16 @@ class CBValidateReceiptResource: CBAPIResource {
         urlRequest.httpMethod = "post"
         urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         var bodyComponents = URLComponents()
-        bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
-          URLQueryItem(name: key,
-                 value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "+", with: "%2B"))
-        })
-        
+        let bodyData = requestBody?.toFormBody().filter({!$0.value.isEmpty})
+        if let data = bodyData {
+            bodyComponents.queryItems = data.compactMap({ (key, value) -> URLQueryItem in
+                URLQueryItem(name: key,
+                             value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "+", with: "%2B"))
+            })
+        }
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
         return urlRequest
-      }
+    }
     
     init(receipt: String, productId: String, name: String,
          price: String, currencyCode : String,
@@ -75,17 +79,15 @@ struct PayloadBody: URLEncodedRequestBody {
     let price: String
     let currencyCode : String
     let customerId : String
-    let channel : String = "app_store"
 
     func toFormBody() -> [String: String] {
         [
             "receipt" : receipt,
             "product[id]" : productId,
             "product[name]": name,
-            "product[price]" :price,
+            "product[price_in_decimal]" :price,
             "product[currency_code]" :currencyCode,
-            "customer[id]" :customerId,
-            "channel": channel
+            "customer[id]" :customerId
         ]
     }
 }

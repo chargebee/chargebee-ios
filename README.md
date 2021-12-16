@@ -40,19 +40,19 @@ You can initialize the SDK during your app startup by including the following in
 import Chargebee
 
 Chargebee.configure(site: "your-site",
-                    publishableApiKey: "api_key",
+                    apiKey: "api_key",
                     sdkKey: "sdk_key")
 }
 
 ```
 
 ### Configuration for using tokenization only
-If you want to use the Chargebee iOS SDK only for tokenizing credit card details, you can initialize the SDK with your Chargebee Site and Publishable API key alone. You can initialize the SDK during your app startup by including the following in your app delegate.
+If you want to use the Chargebee iOS SDK only for tokenizing credit card details, you can initialize the SDK with your Chargebee Site and  API key alone. You can initialize the SDK during your app startup by including the following in your app delegate.
 
 ```swift
 import Chargebee
 
-Chargebee.configure(site: "your-site", publishableApiKey: "api_key")
+Chargebee.configure(site: "your-site", apiKey: "api_key")
 
 ```
 
@@ -86,6 +86,7 @@ The above function will determine your product catalog version in Chargebee and 
 
 You can then convert these to Apple IAP Product objects with the following function.
 
+
 ```swift
 CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],completion: { result in
     switch result {
@@ -103,6 +104,9 @@ You can present any of the above products to your users for them to purchase.
 #### Buy / Subscribe  Product
 
 When the user chooses the product to purchase, pass in the product and customer identifiers to the following function.
+
+customer id - optional Parameter
+We need the unique ID of your customer for customer_id. If your unique list of customers is maintained in your database or a 3rd party system , send us the unique ID from there. If you rely on Chargebee for the unique list of customers, then you can send us a random unique string for this ID.
 
 ```swift
 
