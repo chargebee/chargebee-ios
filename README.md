@@ -40,19 +40,19 @@ You can initialize the SDK during your app startup by including the following in
 import Chargebee
 
 Chargebee.configure(site: "your-site",
-                    publishableApiKey: "api_key",
+                    apiKey: "api_key",
                     sdkKey: "sdk_key")
 }
 
 ```
 
 ### Configuration for using tokenization only
-If you want to use the Chargebee iOS SDK only for tokenizing credit card details, you can initialize the SDK with your Chargebee Site and Publishable API key alone. You can initialize the SDK during your app startup by including the following in your app delegate.
+If you want to use the Chargebee iOS SDK only for tokenizing credit card details, you can initialize the SDK with your Chargebee Site and  API key alone. You can initialize the SDK during your app startup by including the following in your app delegate.
 
 ```swift
 import Chargebee
 
-Chargebee.configure(site: "your-site", publishableApiKey: "api_key")
+Chargebee.configure(site: "your-site", apiKey: "api_key")
 
 ```
 

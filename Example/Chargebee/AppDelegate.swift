@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application
         
         Chargebee.configure(site: "Site Name",
-                            publishableApiKey: "API Key",sdkKey: "ResourceID/SDK Key")
+                            apiKey: "API Key- (full Access)",sdkKey: "ResourceID/SDK Key")
        return true
     }
 }
