@@ -6,18 +6,18 @@ import Foundation
 
 class CBEnvironment {
     static var site: String = ""
-    static var apiKey: String = ""
+    static var publishableApiKey: String = ""
     static var encodedApiKey: String = ""
     static var baseUrl: String = ""
     static var allowErrorLogging: Bool = true
     static var sdkKey : String = ""
     static var version : CatalogVersion = .unknown
 
-    static func configure(site: String, apiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
+    static func configure(site: String, publishableApiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
         CBEnvironment.site = site
-        CBEnvironment.apiKey = apiKey
+        CBEnvironment.publishableApiKey = publishableApiKey
         CBEnvironment.allowErrorLogging = allowErrorLogging
-        CBEnvironment.encodedApiKey = CBEnvironment.apiKey.data(using: .utf8)?.base64EncodedString() ?? ""
+        CBEnvironment.encodedApiKey = CBEnvironment.publishableApiKey.data(using: .utf8)?.base64EncodedString() ?? ""
         CBEnvironment.baseUrl = "https://\(CBEnvironment.site).chargebee.com/api"
         CBEnvironment.version = .unknown
 

@@ -73,8 +73,6 @@ extension CBAPIResource {
         header?.forEach({ (key, value) in
             urlRequest.addValue(value, forHTTPHeaderField: key)
         })
-        urlRequest.addValue(sdkVersion, forHTTPHeaderField: "version")
-        urlRequest.addValue(platform, forHTTPHeaderField: "platform")
         return urlRequest
     }
 }

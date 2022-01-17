@@ -34,8 +34,6 @@ final class CBSubscriptionResource: CBAPIResource {
             urlRequest.addValue(authHeader!, forHTTPHeaderField: "Authorization")
             urlRequest.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")
-            urlRequest.addValue(sdkVersion, forHTTPHeaderField: "version")
-            urlRequest.addValue(platform, forHTTPHeaderField: "platform")
             return urlRequest
         }
     }

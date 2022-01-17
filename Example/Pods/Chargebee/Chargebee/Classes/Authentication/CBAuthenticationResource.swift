@@ -37,8 +37,7 @@ final class CBAuthenticationResource: CBAPIResource {
             urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue(authHeader!, forHTTPHeaderField: "Authorization")
-            urlRequest.addValue(sdkVersion, forHTTPHeaderField: "version")
-            urlRequest.addValue(platform, forHTTPHeaderField: "platform")
+
             return urlRequest
         }
     }

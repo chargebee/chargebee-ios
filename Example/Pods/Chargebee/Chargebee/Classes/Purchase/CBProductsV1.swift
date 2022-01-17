@@ -4,7 +4,7 @@
 //
 //  Created by CB/IT/01/1039 on 21/09/21.
 //
-import Foundation
+
 public typealias ProductIdentifierHandler = (CBResult<CBProductIDWrapper>) -> Void
 
 public struct CBProductIDWrapper {

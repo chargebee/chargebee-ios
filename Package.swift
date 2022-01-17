@@ -23,7 +23,7 @@ let package = Package(
         .target(
             name: "Chargebee",
             dependencies: [],
-            path: "Sources/Chargebee",
+            path: "Chargebee/Classes",
             exclude: ["Chargebee/Assets", "Chargebee/Classes"]),
         .testTarget(
             name: "chargebee-iosTests",
