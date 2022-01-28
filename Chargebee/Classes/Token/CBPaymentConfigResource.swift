@@ -42,7 +42,7 @@ final class CBMerchantPaymentConfig: Decodable {
     func getPaymentProviderConfig(_ currencyCode: String,_ paymentType: CBPaymentType) -> CBGatewayDetail? {
         let paymentMethod: PaymentMethod? = self.apmConfig[currencyCode]?
                 .paymentMethods.first(where: { $0.type == paymentType.rawValue && $0.gatewayName == "STRIPE" })
-        if let clientId = paymentMethod?.tokenizationConfig.STRIPE.clientId, let gatewayId = paymentMethod?.id {
+        if let clientId = paymentMethod?.tokenizationConfig?.STRIPE?.clientId, let gatewayId = paymentMethod?.id {
             return CBGatewayDetail(clientId: clientId, gatewayId: gatewayId)
         }
         return nil
@@ -64,7 +64,7 @@ struct PaymentMethod {
     let id: String
     let gatewayName: String
     let gatewayCurrency: String
-    let tokenizationConfig: TokenizationConfig
+    let tokenizationConfig: TokenizationConfig?
 }
 
 extension PaymentMethod: Decodable {
@@ -78,7 +78,7 @@ extension PaymentMethod: Decodable {
 }
 
 struct TokenizationConfig: Decodable {
-    let STRIPE: PaymentProviderConfig
+    let STRIPE: PaymentProviderConfig?
 
     enum CodingKeys: String, CodingKey {
         case STRIPE

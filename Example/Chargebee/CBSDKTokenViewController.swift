@@ -33,10 +33,14 @@ final class CBSDKTokenViewController: UIViewController {
             switch tokenResult {
             case .success(let token):
                 print("Final CB Token \(token)")
-                self.resultLabel.text = token
+                DispatchQueue.main.async {
+                    self.resultLabel.text = token
+                }
             case .error(let error):
                 print("Error\(error)")
-                self.resultLabel.text = error.localizedDescription
+                DispatchQueue.main.async {
+                    self.resultLabel.text = error.localizedDescription
+                }
             }
         }
     }

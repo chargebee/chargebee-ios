@@ -95,7 +95,7 @@
 		80829F63166E214C399E72D9E3C77E29 /* Chargebee.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = Chargebee.podspec; sourceTree = "<group>"; tabWidth = 2; };
 		81468CD61E2DFF50966982F527109C20 /* Chargebee-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Chargebee-dummy.m"; sourceTree = "<group>"; };
 		822F9376F7530BF2688F6D90039096CA /* CBTokenResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBTokenResource.swift; sourceTree = "<group>"; };
-		87B14DF7F8C822BCAF9BEF054064648B /* CBNetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBNetworkRequest.swift; sourceTree = "<group>"; };
+		87B14DF7F8C822BCAF9BEF054064648B /* CBNetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBNetworkRequest.swift; sourceTree = "<group>"; tabWidth = 3; };
 		90C8D06F26A914AA0004EE81 /* CBItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBItem.swift; sourceTree = "<group>"; };
 		90C8D07326A9179B0004EE81 /* CBItemListResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBItemListResource.swift; sourceTree = "<group>"; };
 		90C8D08126AA953B0004EE81 /* CBItemResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBItemResource.swift; sourceTree = "<group>"; };
@@ -714,6 +714,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0.4;
 				MODULEMAP_FILE = "Target Support Files/Chargebee/Chargebee.modulemap";
 				PRODUCT_MODULE_NAME = Chargebee;
 				PRODUCT_NAME = Chargebee;
@@ -812,6 +813,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0.4;
 				MODULEMAP_FILE = "Target Support Files/Chargebee/Chargebee.modulemap";
 				PRODUCT_MODULE_NAME = Chargebee;
 				PRODUCT_NAME = Chargebee;
