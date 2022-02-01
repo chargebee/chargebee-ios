@@ -18,7 +18,8 @@ final class CBSubscriptionResource: CBAPIResource {
     }
     
     var baseUrl: String
-    var methodPath: String = "/v2/subscriptions"
+    
+    var methodPath: String = "/v2/in_app_subscriptions"
     
     init(_ subscriptionId: String) {
         self.baseUrl = CBEnvironment.baseUrl
