@@ -1,27 +1,16 @@
 PODS:
-  - Chargebee (0.1.0)
-  - Nimble (7.3.4)
-  - Quick (1.2.0)
+  - Chargebee (1.0.5)
 
 DEPENDENCIES:
   - Chargebee (from `../`)
-  - Nimble (~> 7.0)
-  - Quick (~> 1.2.0)
-
-SPEC REPOS:
-  trunk:
-    - Nimble
-    - Quick
 
 EXTERNAL SOURCES:
   Chargebee:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Chargebee: 921b567f23b1bbc1b95f4cec864c1f0a41adcbee
-  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  Chargebee: b2d0e391cee23c019a69e9315710085f6ae7dc94
 
-PODFILE CHECKSUM: f0dabb937ec2f116394f4d757a2ffb6d908d4d20
+PODFILE CHECKSUM: 77557d41e3cf386682df6c3bcbe52a22ff0c898c
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.2

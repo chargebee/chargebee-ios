@@ -16,7 +16,7 @@ After installing and initializing the SDK with the Chargebee site authentication
 ### Github
 The Chargebee iOS SDK can be installed directly from github, by adding this to the Podfile:
 
-    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.3'
+    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.5'
     
 ### CocoaPods
 
@@ -27,8 +27,8 @@ it, simply add the following line to your Podfile:
     
 ### Swift Package Manager
 
-- File > Swift Packages > Add Package Dependency
-- Add `https://github.com/chargebee/chargebee-ios`
+- Select File > Swift Packages > Add Package Dependency
+- Add repository URL `https://github.com/chargebee/chargebee-ios`
 
 
 ## Example project
@@ -47,7 +47,7 @@ import Chargebee
 
 Chargebee.configure(site: "your-site",
                     apiKey: "publishable_api_key",
-                    sdkKey: "sdk_key")
+                    sdkKey: "ResourceID/SDK Key")
 }
 
 ```

@@ -255,7 +255,7 @@ public extension CBPurchase {
                             return
                         }
                         //TODO: Refactor here
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
                             CBSubscription.retrieveSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
                                 switch subscriptionStatusResult {
                                 case let .success(statusResult):
