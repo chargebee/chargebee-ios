@@ -10,13 +10,12 @@ import UIKit
 import Chargebee
 
 final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
-    
     private var products: [CBProduct] = []
-    private var items : [CBItemWrapper] = []
-    private var plans : [CBPlan] = []
+    private var items: [CBItemWrapper] = []
+    private var plans: [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp,.getAllPlan, .getPlan, .getItems , .getItem, .getAddon, .createToken,.getProductIDs, .getProducts, .getSubscriptionStatus,]
-    
+    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ]
+
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
             tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -28,13 +27,13 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         actions.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = actions[indexPath.row].title
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // handle selection
         let selectedAction = actions[indexPath.row]
@@ -49,7 +48,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             performSegue(withIdentifier: selectedAction.title, sender: self)
         case .getProductIDs:
             print("Get Product ID's")
-            CBPurchase.shared.retrieveProductIdentifers(queryParams :["limit": "100"], completion:  { result in
+            CBPurchase.shared.retrieveProductIdentifers(queryParams: ["limit": "100"], completion: { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(dataWrapper):
@@ -57,10 +56,10 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         print(dataWrapper.ids)
                         DispatchQueue.main.async {
                             self.view.activityStopAnimating()
-                            let alertController = UIAlertController(title: "Chargebee", message: "\(dataWrapper.ids.joined(separator:"\n"))", preferredStyle: .alert)
+                            let alertController = UIAlertController(title: "Chargebee", message: "\(dataWrapper.ids.joined(separator: "\n"))", preferredStyle: .alert)
                             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                             self.present(alertController, animated: true, completion: nil)
-                            
+
                         }
 
                     case let .failure(error):
@@ -73,9 +72,9 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             let alert = UIAlertController(title: "",
                                           message: "Please enter Product id's (comma separated)",
                                           preferredStyle: UIAlertControllerStyle.alert)
-            let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (action) in
+            let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (_) in
                 if let textFields = alert.textFields, let customerTextField = textFields.first {
-                    CBPurchase.shared.retrieveProducts(withProductID : customerTextField.text?.components(separatedBy: ",") ?? [String]() ,completion: { result in
+                    CBPurchase.shared.retrieveProducts(withProductID: customerTextField.text?.components(separatedBy: ",") ?? [String](), completion: { result in
                         DispatchQueue.main.async {
                             switch result {
                             case let .success(products):
@@ -96,9 +95,8 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             }
             present(alert, animated: true, completion: nil)
 
-            
         case .getItems:
-            CBItem.retrieveAllItems(queryParams :["limit": "8","sort_by[desc]" : "name"], completion:  { result in
+            Chargebee.shared.retrieveAllItems(queryParams: ["limit": "8", "sort_by[desc]": "name"], completion: { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(itemLst):
@@ -112,7 +110,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             })
         case .getAllPlan:
             print("List All Plans")
-            CBPlan.retrieveAllPlans(queryParams: ["sort_by[desc]" : "name","channel[is]":"app_store"   ]) { result in
+            Chargebee.shared.retrieveAllPlans(queryParams: ["sort_by[desc]": "name", "channel[is]": "app_store"   ]) { result in
                 switch result {
                 case let .success(plansList):
                     var plans  = [CBPlan]()
@@ -126,7 +124,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         vc.render(self.plans)
                         self.navigationController?.pushViewController(vc, animated: true)
                     }
-                    
+
                 case let .error(error):
                     debugPrint("Error: \(error.localizedDescription)")
                 }
@@ -148,7 +146,7 @@ extension CBSDKOptionsViewController {
             }
         }
     }
-    
+
 }
 
 enum ClientAction {
@@ -191,7 +189,7 @@ extension ClientAction {
         case .getProductIDs:
             return "Get Apple Specific Product Identifiers"
         }
-        
+
     }
 }
 
@@ -201,9 +199,8 @@ extension String {
     }
 }
 
-
 @IBDesignable extension UIButton {
-    
+
     @IBInspectable var borderWidth: CGFloat {
         set {
             layer.borderWidth = newValue
@@ -212,7 +209,7 @@ extension String {
             return layer.borderWidth
         }
     }
-    
+
     @IBInspectable var cornerRadius: CGFloat {
         set {
             layer.cornerRadius = newValue
@@ -221,7 +218,7 @@ extension String {
             return layer.cornerRadius
         }
     }
-    
+
     @IBInspectable var borderColor: UIColor? {
         set {
             guard let uiColor = newValue else { return }
@@ -234,15 +231,14 @@ extension String {
     }
 }
 
+extension UIView {
 
-extension UIView{
-    
     func activityStartAnimating(activityColor: UIColor, backgroundColor: UIColor) {
         let backgroundView = UIView()
         backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
         backgroundView.backgroundColor = backgroundColor
         backgroundView.tag = 475647
-        
+
         var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
         activityIndicator = UIActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
         activityIndicator.center = self.center
@@ -251,17 +247,16 @@ extension UIView{
         activityIndicator.color = activityColor
         activityIndicator.startAnimating()
         self.isUserInteractionEnabled = false
-        
+
         backgroundView.addSubview(activityIndicator)
-        
+
         self.addSubview(backgroundView)
     }
-    
+
     func activityStopAnimating() {
-        if let background = viewWithTag(475647){
+        if let background = viewWithTag(475647) {
             background.removeFromSuperview()
         }
         self.isUserInteractionEnabled = true
     }
 }
-

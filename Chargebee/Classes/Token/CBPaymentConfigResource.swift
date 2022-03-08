@@ -10,12 +10,10 @@ final class CBPaymentConfigResource: CBAPIResource {
 
     var baseUrl: String
     var authHeader: String? {
-        get {
-            "Basic \(CBEnvironment.apiKey)"
-        }
+       return "Basic \(CBEnvironment.apiKey)"
     }
     var methodPath: String = "/internal/component/retrieve_config"
-    var header: [String: String]? = ["X-Requested-With":"XMLHttpRequest"]
+    var header: [String: String]? = ["X-Requested-With": "XMLHttpRequest"]
 
     init() {
         self.baseUrl = CBEnvironment.baseUrl
@@ -39,7 +37,7 @@ final class CBMerchantPaymentConfig: Decodable {
         case defaultCurrency = "default_currency"
     }
 
-    func getPaymentProviderConfig(_ currencyCode: String,_ paymentType: CBPaymentType) -> CBGatewayDetail? {
+    func getPaymentProviderConfig(_ currencyCode: String, _ paymentType: CBPaymentType) -> CBGatewayDetail? {
         let paymentMethod: PaymentMethod? = self.apmConfig[currencyCode]?
                 .paymentMethods.first(where: { $0.type == paymentType.rawValue && $0.gatewayName == "STRIPE" })
         if let clientId = paymentMethod?.tokenizationConfig?.STRIPE?.clientId, let gatewayId = paymentMethod?.id {

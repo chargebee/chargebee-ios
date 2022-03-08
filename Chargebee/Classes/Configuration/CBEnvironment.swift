@@ -10,10 +10,11 @@ class CBEnvironment {
     static var encodedApiKey: String = ""
     static var baseUrl: String = ""
     static var allowErrorLogging: Bool = true
-    static var sdkKey : String = ""
-    static var version : CatalogVersion = .unknown
+    static var sdkKey: String = ""
+    static var version: CatalogVersion = .unknown
+    static var session = URLSession.shared
 
-    static func configure(site: String, apiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
+    func configure(site: String, apiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
         CBEnvironment.site = site
         CBEnvironment.apiKey = apiKey
         CBEnvironment.allowErrorLogging = allowErrorLogging
@@ -23,8 +24,8 @@ class CBEnvironment {
 
         if let sdkKey = sdkKey {
             CBEnvironment.sdkKey = sdkKey
-            /// Verify SDK Key and Setup the Environment
-            CBAuthenticationManager.authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
+            // Verify SDK Key and Setup the Environment
+            CBAuthenticationManager().authenticate(forSDKKey: CBEnvironment.sdkKey) { result in
                 switch result {
                 case .success(let status):
                     print("Environment Setup - Completed")
@@ -34,8 +35,8 @@ class CBEnvironment {
                     CBEnvironment.version = .unknown
                 }
             }
-        } 
-        
+        }
+
     }
-    
+
 }

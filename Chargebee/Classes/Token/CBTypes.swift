@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 protocol URLEncodedRequestBody {
     func toFormBody() -> [String: String]
 }

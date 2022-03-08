@@ -36,8 +36,7 @@ struct TempTokenBody: URLEncodedRequestBody {
         [
             "payment_method_type": paymentMethodType.rawValue,
             "id_at_vault": token,
-            "gateway_account_id": gatewayId,
+            "gateway_account_id": gatewayId
         ]
     }
 }
-

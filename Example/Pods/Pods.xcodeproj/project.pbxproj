@@ -106,6 +106,7 @@
 		C58DD80238FA4C1637CE892CA3F3AB8A /* CBPurchaseManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBPurchaseManager.swift; sourceTree = "<group>"; };
 		C854F66BDD070054514712C9A6F0AFDB /* Pods-Chargebee_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Chargebee_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CFDF4096C3312129D643326C8DD1133A /* CBPlan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBPlan.swift; sourceTree = "<group>"; };
+		D4A6818927ABBA3200A6A297 /* ChargebeeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargebeeTests.swift; sourceTree = "<group>"; };
 		D814EAE43A72467ED00544A5AF8532FD /* CBValidateReceiptResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBValidateReceiptResource.swift; sourceTree = "<group>"; };
 		D909C4C47C77A96C3F7E02BCD1E6C266 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D9B46D1906BEE35533EF92F7429E6388 /* Pods-Chargebee_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Chargebee_Example-Info.plist"; sourceTree = "<group>"; };
@@ -349,6 +350,7 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				150DE15DABCE787FE6B4427774B54212 /* Development Pods */,
+				D4A6818827ABBA3200A6A297 /* ChargebeeTests */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				F9A6C31F5A9BDB37DC29BE60BCA720B8 /* Products */,
 				E2FDD844736BD1B068934626B3C89EC0 /* Targets Support Files */,
@@ -361,6 +363,14 @@
 				578452D2E740E91742655AC8F1636D1F /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D4A6818827ABBA3200A6A297 /* ChargebeeTests */ = {
+			isa = PBXGroup;
+			children = (
+				D4A6818927ABBA3200A6A297 /* ChargebeeTests.swift */,
+			);
+			path = ChargebeeTests;
 			sourceTree = "<group>";
 		};
 		E2FDD844736BD1B068934626B3C89EC0 /* Targets Support Files */ = {
@@ -455,7 +465,7 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;

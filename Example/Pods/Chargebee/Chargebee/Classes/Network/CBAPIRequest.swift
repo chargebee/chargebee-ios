@@ -15,7 +15,7 @@ protocol CBAPIResource {
     var url: URLRequest { get }
     var requestBody: URLEncodedRequestBody? { get }
     func create() -> URLRequest
-    var queryParams: [String: String]? { set get}
+    var queryParams: [String: String]? { get set}
 }
 
 extension CBAPIResource {
@@ -29,17 +29,17 @@ extension CBAPIResource {
             nil
         }
     }
-    
-    var queryParams :[String: String]? {
+
+    var queryParams: [String: String]? {
         get { return nil } set {}
     }
-    
+
     var requestBody: URLEncodedRequestBody? {
         get {
             nil
         }
     }
-    
+
     var url: URLRequest {
         buildBaseRequest()
     }
@@ -61,11 +61,11 @@ extension CBAPIResource {
         // TODO: Remove force unwrapping
         var components = URLComponents(string: baseUrl)
         components!.path += methodPath
-        
-        if let queryParams = queryParams{
+
+        if let queryParams = queryParams {
             components?.queryItems = queryItems(dictionary: queryParams)
         }
-        
+
         var urlRequest = URLRequest(url: components!.url!)
         if let authHeader = authHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
@@ -83,11 +83,11 @@ class CBAPIRequest<Resource: CBAPIResource> {
     init(resource: Resource) {
         self.resource = resource
     }
-    
+
 }
 
 extension CBAPIRequest: CBNetworkRequest {
-    
+
     func decode(_ data: Data) -> Resource.ModelType? {
         return try? JSONDecoder().decode(Resource.ModelType.self, from: data)
     }
@@ -95,7 +95,7 @@ extension CBAPIRequest: CBNetworkRequest {
     func decodeError(_ data: Data) -> Resource.ErrorType? {
         return try? JSONDecoder().decode(Resource.ErrorType.self, from: data)
     }
-    
+
     func load(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
         load(resource.url, withCompletion: completion, onError: onError)
     }
@@ -105,7 +105,7 @@ extension CBAPIRequest: CBNetworkRequest {
     }
 }
 
-func queryItems(dictionary: [String:String]) -> [URLQueryItem] {
+func queryItems(dictionary: [String: String]) -> [URLQueryItem] {
     return dictionary.map {
         // Swift 4
         URLQueryItem(name: $0.0, value: $0.1)

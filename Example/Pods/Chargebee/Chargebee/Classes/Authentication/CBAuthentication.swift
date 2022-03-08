@@ -7,18 +7,17 @@
 
 import Foundation
 
-
 public typealias CBAuthenticationHandler = (CBResult<CBAuthenticationStatus>) -> Void
 
 public class CBAuthenticationManager {}
 
 public extension CBAuthenticationManager {
-    
-    // MARK : - Public Helpers
+
+    // MARK: - Public Helpers
     static func isSDKKeyPresent() -> Bool {
         return CBEnvironment.sdkKey.isNotEmpty
     }
-   
+
     static func isCatalogV1() -> Bool {
         return CBEnvironment.sdkKey.isNotEmpty
     }
@@ -33,15 +32,15 @@ public extension CBAuthenticationManager {
             }
         }
     }
-    
+
     static func authenticate(forSDKKey key: String, handler: @escaping CBAuthenticationHandler) {
         let logger = CBLogger(name: "Authentication", action: "Authenticate SDK Key")
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
 
-        guard let appName = Bundle.main.displayName ,let bundleId = Bundle.main.bundleIdentifier  else {
+        guard let appName = Bundle.main.displayName, let bundleId = Bundle.main.bundleIdentifier  else {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "AppName is empty"))
         }
-        
+
         guard key.isNotEmpty else {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "SDK Key is empty"))
         }
@@ -50,7 +49,7 @@ public extension CBAuthenticationManager {
             onSuccess(status)
         }, onError: onError)
     }
-    
+
 }
 
 extension Bundle {
@@ -58,6 +57,3 @@ extension Bundle {
         return object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
     }
 }
-
-
-

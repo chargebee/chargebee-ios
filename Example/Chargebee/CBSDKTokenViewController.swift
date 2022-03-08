@@ -20,7 +20,6 @@ final class CBSDKTokenViewController: UIViewController {
         super.viewDidLoad()
     }
 
-
     @IBAction private func tokenize() {
         let card = CBCard(
                 cardNumber: self.cardNumber.text!,
@@ -28,8 +27,8 @@ final class CBSDKTokenViewController: UIViewController {
                 expiryYear: self.expiryYear.text!,
                 cvc: self.cvc.text!)
         print(card, "card details")
-        let paymentDetail = CBPaymentDetail(type: CBPaymentType.Card, currencyCode: "USD", card: card)
-        CBToken.createTempToken(paymentDetail: paymentDetail) { tokenResult in
+        let paymentDetail = CBPaymentDetail(type: CBPaymentType.card, currencyCode: "USD", card: card)
+        Chargebee.shared.createTempToken(paymentDetail: paymentDetail) { tokenResult in
             switch tokenResult {
             case .success(let token):
                 print("Final CB Token \(token)")

@@ -10,7 +10,7 @@ import UIKit
 import Chargebee
 
 final class CBSDKItemsTableViewController: UITableViewController {
-    
+
     var items: [CBItemWrapper] = []
 
     override func viewDidLoad() {
@@ -26,21 +26,15 @@ final class CBSDKItemsTableViewController: UITableViewController {
         return items.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBSDKItemTableViewCell.self), for: indexPath) as! CBSDKItemTableViewCell
         let item: CBItemWrapper = items[indexPath.row]
         cell.item = item
         cell.nameLabel.text = item.item.name
 //        cell.idLabel.text = item.item.id
-        
+
         return cell
 
     }
 
 }
-
-
-
-
-

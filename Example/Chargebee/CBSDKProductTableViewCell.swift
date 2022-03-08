@@ -9,8 +9,8 @@
 import UIKit
 import Chargebee
 
-protocol ProductTableViewCellDelegate:class {
-    func buyClicked(withProdct: CBProduct)
+protocol ProductTableViewCellDelegate: class {
+    func buyClicked(withProduct: CBProduct)
 }
 
 final class CBSDKProductTableViewCell: UITableViewCell {
@@ -25,7 +25,6 @@ final class CBSDKProductTableViewCell: UITableViewCell {
     // MARK: IBActions
     @IBAction private func actionBtnClicked(_ sender: Any) {
         guard let product = product else { return }
-        delegate?.buyClicked(withProdct: product)
+        delegate?.buyClicked(withProduct: product)
     }
 }
-

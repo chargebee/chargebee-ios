@@ -7,24 +7,24 @@
 
 import Foundation
 
-class CBLogger {
-    
+public class CBLogger {
+
     private let name: String
     private let action: String
-    
+
     init(name: String, action: String) {
         self.name = name
         self.action = action
     }
-    
+
     func error(message: String, code: Int? = nil) {
-        postLog(LogType.Error, message, code)
+        postLog(LogType.error, message, code)
     }
-    
+
     func info() {
-        postLog(LogType.Info)
+        postLog(LogType.info)
     }
-    
+
     private func postLog(_ type: LogType, _ message: String? = nil, _ code: Int? = nil) {
         if CBEnvironment.allowErrorLogging {
             let request = CBAPIRequest(resource: CBLoggerResource(
@@ -35,5 +35,5 @@ class CBLogger {
             request.create()
         }
     }
-    
+
 }

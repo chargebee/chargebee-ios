@@ -133,7 +133,7 @@ The above function will handle the purchase against App Store Connect, and send 
 
 Use the Subscription ID returned by the previous function, to check for Subscription status against Chargebee, and for delivering purchased entitlements.
 ```swift
-CBSubscription.retrieveSubscription(forID: "SubscriptionID") { result in
+Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
     switch result {
     case let .success(result):
         print("Status \(result.status)")
@@ -153,7 +153,7 @@ If you are using **Product Catalog 2.0** in your Chargebee site, then you can us
 
 
 ```swift
-  CBItem.retrieveAllItems(queryParams :["String" : "String"], completion:  { result in
+  Chargebee.shared.retrieveAllItems(queryParams :["String" : "String"], completion:  { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(itemLst):
@@ -172,7 +172,7 @@ For eg. query params above can be _"sort_by[desc]" : "name"_ OR _"limit": "100"_
 #### Get Item Details
 
 ```swift
-CBItem.retrieveItem("Item ID"){ (itemResult) in
+Chargebee.shared.retrieveItem("Item ID"){ (itemResult) in
             switch itemResult {
             case .success(let item):
                 print(item)
@@ -191,7 +191,7 @@ If you are using **Product Catalog 1.0** in your Chargebee site, then you can us
 #### Get All Plans
 
 ```swift
-CBPlan.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
+Chargebee.shared.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
     switch result {
     case .success(let plan):
         print("Plan Array: \(plan)")
@@ -206,7 +206,7 @@ For eg. query params above can be _"sort_by[desc]" : "name"_ OR _"limit": "100"_
 #### Get Plan Details
 
 ```swift
-CBPlan.retrieve("planId") { (planResult) in
+Chargebee.shared.retrieve("planId") { (planResult) in
     switch planResult {
     case .success(let plan):
         print("Plan Name: \(plan.name)")
@@ -220,7 +220,7 @@ CBPlan.retrieve("planId") { (planResult) in
 #### Get Addon Details
 
 ```swift
-CBAddon.retrieve("addonId") { (addonResult) in
+Chargebee.shared.retrieveAddon("addonId") { (addonResult) in
     switch addonResult {
     case .success(let addon):
         print("Addon Name: \(addon.name)")
@@ -244,7 +244,7 @@ let card = CBCard(
 
 let paymentDetail = CBPaymentDetail(type: CBPaymentType.Card, currencyCode: "USD", card: card)
 
-CBToken.createTempToken(paymentDetail: paymentDetail) { tokenResult in
+Chargebee.shared.createTempToken(paymentDetail: paymentDetail) { tokenResult in
     switch tokenResult {
     case .success(let token):
         print("Chargebee Token \(token)")

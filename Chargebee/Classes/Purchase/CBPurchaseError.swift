@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public enum CBPurchaseError: Error {
     case productIDNotFound
     case productsNotFound
@@ -17,7 +16,6 @@ public enum CBPurchaseError: Error {
     case invalidSDKKey
     case invalidCustomerId
     case invalidCatalogVersion
-
 
 }
 
