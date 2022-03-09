@@ -17,7 +17,7 @@ public class CBPurchase: NSObject {
     
     private var productIDs: [String] = []
     public var receiveProductsHandler: ((_ result: Result<[CBProduct], CBPurchaseError>) -> Void)?
-    public var buyProductHandler: ((Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)?
+    public var buyProductHandler: ((Result<(status:Bool, subscriptionId:String?), Error>) -> Void)?
 
     private var restoredPurchasesCount = 0
     var datasource: CBPurchaseDataSource?
@@ -118,7 +118,7 @@ public extension CBPurchase {
     
 
     //Buy the product
-    func purchaseProduct(product: CBProduct, customerId : String? = "" ,completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId : String? = "" ,completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
         customerID = customerId ?? ""
@@ -143,7 +143,7 @@ public extension CBPurchase {
     }
     
     //Restore the purchase
-    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)) {
+    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
@@ -232,7 +232,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
 
 //chargebee methods
 public extension CBPurchase {
-    func validateReceipt(for productID: String,name:String,  _ price: String, currencyCode: String, customerId :String,completion: ((Result<(status:Bool, subscription:CBSubscriptionStatus?), Error>) -> Void)?) {
+    func validateReceipt(for productID: String,name:String,  _ price: String, currencyCode: String, customerId :String,completion: ((Result<(status:Bool, subscriptionId:String?), Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
             FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
@@ -254,17 +254,7 @@ public extension CBPurchase {
                             completion?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
                             return
                         }
-                        //TODO: Refactor here
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                            CBSubscription.retrieveSubscription(forID: receipt.subscriptionId) { subscriptionStatusResult in
-                                switch subscriptionStatusResult {
-                                case let .success(statusResult):
-                                    completion?(.success((true, statusResult)))
-                                case .error(let error):
-                                    completion?(.failure(error))
-                                }
-                            }
-                        }
+                        completion?(.success((true, receipt.subscriptionId)))
                     case .error(let error):
                         debugPrint(" Chargebee - Receipt Upload - Failure")
                         completion?(.failure(error))
