@@ -77,13 +77,12 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
                 switch result {
                 case .success(let result):
                     print(result.status)
-                    print(result.subscription)
+                    print(result.subscriptionId)
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
                         let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alertController, animated: true, completion: nil)
-                        
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
