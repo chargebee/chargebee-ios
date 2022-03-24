@@ -7,7 +7,7 @@ import Foundation
 
 public class Chargebee {
     public static let shared = Chargebee()
-
+    private var client = NetworkClient()
     init() {}
 
     public static func configure(site: String, apiKey: String, sdkKey: String? = nil, allowErrorLogging: Bool = true) {
@@ -27,15 +27,15 @@ public class Chargebee {
         logger.info()
 
         let request = CBAPIRequest(resource: CBItemResource(id))
-        NetworkClient().retrieveItem(network: request, logger: logger, handler: handler)
+        client.retrieve(network: request, logger: logger, handler: handler)
     }
 
     public  func retrieveAllItems(queryParams: [String: String]? = nil, completion handler: @escaping ItemListHandler) {
-        let logger = CBLogger(name: "item", action: "getAllItems")
+        let logger = CBLogger(name: "items", action: "getAllItems")
         logger.info()
 
         let request = CBAPIRequest(resource: CBItemListResource(queryParams: queryParams ))
-        NetworkClient().retrieveAllItems(network: request, logger: logger, handler: handler)
+        client.retrieve(network: request, logger: logger, handler: handler)
     }
 
     public  func retrievePlan(forID id: String, handler: @escaping PlanHandler) {
@@ -43,15 +43,15 @@ public class Chargebee {
         logger.info()
 
         let request = CBAPIRequest(resource: CBItemResource(id))
-        NetworkClient().retrievePlan(network: request, logger: logger, handler: handler)
+        client.retrieve(network: request, logger: logger, handler: handler)
     }
 
     public  func retrieveAllPlans(queryParams: [String: String]? = nil, completion handler: @escaping AllPlanHandler) {
-        let logger = CBLogger(name: "item", action: "getAllItems")
+        let logger = CBLogger(name: "plan", action: "getAllPlans")
         logger.info()
 
         let request = CBAPIRequest(resource: CBItemListResource(queryParams: queryParams ))
-        NetworkClient().retrieveAllPlans(network: request, logger: logger, handler: handler)
+        client.retrieve(network: request, logger: logger, handler: handler)
     }
 
     public  func retrieveAddon(_ addonId: String, completion handler: @escaping AddonHandler) {
@@ -59,7 +59,7 @@ public class Chargebee {
         logger.info()
 
         let request = CBAPIRequest(resource: CBAddOnResource(addonId))
-        NetworkClient().retrieveAddon(network: request, logger: logger, handler: handler)
+        client.retrieve(network: request, logger: logger, handler: handler)
     }
   
     public func createTempToken(paymentDetail: CBPaymentDetail, completion handler: @escaping (CBResult<String>) -> Void) {

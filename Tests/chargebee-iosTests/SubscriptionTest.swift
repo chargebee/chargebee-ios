@@ -92,7 +92,7 @@ class SubscriptionTest: XCTestCase {
                 XCTFail()
             }
         }
-        waitForExpectations(timeout: 10)
+        waitForExpectations(timeout: 20)
     }
 
     func testSubscriptionResource() {

@@ -14,11 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application
 
         Chargebee.configure(site: "cb-imay-test",
-                            apiKey: "test_EojsGoGFeHoc3VpGPQDOZGAxYy3d0FF3", sdkKey: "cb-j53yhbfmtfhfhkmhow3ramecom")
+                            apiKey: "test_EojsGoGFeHoc3VpGPQDOZGAxYy3d0FF3", sdkKey: "cb-njjoibyzbrhyjg7yz4hkwg2ywq")
        return true
     }
 }

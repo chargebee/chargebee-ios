@@ -71,8 +71,8 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
         case .getProducts:
             let alert = UIAlertController(title: "",
                                           message: "Please enter Product id's (comma separated)",
-                                          preferredStyle: UIAlertControllerStyle.alert)
-            let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (_) in
+                                          preferredStyle: UIAlertController.Style.alert)
+            let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (_) in
                 if let textFields = alert.textFields, let customerTextField = textFields.first {
                     CBPurchase.shared.retrieveProducts(withProductID: customerTextField.text?.components(separatedBy: ",") ?? [String](), completion: { result in
                         DispatchQueue.main.async {
@@ -243,7 +243,7 @@ extension UIView {
         activityIndicator = UIActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
         activityIndicator.center = self.center
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
         activityIndicator.color = activityColor
         activityIndicator.startAnimating()
         self.isUserInteractionEnabled = false

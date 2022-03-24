@@ -99,8 +99,8 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
 
         let alert = UIAlertController(title: "",
                                       message: "Please enter customerID",
-                                      preferredStyle: UIAlertControllerStyle.alert)
-        let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (_) in
+                                      preferredStyle: UIAlertController.Style.alert)
+        let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (_) in
             if let textFields = alert.textFields, let customerTextField = textFields.first {
                 purchase(customerID: customerTextField.text ?? "")
             }

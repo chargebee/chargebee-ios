@@ -84,7 +84,7 @@ class CBPlansTest: XCTestCase {
     func testFetchingPlans() {
         let exp = expectation(description: "Plans")
         let mockRequ = MockRequestPlans.init(resource: MockItemsResource())
-        NetworkClient().retrieveAllPlans(network: mockRequ, logger: CBLogger(name: "", action: "")) { result in
+        NetworkClient().retrieve(network: mockRequ, logger: CBLogger(name: "", action: "")) { (result :CBResult<CBPlansWrapper>) in
             switch result {
             case .success(let status):
                 XCTAssertEqual(status.list.count, 2)
@@ -99,7 +99,7 @@ class CBPlansTest: XCTestCase {
     func testFetchingItemPlan() {
         let exp = expectation(description: "Plan")
         let mockRequ = MockRequestPlan.init(resource: MockItemResource())
-        NetworkClient().retrievePlan(network: mockRequ, logger: CBLogger(name: "", action: "")) { result in
+        NetworkClient().retrieve(network: mockRequ, logger: CBLogger(name: "", action: "")) { (result :CBResult<CBPlan>) in
             switch result {
             case .success(let status):
                 XCTAssertEqual(status.price, 1)

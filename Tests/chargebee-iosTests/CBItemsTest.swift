@@ -111,7 +111,7 @@ class CBItemsTest: XCTestCase {
     func testFetchingItems() {
         let exp = expectation(description: "Items")
         let mockRequ = MockRequestItems.init(resource: MockItemsResource())
-        NetworkClient().retrieveAllItems(network: mockRequ, logger: CBLogger(name: "", action: "")) { result in
+        NetworkClient().retrieve(network: mockRequ, logger: CBLogger(name: "", action: "")) { (result:CBResult<CBItemListWrapper>) in
             switch result {
             case .success(let status):
                 XCTAssertEqual(status.list.count, 2)
@@ -126,7 +126,7 @@ class CBItemsTest: XCTestCase {
     func testFetchingItem() {
         let exp = expectation(description: "Item")
         let mockRequ = MockRequestItem.init(resource: MockItemResource())
-        NetworkClient().retrieveItem(network: mockRequ, logger: CBLogger(name: "", action: "")) { result in
+        NetworkClient().retrieve(network: mockRequ, logger: CBLogger(name: "", action: "")) { (result:CBResult<CBItem>) in
             switch result {
             case .success(let status):
                 XCTAssertEqual(status.name, "name")

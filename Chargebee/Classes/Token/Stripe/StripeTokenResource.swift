@@ -13,7 +13,6 @@ class StripeTokenResource: CBAPIResource {
     var baseUrl: String = "https://api.stripe.com/v1"
     var authHeader: String? {
         return  "Bearer \(apiKey)"
-        "Bearer \(apiKey)"
     }
     var requestBody: URLEncodedRequestBody?
 

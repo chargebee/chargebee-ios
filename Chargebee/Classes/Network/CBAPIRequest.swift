@@ -3,6 +3,9 @@
 //
 
 import Foundation
+protocol URLEncodedRequestBody {
+    func toFormBody() -> [String: String]
+}
 
 protocol CBAPIResource {
     associatedtype ModelType: Decodable
@@ -147,48 +150,62 @@ extension URLSession: NetworkSession {
 }
 
 struct NetworkClient {
-    func retrieveAllItems<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping ItemListHandler) {
+    
+    func retrieve<T: CBNetworkRequest, U>(network: T, logger: CBLogger, handler: @escaping (CBResult<U>) -> Void) {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         network.load(withCompletion: { data in
-            if let data = data as? CBItemListWrapper {
+            if let data = data as? U {
                 onSuccess(data)
-            }
-        }, onError: onError)
-    }
-    func retrieveItem<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping ItemHandler) {
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        network.load(withCompletion: { data in
-            if let data = data as? CBItem {
-                onSuccess(data)
+            }else{
+                onError(CBError.defaultSytemError(statusCode: 480, message: "json serialization failure"))
             }
         }, onError: onError)
     }
 
-    func retrieveAllPlans<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping AllPlanHandler) {
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        network.load(withCompletion: { data in
-            if let data = data as? CBPlansWrapper {
-                onSuccess(data)
-            } 
-        }, onError: onError)
-    }
-
-    func retrievePlan<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping PlanHandler) {
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        network.load(withCompletion: { data in
-            if let data = data as? CBPlan {
-                onSuccess(data)
-            }
-        }, onError: onError)
-    }
-   
-    func retrieveAddon<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping AddonHandler) {
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        network.load(withCompletion: { data in
-            if let data = data as? CBAddon {
-                onSuccess(data)
-            }
-        }, onError: onError)
-    }
+//    func retrieveAllItems<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping ItemListHandler) {
+//        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+//        network.load(withCompletion: { data in
+//            if let data = data as? CBItemListWrapper {
+//                onSuccess(data)
+//            }
+//        }, onError: onError)
+//    }
+//    func retrieveItem<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping ItemHandler) {
+//        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+//        network.load(withCompletion: { data in
+//            if let data = data as? CBItem {
+//                onSuccess(data)
+//            }
+//        }, onError: onError)
+//    }
+//
+//    func retrieveAllPlans<T: CBNetworkRequest, U>(network: T, logger: CBLogger, handler: @escaping (CBResult<U>) -> Void) {
+//        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+//        network.load(withCompletion: { data in
+//            if let data = data as? U {
+//                onSuccess(data)
+//            }else{
+//
+//            }
+//        }, onError: onError)
+//    }
+//
+//    func retrievePlan<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping PlanHandler) {
+//        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+//        network.load(withCompletion: { data in
+//            if let data = data as? CBPlan {
+//                onSuccess(data)
+//            }
+//        }, onError: onError)
+//    }
+//
+//    func retrieveAddon<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping AddonHandler) {
+//        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+//        network.load(withCompletion: { data in
+//            if let data = data as? CBAddon {
+//                onSuccess(data)
+//            }
+//        }, onError: onError)
+//    }
 
 }
