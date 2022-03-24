@@ -1,11 +1,11 @@
 # Chargebee iOS
 The official Chargebee iOS SDK.
 
-After installing and initializing the SDK with the Chargebee site authentication, this SDK can be used for,
-
-1. integrating with App Store connect, processing in-app purchase subscriptions, and tracking them on your Chargebee account for a single source of subscription truth across Web subscriptions & iOS IAP. Use this if you are selling digital goods or services, or are REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/)
-
-2. tokenizing credit card information while presenting your own UI. Use this if you are selling physical goods or offline services, or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/)
+Post installation, initialising the SDK with Chargebee site’s authentication will allow you to:
+    
+1. Integrating with App Store connect, processing in-app purchase subscriptions, and tracking them on your Chargebee account for a single source of subscription truth across Web subscriptions & iOS IAP. Use this if you are selling digital goods or services, or are REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
+    **For SDK methods to work, ensure that prerequisites are configured in Chargebee.** [Click here for more details](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html).
+2. Tokenizing credit card information while presenting your own UI. Use this if you are selling physical goods or offline services, or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/)
 
 ## Requirements
 - iOS 8+
@@ -120,7 +120,7 @@ CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID")
     switch result {
         case .success(let result):
             print(result.status)
-            print(result.subscription) // this will print the subscription details object
+            print(result.subscriptionId) // this will print the subscription ID object
         case .failure(let error):
             // Handle error here
     }
