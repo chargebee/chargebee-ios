@@ -15,6 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       run: |
-        swift test -v -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios10.0-simulator"
+        swift build -v -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios10.0-simulator"
     - name: Run tests
-      run: swift test -v
+      run: |
+        swift test -v -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios10.0-simulator"
