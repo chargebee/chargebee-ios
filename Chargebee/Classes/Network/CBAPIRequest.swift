@@ -95,35 +95,12 @@ extension CBAPIRequest: CBNetworkRequest {
     }
 
     func load(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
-        func buildCBError(_ data: Data?, statusCode: Int) -> CBError {
-            guard let data = data else {
-                return CBError.defaultSytemError(statusCode: statusCode)
-            }
-            let errorDetail = self.decodeError(data)
-            return (errorDetail as? ErrorDetail)?.toCBError(statusCode) ?? CBError.defaultSytemError(statusCode: statusCode)
-        }
-
-        let task = CBEnvironment.session.dataTask(with: resource.url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            if let error = error {
-                onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
-                return
-            }
-            if let response = response as? HTTPURLResponse, response.statusCode >= 400 {
-                onError?(self.buildCBError(data, statusCode: response.statusCode))
-                return
-            }
-            guard let data = data,
-                  let decodedData = self.decode(data) else {
-                onError?(CBError.defaultSytemError(statusCode: 400, message: "Response has no/invalid body"))
-                return
-            }
-            completion?(decodedData)
-        })
-        task.resume()
-
+        load(CBEnvironment.session, urlRequest: resource.url, withCompletion: completion, onError: onError)
     }
 
-    func create(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {}
+    func create(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
+        load(CBEnvironment.session, urlRequest: resource.create(), withCompletion: completion, onError: onError)
+    }
 }
 
 func queryItems(dictionary: [String: String]) -> [URLQueryItem] {

@@ -190,6 +190,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
             case .failed:
                 if let error = transaction.error as? SKError {
                     print(error)
+                    debugPrint(transaction.error)
                     buyProductHandler?(.failure(error))
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
@@ -233,7 +234,6 @@ public extension CBPurchase {
             let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
 
             let receiptString = receiptData.base64EncodedString(options: [])
-//            print("Receipt String is :\(receiptString)")
             debugPrint("Apple Purchase - success")
             let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, customerId: self.customerID)
             CBReceiptValidationManager.validateReceipt(receipt: receipt) {

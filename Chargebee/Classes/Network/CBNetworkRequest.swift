@@ -17,8 +17,6 @@ public protocol CBNetworkRequest {
 extension CBNetworkRequest {
     func load(_ session: URLSession = URLSession.shared, urlRequest: URLRequest, withCompletion completion: SuccessHandler<ModelType>? = nil, onError: ErrorHandler? = nil) {
 
-        print("UrL request \(urlRequest)")
-
         let task = CBEnvironment.session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             if let error = error {
                 onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
