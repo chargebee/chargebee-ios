@@ -1,46 +1,85 @@
-# Chargebee iOS
-The official Chargebee iOS SDK.
+Chargebee iOS
+=============
 
-Post installation, initialising the SDK with Chargebee site’s authentication will allow you to:
-    
-1. Integrating with App Store connect, processing in-app purchase subscriptions, and tracking them on your Chargebee account for a single source of subscription truth across Web subscriptions & iOS IAP. Use this if you are selling digital goods or services, or are REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
-    **For SDK methods to work, ensure that prerequisites are configured in Chargebee.** [Click here for more details](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html).
-2. Tokenizing credit card information while presenting your own UI. Use this if you are selling physical goods or offline services, or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/)
+This is the official  Software Development Kit (SDK) for Chargebee iOS. This SDK makes it efficient and comfortable to build an impressive subscription experience in your iOS app.
 
-## Requirements
-- iOS 8+
-- Swift 5+
+Post-installation, initialization, and authentication with the Chargebee site, this SDK will support the following process.
 
-## Installation
+-   **Sync In-App Subscriptions with Chargebee**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html) with [Apple Store Connect](https://appstoreconnect.apple.com/login) to process in-app purchase subscriptions, and track them on your Chargebee account for a single source of truth for subscriptions across the Web and Apple App Store. Use this if you are selling digital goods or services, or are REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
+    **For SDK methods to work, ensure that** [**prerequisites**](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#configure-prerequisites) **are configured in Chargebee.** To import products configured in Apple App Store and existing subscriptions, read [more](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#import-products).
+
+-   **Tokenisation of credit card**: Tokenize credit card information while presenting your own user interface. Use this if you are selling physical goods or offline services or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
+
+Requirements
+------------
+
+The following requirements must be set up prior to installing Chargebee's iOS SDK
+
+-   iOS 8+
+
+-   Swift 5+
+
+Installation
+------------
+
+Choose from the following options to install Chargeee iOS SDK.
 
 ### Github
-The Chargebee iOS SDK can be installed directly from github, by adding this to the Podfile:
 
-    pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.7'
-    
+Add the following snippet to the Podfile to install directly from Github.
+
+```swift
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.5'
+```
+
 ### CocoaPods
 
-It's also available through [CocoaPods](https://cocoapods.org/pods/Chargebee). To install
-it, simply add the following line to your Podfile:
+Add the following line to your Podfile to install using [CocoaPods](https://cocoapods.org/pods/Chargebee).
 
-    pod 'Chargebee'
-    
+```swift
+pod 'Chargebee'
+```
+
 ### Swift Package Manager
 
-- Select File > Swift Packages > Add Package Dependency
-- Add repository URL `https://github.com/chargebee/chargebee-ios`
+Follow the step to install SDK using Swift Package Manager.
 
+-   Select File > Swift Packages > Add Package Dependency
 
-## Example project
+-   Add repository URL https://github.com/chargebee/chargebee-ios
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+Example project
+---------------
 
-## Configuration
+This is an optional step that helps you to verify the SDK implementation using this example project. You can download or clone the example project via GitHub.
 
-### Configuration for using In-App Purchases
-To use the Chargebee iOS SDK for making and managing in-app purchases, you must initialize the SDK with your Chargebee Site, Publishable API key and the SDK Key. You can find your Publishable API key, or create a new one, in your Chargebee account under _Configure Chargebee > API Keys_ . Once you setup the Apple App Store integration on your Chargebee account, you can find the SDK Key under the name of _Resource ID_ when you click on _View Keys_.
+To run the example project, follow these steps.
 
-You can initialize the SDK during your app startup by including the following in your app delegate.
+-   Clone the repo - https://github.com/chargebee/chargebee-ios.
+
+-   Run pod install from the Example directory.
+
+Configuring SDK
+---------------
+
+There are two types of configuration.
+
+-   Configuration for In-App Purchases
+
+-   Configuration for credit card using tokenization
+
+### Configuration for In-App Purchases
+
+To configure the Chargebee iOS SDK for completing and managing In-App Purchases, follow these steps.
+
+-   [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html) the [App Store Connect](https://appstoreconnect.apple.com/login) with your [Chargebee site](https://app.chargebee.com/login).
+
+-   On the**Sync Overview** pageof theweb app, click**View Keys**and use the value of generated[**App ID**](https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id)as the **SDK Key.**
+
+-   On the Chargebee site, navigate to **Configure Chargebee** *>* [**API Keys**](https://www.chargebee.com/docs/2.0/api_keys.html#create-an-api-key) to create a new **Publishable API Key** or use an existing [**Publishable API Key**](https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key).
+    **Note:** During the publishable API key creation you must allow **read-only** access to plans/items otherwise this key will not work in the following step. Read [more](https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key).
+
+-   Initialize the SDK with your Chargebee site, Publishable API Key, and SDK Key by including the following snippets in your app delegate during app startup.
 
 ```swift
 import Chargebee
@@ -49,29 +88,40 @@ Chargebee.configure(site: "your-site",
                     apiKey: "publishable_api_key",
                     sdkKey: "ResourceID/SDK Key")
 }
-
 ```
 
-### Configuration for using tokenization only
-If you want to use the Chargebee iOS SDK only for tokenizing credit card details, you can initialize the SDK with your Chargebee Site and  API key alone. You can initialize the SDK during your app startup by including the following in your app delegate.
+### Configuration for credit card using tokenization
+
+To configure SDK only for tokenizing credit card details, follow these steps.
+
+-   Initialize the SDK with your Chargebee Site and Publishable/Full Access Key.
+
+-   Initialize the SDK during your app startup by including the following snippets in your app delegate.
 
 ```swift
 import Chargebee
 
 Chargebee.configure(site: "your-site", apiKey: "publishable_api_key")
-
 ```
 
-## Usage
+SDK Integration Processes
+-------------------------
+
+This section describes the SDK integration processes.
+
+-   Integrating In-App Purchases
+
+-   Integrating credit card tokenization
 
 ### Integrating In-App Purchases
 
+The following section describes how to use the SDK to integrate In-App Purchase information. For details on In-App Purchase, read [more](https://www.chargebee.com/docs/2.0/mobile-in-app-purchases.html).
+
 #### Get all IAP Product IDs from Chargebee
 
-Every In-App Purchase subscription product that you configure in your App Store Connect account, can be configured in Chargebee as a Plan. Start by retrieving the Apple IAP Product IDs from your Chargebee account.
+Every In-App Purchase subscription product you configure in your App Store Connect account can be configured in Chargebee as a Plan. Start by retrieving the Apple IAP Product IDs from your Chargebee account.
 
 ```swift
-
 CBPurchase.shared.retrieveProductIdentifers(queryParams :["String": "String"], completion:  { result in
 switch result {
     case let .success(products):
@@ -79,19 +129,16 @@ switch result {
     case let .failure(error):
         // Handle error here
 }
-
 })
-
 ```
-For eg. query params above can be _"limit": "100"_.
 
-The above function will determine your product catalog version in Chargebee and hit the relevant APIs automatically, to retrieve the Chargebee Plans that correspond to Apple IAP products, along with their Apple IAP Product IDs.
+For example, query params above can be *"limit": "100"*.
 
+The above function will automatically determine your product catalog version in Chargebee and call the relevant APIs to retrieve the Chargebee Plans that correspond to Apple IAP products and their Apple IAP Product IDs.
 
-#### Get IAP Products 
+#### Get IAP Products
 
-You can then convert these to Apple IAP Product objects with the following function.
-
+You can then convert the IAP Product IDs to Apple IAP Product objects with the following function.
 
 ```swift
 CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],completion: { result in
@@ -102,20 +149,17 @@ CBPurchase.shared.retrieveProducts(withProductID : ["Product ID from Apple"],com
         // Handle error here
 }
 }
-
 ```
 
 You can present any of the above products to your users for them to purchase.
 
-#### Buy / Subscribe  Product
+#### Buy or Subscribe Product
 
-When the user chooses the product to purchase, pass in the product and customer identifiers to the following function.
+Pass the product and customer identifiers to the following function when the user chooses the product to purchase.
 
-customer id - optional Parameter
-We need the unique ID of your customer for customer_id. If your unique list of customers is maintained in your database or a 3rd party system , send us the unique ID from there. If you rely on Chargebee for the unique list of customers, then you can send us a random unique string for this ID.
+customerId - Optional parameter. We need the unique ID of your customer as customerId. If your unique list of customers is maintained in your database or a third-party system, send us the unique ID from that source.
 
 ```swift
-
 CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID") { result in
     switch result {
         case .success(let result):
@@ -125,15 +169,16 @@ CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID")
             // Handle error here
     }
 }
-
 ```
-The above function will handle the purchase against App Store Connect, and send the IAP receipt for server-side receipt verification to your Chargebee account.
 
-#### Get Subscription Status
+The above function will handle the purchase against App Store Connect and send the IAP receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function, to check for Subscription status on Chargebee and confirm the access - granted or denied.
 
-Use the Subscription ID returned by the previous function, to check for Subscription status against Chargebee, and for delivering purchased entitlements.
+#### Get Subscription Status for Existing Subscriber
+
+For a subscriber who already purchased the product, use the existing Subscription ID to check for Subscription status on Chargebee and confirm the access - granted or denied.
+
 ```swift
-Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
+CBSubscription.retrieveSubscription(forID: "SubscriptionID") { result in
     switch result {
     case let .success(result):
         print("Status \(result.status)")
@@ -145,15 +190,18 @@ Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
 
 ### Integrating credit card tokenization
 
-The following section describes how to use the SDK to directly tokenize credit card information if you are NOT REQUIRED to use Apple's in-app purchases.
+The following section describes how to use the SDK to tokenize credit card information.
 
-If you are using **Product Catalog 2.0** in your Chargebee site, then you can use the following functions to retrieve the product to be presented for users to purchase.
+#### Product Catalog 2.0
 
-#### Get all Items
+If your Chargebee site is configured to PC 2.0, use the following functions to retrieve the product or product list for purchase.
 
+##### Get all items
+
+Retrieve the list of items using the following function.
 
 ```swift
-  Chargebee.shared.retrieveAllItems(queryParams :["String" : "String"], completion:  { result in
+  CBItem.retrieveAllItems(queryParams :["String" : "String"], completion:  { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(itemLst):
@@ -165,20 +213,22 @@ If you are using **Product Catalog 2.0** in your Chargebee site, then you can us
                     }
                 }
     })
-
 ```
-For eg. query params above can be _"sort_by[desc]" : "name"_ OR _"limit": "100"_.
 
-#### Get Item Details
+For example, query params above can be *"sort_by[desc]" : "name"* OR *"limit": "100"*.
+
+##### Get item details
+
+Retrieve specific item details using the following function. Use the Item ID that you received from the previous function - Get all items.
 
 ```swift
-Chargebee.shared.retrieveItem("Item ID"){ (itemResult) in
+CBItem.retrieveItem("Item ID"){ (itemResult) in
             switch itemResult {
             case .success(let item):
                 print(item)
                 self.itemName.text = item.name
                 self.itemStatus.text = item.status
-                
+
             case .error(let error):
                 print("Error\(error)")
                 self.error.text = error.localizedDescription
@@ -186,12 +236,16 @@ Chargebee.shared.retrieveItem("Item ID"){ (itemResult) in
         }
 ```
 
-If you are using **Product Catalog 1.0** in your Chargebee site, then you can use any of the following relevant functions to retrieve the product to be presented for users to purchase.
+#### Product Catalog 1.0
 
-#### Get All Plans
+If your Chargebee site is configured to PC 1.0, use the relevant functions to retrieve the product or product list for purchase.
+
+##### Get All Plans
+
+Retrieve a list of plans using the following function.
 
 ```swift
-Chargebee.shared.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
+CBPlan.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
     switch result {
     case .success(let plan):
         print("Plan Array: \(plan)")
@@ -201,12 +255,15 @@ Chargebee.shared.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) 
     }
 }
 ```
-For eg. query params above can be _"sort_by[desc]" : "name"_ OR _"limit": "100"_.
 
-#### Get Plan Details
+For eg. query params above can be *"sort_by[desc]" : "name"* OR *"limit": "100"*.
+
+##### Get Plan Details
+
+Retrieve specific plan details passing plan ID in the following function.
 
 ```swift
-Chargebee.shared.retrieve("planId") { (planResult) in
+CBPlan.retrieve("planId") { (planResult) in
     switch planResult {
     case .success(let plan):
         print("Plan Name: \(plan.name)")
@@ -217,10 +274,12 @@ Chargebee.shared.retrieve("planId") { (planResult) in
 }
 ```
 
-#### Get Addon Details
+##### Get Addon Details
+
+Retrieve specific addon details passing addon ID in the following function.
 
 ```swift
-Chargebee.shared.retrieveAddon("addonId") { (addonResult) in
+CBAddon.retrieve("addonId") { (addonResult) in
     switch addonResult {
     case .success(let addon):
         print("Addon Name: \(addon.name)")
@@ -231,7 +290,7 @@ Chargebee.shared.retrieveAddon("addonId") { (addonResult) in
 }
 ```
 
-#### Get Payment Token
+### Get Payment Token
 
 Once the user selects the product to purchase, and you collect the credit card information, use the following function to tokenize the credit card details against Stripe. You need to have connected your Stripe account to your Chargebee site.
 
@@ -244,7 +303,7 @@ let card = CBCard(
 
 let paymentDetail = CBPaymentDetail(type: CBPaymentType.Card, currencyCode: "USD", card: card)
 
-Chargebee.shared.createTempToken(paymentDetail: paymentDetail) { tokenResult in
+CBToken.createTempToken(paymentDetail: paymentDetail) { tokenResult in
     switch tokenResult {
     case .success(let token):
         print("Chargebee Token \(token)")
@@ -255,18 +314,21 @@ Chargebee.shared.createTempToken(paymentDetail: paymentDetail) { tokenResult in
 }
 ```
 
-#### Use the Chargebee Token
+### Use the Chargebee Token
 
-Once your customer’s card data is processed and stored, and a Chargebee token reference is returned to you, you can use the token in subsequent API calls to process transactions. The following are some endpoints that accept Chargebee tokens for processing.
+After the customer's card data is processed and stored and a Chargebee token reference is returned to you, use the token in subsequent API calls to process transactions.
 
-- [Create a Payment Source for the customer](https://apidocs.chargebee.com/docs/api/payment_sources#create_using_chargebee_token)
-- [Create a Subscription](https://apidocs.chargebee.com/docs/api/subscriptions#create_a_subscription)
-- [Update a Subscription](https://apidocs.chargebee.com/docs/api/subscriptions#update_a_subscription)
+The following are some endpoints that accept Chargebee tokens for processing subscriptions.
+
+-   [Create a Payment Source for the customer](https://apidocs.chargebee.com/docs/api/payment_sources#create_using_chargebee_token)
+
+-   [Create a Subscription](https://apidocs.chargebee.com/docs/api/subscriptions#create_a_subscription)
+
+-   [Update a Subscription](https://apidocs.chargebee.com/docs/api/subscriptions#update_a_subscription)
 
 Please refer to the [Chargebee API Docs](https://apidocs.chargebee.com/docs/api) for subsequent integration steps.
 
+License
+-------
 
-
-## License
-
-Chargebee is available under the MIT license. See the LICENSE file for more info.
+Chargebee is available under the [MIT license](https://opensource.org/licenses/MIT). For more information, see the LICENSE file.
