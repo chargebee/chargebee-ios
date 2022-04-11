@@ -29,9 +29,11 @@ class CBEnvironment {
                 switch result {
                 case .success(let status):
                     print("Environment Setup - Completed")
+                    print("Note: pre-requisites configuration is mandatory for SDK to work. Learn more(https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html)")
                     CBEnvironment.version = status.details.version ?? .unknown
                 case .error(let error):
                     print(error)
+                    print("Note: pre-requisites configuration is mandatory for SDK to work. Learn more(https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html)")
                     CBEnvironment.version = .unknown
                 }
             }
