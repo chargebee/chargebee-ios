@@ -54,23 +54,23 @@ struct CBAuthenticationBody: URLEncodedRequestBody {
     let key: String
     let bundleId: String
     let appName: String
-    let channel : String = "app_store"
+    let channel: String = "app_store"
 
     func toFormBody() -> [String: String] {
         [
-            "shared_secret" : key,
-            "app_id" : bundleId,
-            "app_name" :appName,
+            "shared_secret": key,
+            "app_id": bundleId,
+            "app_name": appName,
             "channel": channel
         ]
     }
 }
 
 public struct CBAuthenticationStatus: Codable {
-    
+
     public let details: CBAuthentication
-    
-    enum CodingKeys: String, CodingKey  {
+
+    enum CodingKeys: String, CodingKey {
         case details = "in_app_detail"
     }
 }
@@ -88,7 +88,7 @@ public struct CBAuthentication: Codable {
     public let status: String?
     public let version: CatalogVersion?
 
-    enum CodingKeys: String, CodingKey  {
+    enum CodingKeys: String, CodingKey {
         case appId = "app_id"
         case status
         case version = "product_catalog_version"

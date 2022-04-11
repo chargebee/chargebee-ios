@@ -10,7 +10,7 @@ import UIKit
 import Chargebee
 
 final class CBSDKProductsTableViewController: UITableViewController, UITextFieldDelegate {
-    
+
     var products: [CBProduct] = []
 
     override func viewDidLoad() {
@@ -25,12 +25,13 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return products.count
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100  
+        return 100
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBSDKProductTableViewCell.self), for: indexPath) as! CBSDKProductTableViewCell
         let product: CBProduct = products[indexPath.row]
         cell.product = product
@@ -54,25 +55,24 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
 
 extension UITableViewCell {
 // Not using static as it wont be possible to override to provide custom storyboardID then
-class var storyboardID : String {
+class var storyboardID: String {
     return "\(self)"
   }
 
-static func registerCellXib(with tableview: UITableView){
+static func registerCellXib(with tableview: UITableView) {
     let nib = UINib(nibName: self.storyboardID, bundle: nil)
     tableview.register(nib, forCellReuseIdentifier: self.storyboardID)
   }
 }
 
+extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
 
-extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
-        
-    func buyClicked(withProdct: CBProduct) {
+    func buyClicked(withProduct: CBProduct) {
 
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-            
-            CBPurchase.shared.purchaseProduct(product: withProdct,customerId: customerID) { result in
+
+            CBPurchase.shared.purchaseProduct(product: withProduct, customerId: customerID) { result in
                 print(result)
                 switch result {
                 case .success(let result):
@@ -95,11 +95,11 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
                 }
             }
         }
-        
+
         let alert = UIAlertController(title: "",
                                       message: "Please enter customerID",
-                                      preferredStyle: UIAlertControllerStyle.alert)
-        let defaultAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (action) in
+                                      preferredStyle: UIAlertController.Style.alert)
+        let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (_) in
             if let textFields = alert.textFields, let customerTextField = textFields.first {
                 purchase(customerID: customerTextField.text ?? "")
             }
@@ -110,7 +110,6 @@ extension CBSDKProductsTableViewController : ProductTableViewCellDelegate {
              textField.delegate = self
         }
         present(alert, animated: true, completion: nil)
-
 
     }
 }

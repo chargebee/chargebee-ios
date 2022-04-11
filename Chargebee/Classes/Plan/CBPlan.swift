@@ -13,15 +13,14 @@ public struct CBPlanWrapper: Decodable {
 public struct CBPlansWrapper: Decodable {
     public let list: [CBPlanWrapper]
     public  let nextOffset: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case list
         case nextOffset = "next_offset"
     }
 }
 
-
-public class CBPlan: Decodable {
+public struct CBPlan: Decodable {
     public let addonApplicability: String
     public let chargeModel: String
     public let currencyCode: String
@@ -64,29 +63,6 @@ public class CBPlan: Decodable {
         case status = "status"
         case taxable = "taxable"
         case updatedAt = "updated_at"
-    }
-    
-    public static func retrieve(_ planId: String, completion handler: @escaping PlanHandler) {
-        let logger = CBLogger(name: "plan", action: "retrieve_plan")
-        logger.info()
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        if planId.isEmpty {
-            return onError(CBError.defaultSytemError(statusCode: 400, message: "Plan id is empty"))
-        }
-        let request = CBAPIRequest(resource: CBPlanResource(planId))
-        request.load(withCompletion: { planWrapper in
-            onSuccess(planWrapper.plan)
-        }, onError: onError)
-    }
-
-    public static func retrieveAllPlans(queryParams : [String:String]? = nil, completion handler: @escaping AllPlanHandler) {
-        let logger = CBLogger(name: "plan", action: "getAllPlans")
-        logger.info()
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        let request = CBAPIRequest(resource: CBPlansResource(queryParams :queryParams ))
-        request.load(withCompletion: { planListWrapper in
-            onSuccess(planListWrapper)
-        }, onError: onError)
     }
 
 }

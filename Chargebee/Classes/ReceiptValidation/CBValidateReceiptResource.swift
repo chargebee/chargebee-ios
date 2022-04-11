@@ -1,6 +1,5 @@
 //
 //  CBValidateReceiptResource.swift
-//  FakeGame
 //
 //  Created by cb-christopher on 19/04/21.
 //  Copyright © 2021 Chargebee. All rights reserved.
@@ -13,16 +12,12 @@ class CBValidateReceiptResource: CBAPIResource {
     typealias ErrorType = CBErrorDetail
 
     var authHeader: String? {
-        get {
-            return "Basic \(CBEnvironment.encodedApiKey)"
-        }
+        return "Basic \(CBEnvironment.encodedApiKey)"
     }
     var baseUrl: String
     var requestBody: URLEncodedRequestBody?
     var methodPath: String {
-        get {
-            return "/v2/in_app_subscriptions/\(CBEnvironment.sdkKey)/process_purchase_command"
-        }
+        return "/v2/in_app_subscriptions/\(CBEnvironment.sdkKey)/process_purchase_command"
     }
 
     private func buildBaseRequest() -> URLRequest {
@@ -39,7 +34,7 @@ class CBValidateReceiptResource: CBAPIResource {
         urlRequest.addValue(platform, forHTTPHeaderField: "platform")
         return urlRequest
     }
-    
+
     func create() -> URLRequest {
         return createRequest()
 
@@ -60,14 +55,12 @@ class CBValidateReceiptResource: CBAPIResource {
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
         return urlRequest
     }
-    
-    init(receipt: String, productId: String, name: String,
-         price: String, currencyCode : String,
-         customerId : String) {
+
+    init(receipt: CBReceipt ) {
         self.baseUrl = CBEnvironment.baseUrl
-        self.requestBody = PayloadBody(receipt: receipt, productId: productId,name: name,
-                                       price: price, currencyCode : currencyCode,
-                                       customerId : customerId)
+        self.requestBody = PayloadBody(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
+                                       price: receipt.price, currencyCode: receipt.currencyCode,
+                                       customerId: receipt.customerId ??  "")
     }
 
 }
@@ -77,18 +70,17 @@ struct PayloadBody: URLEncodedRequestBody {
     let productId: String
     let name: String
     let price: String
-    let currencyCode : String
-    let customerId : String
+    let currencyCode: String
+    let customerId: String
 
     func toFormBody() -> [String: String] {
         [
-            "receipt" : receipt,
-            "product[id]" : productId,
+            "receipt": receipt,
+            "product[id]": productId,
             "product[name]": name,
-            "product[price_in_decimal]" :price,
-            "product[currency_code]" :currencyCode,
-            "customer[id]" :customerId
+            "product[price_in_decimal]": price,
+            "product[currency_code]": currencyCode,
+            "customer[id]": customerId
         ]
     }
 }
-

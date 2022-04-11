@@ -12,35 +12,29 @@ final class CBAuthenticationResource: CBAPIResource {
     typealias ErrorType = CBErrorDetail
 
     var authHeader: String? {
-        get {
-            return "Basic \(CBEnvironment.encodedApiKey)"
-        }
+        return "Basic \(CBEnvironment.encodedApiKey)"
     }
     var baseUrl: String
     var requestBody: URLEncodedRequestBody?
     var methodPath: String {
-        get {
-            return "/v2/in_app_details/\(CBEnvironment.sdkKey)/verify_app_detail"
-        }
+        return "/v2/in_app_details/\(CBEnvironment.sdkKey)/verify_app_detail"
     }
 
     var url: URLRequest {
-        get {
-            var components = URLComponents(string: baseUrl)
-            components!.path += methodPath
-            var urlRequest = URLRequest(url: components!.url!)
-            urlRequest.httpMethod = "post"
-            var bodyComponents = URLComponents()
-            bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
-                URLQueryItem(name: key, value: value)
-            })
-            urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
-            urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            urlRequest.addValue(authHeader!, forHTTPHeaderField: "Authorization")
-            urlRequest.addValue(sdkVersion, forHTTPHeaderField: "version")
-            urlRequest.addValue(platform, forHTTPHeaderField: "platform")
-            return urlRequest
-        }
+        var components = URLComponents(string: baseUrl)
+        components!.path += methodPath
+        var urlRequest = URLRequest(url: components!.url!)
+        urlRequest.httpMethod = "post"
+        var bodyComponents = URLComponents()
+        bodyComponents.queryItems = requestBody?.toFormBody().map({ (key, value) -> URLQueryItem in
+            URLQueryItem(name: key, value: value)
+        })
+        urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
+        urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue(authHeader!, forHTTPHeaderField: "Authorization")
+        urlRequest.addValue(sdkVersion, forHTTPHeaderField: "version")
+        urlRequest.addValue(platform, forHTTPHeaderField: "platform")
+        return urlRequest
     }
 
     init(key: String, bundleId: String,
@@ -55,23 +49,23 @@ struct CBAuthenticationBody: URLEncodedRequestBody {
     let key: String
     let bundleId: String
     let appName: String
-    let channel : String = "app_store"
+    let channel: String = "app_store"
 
     func toFormBody() -> [String: String] {
         [
-            "shared_secret" : key,
-            "app_id" : bundleId,
-            "app_name" :appName,
+            "shared_secret": key,
+            "app_id": bundleId,
+            "app_name": appName,
             "channel": channel
         ]
     }
 }
 
 public struct CBAuthenticationStatus: Codable {
-    
+
     public let details: CBAuthentication
-    
-    enum CodingKeys: String, CodingKey  {
+
+    enum CodingKeys: String, CodingKey {
         case details = "in_app_detail"
     }
 }
@@ -89,7 +83,7 @@ public struct CBAuthentication: Codable {
     public let status: String?
     public let version: CatalogVersion?
 
-    enum CodingKeys: String, CodingKey  {
+    enum CodingKeys: String, CodingKey {
         case appId = "app_id"
         case status
         case version = "product_catalog_version"

@@ -52,7 +52,7 @@ public class CBAddon: Decodable {
         case showDescriptionInInvoices =  "show_description_in_invoices"
         case showDescriptionInQuotes =  "show_description_in_quotes"
     }
-    
+
     public static func retrieve(_ addonId: String, completion handler: @escaping AddonHandler) {
         let logger = CBLogger(name: "addon", action: "retrieve_addon")
         logger.info()
@@ -66,4 +66,3 @@ public class CBAddon: Decodable {
         }, onError: onError)
     }
 }
-

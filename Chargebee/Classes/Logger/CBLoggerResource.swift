@@ -24,41 +24,38 @@ var osVersion: String {
 }
 
 var sdkVersion: String {
-   
-    if let version = Bundle(for: Chargebee.self).infoDictionary?["CFBundleShortVersionString"] as? String, let build = Bundle(for: Chargebee.self).infoDictionary?["CFBundleVersion"] as? String  {
-        
+
+    if let version = Bundle(for: Chargebee.self).infoDictionary?["CFBundleShortVersionString"] as? String, let build = Bundle(for: Chargebee.self).infoDictionary?["CFBundleVersion"] as? String {
+
         return "\(version)-(\(build))"
       }
 
     return ""
 }
 
-
 class CBLoggerResource: CBAPIResource {
-    
+
     typealias ModelType = String?
     typealias ErrorType = String?
-    
+
     var baseUrl: String
     var methodPath: String = "/internal/track_info_error"
     private var logDetail: LogDetail
-   
+
     func create() -> URLRequest {
         return self.url
     }
-    
+
     var url: URLRequest {
-        get {
-            var components = URLComponents(string: baseUrl)
-            components!.path += methodPath
-            var urlRequest = URLRequest(url: components!.url!)
-            urlRequest.httpMethod = "post"
-            urlRequest.httpBody = try? JSONEncoder().encode(self.logDetail)
-            urlRequest.addValue("application/json", forHTTPHeaderField: "content-type")
-            return urlRequest
-        }
+        var components = URLComponents(string: baseUrl)
+        components!.path += methodPath
+        var urlRequest = URLRequest(url: components!.url!)
+        urlRequest.httpMethod = "post"
+        urlRequest.httpBody = try? JSONEncoder().encode(self.logDetail)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "content-type")
+        return urlRequest
     }
-    
+
     init(action: String, type: LogType, errorMessage: String? = nil, errorCode: Int? = nil) {
         var data =  ["key": "cb.logging",
                      "ref_module": "cb_ios_sdk",
@@ -81,18 +78,16 @@ class CBLoggerResource: CBAPIResource {
 }
 
 struct LogDetail: Codable {
-    
+
     let data: [String: String]
-    let type = "kvl"
-    
+    var type = "kvl"
+
 }
 
 enum LogType: String {
-    case Error = "error"
-    case Info = "info"
+    case error
+    case info
 }
-
-
 
 public extension UIDevice {
     static let modelName: String = {

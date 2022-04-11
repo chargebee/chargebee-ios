@@ -23,8 +23,11 @@ final class CBSDKPlanViewController: UIViewController {
 
     @IBAction private func getPlan() {
         clearAllFields()
-        CBPlan.retrieve(self.planCode.text!) { (planResult) in
-            switch planResult {
+        guard let planId = self.planCode.text else {
+            return
+        }
+        Chargebee.shared.retrievePlan(forID: planId) { result in
+            switch result {
             case .success(let plan):
                 print(plan)
                 self.planName.text = plan.name
@@ -34,10 +37,11 @@ final class CBSDKPlanViewController: UIViewController {
                 print("Error\(error)")
                 self.planError.text = error.localizedDescription
             }
+
         }
     }
 
-    private func clearAllFields() -> Void {
+    private func clearAllFields() {
         self.planName.text = ""
         self.planStatus.text = ""
         self.planCurrencyCode.text = ""

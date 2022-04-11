@@ -12,12 +12,12 @@ import Chargebee
 class CBSDKItemTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
-    
+
     @IBOutlet weak var idLabel: UILabel!
-    
+
     // MARK: - Public Properties
     var item: CBItemWrapper?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

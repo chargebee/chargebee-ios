@@ -4,10 +4,10 @@
 
 import Foundation
 
-protocol CBNetworkRequest {
+public protocol CBNetworkRequest {
     associatedtype ModelType: Decodable
     associatedtype ErrorType: Decodable
-    
+
     func decode(_ data: Data) -> ModelType?
     func decodeError(_ data: Data) -> ErrorType?
     func load(withCompletion completion: SuccessHandler<ModelType>?, onError: ErrorHandler?)
@@ -15,13 +15,10 @@ protocol CBNetworkRequest {
 
 @available(macCatalyst 13.0, *)
 extension CBNetworkRequest {
-    func load(_ urlRequest: URLRequest, withCompletion completion: SuccessHandler<ModelType>? = nil, onError: ErrorHandler? = nil) {
-        
-        print("UrL request \(urlRequest)")
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            if let error = error{
+    func load(_ session: URLSession = URLSession.shared, urlRequest: URLRequest, withCompletion completion: SuccessHandler<ModelType>? = nil, onError: ErrorHandler? = nil) {
+
+        let task = CBEnvironment.session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+            if let error = error {
                 onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
                 return
             }
@@ -29,7 +26,6 @@ extension CBNetworkRequest {
                 onError?(self.buildCBError(data, statusCode: response.statusCode))
                 return
             }
-            print(String(data: data!, encoding: .utf8))
             guard let data = data,
                   let decodedData = self.decode(data) else {
                 onError?(CBError.defaultSytemError(statusCode: 400, message: "Response has no/invalid body"))
@@ -39,9 +35,8 @@ extension CBNetworkRequest {
         })
         task.resume()
     }
-    
-    
-    private func buildCBError(_ data: Data?, statusCode: Int) -> CBError {
+
+    func buildCBError(_ data: Data?, statusCode: Int) -> CBError {
         guard let data = data else {
             return CBError.defaultSytemError(statusCode: statusCode)
         }

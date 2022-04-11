@@ -1,6 +1,5 @@
 //
 //  CBValidateReceiptResource.swift
-//  FakeGame
 //
 //  Created by cb-christopher on 19/04/21.
 //  Copyright © 2021 Chargebee. All rights reserved.
@@ -37,7 +36,7 @@ class CBValidateReceiptResource: CBAPIResource {
         })
         return urlRequest
     }
-    
+
     func create() -> URLRequest {
         return createRequest()
 
@@ -52,18 +51,18 @@ class CBValidateReceiptResource: CBAPIResource {
           URLQueryItem(name: key,
                  value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "+", with: "%2B"))
         })
-        
+
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
         return urlRequest
       }
-    
+
     init(receipt: String, productId: String, name: String,
-         price: String, currencyCode : String,
-         customerId : String) {
+         price: String, currencyCode: String,
+         customerId: String) {
         self.baseUrl = CBEnvironment.baseUrl
-        self.requestBody = PayloadBody(receipt: receipt, productId: productId,name: name,
-                                       price: price, currencyCode : currencyCode,
-                                       customerId : customerId)
+        self.requestBody = PayloadBody(receipt: receipt, productId: productId, name: name,
+                                       price: price, currencyCode: currencyCode,
+                                       customerId: customerId)
     }
 
 }
@@ -73,20 +72,19 @@ struct PayloadBody: URLEncodedRequestBody {
     let productId: String
     let name: String
     let price: String
-    let currencyCode : String
-    let customerId : String
-    let channel : String = "app_store"
+    let currencyCode: String
+    let customerId: String
+    let channel: String = "app_store"
 
     func toFormBody() -> [String: String] {
         [
-            "receipt" : receipt,
-            "product[id]" : productId,
+            "receipt": receipt,
+            "product[id]": productId,
             "product[name]": name,
-            "product[price]" :price,
-            "product[currency_code]" :currencyCode,
-            "customer[id]" :customerId,
+            "product[price]": price,
+            "product[currency_code]": currencyCode,
+            "customer[id]": customerId,
             "channel": channel
         ]
     }
 }
-

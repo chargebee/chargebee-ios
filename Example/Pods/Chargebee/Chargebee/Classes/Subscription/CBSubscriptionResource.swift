@@ -10,21 +10,21 @@ import Foundation
 final class CBSubscriptionResource: CBAPIResource {
     typealias ModelType = CBSubscriptionStatus
     typealias ErrorType = CBErrorDetail
-    
+
     var authHeader: String? {
         get {
           "Basic \(CBEnvironment.encodedApiKey)"
         }
     }
-    
+
     var baseUrl: String
     var methodPath: String = "/v2/subscriptions"
-    
+
     init(_ subscriptionId: String) {
         self.baseUrl = CBEnvironment.baseUrl
         self.methodPath += "/\(subscriptionId)"
     }
-   
+
     var url: URLRequest {
         get {
             var components = URLComponents(string: baseUrl)
@@ -37,6 +37,5 @@ final class CBSubscriptionResource: CBAPIResource {
             return urlRequest
         }
     }
-
 
 }
