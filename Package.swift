@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Chargebee",
+    platforms: [
+        .iOS(.v10)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -25,7 +28,8 @@ let package = Package(
             path: "Chargebee/Classes"
            ),
         .testTarget(
-            name: "chargebee-iosTests",
+            name: "Chargebee-test",
             dependencies: ["Chargebee"])
+        
     ]
 )

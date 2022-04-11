@@ -42,7 +42,7 @@ public class Chargebee {
         let logger = CBLogger(name: "plan", action: "retrieve_plan")
         logger.info()
 
-        let request = CBAPIRequest(resource: CBItemResource(id))
+        let request = CBAPIRequest(resource: CBPlanResource(id))
         client.retrieve(network: request, logger: logger, handler: handler)
     }
 
@@ -50,7 +50,7 @@ public class Chargebee {
         let logger = CBLogger(name: "plan", action: "getAllPlans")
         logger.info()
 
-        let request = CBAPIRequest(resource: CBItemListResource(queryParams: queryParams ))
+        let request = CBAPIRequest(resource: CBPlansResource(queryParams: queryParams ))
         client.retrieve(network: request, logger: logger, handler: handler)
     }
 

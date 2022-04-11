@@ -31,14 +31,18 @@ final class CBSDKItemViewController: UIViewController {
         }
         Chargebee.shared.retrieveItem(forID: itemId) { result in
             switch result {
-            case .success(let item):
-                print(item)
-                self.itemName.text = item.name
-                self.itemStatus.text = item.status
+            case .success(let list):
+                print(list)
+                DispatchQueue.main.async {
+                    self.itemName.text = list.item.name
+                    self.itemStatus.text = list.item.status
+                }
 
             case .error(let error):
                 print("Error\(error)")
-                self.error.text = error.localizedDescription
+                DispatchQueue.main.async {
+                    self.error.text = error.localizedDescription
+                }
             }
 
         }
