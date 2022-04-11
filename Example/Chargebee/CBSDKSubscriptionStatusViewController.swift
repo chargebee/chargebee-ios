@@ -10,28 +10,28 @@ import UIKit
 import Chargebee
 
 final class CBSDKSubscriptionStatusViewController: UIViewController {
-    
+
     @IBOutlet private weak var subscriptioniDTextField: UITextField!
     @IBOutlet private weak var fetchSubscriptionutton: UIButton!
     @IBOutlet private weak var statusLabel: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         enableFetchButton(shouldEnable: subscriptioniDTextField.isNotEmpty)
     }
-    
+
     private func enableFetchButton(shouldEnable: Bool) {
         fetchSubscriptionutton.isEnabled = shouldEnable
     }
-    
+
     @IBAction func fetchSubscriptionStatus(_ sender: UIButton) {
-        
+
         self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
 
-        guard let subscriptionID = subscriptioniDTextField.text , subscriptionID.isNotEmpty else {
+        guard let subscriptionID = subscriptioniDTextField.text, subscriptionID.isNotEmpty else {
             return
         }
-        CBSubscription.retrieveSubscription(forID: subscriptionID) { result in
+        Chargebee.shared.retrieveSubscription(forID: subscriptionID) { result in
             switch result {
             case let .success(statusResult):
                 debugPrint("Subscription Status Fetched: \(statusResult)")
@@ -55,7 +55,7 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
             }
         }
     }
-    
+
     @IBAction private func textFieldDidEndEdit(_ sender: UITextField) {
         enableFetchButton(shouldEnable: sender.isNotEmpty)
     }
@@ -65,7 +65,7 @@ extension UITextField {
     var isEmpty: Bool {
         return text?.isEmpty ?? true
     }
-    
+
     var isNotEmpty: Bool {
         return !isEmpty
     }

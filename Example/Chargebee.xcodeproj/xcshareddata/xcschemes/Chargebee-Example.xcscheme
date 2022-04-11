@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0900"
+   LastUpgradeVersion = "1330"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -58,6 +58,16 @@
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
                BuildableName = "Chargebee_Tests.xctest"
                BlueprintName = "Chargebee_Tests"
+               ReferencedContainer = "container:Chargebee.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D4A6817927ABB89300A6A297"
+               BuildableName = "Chargebee_ExampleTests.xctest"
+               BlueprintName = "Chargebee_ExampleTests"
                ReferencedContainer = "container:Chargebee.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -14,7 +14,7 @@ class CBSDKPlansViewController: UIViewController {
         let tv = UITableView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
-    } ()
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class CBSDKPlansViewController: UIViewController {
 }
 
 extension CBSDKPlansViewController {
-    func render(_ model :[CBPlan]) {
+    func render(_ model: [CBPlan]) {
         self.plans = model
         plansTableView.reloadData()
     }

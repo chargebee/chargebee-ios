@@ -7,11 +7,9 @@ import Foundation
 class CBAddOnResource: CBAPIResource {
     typealias ModelType = AddonWrapper
     typealias ErrorType = CBErrorDetail
-    
+
     var authHeader: String? {
-        get {
-            "Basic \(CBEnvironment.encodedApiKey)"
-        }
+       return "Basic \(CBEnvironment.encodedApiKey)"
     }
     var baseUrl: String
     var methodPath: String = "/v2/addons"

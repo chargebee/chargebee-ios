@@ -13,13 +13,12 @@ public struct CBPlanWrapper: Decodable {
 public struct CBPlansWrapper: Decodable {
     public let list: [CBPlanWrapper]
     public  let nextOffset: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case list
         case nextOffset = "next_offset"
     }
 }
-
 
 public class CBPlan: Decodable {
     public let addonApplicability: String
@@ -65,7 +64,7 @@ public class CBPlan: Decodable {
         case taxable = "taxable"
         case updatedAt = "updated_at"
     }
-    
+
     public static func retrieve(_ planId: String, completion handler: @escaping PlanHandler) {
         let logger = CBLogger(name: "plan", action: "retrieve_plan")
         logger.info()
@@ -79,11 +78,11 @@ public class CBPlan: Decodable {
         }, onError: onError)
     }
 
-    public static func retrieveAllPlans(queryParams : [String:String]? = nil, completion handler: @escaping AllPlanHandler) {
+    public static func retrieveAllPlans(queryParams: [String: String]? = nil, completion handler: @escaping AllPlanHandler) {
         let logger = CBLogger(name: "plan", action: "getAllPlans")
         logger.info()
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        let request = CBAPIRequest(resource: CBPlansResource(queryParams :queryParams ))
+        let request = CBAPIRequest(resource: CBPlansResource(queryParams: queryParams ))
         request.load(withCompletion: { planListWrapper in
             onSuccess(planListWrapper)
         }, onError: onError)

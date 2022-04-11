@@ -19,8 +19,11 @@ final class CBSDKAddonViewController: UIViewController {
 
     @IBAction private func getAddonDetail() {
         clearAllFields()
-        CBAddon.retrieve(addonCode.text!) { (addonResult) in
-            switch addonResult {
+        guard let id = addonCode.text else {
+            return
+        }
+        Chargebee.shared.retrieveAddon(id) { result in
+            switch result {
             case .success(let addon):
                 print(addon)
                 self.addonName.text = addon.name
@@ -33,7 +36,7 @@ final class CBSDKAddonViewController: UIViewController {
         }
     }
 
-    private func clearAllFields() -> Void {
+    private func clearAllFields() {
         self.addonName.text = ""
         self.addonStatus.text = ""
         self.addonCurrencyCode.text = ""

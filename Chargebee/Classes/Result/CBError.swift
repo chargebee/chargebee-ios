@@ -7,12 +7,11 @@
 
 import Foundation
 
-
 public enum CBError: Error {
     case operationFailed(errorResponse: CBErrorDetail)
     case invalidRequest(errorResponse: CBErrorDetail)
     case paymentFailed(errorResponse: CBErrorDetail)
-    
+
     static func defaultSytemError(statusCode: Int, message: String = "") -> CBError {
         let errorDetail = CBErrorDetail(message: message, type: "", apiErrorCode: "", param: "", httpStatusCode: statusCode)
         return errorDetail.toCBError(statusCode)
@@ -43,7 +42,7 @@ public struct CBErrorDetail: Decodable, ErrorDetail {
     public let apiErrorCode: String?
     public let param: String?
     public let httpStatusCode: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case message = "message"
         case type = "type"
@@ -51,7 +50,7 @@ public struct CBErrorDetail: Decodable, ErrorDetail {
         case param = "param"
         case httpStatusCode = "http_status_code"
     }
-    
+
     func toCBError(_ statusCode: Int) -> CBError {
         switch statusCode {
         case (400...499):
@@ -62,15 +61,14 @@ public struct CBErrorDetail: Decodable, ErrorDetail {
     }
 }
 
-
 struct CBInternalErrorDetail: Decodable {
     let message: String
 }
 
 struct CBInternalErrorWrapper: Decodable, ErrorDetail {
-    
+
     let errors: [CBInternalErrorDetail]?
-    
+
     func toCBError(_ statusCode: Int) -> CBError {
         let message = errors?.first?.message ?? ""
         return CBError.defaultSytemError(statusCode: statusCode, message: message)

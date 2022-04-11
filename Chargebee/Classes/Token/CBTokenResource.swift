@@ -1,4 +1,3 @@
-//
 //  CBTokenReource.swift
 //  Chargebee
 //
@@ -12,9 +11,7 @@ final class CBTokenResource: CBAPIResource {
     typealias ErrorType = CBErrorDetail
 
     var authHeader: String? {
-        get {
-            return "Basic \(CBEnvironment.encodedApiKey)"
-        }
+        return "Basic \(CBEnvironment.encodedApiKey)"
     }
     var baseUrl: String
     var requestBody: URLEncodedRequestBody?
@@ -36,8 +33,7 @@ struct TempTokenBody: URLEncodedRequestBody {
         [
             "payment_method_type": paymentMethodType.rawValue,
             "id_at_vault": token,
-            "gateway_account_id": gatewayId,
+            "gateway_account_id": gatewayId
         ]
     }
 }
-

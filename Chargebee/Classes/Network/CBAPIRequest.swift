@@ -3,6 +3,9 @@
 //
 
 import Foundation
+protocol URLEncodedRequestBody {
+    func toFormBody() -> [String: String]
+}
 
 protocol CBAPIResource {
     associatedtype ModelType: Decodable
@@ -15,31 +18,27 @@ protocol CBAPIResource {
     var url: URLRequest { get }
     var requestBody: URLEncodedRequestBody? { get }
     func create() -> URLRequest
-    var queryParams: [String: String]? { set get}
+    var queryParams: [String: String]? { get set}
+
 }
 
 extension CBAPIResource {
+
     var authHeader: String? {
-        get {
-            nil
-        }
+        return nil
     }
     var header: [String: String]? {
-        get {
-            nil
-        }
+        return nil
     }
-    
-    var queryParams :[String: String]? {
+
+    var queryParams: [String: String]? {
         get { return nil } set {}
     }
-    
+
     var requestBody: URLEncodedRequestBody? {
-        get {
-            nil
-        }
+        return nil
     }
-    
+
     var url: URLRequest {
         buildBaseRequest()
     }
@@ -53,19 +52,17 @@ extension CBAPIResource {
             URLQueryItem(name: key, value: value)
         })
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
-//        print(bodyComponents.query?.data(using: .utf8))
         return urlRequest
     }
 
     private func buildBaseRequest() -> URLRequest {
-        // TODO: Remove force unwrapping
         var components = URLComponents(string: baseUrl)
         components!.path += methodPath
-        
-        if let queryParams = queryParams{
+
+        if let queryParams = queryParams {
             components?.queryItems = queryItems(dictionary: queryParams)
         }
-        
+
         var urlRequest = URLRequest(url: components!.url!)
         if let authHeader = authHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
@@ -80,16 +77,15 @@ extension CBAPIResource {
 }
 
 class CBAPIRequest<Resource: CBAPIResource> {
-    let resource: Resource
+    var resource: Resource
 
     init(resource: Resource) {
         self.resource = resource
     }
-    
 }
 
 extension CBAPIRequest: CBNetworkRequest {
-    
+
     func decode(_ data: Data) -> Resource.ModelType? {
         return try? JSONDecoder().decode(Resource.ModelType.self, from: data)
     }
@@ -97,19 +93,49 @@ extension CBAPIRequest: CBNetworkRequest {
     func decodeError(_ data: Data) -> Resource.ErrorType? {
         return try? JSONDecoder().decode(Resource.ErrorType.self, from: data)
     }
-    
+
     func load(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
-        load(resource.url, withCompletion: completion, onError: onError)
+        load(CBEnvironment.session, urlRequest: resource.url, withCompletion: completion, onError: onError)
     }
 
     func create(withCompletion completion: SuccessHandler<Resource.ModelType>? = nil, onError: ErrorHandler? = nil) {
-        load(resource.create(), withCompletion: completion, onError: onError)
+        load(CBEnvironment.session, urlRequest: resource.create(), withCompletion: completion, onError: onError)
     }
 }
 
-func queryItems(dictionary: [String:String]) -> [URLQueryItem] {
+func queryItems(dictionary: [String: String]) -> [URLQueryItem] {
     return dictionary.map {
         // Swift 4
         URLQueryItem(name: $0.0, value: $0.1)
+    }
+}
+
+protocol NetworkSession {
+    func loadData(from url: URL,
+                  completionHandler: @escaping (Data?, Error?) -> Void)
+}
+
+extension URLSession: NetworkSession {
+    func loadData(from url: URL,
+                  completionHandler: @escaping (Data?, Error?) -> Void) {
+        let task = dataTask(with: url) { (data, _, error) in
+            completionHandler(data, error)
+        }
+
+        task.resume()
+    }
+}
+
+struct NetworkClient {
+    
+    func retrieve<T: CBNetworkRequest, U>(network: T, logger: CBLogger, handler: @escaping (CBResult<U>) -> Void) {
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+        network.load(withCompletion: { data in
+            if let data = data as? U {
+                onSuccess(data)
+            }else{
+                onError(CBError.defaultSytemError(statusCode: 480, message: "json serialization failure"))
+            }
+        }, onError: onError)
     }
 }

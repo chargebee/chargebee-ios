@@ -52,18 +52,5 @@ public class CBAddon: Decodable {
         case showDescriptionInInvoices =  "show_description_in_invoices"
         case showDescriptionInQuotes =  "show_description_in_quotes"
     }
-    
-    public static func retrieve(_ addonId: String, completion handler: @escaping AddonHandler) {
-        let logger = CBLogger(name: "addon", action: "retrieve_addon")
-        logger.info()
-        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        if addonId.isEmpty {
-            return onError(CBError.defaultSytemError(statusCode: 400, message: "Addon id is empty"))
-        }
-        let request = CBAPIRequest(resource: CBAddOnResource(addonId))
-        request.load(withCompletion: { addonWrapper in
-            onSuccess(addonWrapper.addon)
-        }, onError: onError)
-    }
-}
 
+}

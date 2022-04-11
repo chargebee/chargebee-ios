@@ -7,4 +7,9 @@ final class chargebee_iosTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
     }
+
+    func testAuthentication() {
+
+    }
+
 }

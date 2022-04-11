@@ -8,10 +8,10 @@
 import UIKit
 
 class CBProductsV2: NSObject {
-   
-    static func getProducts(queryParams : [String:String]? = nil , _ completion: @escaping ((_ products: CBProductIDWrapper) -> Void)) {
 
-        CBItem.retrieveAllItems(queryParams:queryParams ) { result in
+    static func getProducts(queryParams: [String: String]? = nil, _ completion: @escaping ((_ products: CBProductIDWrapper) -> Void)) {
+
+        Chargebee.shared.retrieveAllItems(queryParams: queryParams ) { result in
             switch result {
             case let .success(itemsWrapper):
                 var ids  = [String]()

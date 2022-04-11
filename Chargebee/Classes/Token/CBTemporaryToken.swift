@@ -1,4 +1,3 @@
-//
 //  CBTemporaryToken.swift
 //  Chargebee
 //

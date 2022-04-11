@@ -16,9 +16,8 @@ public struct CBSubscriptionData: Codable {
     public let activatedAt: Double?
     public let status: String?
     public let planAmount: Double?
-    
-   
-    enum CodingKeys: String, CodingKey  {
+
+    enum CodingKeys: String, CodingKey {
         case activatedAt = "activated_at"
         case status
         case planAmount = "plan_amount"
@@ -32,8 +31,8 @@ public struct CBCustomer: Codable {
     public let cardStatus: String?
     public let createdAt: Double?
     public let deleted: Bool?
-    
-    enum CodingKeys: String, CodingKey  {
+
+    enum CodingKeys: String, CodingKey {
         case allowDirectDebit = "allow_direct_debit"
         case autoCollection = "auto_collection"
         case billingAddress = "billing_address"
@@ -54,8 +53,8 @@ public struct CBAddress: Codable {
     public let stateCode: String?
     public let validationStatus: String?
     public let zip: String?
-    
-    enum CodingKeys: String, CodingKey  {
+
+    enum CodingKeys: String, CodingKey {
         case city, country, line1, object, state, zip
         case firstName = "first_name"
         case lastName = "last_name"
@@ -72,9 +71,9 @@ public extension CBSubscription {
     static func retrieveSubscription(forID id: String, handler: @escaping CBSubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")
         logger.info()
-        
+
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        
+
         guard id.isNotEmpty else {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "Subscription id is empty"))
         }
@@ -83,16 +82,11 @@ public extension CBSubscription {
             onSuccess(subscriptionStatus)
         }, onError: onError)
     }
-    
-}
 
+}
 
 extension String {
     var isNotEmpty: Bool {
         return !isEmpty
     }
 }
-
-
-
-

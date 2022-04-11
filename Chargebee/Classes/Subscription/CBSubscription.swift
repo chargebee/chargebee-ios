@@ -9,7 +9,7 @@ import Foundation
 
 public struct CBSubscriptionStatus: Codable {
     public let subscription: Subscription
-    enum CodingKeys: String, CodingKey  {
+    enum CodingKeys: String, CodingKey {
         case subscription = "cb_subscription"
     }
 }
@@ -23,7 +23,7 @@ public struct Subscription: Codable {
     public let currentTermEnd: Double?
     public let currentTermStart: Double?
 
-    enum CodingKeys: String, CodingKey  {
+    enum CodingKeys: String, CodingKey {
         case activatedAt = "activated_at"
         case status
         case id = "subscription_id"
@@ -36,33 +36,19 @@ public struct Subscription: Codable {
 
 public typealias CBSubscriptionHandler = (CBResult<CBSubscriptionStatus>) -> Void
 
-public class CBSubscription {}
-
-public extension CBSubscription {
-    static func retrieveSubscription(forID id: String, handler: @escaping CBSubscriptionHandler) {
-        let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")
-        logger.info()
-        
+class CBSubscriptionManager {
+    func retrieveSubscription<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping CBSubscriptionHandler) {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        
-        guard id.isNotEmpty else {
-            return onError(CBError.defaultSytemError(statusCode: 400, message: "Subscription id is empty"))
-        }
-        let request = CBAPIRequest(resource: CBSubscriptionResource(id))
-        request.load(withCompletion: { subscriptionStatus in
-            onSuccess(subscriptionStatus)
+        network.load(withCompletion: { status in
+            if let data = status as? CBSubscriptionStatus {
+                onSuccess(data)
+            }
         }, onError: onError)
     }
-    
 }
-
 
 extension String {
     var isNotEmpty: Bool {
         return !isEmpty
     }
 }
-
-
-
-
