@@ -74,7 +74,7 @@ To configure the Chargebee iOS SDK for completing and managing In-App Purchases,
 
 -   [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html) the [App Store Connect](https://appstoreconnect.apple.com/login) with your [Chargebee site](https://app.chargebee.com/login).
 
--   On the**Sync Overview** pageof theweb app, click**View Keys**and use the value of generated[**App ID**](https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id)as the **SDK Key.**
+-   On the **Sync Overview** page of th eweb app, click **View Keys** and use the value of generated [**App ID**](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#connection-keys_app-id) as the **SDK Key**.
 
 -   On the Chargebee site, navigate to **Configure Chargebee** *>* [**API Keys**](https://www.chargebee.com/docs/2.0/api_keys.html#create-an-api-key) to create a new **Publishable API Key** or use an existing [**Publishable API Key**](https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key).
     **Note:** During the publishable API key creation you must allow **read-only** access to plans/items otherwise this key will not work in the following step. Read [more](https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key).
@@ -256,7 +256,7 @@ CBPlan.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
 }
 ```
 
-For eg. query params above can be *"sort_by[desc]" : "name"* OR *"limit": "100"*.
+For example, query params above can be *"sort_by[desc]" : "name"* OR *"limit": "100"*.
 
 ##### Get Plan Details
 
