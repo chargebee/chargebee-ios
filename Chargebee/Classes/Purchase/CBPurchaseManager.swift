@@ -227,7 +227,7 @@ public extension CBPurchase {
             debugPrint("No receipt Exist")
             return
         }
-        guard let product = product, let currencyCode = product.priceLocale.currencyCode  else {
+        guard let product = product, let currencyCode = product.priceLocale.currencyCode, let period = product.subscriptionPeriod?.numberOfUnits, let unit = product.subscriptionPeriod?.unit.rawValue  else {
             return
         }
         do {
@@ -235,7 +235,7 @@ public extension CBPurchase {
 
             let receiptString = receiptData.base64EncodedString(options: [])
             debugPrint("Apple Purchase - success")
-            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, customerId: self.customerID)
+            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, customerId: self.customerID, period: period, periodUnit: Int(unit))
             CBReceiptValidationManager.validateReceipt(receipt: receipt) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
