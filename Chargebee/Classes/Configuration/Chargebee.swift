@@ -14,12 +14,20 @@ public class Chargebee {
         CBEnvironment().configure(site: site, apiKey: apiKey, allowErrorLogging: allowErrorLogging, sdkKey: sdkKey)
     }
 
-    public func retrieveSubscription(forID id: String, handler: @escaping CBSubscriptionHandler) {
+    public func retrieveSubscription(forSubscriptionID id: String, handler: @escaping CBSubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")
         logger.info()
 
         let request = CBAPIRequest(resource: CBSubscriptionResource(id))
         CBSubscriptionManager().retrieveSubscription(network: request, logger: logger, handler: handler)
+    }
+   
+    public func retrieveSubscriptions(queryParams: [String: String]? = nil, handler: @escaping SubscriptionHandler) {
+        let logger = CBLogger(name: "Subscription", action: "Fetch Subscription using customerId")
+        logger.info()
+
+        let request = CBAPIRequest(resource: SubscriptionResource(queryParams: queryParams))
+        CBSubscriptionManager().retrieveSubscriptions(network: request, logger: logger, handler: handler)
     }
 
     public  func retrieveItem(forID id: String, handler: @escaping ItemHandler) {

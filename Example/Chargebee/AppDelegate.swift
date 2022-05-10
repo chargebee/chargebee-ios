@@ -16,11 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application
+        Chargebee.configure(site: "cb-abc-test",
+                            apiKey: "API-KEY", sdkKey: "SDK-KEY", allowErrorLogging: false)
 
-        Chargebee.configure(site: "cb-imay-test",
-                            apiKey: "test_EojsGoGFeHoc3VpGPQDOZGAxYy3d0FF3", sdkKey: "cb-njjoibyzbrhyjg7yz4hkwg2ywq")
-        
-        
        return true
     }
 }
