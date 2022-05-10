@@ -200,7 +200,7 @@ For example, query parameters can be passed as **"customer_id" : "id"**, **"subs
 Use only Subscription ID for checking the Subscription status on Chargebee and confirm the access - granted or denied.
 
 ```swift
-CBSubscription.retrieveSubscription(forID: "SubscriptionID") { result in
+CBSubscription.retrieveSubscription(forSubscriptionID: "SubscriptionID") { result in
     switch result {
     case let .success(result):
         print("Status \(result.status)")
