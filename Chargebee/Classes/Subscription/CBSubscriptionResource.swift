@@ -13,7 +13,6 @@ final class CBSubscriptionResource: CBAPIResource {
 
     var authHeader: String? {
         return    "Basic \(CBEnvironment.encodedApiKey)"
-
     }
 
     var baseUrl: String
@@ -36,6 +35,27 @@ final class CBSubscriptionResource: CBAPIResource {
         urlRequest.addValue(sdkVersion, forHTTPHeaderField: "version")
         urlRequest.addValue(platform, forHTTPHeaderField: "platform")
         return urlRequest
+    }
+
+}
+
+final class SubscriptionResource: CBAPIResource {
+
+    typealias ModelType = CBSubscriptionWrapper
+    typealias ErrorType = CBErrorDetail
+
+    var authHeader: String? {
+        return   "Basic \(CBEnvironment.encodedApiKey)"
+    }
+    var baseUrl: String
+    var methodPath: String = "/v2/in_app_subscriptions"
+    var queryParams: [String: String]?
+
+    init(queryParams: [String: String]? = nil) {
+        self.baseUrl = CBEnvironment.baseUrl
+        if let queryParams = queryParams {
+            self.queryParams = queryParams
+        }
     }
 
 }

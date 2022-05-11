@@ -173,12 +173,34 @@ CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID")
 
 The above function will handle the purchase against App Store Connect and send the IAP receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function, to check for Subscription status on Chargebee and confirm the access - granted or denied.
 
-#### Get Subscription Status for Existing Subscriber
+#### Get Subscription Status for Existing Subscribers
 
-For a subscriber who already purchased the product, use the existing Subscription ID to check for Subscription status on Chargebee and confirm the access - granted or denied.
+The following are methods for checking the subscription status.
+
+
+##### Get Subscription Status for Existing Subscribers using Query Parameters
+
+Use query parameters - Subscription ID, Customer ID, or Status for checking the Subscription status on Chargebee and confirm the access - granted or denied.
 
 ```swift
-CBSubscription.retrieveSubscription(forID: "SubscriptionID") { result in
+CBSubscription.retrieveSubscriptions(queryParams :["String" : "String"]") { result in
+    switch result {
+    case let .success(resultarray):
+        print("Status \(resultarray.first.subscription.status)")
+    case let .error(error):
+        // Handle error here
+    }
+}
+```
+
+For example, query parameters can be passed as **"customer_id" : "id"**, **"subscription_id": "id"**, or **"status": "active"**.
+
+##### Get Subscription Status for Existing Subscribers using Subscription ID
+
+Use only Subscription ID for checking the Subscription status on Chargebee and confirm the access - granted or denied.
+
+```swift
+CBSubscription.retrieveSubscription(forSubscriptionID: "SubscriptionID") { result in
     switch result {
     case let .success(result):
         print("Status \(result.status)")

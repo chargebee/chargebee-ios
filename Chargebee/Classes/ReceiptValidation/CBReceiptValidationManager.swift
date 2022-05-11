@@ -29,6 +29,8 @@ struct CBReceipt {
     let price: String
     let currencyCode: String
     let customerId: String?
+    let period:Int
+    let periodUnit:Int
 }
 
 class CBReceiptValidationManager {
