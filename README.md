@@ -15,7 +15,7 @@ Requirements
 
 The following requirements must be set up prior to installing Chargebee's iOS SDK
 
--   iOS 8+
+-   iOS 11+
 
 -   Swift 5+
 
@@ -132,7 +132,7 @@ switch result {
 })
 ```
 
-For example, query params above can be *"limit": "100"*.
+For example, query parameters can be passed as **"limit": "100"**.
 
 The above function will automatically determine your product catalog version in Chargebee and call the relevant APIs to retrieve the Chargebee Plans that correspond to Apple IAP products and their Apple IAP Product IDs.
 
@@ -175,8 +175,7 @@ The above function will handle the purchase against App Store Connect and send t
 
 #### Get Subscription Status for Existing Subscribers
 
-The following are methods for checking the subscription status.
-
+The following are methods for checking the subscription status of a subscriber who already purchased the product.
 
 ##### Get Subscription Status for Existing Subscribers using Query Parameters
 
@@ -200,7 +199,7 @@ For example, query parameters can be passed as **"customer_id" : "id"**, **"subs
 Use only Subscription ID for checking the Subscription status on Chargebee and confirm the access - granted or denied.
 
 ```swift
-CBSubscription.retrieveSubscription(forSubscriptionID: "SubscriptionID") { result in
+CBSubscription.retrieveSubscription(forID: "SubscriptionID") { result in
     switch result {
     case let .success(result):
         print("Status \(result.status)")
@@ -237,7 +236,7 @@ Retrieve the list of items using the following function.
     })
 ```
 
-For example, query params above can be *"sort_by[desc]" : "name"* OR *"limit": "100"*.
+For example, query parameters can be passed as **"sort_by[desc]" : "name"** or **"limit": "100"**.
 
 ##### Get item details
 
@@ -278,7 +277,7 @@ CBPlan.retrieveAllPlans(queryParams: ["String":"String" ]) { (result) in
 }
 ```
 
-For example, query params above can be *"sort_by[desc]" : "name"* OR *"limit": "100"*.
+For example, query parameters can be passed as **"sort_by[desc]" : "name"** or **"limit": "100"**.
 
 ##### Get Plan Details
 
