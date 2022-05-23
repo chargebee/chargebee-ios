@@ -182,7 +182,7 @@ The following are methods for checking the subscription status of a subscriber w
 Use query parameters - Subscription ID, Customer ID, or Status for checking the Subscription status on Chargebee and confirm the access - granted or denied.
 
 ```swift
-CBSubscription.retrieveSubscriptions(queryParams :["String" : "String"]") { result in
+Chargebee.shared.retrieveSubscriptions(queryParams :["String" : "String"]") { result in
     switch result {
     case let .success(resultarray):
         print("Status \(resultarray.first.subscription.status)")
@@ -199,7 +199,7 @@ For example, query parameters can be passed as **"customer_id" : "id"**, **"subs
 Use only Subscription ID for checking the Subscription status on Chargebee and confirm the access - granted or denied.
 
 ```swift
-CBSubscription.retrieveSubscription(forID: "SubscriptionID") { result in
+Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
     switch result {
     case let .success(result):
         print("Status \(result.status)")
