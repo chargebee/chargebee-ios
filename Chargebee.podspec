@@ -28,7 +28,7 @@ Chargebee’s iOS SDK now has support for making and managing in-app purchase su
   s.authors           = { 'cb-imay' => 'imayaselvan@chargebee.com'}
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '11.2'
   
   s.source_files = 'Chargebee/Classes/**/*'
   s.swift_version = '5.0'
