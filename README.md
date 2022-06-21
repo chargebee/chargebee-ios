@@ -15,7 +15,7 @@ Requirements
 
 The following requirements must be set up prior to installing Chargebee's iOS SDK
 
--   iOS 11+
+-   iOS 12+
 
 -   Swift 5+
 
