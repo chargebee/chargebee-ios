@@ -28,14 +28,19 @@ final class CBSDKPlanViewController: UIViewController {
         }
         Chargebee.shared.retrievePlan(forID: planId) { result in
             switch result {
-            case .success(let plan):
-                print(plan)
-                self.planName.text = plan.name
-                self.planStatus.text = plan.status
-                self.planCurrencyCode.text = plan.currencyCode
+            case .success(let planData):
+                print(planData.plan)
+                DispatchQueue.main.async {
+                    self.planName.text = planData.plan.name
+                    self.planStatus.text = planData.plan.status
+                    self.planCurrencyCode.text = planData.plan.currencyCode
+                    print(planData.plan.metadata)
+                }
             case .error(let error):
                 print("Error\(error)")
-                self.planError.text = error.localizedDescription
+                DispatchQueue.main.async {
+                    self.planError.text = error.localizedDescription
+                }
             }
 
         }
