@@ -42,6 +42,7 @@ public struct Subscription: Codable {
     public let customerId: String?
     public let currentTermEnd: Double?
     public let currentTermStart: Double?
+    public let planId: String?
 
     enum CodingKeys: String, CodingKey {
         case activatedAt = "activated_at"
@@ -51,6 +52,7 @@ public struct Subscription: Codable {
         case planAmount = "plan_amount"
         case currentTermEnd = "current_term_end"
         case currentTermStart = "current_term_start"
+        case planId = "plan_id"
     }
 }
 
