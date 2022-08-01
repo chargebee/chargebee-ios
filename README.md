@@ -164,7 +164,8 @@ CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID")
     switch result {
         case .success(let result):
             print(result.status)
-            print(result.subscriptionId) // this will print the subscription ID object
+            print(result.subscriptionId) // this will print the subscription ID 
+            print(result.planId) // this will print the Plan ID 
         case .failure(let error):
             // Handle error here
     }
