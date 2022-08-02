@@ -130,8 +130,8 @@ struct NetworkClient {
     
     func retrieve<T: CBNetworkRequest, U>(network: T, logger: CBLogger, handler: @escaping (CBResult<U>) -> Void) {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        network.load(withCompletion: { data in
-            if let data = data as? U {
+        network.load(withCompletion: { result in
+            if let data = result as? U {
                 onSuccess(data)
             }else{
                 onError(CBError.defaultSytemError(statusCode: 480, message: "json serialization failure"))

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public typealias PlanHandler = (CBResult<CBPlan>) -> Void
+public typealias PlanHandler = (CBResult<CBPlanWrapper>) -> Void
 public typealias AllPlanHandler = (CBResult<CBPlansWrapper>) -> Void
 
 public struct CBPlanWrapper: Decodable {
@@ -41,7 +41,7 @@ public struct CBPlan: Decodable {
     public let status: String
     public let taxable: Bool
     public let updatedAt: UInt64
-
+    public var metadata = [String: String]()
     enum CodingKeys: String, CodingKey {
         case addonApplicability = "addon_applicability"
         case chargeModel = "charge_model"
@@ -63,6 +63,7 @@ public struct CBPlan: Decodable {
         case status = "status"
         case taxable = "taxable"
         case updatedAt = "updated_at"
+        case metadata = "meta_data"
     }
 
 }
