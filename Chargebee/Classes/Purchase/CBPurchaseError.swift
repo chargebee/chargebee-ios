@@ -16,6 +16,12 @@ public enum CBPurchaseError: Error {
     case invalidSDKKey
     case invalidCustomerId
     case invalidCatalogVersion
+    
+    case userCancelled
+    case paymentFailed
+    case invalidPurchase
+    case invalidProduct
+    case networkConnectionFailed
 
 }
 
@@ -30,6 +36,11 @@ extension CBPurchaseError: LocalizedError {
         case .invalidSDKKey:return "SDK key is invalid"
         case .invalidCustomerId: return "Customer Id is invalid"
         case .invalidCatalogVersion: return "Invalid Catalog Version"
+        case .userCancelled: return "User Cancelled the Payment."
+        case .paymentFailed: return "Payment Failed."
+        case .invalidPurchase: return "You are already subscribed to this product."
+        case .invalidProduct: return "Product id mismatch with the receipt"
+        case .networkConnectionFailed: return " Device could not connect to the network."
 
         }
     }

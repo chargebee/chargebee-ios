@@ -190,8 +190,22 @@ extension CBPurchase: SKPaymentTransactionObserver {
             case .failed:
                 if let error = transaction.error as? SKError {
                     print(error)
-                    debugPrint(transaction.error)
-                    buyProductHandler?(.failure(error))
+                    switch  error.errorCode {
+                    case 0:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidPurchase))
+                    case 1:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidProduct))
+                    case 2:
+                        buyProductHandler?(.failure(CBPurchaseError.userCancelled))
+                    case 15:
+                        buyProductHandler?(.failure(CBPurchaseError.userCancelled))
+                    case 3:
+                        buyProductHandler?(.failure(CBPurchaseError.paymentFailed))
+                    case 7:
+                        buyProductHandler?(.failure(CBPurchaseError.networkConnectionFailed))
+                    default:
+                        buyProductHandler?(.failure(error))
+                    }
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
 
