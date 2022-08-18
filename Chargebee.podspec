@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Chargebee'
-  s.version          = '1.0.10'
+  s.version          = '1.0.11'
   s.summary          = 'Chargebee iOS SDK'
 
 # This description is used to generate tags and improve search results.
