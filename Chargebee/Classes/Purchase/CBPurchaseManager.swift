@@ -190,8 +190,38 @@ extension CBPurchase: SKPaymentTransactionObserver {
             case .failed:
                 if let error = transaction.error as? SKError {
                     print(error)
-                    debugPrint(transaction.error)
-                    buyProductHandler?(.failure(error))
+                    switch  error.errorCode {
+                    case 0:
+                        buyProductHandler?(.failure(CBPurchaseError.unknown))
+                    case 1:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidClient))
+                    case 2:
+                        buyProductHandler?(.failure(CBPurchaseError.userCancelled))
+                    case 3:
+                        buyProductHandler?(.failure(CBPurchaseError.paymentFailed))
+                    case 4:
+                        buyProductHandler?(.failure(CBPurchaseError.paymentNotAllowed))
+                    case 5:
+                        buyProductHandler?(.failure(CBPurchaseError.productNotAvailable))
+                    case 7:
+                        buyProductHandler?(.failure(CBPurchaseError.networkConnectionFailed))
+                    case 8:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidSandbox))
+                    case 9:
+                        buyProductHandler?(.failure(CBPurchaseError.privacyAcknowledgementRequired))
+                    case 11:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidOffer))
+                    case 12:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidPromoCode))
+                    case 13:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidPromoOffer))
+                    case 14:
+                        buyProductHandler?(.failure(CBPurchaseError.invalidPrice))
+                    case 15:
+                        buyProductHandler?(.failure(CBPurchaseError.userCancelled))
+                    default:
+                        buyProductHandler?(.failure(error))
+                    }
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
 
