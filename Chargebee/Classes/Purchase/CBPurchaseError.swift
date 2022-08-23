@@ -20,8 +20,18 @@ public enum CBPurchaseError: Error {
     case userCancelled
     case paymentFailed
     case invalidPurchase
-    case invalidProduct
+    case invalidClient
     case networkConnectionFailed
+    case privacyAcknowledgementRequired
+    case unknown
+    case paymentNotAllowed
+    case productNotAvailable
+    case invalidOffer
+    case invalidPromoCode
+    case invalidPrice
+    case invalidPromoOffer
+    case invalidSandbox
+
 
 }
 
@@ -34,13 +44,22 @@ extension CBPurchaseError: LocalizedError {
         case .cannotMakePayments: return "User cannot make payments"
         case .noProductToRestore: return "No products found to restore."
         case .invalidSDKKey:return "SDK key is invalid"
-        case .invalidCustomerId: return "Customer Id is invalid"
-        case .invalidCatalogVersion: return "Invalid Catalog Version"
-        case .userCancelled: return "User Cancelled the Payment."
-        case .paymentFailed: return "Payment Failed."
-        case .invalidPurchase: return "You are already subscribed to this product."
-        case .invalidProduct: return "Product id mismatch with the receipt"
-        case .networkConnectionFailed: return " Device could not connect to the network."
+        case .invalidCustomerId: return "Customer ID is invalid."
+        case .invalidCatalogVersion: return "Invalid catalog version"
+        case .userCancelled: return "User cancelled the payment."
+        case .paymentFailed: return "Payment is failed."
+        case .invalidPurchase: return "Your subscription already exists for this product/Invalid Purchase."
+        case .invalidClient: return "Purchase is restricted. Please change your account or device."
+        case .networkConnectionFailed: return "Device does not have a network connection. Please connect the network and try again."
+        case .privacyAcknowledgementRequired: return "User need to acknowledge Apple's privacy policy."
+        case .unknown: return "Purchase is unavailable due to unknown or unexpected reason. Please try again later."
+        case .paymentNotAllowed: return "The purchase is not available for the selected payment method."
+        case .productNotAvailable: return "Product is not available in the selected store. Please change the store and try again."
+        case .invalidOffer: return "Offer is invalid or expired."
+        case .invalidPromoCode: return "Promo code is invalid or expired."
+        case .invalidPrice: return "Price displayed in the App Store is invalid."
+        case .invalidPromoOffer: return "Promotional offer is invalid or expired."
+        case .invalidSandbox: return "Storekit not configured."
 
         }
     }
