@@ -130,7 +130,7 @@ struct NetworkClient {
     
     func retrieve<T: CBNetworkRequest, U>(network: T, logger: CBLogger, handler: @escaping (CBResult<U>) -> Void) {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
-        network.load(withCompletion: { result in
+        network.load(withCompletion: { result in            
             if let data = result as? U {
                 onSuccess(data)
             }else{

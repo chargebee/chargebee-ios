@@ -15,6 +15,8 @@
 		2574A39D784124FA67B1CA967C36DD1B /* CBAddon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C49C633E407696C3B70C820019BFF5 /* CBAddon.swift */; };
 		28CF1B27DEB9F1C5E1895052A30B644A /* CBPaymentConfigResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E077DD5E6CF2FE637A1C92873B0E8A /* CBPaymentConfigResource.swift */; };
 		42981E1AEBCF686389E6919A7AEAFB12 /* CBPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58DD80238FA4C1637CE892CA3F3AB8A /* CBPurchaseManager.swift */; };
+		48251FFB28B89B8000436F74 /* CBEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48251FFA28B89B8000436F74 /* CBEntitlement.swift */; };
+		48251FFD28B89CE400436F74 /* CBEntitlementResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48251FFC28B89CE400436F74 /* CBEntitlementResource.swift */; };
 		52B6734620FC23310AB038FDC2E20417 /* StripeTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A984220DA20FE97FAF3A0B975F1789 /* StripeTokenizer.swift */; };
 		6930A8D0F761D5718C0A5A79EE26FBE8 /* CBProductsV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9951B1231DEB819372A1C99504660C /* CBProductsV1.swift */; };
 		6D0C70E5934E9BA6F2B292E7CF982F12 /* CBPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF4096C3312129D643326C8DD1133A /* CBPlan.swift */; };
@@ -70,6 +72,8 @@
 		38C49C633E407696C3B70C820019BFF5 /* CBAddon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBAddon.swift; sourceTree = "<group>"; };
 		3CE16505C69EE1AC396E1544525B636F /* Chargebee.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Chargebee.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		464FB1219BB4254D0677583A837D4A8F /* CBPlanResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBPlanResource.swift; sourceTree = "<group>"; };
+		48251FFA28B89B8000436F74 /* CBEntitlement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBEntitlement.swift; sourceTree = "<group>"; };
+		48251FFC28B89CE400436F74 /* CBEntitlementResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBEntitlementResource.swift; sourceTree = "<group>"; };
 		48E077DD5E6CF2FE637A1C92873B0E8A /* CBPaymentConfigResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBPaymentConfigResource.swift; sourceTree = "<group>"; };
 		53FE88B551C122650E8731494FE67DBB /* Chargebee-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Chargebee-prefix.pch"; sourceTree = "<group>"; };
 		59372E4D6E3E4E5C170D16F01ED467F0 /* CBItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBItem.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 		10EDB254E336D86725660E2D27AB7E2F /* Chargebee */ = {
 			isa = PBXGroup;
 			children = (
+				48251FF928B89B4F00436F74 /* Entitlements */,
 				CDBEA262DD1C18ADBE954AC574169E2B /* Addon */,
 				0BDAAC168E08E57CA310F19357130BBB /* Authentication */,
 				0F876ABDD2B36B182DFD6770A00E291A /* Configuration */,
@@ -227,6 +232,16 @@
 			);
 			name = Result;
 			path = Chargebee/Classes/Result;
+			sourceTree = "<group>";
+		};
+		48251FF928B89B4F00436F74 /* Entitlements */ = {
+			isa = PBXGroup;
+			children = (
+				48251FFA28B89B8000436F74 /* CBEntitlement.swift */,
+				48251FFC28B89CE400436F74 /* CBEntitlementResource.swift */,
+			);
+			name = Entitlements;
+			path = Chargebee/Classes/Entitlements;
 			sourceTree = "<group>";
 		};
 		4BF93208A20C3CE9247740D996D999BE /* Stripe */ = {
@@ -506,6 +521,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48251FFD28B89CE400436F74 /* CBEntitlementResource.swift in Sources */,
 				2574A39D784124FA67B1CA967C36DD1B /* CBAddon.swift in Sources */,
 				AC5AF1D83CDCD9B9F9C2D1459D655428 /* CBAddOnResource.swift in Sources */,
 				A51D16B48A71CEB055FEC877E694C5D8 /* CBAPIRequest.swift in Sources */,
@@ -528,6 +544,7 @@
 				6F70299F080E5A120530354AB4645723 /* CBPurchaseError.swift in Sources */,
 				42981E1AEBCF686389E6919A7AEAFB12 /* CBPurchaseManager.swift in Sources */,
 				7632C36C4BBE773111AB2D0C04DB35B6 /* CBReceiptValidationManager.swift in Sources */,
+				48251FFB28B89B8000436F74 /* CBEntitlement.swift in Sources */,
 				982D4501F8361DD7136A8E1D3F2BCE81 /* CBResult.swift in Sources */,
 				0A3975FAEDEC8CE98E5E93984C69F8A4 /* CBSubscription.swift in Sources */,
 				F21CBC6AE3BE93F2196808B4219CE53C /* CBSubscriptionResource.swift in Sources */,
