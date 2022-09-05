@@ -14,7 +14,7 @@ final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
     private var items: [CBItemWrapper] = []
     private var plans: [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ]
+    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ]
 
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -108,6 +108,44 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     }
                 }
             })
+        case .getEntitlements:
+            let alert = UIAlertController(title: "",
+                                          message: "Please enter the subscriptionID",
+                                          preferredStyle: UIAlertController.Style.alert)
+            let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (_) in
+                if let textFields = alert.textFields, let customerTextField = textFields.first {
+                    Chargebee.shared.retrieveEntitlements(forSubscriptionID: customerTextField.text ?? "AzZlGJTC9U3tw4nF") { result in
+                        switch result {
+                        case let .success(entitlements):
+                            debugPrint("items: \(entitlements)")
+                            DispatchQueue.main.async {
+                                let alertController = UIAlertController(title: "Chargebee", message: "\(entitlements.list.count) entitlements found", preferredStyle: .alert)
+                                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                self.present(alertController, animated: true, completion: nil)
+
+                            }
+
+                        case let .error(error):
+                            debugPrint("Error: \(error.localizedDescription)")
+                            DispatchQueue.main.async {
+                                let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                self.present(alertController, animated: true, completion: nil)
+
+                            }
+
+                        }
+                        
+                    }
+                }
+            }
+            defaultAction.isEnabled = true
+            alert.addAction(defaultAction)
+            alert.addTextField { (textField) in
+                 textField.delegate = self
+            }
+            present(alert, animated: true, completion: nil)
+
         case .getAllPlan:
             print("List All Plans")
             Chargebee.shared.retrieveAllPlans(queryParams: ["sort_by[desc]": "name", "channel[is]": "app_store"   ]) { result in
@@ -161,6 +199,8 @@ enum ClientAction {
     case processReceipt
     case getItems
     case getItem
+    case getEntitlements
+
 }
 
 extension ClientAction {
@@ -186,6 +226,8 @@ extension ClientAction {
             return "Get Items"
         case .getItem:
             return "Get Item"
+        case .getEntitlements:
+            return "Get Entitlements"
         case .getProductIDs:
             return "Get Apple Specific Product Identifiers"
         }

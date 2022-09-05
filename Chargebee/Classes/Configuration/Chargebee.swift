@@ -31,7 +31,7 @@ public class Chargebee {
     }
 
     public  func retrieveItem(forID id: String, handler: @escaping ItemHandler) {
-        let logger = CBLogger(name: "item", action: "getItem")
+        let logger = CBLogger(name: "item", action: "retrieve_item")
         logger.info()
 
         let request = CBAPIRequest(resource: CBItemResource(id))
@@ -39,7 +39,7 @@ public class Chargebee {
     }
 
     public  func retrieveAllItems(queryParams: [String: String]? = nil, completion handler: @escaping ItemListHandler) {
-        let logger = CBLogger(name: "items", action: "getAllItems")
+        let logger = CBLogger(name: "items", action: "retrieve_allitems")
         logger.info()
 
         let request = CBAPIRequest(resource: CBItemListResource(queryParams: queryParams ))
@@ -55,12 +55,21 @@ public class Chargebee {
     }
 
     public  func retrieveAllPlans(queryParams: [String: String]? = nil, completion handler: @escaping AllPlanHandler) {
-        let logger = CBLogger(name: "plan", action: "getAllPlans")
+        let logger = CBLogger(name: "plan", action: "retrieve_allplans")
         logger.info()
 
         let request = CBAPIRequest(resource: CBPlansResource(queryParams: queryParams ))
         client.retrieve(network: request, logger: logger, handler: handler)
     }
+    
+    public func retrieveEntitlements(forSubscriptionID id: String, handler: @escaping EntitlementHandler) {
+        let logger = CBLogger(name: "Entitlements", action: "retrieve_entitlements")
+        logger.info()
+
+        let request = CBAPIRequest(resource: CBEntitlementResource(id))
+        client.retrieve(network: request, logger: logger, handler: handler)
+    }
+
 
     public  func retrieveAddon(_ addonId: String, completion handler: @escaping AddonHandler) {
         let logger = CBLogger(name: "addOn", action: "retrieve_addon")
