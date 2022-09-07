@@ -225,6 +225,8 @@ Chargebee.shared.retrieveEntitlements(forID: "SubscriptionID") { result in
 }
 ```
 
+**Note**: Entitlements feature is available only if your Chargebee site is on [Product Catalog 2.0](https://www.chargebee.com/docs/2.0/product-catalog.html).
+
 
 ### Integrating credit card tokenization
 
