@@ -58,7 +58,7 @@ class CBLoggerResource: CBAPIResource {
 
     init(action: String, type: LogType, errorMessage: String? = nil, errorCode: Int? = nil) {
         var data =  ["key": "cb.logging",
-                     "ref_module": "cb_ios_sdk",
+                     "ref_module": CBEnvironment.environment,
                      "site": CBEnvironment.site,
                      "action": action,
                      "log_data_type": type.rawValue,
