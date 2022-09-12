@@ -174,6 +174,10 @@ CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID")
 
 The above function will handle the purchase against App Store Connect and send the IAP receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function, to check for Subscription status on Chargebee and confirm the access - granted or denied.
 
+##### Returns Plan Object
+
+This function returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK method - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+
 #### Get Subscription Status for Existing Subscribers
 
 The following are methods for checking the subscription status of a subscriber who already purchased the product.
@@ -210,6 +214,10 @@ Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
 }
 ```
 
+##### Returns Plan Object
+
+The above functions return the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK method - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+
 #### Retrieve Entitlements of a Subscription
 
 Use the Subscription ID for fetching the list of [entitlements](https://www.chargebee.com/docs/2.0/entitlements.html) associated with the subscription. 
@@ -226,6 +234,7 @@ Chargebee.shared.retrieveEntitlements(forID: "SubscriptionID") { result in
 ```
 
 **Note**: Entitlements feature is available only if your Chargebee site is on [Product Catalog 2.0](https://www.chargebee.com/docs/2.0/product-catalog.html).
+
 
 
 ### Integrating credit card tokenization
