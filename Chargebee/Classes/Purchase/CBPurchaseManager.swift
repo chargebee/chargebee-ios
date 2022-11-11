@@ -137,11 +137,11 @@ public extension CBPurchase {
 
 // MARK: - Private methods
 extension CBPurchase {
-    private func startPaymentQueueObserver() {
+    func startPaymentQueueObserver() {
         SKPaymentQueue.default().add(self)
     }
 
-    private func stopPaymentQueueObserver() {
+    func stopPaymentQueueObserver() {
         SKPaymentQueue.default().remove(self)
     }
 
