@@ -10,6 +10,8 @@ Post-installation, initialization, and authentication with the Chargebee site, t
 
 -   **Tokenisation of credit card**: Tokenize credit card information while presenting your own user interface. Use this if you are selling physical goods or offline services or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
 
+-  **Note**: This SDK doesn’t support Apps developed using Objective C. If your app is developed using Objective C then we can guide you to integrate Objective C with our SDK code. Please reach out to support@chargebee.com
+
 Requirements
 ------------
 
@@ -29,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.5'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.15'
 ```
 
 ### CocoaPods
