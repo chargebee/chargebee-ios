@@ -11,7 +11,7 @@ public typealias ItemListHandler = (CBResult<CBItemListWrapper>) -> Void
 
 public typealias ItemHandler = (CBResult<CBItemWrapper>) -> Void
 
-public struct CBItemListWrapper: Decodable {
+public struct CBItemListWrapper: Codable {
     public let list: [CBItemWrapper]
     public  let nextOffset: String?
     enum CodingKeys: String, CodingKey {
@@ -20,11 +20,11 @@ public struct CBItemListWrapper: Decodable {
     }
 }
 
-public struct CBItemWrapper: Decodable {
+public struct CBItemWrapper: Codable {
     public let item: CBItem
 }
 
-public struct CBItem: Decodable {
+public struct CBItem: Codable {
     public let id: String
     public let name: String
     public let description: String?

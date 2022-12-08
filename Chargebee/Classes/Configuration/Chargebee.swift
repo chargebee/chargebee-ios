@@ -8,9 +8,11 @@ import Foundation
 public class Chargebee {
     public static let shared = Chargebee()
     private var client = NetworkClient()
+    public static var environment: String = "cb_ios_sdk"
     init() {}
 
     public static func configure(site: String, apiKey: String, sdkKey: String? = nil, allowErrorLogging: Bool = true) {
+        CBEnvironment.environment = self.environment
         CBEnvironment().configure(site: site, apiKey: apiKey, allowErrorLogging: allowErrorLogging, sdkKey: sdkKey)
     }
 

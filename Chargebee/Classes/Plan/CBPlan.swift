@@ -7,10 +7,10 @@ import Foundation
 public typealias PlanHandler = (CBResult<CBPlanWrapper>) -> Void
 public typealias AllPlanHandler = (CBResult<CBPlansWrapper>) -> Void
 
-public struct CBPlanWrapper: Decodable {
+public struct CBPlanWrapper: Codable {
     public let plan: CBPlan
 }
-public struct CBPlansWrapper: Decodable {
+public struct CBPlansWrapper: Codable {
     public let list: [CBPlanWrapper]
     public  let nextOffset: String?
 
@@ -20,7 +20,7 @@ public struct CBPlansWrapper: Decodable {
     }
 }
 
-public struct CBPlan: Decodable {
+public struct CBPlan: Codable {
     public let addonApplicability: String
     public let chargeModel: String
     public let currencyCode: String
