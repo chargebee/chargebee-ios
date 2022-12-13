@@ -35,6 +35,7 @@ extension CBAuthenticationManager {
 
     func authenticate(forSDKKey key: String, handler: @escaping CBAuthenticationHandler) {
         let logger = CBLogger(name: "Authentication", action: "Authenticate SDK Key")
+        logger.info()
         let (_, onError) = CBResult.buildResultHandlers(handler, logger)
 
         guard let appName = Bundle.main.displayName, let bundleId = Bundle.main.bundleIdentifier  else {

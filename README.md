@@ -10,6 +10,8 @@ Post-installation, initialization, and authentication with the Chargebee site, t
 
 -   **Tokenisation of credit card**: Tokenize credit card information while presenting your own user interface. Use this if you are selling physical goods or offline services or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
 
+-  **Note**: This SDK doesn’t support Apps developed using Objective C. If your app is developed using Objective C then we can guide you to integrate Objective C with our SDK code. Please reach out to support@chargebee.com
+
 Requirements
 ------------
 
@@ -29,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.5'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.15'
 ```
 
 ### CocoaPods
@@ -157,7 +159,8 @@ You can present any of the above products to your users for them to purchase.
 
 Pass the product and customer identifiers to the following function when the user chooses the product to purchase.
 
-customerId - Optional parameter. We need the unique ID of your customer as customerId. If your unique list of customers is maintained in your database or a third-party system, send us the unique ID from that source.
+customerId -  **Optional parameter**. Although this is an optional parameter, we recommend passing customerId if it is available before user subscribes on your App. Passing this parameter ensures that customerId in your database matches with the customerId in Chargebee.
+In case this parameter is not passed, then the **customerId** will be the same as the **SubscriptionId** created in Chargebee.
 
 ```swift
 CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID") { result in

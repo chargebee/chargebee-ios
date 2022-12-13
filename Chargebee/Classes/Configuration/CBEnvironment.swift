@@ -14,6 +14,7 @@ class CBEnvironment {
     static var version: CatalogVersion = .unknown
     static var session = URLSession.shared
     static var environment: String = "cb_ios_sdk"
+    
 
     func configure(site: String, apiKey: String, allowErrorLogging: Bool, sdkKey: String? = nil) {
         CBEnvironment.site = site
