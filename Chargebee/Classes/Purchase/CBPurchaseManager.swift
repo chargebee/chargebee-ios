@@ -275,6 +275,7 @@ public extension CBPurchase {
                             completion?(.failure(CBError.defaultSytemError(statusCode: 400, message: "Invalid Purchase")))
                             return
                         }
+                        self.activeProduct = nil
                         completion?(.success((true, receipt.subscriptionId, receipt.planId)))
                     case .error(let error):
                         debugPrint(" Chargebee - Receipt Upload - Failure")
