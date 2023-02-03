@@ -29,6 +29,16 @@ extension CBError: LocalizedError {
             return errorResponse.message
         }
     }
+    public var httpStatusCode: Int {
+        switch self {
+        case .operationFailed(let errorResponse):
+            return errorResponse.httpStatusCode ?? 0
+        case .invalidRequest(let errorResponse):
+            return errorResponse.httpStatusCode ?? 0
+        case .paymentFailed(let errorResponse):
+            return errorResponse.httpStatusCode ?? 0
+        }
+    } 
 }
 
 protocol ErrorDetail {
