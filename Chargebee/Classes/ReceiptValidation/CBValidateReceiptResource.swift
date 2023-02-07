@@ -60,7 +60,7 @@ class CBValidateReceiptResource: CBAPIResource {
         self.baseUrl = CBEnvironment.baseUrl
         self.requestBody = PayloadBody(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
                                        price: receipt.price, currencyCode: receipt.currencyCode,
-                                       customerId: receipt.customerId ??  "", period: "\(receipt.period)" , periodUnit: "\(receipt.periodUnit)" )
+                                       customerId: receipt.customerId ??  "", period: "\(receipt.period)" , periodUnit: "\(receipt.periodUnit)",first_name: receipt.first_name ?? "",last_name: receipt.last_name ?? "", email: receipt.email ?? "")
     }
 
 }
@@ -74,6 +74,9 @@ struct PayloadBody: URLEncodedRequestBody {
     let customerId: String
     let period: String
     let periodUnit: String
+    let first_name: String
+    let last_name: String
+    let email: String
     func toFormBody() -> [String: String] {
         [
             "receipt": receipt,
@@ -83,7 +86,10 @@ struct PayloadBody: URLEncodedRequestBody {
             "product[currency_code]": currencyCode,
             "product[period]": period,
             "product[period_unit]": periodUnit,
-            "customer[id]": customerId
+            "customer[id]": customerId,
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email
         ]
     }
 }

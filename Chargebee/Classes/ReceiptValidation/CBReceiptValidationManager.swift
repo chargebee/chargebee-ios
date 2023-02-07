@@ -31,6 +31,9 @@ struct CBReceipt {
     let customerId: String?
     let period:Int
     let periodUnit:Int
+    let first_name: String?
+    let last_name: String?
+    let email: String?
 }
 
 class CBReceiptValidationManager {
