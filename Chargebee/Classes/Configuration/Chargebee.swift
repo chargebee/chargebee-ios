@@ -16,6 +16,20 @@ public class Chargebee {
         CBEnvironment().configure(site: site, apiKey: apiKey, allowErrorLogging: allowErrorLogging, sdkKey: sdkKey)
     }
 
+    public static func configure(site: String, apiKey: String, sdkKey: String? = nil, allowErrorLogging: Bool = true, handler: @escaping CBAuthenticationHandler) {
+            let (onSuccess, onError) = CBResult.buildResultHandlers(handler, nil)
+
+            CBEnvironment.environment = self.environment
+            CBEnvironment().configure(site: site, apiKey: apiKey, allowErrorLogging: allowErrorLogging, sdkKey: sdkKey){ result in
+                switch result {
+                case .success(let status):
+                    onSuccess(status)
+                case .error(let error):
+                    onError(error)
+                }
+            }
+        }
+    
     public func retrieveSubscription(forSubscriptionID id: String, handler: @escaping CBSubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")
         logger.info()
