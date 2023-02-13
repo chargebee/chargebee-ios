@@ -41,7 +41,7 @@ public struct CBPlan: Codable {
     public let status: String
     public let taxable: Bool
     public let updatedAt: UInt64
-    public var metadata = [String: String]()
+    public let metadata: [String: String]?
     enum CodingKeys: String, CodingKey {
         case addonApplicability = "addon_applicability"
         case chargeModel = "charge_model"
