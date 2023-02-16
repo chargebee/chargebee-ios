@@ -163,7 +163,10 @@ customerId -  **Optional parameter**. Although this is an optional parameter, we
 In case this parameter is not passed, then the **customerId** will be the same as the **SubscriptionId** created in Chargebee.
 
 ```swift
-CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID") { result in
+
+   //Create CBCustomerInfo Object and Pass as param which has (FirstName,LastName,Email).
+   let userInformation = CBCustomer(customerID: "", first_name: "", last_name: "", email: "")
+   CBPurchase.shared.purchaseProduct(product: withProduct,userInfo: userInformation) { result in
     switch result {
         case .success(let result):
             print(result.status)
