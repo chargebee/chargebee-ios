@@ -87,9 +87,9 @@ struct PayloadBody: URLEncodedRequestBody {
             "product[period]": period,
             "product[period_unit]": periodUnit,
             "customer[id]": customerId,
-            "first_name": first_name,
-            "last_name": last_name,
-            "email": email
+            "customer[first_name]": first_name,
+            "customer[last_name]": last_name,
+            "customer[email]": email
         ]
     }
 }

@@ -19,8 +19,7 @@ public class CBPurchase: NSObject {
 
     private var restoredPurchasesCount = 0
     private var activeProduct: SKProduct?
-    var customerID: String = ""
-    var customerInfo: CBCustomerInfo?
+    var customerInfo: CBCustomer?
 
     // MARK: - Init
     private override init() {
@@ -104,10 +103,9 @@ public extension CBPurchase {
     }
 
     //Buy the product
-    func purchaseProduct(product: CBProduct, customerId : String? = "", userInfo : CBCustomerInfo? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, userInfo : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
-        customerID = customerId ?? ""
         if let customerData = userInfo {
             customerInfo = customerData
         }
@@ -269,7 +267,7 @@ public extension CBPurchase {
 
             let receiptString = receiptData.base64EncodedString(options: [])
             debugPrint("Apple Purchase - success")
-            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, customerId: self.customerID, period: period, periodUnit: Int(unit),first_name: customerInfo?.first_name ?? "", last_name: customerInfo?.last_name ?? "", email: customerInfo?.email ?? "")
+            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, customerId: customerInfo?.customerID ?? "", period: period, periodUnit: Int(unit),first_name: customerInfo?.first_name ?? "", last_name: customerInfo?.last_name ?? "", email: customerInfo?.email ?? "")
             
             CBReceiptValidationManager.validateReceipt(receipt: receipt) {
                 (receiptResult) in DispatchQueue.main.async {
