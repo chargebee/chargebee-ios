@@ -1,5 +1,5 @@
 //
-//  CBCustomerInfo.swift
+//  CBCustomer.swift
 //  Chargebee
 //
 //  Created by ramesh_g on 06/02/23.
