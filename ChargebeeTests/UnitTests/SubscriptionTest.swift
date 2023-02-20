@@ -67,7 +67,7 @@ extension MockRequest: CBNetworkRequest {
     }
 
     func decode(_ data: Data) -> CBSubscriptionStatus? {
-        return CBSubscriptionStatus.init(subscription: Subscription.init(activatedAt: 12222.0, status: "active", planAmount: 2332.0, id: "123456", customerId: "ima-123", currentTermEnd: 1233233.0, currentTermStart: 123323323.0))
+        return CBSubscriptionStatus.init(subscription: Subscription.init(activatedAt: 12222.0, status: "active", planAmount: 2332.0, id: "123456", customerId: "ima-123", currentTermEnd: 1233233.0, currentTermStart: 123323323.0, planId: nil))
     }
 
     func decodeError(_ data: Data) -> String? {
@@ -86,7 +86,7 @@ class SubscriptionTest: XCTestCase {
         CBSubscriptionManager().retrieveSubscription(network: mockRequ, logger: CBLogger(name: "", action: "")) { result in
             switch result {
             case .success(let status):
-                XCTAssertEqual(status.subscription.customerId, "ima-123")
+                XCTAssertEqual(status.customerId, "ima-123")
                 exp.fulfill()
             case .error:
                 XCTFail()
