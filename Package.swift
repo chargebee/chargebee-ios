@@ -29,7 +29,8 @@ let package = Package(
            ),
         .testTarget(
             name: "Chargebee-test",
-            dependencies: ["Chargebee"])
+            dependencies: ["Chargebee"],
+            path: "ChargebeeTests")
         
     ]
 )
