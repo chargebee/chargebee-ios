@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		20CCB493265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */; };
 		20CCB4B5265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */; };
+		2BF2D53629A3C7A500E22D21 /* Chargebee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF2D53329A3C6F400E22D21 /* Chargebee.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* CBSDKOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* CBSDKOptionsViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		62B3F4F6713321E11E4A68BB /* Pods_Chargebee_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */; };
 		851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */; };
 		851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */; };
 		851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */; };
@@ -32,13 +32,38 @@
 		FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2BF2D53229A3C6F400E22D21 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BF2D52D29A3C6F400E22D21 /* Chargebee.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2BF2D48929A3B81000E22D21;
+			remoteInfo = Chargebee;
+		};
+		2BF2D53429A3C6F400E22D21 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BF2D52D29A3C6F400E22D21 /* Chargebee.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2BF2D49329A3B81000E22D21;
+			remoteInfo = ChargebeeTests;
+		};
+		2BF2D53729A3C7AE00E22D21 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BF2D52D29A3C6F400E22D21 /* Chargebee.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BF2D48829A3B81000E22D21;
+			remoteInfo = Chargebee;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		11D26FE36CF981E946EE2FFA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKProductsTableViewController.swift; sourceTree = "<group>"; };
 		20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKSubscriptionStatusViewController.swift; sourceTree = "<group>"; };
 		2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chargebee_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BF2D52D29A3C6F400E22D21 /* Chargebee.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chargebee.xcodeproj; path = ../Chargebee.xcodeproj; sourceTree = "<group>"; };
 		372AB47A894F58E78F9AFA7C /* Pods-Chargebee_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* Chargebee_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chargebee_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* Chargebee Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chargebee Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* CBSDKOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKOptionsViewController.swift; sourceTree = "<group>"; };
@@ -73,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62B3F4F6713321E11E4A68BB /* Pods_Chargebee_Example.framework in Frameworks */,
+				2BF2D53629A3C7A500E22D21 /* Chargebee.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +153,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		2BF2D52E29A3C6F400E22D21 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2BF2D53329A3C6F400E22D21 /* Chargebee.framework */,
+				2BF2D53529A3C6F400E22D21 /* ChargebeeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		2F12FF6EE59CE359AA610724 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,7 +187,7 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* Chargebee_Example.app */,
+				607FACD01AFB9204008FA782 /* Chargebee Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -194,6 +228,7 @@
 		AAD4F8DC1372EE4D1A09D929 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BF2D52D29A3C6F400E22D21 /* Chargebee.xcodeproj */,
 				2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */,
 				F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */,
 			);
@@ -203,9 +238,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* Chargebee_Example */ = {
+		607FACCF1AFB9204008FA782 /* Chargebee Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chargebee_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chargebee Example" */;
 			buildPhases = (
 				14752A223DBDF877A65E5AEA /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
@@ -216,10 +251,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				2BF2D53829A3C7AE00E22D21 /* PBXTargetDependency */,
 			);
-			name = Chargebee_Example;
+			name = "Chargebee Example";
 			productName = Chargebee;
-			productReference = 607FACD01AFB9204008FA782 /* Chargebee_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* Chargebee Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -240,7 +276,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Chargebee" */;
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Chargebee Example" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -251,12 +287,35 @@
 			mainGroup = 607FACC71AFB9204008FA782;
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2BF2D52E29A3C6F400E22D21 /* Products */;
+					ProjectRef = 2BF2D52D29A3C6F400E22D21 /* Chargebee.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* Chargebee_Example */,
+				607FACCF1AFB9204008FA782 /* Chargebee Example */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2BF2D53329A3C6F400E22D21 /* Chargebee.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Chargebee.framework;
+			remoteRef = 2BF2D53229A3C6F400E22D21 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2BF2D53529A3C6F400E22D21 /* ChargebeeTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChargebeeTests.xctest;
+			remoteRef = 2BF2D53429A3C6F400E22D21 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		607FACCE1AFB9204008FA782 /* Resources */ = {
@@ -342,6 +401,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BF2D53829A3C7AE00E22D21 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Chargebee;
+			targetProxy = 2BF2D53729A3C7AE00E22D21 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
@@ -519,7 +586,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Chargebee" */ = {
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Chargebee Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
@@ -528,7 +595,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chargebee_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chargebee Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,

@@ -15,23 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "Chargebee_Example.app"
-               BlueprintName = "Chargebee_Example"
-               ReferencedContainer = "container:Chargebee.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "Chargebee_Tests.xctest"
-               BlueprintName = "Chargebee_Tests"
-               ReferencedContainer = "container:Chargebee.xcodeproj">
+               BuildableName = "Chargebee Example.app"
+               BlueprintName = "Chargebee Example"
+               ReferencedContainer = "container:Chargebee Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -41,34 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "Chargebee_Example.app"
-            BlueprintName = "Chargebee_Example"
-            ReferencedContainer = "container:Chargebee.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "Chargebee_Tests.xctest"
-               BlueprintName = "Chargebee_Tests"
-               ReferencedContainer = "container:Chargebee.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D4A6817927ABB89300A6A297"
-               BuildableName = "Chargebee_ExampleTests.xctest"
-               BlueprintName = "Chargebee_ExampleTests"
-               ReferencedContainer = "container:Chargebee.xcodeproj">
+               BlueprintIdentifier = "2BF2D49229A3B81000E22D21"
+               BuildableName = "ChargebeeTests.xctest"
+               BlueprintName = "ChargebeeTests"
+               ReferencedContainer = "container:../Chargebee.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -88,21 +55,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "Chargebee_Example.app"
-            BlueprintName = "Chargebee_Example"
-            ReferencedContainer = "container:Chargebee.xcodeproj">
+            BuildableName = "Chargebee Example.app"
+            BlueprintName = "Chargebee Example"
+            ReferencedContainer = "container:Chargebee Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "CFNETWORK_DIAGNOSTICS"
-            value = "3"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
-      <StoreKitConfigurationFileReference
-         identifier = "../Chargebee/Configuration.storekit">
-      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -115,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "Chargebee_Example.app"
-            BlueprintName = "Chargebee_Example"
-            ReferencedContainer = "container:Chargebee.xcodeproj">
+            BuildableName = "Chargebee Example.app"
+            BlueprintName = "Chargebee Example"
+            ReferencedContainer = "container:Chargebee Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
