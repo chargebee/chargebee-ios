@@ -60,7 +60,7 @@ class CBValidateReceiptResource: CBAPIResource {
         self.baseUrl = CBEnvironment.baseUrl
         self.requestBody = PayloadBody(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
                                        price: receipt.price, currencyCode: receipt.currencyCode,
-                                       customerId: receipt.customerInfo?.customerID ?? "", period: "\(receipt.period)" , periodUnit: "\(receipt.periodUnit)",first_name: receipt.customerInfo?.first_name ?? "",last_name: receipt.customerInfo?.last_name ?? "", email: receipt.customerInfo?.email ?? "")
+                                       customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",first_name: receipt.customer?.firstName ?? "",last_name: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "")
     }
 
 }

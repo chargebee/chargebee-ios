@@ -19,14 +19,13 @@ public class CBPurchase: NSObject {
 
     private var restoredPurchasesCount = 0
     private var activeProduct: SKProduct?
-    var customerInfo: CBCustomer?
+    var customer: CBCustomer?
 
     // MARK: - Init
     private override init() {
         super.init()
         startPaymentQueueObserver()
     }
-
 }
 
 public struct CBProduct {
@@ -103,53 +102,21 @@ public extension CBPurchase {
     }
 
     //Buy the product
+    @available(swift, deprecated: 4.0, message: "This will be removed in upcoming versions, Please use this API func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion) .")
     func purchaseProduct(product: CBProduct, customerId : String? = "" ,completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
-        self.customerInfo = CBCustomer(customerID: customerId ?? "", first_name: "", last_name: "", email: "")
-        guard CBAuthenticationManager.isSDKKeyPresent() else {
-            handler(.failure(CBPurchaseError.cannotMakePayments))
-            return
-        }
-
-        if !CBPurchase.shared.canMakePayments() {
-            handler(.failure(CBPurchaseError.cannotMakePayments))
-        } else {
-            authenticationManager.isSDKKeyValid { status in
-                if status {
-                    let payment = SKPayment(product: product.product)
-                    SKPaymentQueue.default().add(payment)
-
-                } else {
-                    handler(.failure(CBPurchaseError.invalidSDKKey))
-                }
-            }
-        }
+        self.customer = CBCustomer(customerID: customerId ?? "")
+        self.purchaseProductHandler(product: product, completion: handler)
     }
-    func purchaseProduct(product: CBProduct, userInfo : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+    
+    func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
-        if let customerData = userInfo {
-            customerInfo = customerData
+        if let customer = customer {
+            self.customer = customer
         }
-        guard CBAuthenticationManager.isSDKKeyPresent() else {
-            handler(.failure(CBPurchaseError.cannotMakePayments))
-            return
-        }
-
-        if !CBPurchase.shared.canMakePayments() {
-            handler(.failure(CBPurchaseError.cannotMakePayments))
-        } else {
-            authenticationManager.isSDKKeyValid { status in
-                if status {
-                    let payment = SKPayment(product: product.product)
-                    SKPaymentQueue.default().add(payment)
-
-                } else {
-                    handler(.failure(CBPurchaseError.invalidSDKKey))
-                }
-            }
-        }
+        self.purchaseProductHandler(product: product, completion: handler)
     }
     
     //Restore the purchase
@@ -157,6 +124,28 @@ public extension CBPurchase {
         buyProductHandler = handler
         restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
+    }
+    
+    func purchaseProductHandler(product: CBProduct,completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+        
+        guard CBAuthenticationManager.isSDKKeyPresent() else {
+            handler(.failure(CBPurchaseError.cannotMakePayments))
+            return
+        }
+
+        if !CBPurchase.shared.canMakePayments() {
+            handler(.failure(CBPurchaseError.cannotMakePayments))
+        } else {
+            authenticationManager.isSDKKeyValid { status in
+                if status {
+                    let payment = SKPayment(product: product.product)
+                    SKPaymentQueue.default().add(payment)
+
+                } else {
+                    handler(.failure(CBPurchaseError.invalidSDKKey))
+                }
+            }
+        }
     }
 }
 
@@ -290,7 +279,7 @@ public extension CBPurchase {
 
             let receiptString = receiptData.base64EncodedString(options: [])
             debugPrint("Apple Purchase - success")
-            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, customerId: customerInfo?.customerID ?? "", period: period, periodUnit: Int(unit),customerInfo: customerInfo)
+            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, period: period, periodUnit: Int(unit),customer: customer)
             
             CBReceiptValidationManager.validateReceipt(receipt: receipt) {
                 (receiptResult) in DispatchQueue.main.async {
