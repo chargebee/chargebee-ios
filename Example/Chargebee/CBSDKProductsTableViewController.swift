@@ -71,10 +71,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
 
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-
-                //Create CBCustomerInfo Object and Pass as param which has (FirstName,LastName,Email).
-            let userInformation = CBCustomer(customerID: "", first_name: "", last_name: "", email: "")
-            CBPurchase.shared.purchaseProduct(product: withProduct,userInfo: userInformation) { result in
+            CBPurchase.shared.purchaseProduct(product: withProduct,customerId: customerID) { result in
                 print(result)
                 switch result {
                 case .success(let result):
