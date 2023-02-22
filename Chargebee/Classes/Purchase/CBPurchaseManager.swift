@@ -113,9 +113,7 @@ public extension CBPurchase {
     func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
-        if let customer = customer {
             self.customer = customer
-        }
         self.purchaseProductHandler(product: product, completion: handler)
     }
     

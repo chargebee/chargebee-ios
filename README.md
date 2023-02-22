@@ -164,9 +164,9 @@ In case this parameter is not passed, then the **customerId** will be the same a
 
 ```swift
 
-   //Create CBCustomerInfo Object and Pass as param which has (FirstName,LastName,Email).
-   let userInformation = CBCustomer(customerID: "", first_name: "", last_name: "", email: "")
-   CBPurchase.shared.purchaseProduct(product: withProduct,userInfo: userInformation) { result in
+   //Create CBCustomer Object and Pass as param which has (customerID,FirstName,LastName,Email).
+    let customer = CBCustomer(customerID: "",firstName:"",lastName: "",email: "")
+    CBPurchase.shared.purchaseProduct(product: withProduct,customer: customer) { result in
     switch result {
         case .success(let result):
             print(result.status)
