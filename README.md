@@ -157,10 +157,11 @@ You can present any of the above products to your users for them to purchase.
 
 #### Buy or Subscribe Product
 
-Pass the product and customer identifiers to the following function when the user chooses the product to purchase.
+Pass the `CBProduct` and  `CBCustomer` objects to the following function when the user chooses the product to purchase.
 
-customerId -  **Optional parameter**. Although this is an optional parameter, we recommend passing customerId if it is available before user subscribes on your App. Passing this parameter ensures that customerId in your database matches with the customerId in Chargebee.
-In case this parameter is not passed, then the **customerId** will be the same as the **SubscriptionId** created in Chargebee.
+`CBCustomer` - **Optional object**. Although this is an optional object, we recommend passing the necessary customer details, such as `customerID`, `firstName`, `lastName`, and `email` if it is available before the user subscribes to your App. This ensures that the customer details in your database match the customer details in Chargebee. If the `customerID` is not passed in the customer's details, then the value of `customerID` will be the same as the `SubscriptionId` created in Chargebee.
+
+**Note**: The `customer` parameter in the below code snippet is an instance of `CBCustomer` class that contains the details of the customer who wants to subscribe or buy the product.
 
 ```swift
 CBPurchase.shared.purchaseProduct(product: "CBProduct",customerId: "CustomerID") { result in
