@@ -11,6 +11,7 @@ import Chargebee
 
 protocol ProductTableViewCellDelegate: class {
     func buyClicked(withProduct: CBProduct)
+    func buyProduct(withProduct: CBProduct)
 }
 
 final class CBSDKProductTableViewCell: UITableViewCell {

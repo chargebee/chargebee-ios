@@ -47,6 +47,7 @@
 		F21CBC6AE3BE93F2196808B4219CE53C /* CBSubscriptionResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2056AD371A5C2E945A497FA517F2B518 /* CBSubscriptionResource.swift */; };
 		F72AF357B920CD67870D09960DA9929E /* CBPaymentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D39CDCB57024714FBAD569E37FB811 /* CBPaymentDetail.swift */; };
 		F8DF0BAF2030A8D4F053EB8538E8825A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		FB23D7A92991447600BC402D /* CBCustomer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB23D7A82991447600BC402D /* CBCustomer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +117,7 @@
 		DC456E2E47F738A49E4909FE2AA39C5F /* CBProductsV2.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBProductsV2.swift; sourceTree = "<group>"; };
 		E1A37B64FBC221D6674BD98FE32BD75F /* CBNetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBNetworkRequest.swift; sourceTree = "<group>"; };
 		E2F934B041E443084806B01866FE87E5 /* CBAuthenticationResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBAuthenticationResource.swift; sourceTree = "<group>"; };
+		FB23D7A82991447600BC402D /* CBCustomer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBCustomer.swift; sourceTree = "<group>"; };
 		FB4FC87068661580D33646361C626416 /* Pods-Chargebee_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Chargebee_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		FF4E46251FF4E16A87284EF921F0E0C2 /* CBAddOnResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBAddOnResource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +170,7 @@
 				DC456E2E47F738A49E4909FE2AA39C5F /* CBProductsV2.swift */,
 				900CB21AE1CA138872C98A8BC4B62CB7 /* CBPurchaseError.swift */,
 				C58DD80238FA4C1637CE892CA3F3AB8A /* CBPurchaseManager.swift */,
+				FB23D7A82991447600BC402D /* CBCustomer.swift */,
 			);
 			name = Purchase;
 			path = Chargebee/Classes/Purchase;
@@ -555,6 +558,7 @@
 				0211271CB4BD71A42BDE5CD492397A3C /* Chargebee.swift in Sources */,
 				D3BF6D273DD0446DBAC6E9E14035B96D /* Chargebee-dummy.m in Sources */,
 				52B6734620FC23310AB038FDC2E20417 /* StripeTokenizer.swift in Sources */,
+				FB23D7A92991447600BC402D /* CBCustomer.swift in Sources */,
 				B93129726750D4A2DBDAB610FCFE3BED /* StripeTokenResource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
