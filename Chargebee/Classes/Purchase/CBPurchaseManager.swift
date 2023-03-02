@@ -19,14 +19,13 @@ public class CBPurchase: NSObject {
 
     private var restoredPurchasesCount = 0
     private var activeProduct: SKProduct?
-    var customerID: String = ""
+    var customer: CBCustomer?
 
     // MARK: - Init
     private override init() {
         super.init()
         startPaymentQueueObserver()
     }
-
 }
 
 public struct CBProduct {
@@ -103,10 +102,30 @@ public extension CBPurchase {
     }
 
     //Buy the product
+    @available(*, deprecated, message: "This will be removed in upcoming versions, Please use this API func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion)")
     func purchaseProduct(product: CBProduct, customerId : String? = "" ,completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product.product
-        customerID = customerId ?? ""
+        self.customer = CBCustomer(customerID: customerId ?? "")
+        self.purchaseProductHandler(product: product, completion: handler)
+    }
+    
+    func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+        buyProductHandler = handler
+        activeProduct = product.product
+            self.customer = customer
+        self.purchaseProductHandler(product: product, completion: handler)
+    }
+    
+    //Restore the purchase
+    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+        buyProductHandler = handler
+        restoredPurchasesCount = 0
+        SKPaymentQueue.default().restoreCompletedTransactions()
+    }
+    
+    func purchaseProductHandler(product: CBProduct,completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+        
         guard CBAuthenticationManager.isSDKKeyPresent() else {
             handler(.failure(CBPurchaseError.cannotMakePayments))
             return
@@ -125,13 +144,6 @@ public extension CBPurchase {
                 }
             }
         }
-    }
-    
-    //Restore the purchase
-    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
-        buyProductHandler = handler
-        restoredPurchasesCount = 0
-        SKPaymentQueue.default().restoreCompletedTransactions()
     }
 }
 
@@ -265,7 +277,8 @@ public extension CBPurchase {
 
             let receiptString = receiptData.base64EncodedString(options: [])
             debugPrint("Apple Purchase - success")
-            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, customerId: self.customerID, period: period, periodUnit: Int(unit))
+            let receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, period: period, periodUnit: Int(unit),customer: customer)
+            
             CBReceiptValidationManager.validateReceipt(receipt: receipt) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
