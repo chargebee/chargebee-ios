@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BA8938329B0D2B40032DBD2 /* CBCustomer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA8938229B0D2B40032DBD2 /* CBCustomer.swift */; };
 		2BF2D49429A3B81000E22D21 /* Chargebee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF2D48929A3B81000E22D21 /* Chargebee.framework */; };
 		2BF2D4D829A3B8E300E22D21 /* CBPaymentConfigResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D4A729A3B8E300E22D21 /* CBPaymentConfigResource.swift */; };
 		2BF2D4D929A3B8E300E22D21 /* CBPaymentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D4A829A3B8E300E22D21 /* CBPaymentDetail.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2BA8938229B0D2B40032DBD2 /* CBCustomer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBCustomer.swift; sourceTree = "<group>"; };
 		2BF2D48929A3B81000E22D21 /* Chargebee.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Chargebee.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF2D49329A3B81000E22D21 /* ChargebeeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChargebeeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF2D4A729A3B8E300E22D21 /* CBPaymentConfigResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBPaymentConfigResource.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 		2BF2D4CF29A3B8E300E22D21 /* Purchase */ = {
 			isa = PBXGroup;
 			children = (
+				2BA8938229B0D2B40032DBD2 /* CBCustomer.swift */,
 				2BF2D4D029A3B8E300E22D21 /* CBProductsV2.swift */,
 				2BF2D4D129A3B8E300E22D21 /* CBProductsV1.swift */,
 				2BF2D4D229A3B8E300E22D21 /* CBPurchaseManager.swift */,
@@ -467,6 +470,7 @@
 				2BF2D4EE29A3B8E300E22D21 /* CBEntitlementResource.swift in Sources */,
 				2BF2D4F529A3B8E300E22D21 /* CBProductsV2.swift in Sources */,
 				2BF2D4E529A3B8E300E22D21 /* CBValidateReceiptResource.swift in Sources */,
+				2BA8938329B0D2B40032DBD2 /* CBCustomer.swift in Sources */,
 				2BF2D4DE29A3B8E300E22D21 /* StripeTokenizer.swift in Sources */,
 				2BF2D4F729A3B8E300E22D21 /* CBPurchaseManager.swift in Sources */,
 				2BF2D4E429A3B8E300E22D21 /* CBLoggerResource.swift in Sources */,

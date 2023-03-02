@@ -5,6 +5,6 @@
       location = "group:../Chargebee.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/cb-it-01-1260/workspace/chargebee/mobile-sdk/haripriyan/chargebee-ios/Example/Chargebee Example.xcodeproj">
+      location = "group:Chargebee Example.xcodeproj">
    </FileRef>
 </Workspace>

@@ -24,7 +24,7 @@ extension MockRequestPlans: CBNetworkRequest {
     }
 
     func decode(_ data: Data) -> CBPlansWrapper? {
-        let item = CBPlan.init(addonApplicability: "", chargeModel: "", currencyCode: "", enabledInHostedPages: true, enabledInPortal: true, freeQuantity: 1, giftable: true, id: "", invoiceName: "", isShippable: true, name: "", object: "", period: 1, periodUnit: "", price: 1, pricingModel: "", resourceVersion: 1, status: "", taxable: true, updatedAt: 1)
+        let item = CBPlan.init(addonApplicability: "", chargeModel: "", currencyCode: "", enabledInHostedPages: true, enabledInPortal: true, freeQuantity: 1, giftable: true, id: "", invoiceName: "", isShippable: true, name: "", object: "", period: 1, periodUnit: "", price: 1, pricingModel: "", resourceVersion: 1, status: "", taxable: true, updatedAt: 1, metadata: nil)
 
         return CBPlansWrapper.init(list: [CBPlanWrapper.init(plan: item), CBPlanWrapper.init(plan: item)], nextOffset: "2")
     }
@@ -52,7 +52,7 @@ extension MockRequestPlan: CBNetworkRequest {
     }
 
     func decode(_ data: Data) -> CBPlan? {
-        return CBPlan.init(addonApplicability: "", chargeModel: "", currencyCode: "", enabledInHostedPages: true, enabledInPortal: true, freeQuantity: 1, giftable: true, id: "", invoiceName: "", isShippable: true, name: "", object: "", period: 1, periodUnit: "", price: 1, pricingModel: "", resourceVersion: 1, status: "", taxable: true, updatedAt: 1)
+        return CBPlan.init(addonApplicability: "", chargeModel: "", currencyCode: "", enabledInHostedPages: true, enabledInPortal: true, freeQuantity: 1, giftable: true, id: "", invoiceName: "", isShippable: true, name: "", object: "", period: 1, periodUnit: "", price: 1, pricingModel: "", resourceVersion: 1, status: "", taxable: true, updatedAt: 1, metadata: nil)
 
     }
 
