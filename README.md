@@ -359,7 +359,7 @@ let card = CBCard(
 
 let paymentDetail = CBPaymentDetail(type: CBPaymentType.Card, currencyCode: "USD", card: card)
 
-CBToken.createTempToken(paymentDetail: paymentDetail) { tokenResult in
+Chargebee.shared.createTempToken(paymentDetail: paymentDetail) { tokenResult in
     switch tokenResult {
     case .success(let token):
         print("Chargebee Token \(token)")
