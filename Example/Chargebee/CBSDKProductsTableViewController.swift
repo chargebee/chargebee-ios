@@ -19,6 +19,77 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         self.title = "Products"
 
     }
+    
+    func reachabilityObserver() {
+        NetworkReachability.shared.reachabilityObserver = {  status in
+            switch status {
+            case .connected:
+                print("Reachability: Network available ")
+                if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                    self.validateReceiptOnceInternetIsAvailable()
+                }
+            case .disconnected:
+                print("Reachability: Network unavailable ")
+            }
+        }
+    }
+    
+    func ValidateReceipt(_ product: CBProduct){
+        CBPurchase.shared.validateReceipt(product) { result in
+            switch result {
+            case .success(let result):
+                print(result.status )
+                print(result.subscriptionId ?? "")
+                print(result.planId ?? "")
+                DispatchQueue.main.async {
+                    self.view.activityStopAnimating()
+                    let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                    CBDemoPersistance.clearPurchaseIDCache()
+                }
+                NetworkReachability.shared.stopNotifier()
+            case .failure(let error):
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.view.activityStopAnimating()
+                    let alertController = UIAlertController(title: "Chargebee", message: error.localizedDescription, preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func validateReceiptOnceInternetIsAvailable() {
+        if let productID = CBDemoPersistance.getProductIDFromCache() {
+            // Getting the productID from Cache and with ProductID we will get the product using retrieveProducts API and Validate Receipt
+            self.view.activityStartAnimating(activityColor: .gray, backgroundColor: .gray)
+            print("Offline Validation is Going on")
+            CBPurchase.shared.retrieveProducts(withProductID: [productID] as! [String]) { result in
+                DispatchQueue.main.async {
+                    self.view.activityStopAnimating()
+                }
+                switch result {
+                case let .success(products):
+                    if let product = products.first {
+                        self.ValidateReceipt(product)
+                    }
+                case let .failure(error):
+                    debugPrint("Error: \(error.localizedDescription)")
+                    print("Inside Failure")
+
+                }
+            }
+        }
+    }
+    
+    private func addNetWorkObserver(){
+         NetworkReachability.shared.startNotifier()
+         self.reachabilityObserver()
+     }
 
     // MARK: - Table view data source
 
@@ -70,9 +141,16 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
 
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+            addNetWorkObserver()
             let customer = CBCustomer(customerID: customerID,firstName:"",lastName: "",email: "")
             CBPurchase.shared.purchaseProduct(product: withProduct,customer: customer) { result in
                 print(result)
+                if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                    CBDemoPersistance.clearPurchaseIDCache()
+                }
+                if !CBDemoPersistance.isPurchaseProductIDAvailable(){
+                    CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
+                }
                 switch result {
                 case .success(let result):
                     print(result.status)
@@ -84,13 +162,33 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alertController, animated: true, completion: nil)
                     }
+                  
+                    if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                        CBDemoPersistance.clearPurchaseIDCache()
+                    }
+                    NetworkReachability.shared.stopNotifier()
+                   
                 case .failure(let error):
                     print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        self.view.activityStopAnimating()
-                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alertController, animated: true, completion: nil)
+                    
+                    guard let errorDetails = error as? CBError else{
+                        print("error has been casted to CBError")
+                        return
+                    }
+                    switch errorDetails {
+                    case .operationFailed(errorResponse: let errorResponse),
+                            .invalidRequest(errorResponse: let errorResponse),      .paymentFailed(errorResponse: let errorResponse):
+                        print("errorResponse",errorResponse)
+                        DispatchQueue.main.async {
+                            self.view.activityStopAnimating()
+                            let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    case .serverNotResponding(errorResponse: let errorResponse):
+                        // Retry Validating receipt here with below method in case server is not responding.
+                        print("Error:",errorResponse)
+                        self.ValidateReceipt(withProduct)
                     }
                 }
             }
@@ -117,8 +215,15 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
     func buyClicked(withProduct: CBProduct) {
 
         func purchase(customerID: String) {
+            addNetWorkObserver()
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             CBPurchase.shared.purchaseProduct(product: withProduct,customerId: customerID) { result in
+                if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                    CBDemoPersistance.clearPurchaseIDCache()
+                }
+                if !CBDemoPersistance.isPurchaseProductIDAvailable(){
+                    CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
+                }
                 print(result)
                 switch result {
                 case .success(let result):
@@ -131,13 +236,31 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alertController, animated: true, completion: nil)
                     }
+                    if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                        CBDemoPersistance.clearPurchaseIDCache()
+                    }
+                    NetworkReachability.shared.stopNotifier()
                 case .failure(let error):
                     print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        self.view.activityStopAnimating()
-                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alertController, animated: true, completion: nil)
+                    
+                    guard let errorDetails = error as? CBError else{
+                        print("error has been casted to CBError")
+                        return
+                    }
+                    switch errorDetails {
+                    case .operationFailed(errorResponse: let errorResponse),
+                            .invalidRequest(errorResponse: let errorResponse),      .paymentFailed(errorResponse: let errorResponse):
+                        print("errorResponse",errorResponse)
+                        DispatchQueue.main.async {
+                            self.view.activityStopAnimating()
+                            let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    case .serverNotResponding(errorResponse: let errorResponse):
+                        // Retry Validating receipt here with below method in case server is not responding.
+                        print("Error:",errorResponse)
+                        self.ValidateReceipt(withProduct)
                     }
                 }
             }
