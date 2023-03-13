@@ -14,7 +14,7 @@ final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
     private var items: [CBItemWrapper] = []
     private var plans: [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ]
+    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ,.restore]
 
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -167,6 +167,56 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     debugPrint("Error: \(error.localizedDescription)")
                 }
             }
+        case .restore:
+            self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+            CBPurchase.shared.restorePurchases(includeNonActiveProducts: false) { result in
+                switch result {
+                case .success(let response):
+                    print("Active products List:",response)
+                    if response.count > 0 {
+                        
+                        for sub in response {
+                            
+                            if let status = sub.storeStatus {
+                                if status == "Active"{
+                                    DispatchQueue.main.async {
+                                        self.view.activityStopAnimating()
+
+                                        let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
+                                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                }else{
+                                    DispatchQueue.main.async {
+                                        self.view.activityStopAnimating()
+
+                                        let alertController = UIAlertController(title: "Chargebee", message: "No Active products to Restore", preferredStyle: .alert)
+                                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        
+                    }else {
+                        DispatchQueue.main.async {
+                            self.view.activityStopAnimating()
+
+                            let alertController = UIAlertController(title: "Chargebee", message: "No products to Restore", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
         }
     }
 }
@@ -200,6 +250,7 @@ enum ClientAction {
     case getItems
     case getItem
     case getEntitlements
+    case restore
 
 }
 
@@ -230,6 +281,8 @@ extension ClientAction {
             return "Get Entitlements"
         case .getProductIDs:
             return "Get Apple Specific Product Identifiers"
+        case .restore:
+            return "Restore Purcahses"
         }
 
     }

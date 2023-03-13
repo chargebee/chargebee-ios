@@ -17,9 +17,18 @@ public class CBPurchase: NSObject {
     private var authenticationManager = CBAuthenticationManager()
     var productRequest: SKProductsRequestFactory = SKProductsRequestFactory()
 
-    private var restoredPurchasesCount = 0
+     var restoredPurchasesCount = 0
     private var activeProduct: SKProduct?
     var customer: CBCustomer?
+    
+      var restorePurchaseHanlder: ((Result<CBRestorePurchase, RestoreError>) -> Void)?
+      var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
+
+     var result: ReceiptResult<String>?
+     var refreshHandler: RestoreResultCompletion<String>?
+
+   public var includeNonActiveProducts = false
+    var restoreHandlerisActive = false
 
     // MARK: - Init
     private override init() {
@@ -118,8 +127,8 @@ public extension CBPurchase {
     }
     
     //Restore the purchase
-    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
-        buyProductHandler = handler
+    func restorePurchases(includeNonActiveProducts: Bool? = false,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
+        restoreResponseHandler = handler
         restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
@@ -176,13 +185,14 @@ extension CBPurchase: SKProductsRequestDelegate {
 
     public func request(_ request: SKRequest, didFailWithError error: Error) {
         debugPrint("Error: \(error.localizedDescription)")
-        receiveProductsHandler?(.failure(.skRequestFailed))
+        
+        if self.restoreHandlerisActive {
+            self.restoreHandlerisActive = false
+            restoreResponseHandler?(.failure(.refreshReceiptFailed))
+        }else{
+            receiveProductsHandler?(.failure(.skRequestFailed))
+        }
     }
-
-    public func requestDidFinish(_ request: SKRequest) {
-        // if needed
-    }
-
 }
 
 // MARK: - SKPaymentTransactionObserver delegates
@@ -196,9 +206,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
                     validateReceipt(product, completion: buyProductHandler)
                 }
             case .restored:
-                restoredPurchasesCount += 1
-                SKPaymentQueue.default().finishTransaction(transaction)
-
+                receivedRestoredTransaction(transaction)
             case .failed:
                 if let error = transaction.error as? SKError {
                     print(error)
@@ -246,16 +254,12 @@ extension CBPurchase: SKPaymentTransactionObserver {
     }
 
     public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        if restoredPurchasesCount != 0 {
-            buyProductHandler?(.success((true, nil, nil)))
-        } else {
-            buyProductHandler?(.failure(CBPurchaseError.noProductToRestore))
-        }
+        receiveRestoredTransactionsFinished(nil)
     }
 
     public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        if let error = error as? SKError {
-            buyProductHandler?(.failure(error))
+        if let error = error as? RestoreError {
+            receiveRestoredTransactionsFinished(error)
         }
     }
 }
@@ -291,7 +295,7 @@ public extension CBPurchase {
                         self.activeProduct = nil
                         completion?(.success((true, receipt.subscriptionId, receipt.planId)))
                     case .error(let error):
-                        debugPrint(" Chargebee - Receipt Upload - Failure")
+                        debugPrint(" Chargebee - Receipt Upload - Failure",error.localizedDescription)
                         completion?(.failure(error))
                     }
                 }
