@@ -172,7 +172,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             CBPurchase.shared.restorePurchases(includeNonActiveProducts: true) { result in
                 switch result {
                 case .success(let response):
-                    print("Active products List:",response)
+                    print("Restore Products List:",response)
                     if response.count > 0 {
                         for subscription in response {
                             if let status = subscription.storeStatus {
@@ -186,7 +186,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                                 }else {
                                     DispatchQueue.main.async {
                                         self.view.activityStopAnimating()
-
+                                        
                                         let alertController = UIAlertController(title: "Chargebee", message: "No Active products to Restore", preferredStyle: .alert)
                                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                                         self.present(alertController, animated: true, completion: nil)
@@ -199,7 +199,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     }else {
                         DispatchQueue.main.async {
                             self.view.activityStopAnimating()
-
+                            
                             let alertController = UIAlertController(title: "Chargebee", message: "No products to Restore", preferredStyle: .alert)
                             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                             self.present(alertController, animated: true, completion: nil)

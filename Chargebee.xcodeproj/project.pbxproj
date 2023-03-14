@@ -56,7 +56,7 @@
 		FB5363E929BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */; };
 		FB5363EB29BEE25600E3AC9A /* CBRestoreServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EA29BEE25600E3AC9A /* CBRestoreServiceManager.swift */; };
 		FB5363ED29BEE28200E3AC9A /* RestoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EC29BEE28200E3AC9A /* RestoreError.swift */; };
-		FB5363EF29BEE29800E3AC9A /* BackgrounOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EE29BEE29800E3AC9A /* BackgrounOperationQueue.swift */; };
+		FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,7 +120,7 @@
 		FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRestorePurchaseManager.swift; sourceTree = "<group>"; };
 		FB5363EA29BEE25600E3AC9A /* CBRestoreServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRestoreServiceManager.swift; sourceTree = "<group>"; };
 		FB5363EC29BEE28200E3AC9A /* RestoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreError.swift; sourceTree = "<group>"; };
-		FB5363EE29BEE29800E3AC9A /* BackgrounOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgrounOperationQueue.swift; sourceTree = "<group>"; };
+		FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundOperationQueue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,7 +371,7 @@
 				FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */,
 				FB5363EA29BEE25600E3AC9A /* CBRestoreServiceManager.swift */,
 				FB5363EC29BEE28200E3AC9A /* RestoreError.swift */,
-				FB5363EE29BEE29800E3AC9A /* BackgrounOperationQueue.swift */,
+				FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */,
 			);
 			path = Restore;
 			sourceTree = "<group>";
@@ -502,7 +502,7 @@
 				2BF2D4EB29A3B8E300E22D21 /* CBNetworkRequest.swift in Sources */,
 				2BF2D4F229A3B8E300E22D21 /* CBItemResource.swift in Sources */,
 				2BF2D4F629A3B8E300E22D21 /* CBProductsV1.swift in Sources */,
-				FB5363EF29BEE29800E3AC9A /* BackgrounOperationQueue.swift in Sources */,
+				FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */,
 				FB5363EB29BEE25600E3AC9A /* CBRestoreServiceManager.swift in Sources */,
 				2BF2D4E629A3B8E300E22D21 /* CBReceiptValidationManager.swift in Sources */,
 				2BF2D4E729A3B8E300E22D21 /* CBPlanResource.swift in Sources */,

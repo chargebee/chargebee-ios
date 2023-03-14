@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BackgrounOperationQueue: OperationQueue {
+class BackgroundOperationQueue: OperationQueue {
     
     private static var operationsKeyPath: String {
         return "operations"
@@ -19,7 +19,7 @@ class BackgrounOperationQueue: OperationQueue {
     
     var completionBlock: (() -> Void)? {
         didSet {
-            self.addObserver(self, forKeyPath: BackgrounOperationQueue.operationsKeyPath, options: .new, context: nil)
+            self.addObserver(self, forKeyPath: BackgroundOperationQueue.operationsKeyPath, options: .new, context: nil)
         }
     }
     
@@ -28,7 +28,7 @@ class BackgrounOperationQueue: OperationQueue {
     }
     
     func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutableRawPointer) {
-        if let operationPath = keyPath, operationPath == BackgrounOperationQueue.operationsKeyPath {
+        if let operationPath = keyPath, operationPath == BackgroundOperationQueue.operationsKeyPath {
             if self.operations.count == 0 {
                 OperationQueue.main.addOperation({
                     self.completionBlock?()

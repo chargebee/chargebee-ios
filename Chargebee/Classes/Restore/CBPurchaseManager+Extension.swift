@@ -18,7 +18,6 @@ extension CBPurchase {
     }
     
     func receiveRestoredTransactionsFinished(_ error: RestoreError?) {
-        var error = error
         if let error = error {
             debugPrint("Failed to restore purchases: \(error.localizedDescription)")
             self.restoreResponseHandler?(.failure(.restoreFailed))
@@ -27,7 +26,7 @@ extension CBPurchase {
         
         if self.restoredPurchasesCount == 0 {
             debugPrint("Successfully restored zero purchases.")
-            error = .noProductsToRestore
+            self.restoreResponseHandler?(.failure(.noProductsToRestore))
         }
         
         self.validateReceipt(refreshIfEmpty: true)
@@ -100,10 +99,10 @@ extension CBPurchase{
                 if self.includeNonActiveProducts{
                     completion?(.success(restoreResult.inAppSubscriptions))
                 }else{
-                    let  activeSubsList = restoreResult.inAppSubscriptions.filter {
+                    let  activeSubscriptionsList = restoreResult.inAppSubscriptions.filter {
                         return $0.storeStatus == "active"  || $0.storeStatus == "in_trial"
                     }
-                    completion?(.success(activeSubsList))
+                    completion?(.success(activeSubscriptionsList))
                 }
                 
                 let productIdsList = restoreResult.inAppSubscriptions.map { plan_id in
@@ -129,14 +128,14 @@ extension CBPurchase{
             case .success(let products):
                 self.syncPurhcasesWithChargebee(products: products)
             case.failure(let error):
-                print("Error:",error)
+                debugPrint("Error While retriving products to sync with Chargebeee:",error)
             }
         }
     }
     
     func syncPurhcasesWithChargebee(products:[CBProduct]) {
         
-        var operationQueue: BackgrounOperationQueue? = BackgrounOperationQueue()
+        var operationQueue: BackgroundOperationQueue? = BackgroundOperationQueue()
         for product in products {
             operationQueue?.addOperation{
                 self.validateReceipt(product.product, completion: nil)
