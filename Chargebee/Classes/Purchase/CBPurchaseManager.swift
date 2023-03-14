@@ -21,9 +21,7 @@ public class CBPurchase: NSObject {
     private var activeProduct: SKProduct?
     var customer: CBCustomer?
     
-      var restorePurchaseHanlder: ((Result<CBRestorePurchase, RestoreError>) -> Void)?
-      var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
-
+     var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
      var result: ReceiptResult<String>?
      var refreshHandler: RestoreResultCompletion<String>?
 
@@ -126,9 +124,11 @@ public extension CBPurchase {
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    //Restore the purchase
     func restorePurchases(includeNonActiveProducts: Bool? = false,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
         restoreResponseHandler = handler
+        if let includeProducts = includeNonActiveProducts{
+            self.includeNonActiveProducts = includeProducts
+        }
         restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
     }

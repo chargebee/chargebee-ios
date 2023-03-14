@@ -21,8 +21,8 @@ public struct CBRestorePurchase: Decodable {
 
 // MARK: - InAppSubscription
 public struct InAppSubscription: Decodable {
-   public let subscriptionID, planID, storeStatus, purchaseType: String?
-
+    public let subscriptionID, planID, storeStatus, purchaseType: String?
+    
     enum CodingKeys: String, CodingKey {
         case subscriptionID = "subscription_id"
         case planID = "plan_id"
@@ -31,14 +31,14 @@ public struct InAppSubscription: Decodable {
     }
 }
 
-
-class CBRestorePurchaseManager {
-    public  func restorePurchases(receiptData: String, completion handler: @escaping CBRestorePurchaseHandler) {
+class CBRestorePurchaseManager{
+    
+    public  func restorePurchases(receipt: String, completion handler: @escaping CBRestorePurchaseHandler) {
         let logger = CBLogger(name: "restore", action: "restore_purchases")
         logger.info()
-
+        
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, nil)
-        let request = CBAPIRequest(resource: CBRestoreResource(receipt: receiptData))
+        let request = CBAPIRequest(resource: CBRestoreResource(receipt: receipt))
         request.create(withCompletion: { (res: CBRestorePurchase?) in
             onSuccess(res!)
         }, onError: onError)

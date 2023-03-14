@@ -18,7 +18,6 @@ public enum RestoreError: Error {
     case noProductsToRestore
 }
 
-
 extension RestoreError: LocalizedError {
     public var errorDescription: String? {
         switch self {
@@ -33,7 +32,7 @@ extension RestoreError: LocalizedError {
         case .invalidReceiptData:
             return "Invalid receipt data found or Apple services may be down, please try again later"
         case .noProductsToRestore:
-          return "Currently you dont have any active products to restore"
+            return "Currently you dont have any active products to restore"
         }
     }
 }

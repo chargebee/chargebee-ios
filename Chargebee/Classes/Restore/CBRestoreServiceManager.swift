@@ -9,10 +9,6 @@
 import Foundation
 import StoreKit
 
-public protocol RestoreReceiptValidator {
-    func validateReceipt(refreshIfEmpty: Bool, _ completion: ((Result<CBRestorePurchase, RestoreError>) -> Void)?)
-}
-
 final class CBRestoreResource: CBAPIResource {
     typealias ModelType = CBRestorePurchase
     typealias ErrorType = CBErrorDetail
@@ -39,12 +35,12 @@ final class CBRestoreResource: CBAPIResource {
         urlRequest.addValue(platform, forHTTPHeaderField: "platform")
         return urlRequest
     }
-
+    
     func create() -> URLRequest {
         return createRequest()
-
+        
     }
-
+    
     func createRequest() -> URLRequest {
         var urlRequest = buildBaseRequest()
         urlRequest.httpMethod = "post"

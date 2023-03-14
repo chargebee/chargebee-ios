@@ -21,7 +21,7 @@ extension CBPurchase {
         var error = error
         if let error = error {
             debugPrint("Failed to restore purchases: \(error.localizedDescription)")
-            self.restorePurchaseHanlder?(.failure(.restoreFailed))
+            self.restoreResponseHandler?(.failure(.restoreFailed))
             return
         }
         
@@ -30,14 +30,7 @@ extension CBPurchase {
             error = .noProductsToRestore
         }
         
-        self.validateReceipt(refreshIfEmpty: true) { [weak self] result in
-            guard let self = self else { return }
-            if let error = error {
-                self.restorePurchaseHanlder?(.failure(error))
-                return
-            }
-            self.restorePurchaseHanlder?(result)
-        }
+        self.validateReceipt(refreshIfEmpty: true)
     }
     
     func getReceipt(refreshIfEmpty: Bool, _ completion: @escaping RestoreResultCompletion<String>) {
@@ -56,7 +49,6 @@ extension CBPurchase {
                 self.refreshReceipt{_ in}
             }
         }
-        
     }
     
     func bundleReceipt() -> ReceiptResult<String> {
@@ -87,25 +79,24 @@ extension CBPurchase {
 }
 
 extension CBPurchase{
-    public func validateReceipt(refreshIfEmpty: Bool, _ completion: ((Result<CBRestorePurchase, RestoreError>) -> Void)?) {
+    public func validateReceipt(refreshIfEmpty: Bool) {
         
-        getReceipt(refreshIfEmpty: true) { receiptString in
+        getReceipt(refreshIfEmpty: refreshIfEmpty) { receiptString in
             switch receiptString {
             case .success(let receiptString):
                 self.receiptVerification(receipt: receiptString, self.restoreResponseHandler)
             case .failure(let error):
                 debugPrint("Error While trying to fetch receipt",error)
-                completion?(.failure(.invalidReceiptData))
+                self.restoreResponseHandler?(.failure(error))
             }
         }
     }
     
     func receiptVerification(receipt: String, _ completion: ((Result<[InAppSubscription], RestoreError>) -> Void)?) {
         
-        CBRestorePurchaseManager().restorePurchases(receiptData: receipt) { result in
+        CBRestorePurchaseManager().restorePurchases(receipt: receipt) { result in
             switch result{
             case .success(let restoreResult):
-                
                 if self.includeNonActiveProducts{
                     completion?(.success(restoreResult.inAppSubscriptions))
                 }else{

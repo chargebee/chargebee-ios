@@ -169,24 +169,21 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             }
         case .restore:
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-            CBPurchase.shared.restorePurchases(includeNonActiveProducts: false) { result in
+            CBPurchase.shared.restorePurchases(includeNonActiveProducts: true) { result in
                 switch result {
                 case .success(let response):
                     print("Active products List:",response)
                     if response.count > 0 {
-                        
-                        for sub in response {
-                            
-                            if let status = sub.storeStatus {
-                                if status == "Active"{
+                        for subscription in response {
+                            if let status = subscription.storeStatus {
+                                if status == "active"{
                                     DispatchQueue.main.async {
                                         self.view.activityStopAnimating()
-
                                         let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
                                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                                         self.present(alertController, animated: true, completion: nil)
                                     }
-                                }else{
+                                }else {
                                     DispatchQueue.main.async {
                                         self.view.activityStopAnimating()
 
