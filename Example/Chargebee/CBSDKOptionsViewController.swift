@@ -169,11 +169,11 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             }
         case .restore:
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-            CBPurchase.shared.restorePurchases(includeNonActiveProducts: true) { result in
+            CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
                 switch result {
                 case .success(let response):
-                    print("Restore Products List:",response)
                     if response.count > 0 {
+                        print("Purchase products history:",response)
                         for subscription in response {
                             if let status = subscription.storeStatus {
                                 if status == "active"{

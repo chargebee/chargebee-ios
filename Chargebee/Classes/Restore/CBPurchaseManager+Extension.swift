@@ -26,7 +26,6 @@ extension CBPurchase {
         
         if self.restoredPurchasesCount == 0 {
             debugPrint("Successfully restored zero purchases.")
-            self.restoreResponseHandler?(.failure(.noProductsToRestore))
         }
         
         self.validateReceipt(refreshIfEmpty: true)
@@ -96,7 +95,7 @@ extension CBPurchase{
         CBRestorePurchaseManager().restorePurchases(receipt: receipt) { result in
             switch result{
             case .success(let restoreResult):
-                if self.includeNonActiveProducts{
+                if self.includeInActiveProducts{
                     completion?(.success(restoreResult.inAppSubscriptions))
                 }else{
                     let  activeSubscriptionsList = restoreResult.inAppSubscriptions.filter {
@@ -105,9 +104,9 @@ extension CBPurchase{
                     completion?(.success(activeSubscriptionsList))
                 }
                 
-                let productIdsList = restoreResult.inAppSubscriptions.map { plan_id in
-                    if let planId = plan_id.planID {
-                        return planId
+                let productIdsList = restoreResult.inAppSubscriptions.map { planID in
+                    if let planID = planID.planID {
+                        return planID
                     }
                     return ""
                 }
@@ -116,7 +115,7 @@ extension CBPurchase{
                 }
             case .error(let error):
                 debugPrint("Error While Restoring:",error.localizedDescription)
-                completion?(.failure(.invalidReceiptData))
+                completion?(.failure(.serviceError(error: error.localizedDescription)))
             }
         }
     }

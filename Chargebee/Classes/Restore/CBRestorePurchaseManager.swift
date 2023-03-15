@@ -21,7 +21,10 @@ public struct CBRestorePurchase: Decodable {
 
 // MARK: - InAppSubscription
 public struct InAppSubscription: Decodable {
-    public let subscriptionID, planID, storeStatus, purchaseType: String?
+    public let subscriptionID: String?
+    public let planID: String?
+    public let storeStatus: String?
+    public let purchaseType: String?
     
     enum CodingKeys: String, CodingKey {
         case subscriptionID = "subscription_id"

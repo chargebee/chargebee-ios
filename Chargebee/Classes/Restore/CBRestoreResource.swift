@@ -13,6 +13,9 @@ final class CBRestoreResource: CBAPIResource {
     typealias ModelType = CBRestorePurchase
     typealias ErrorType = CBErrorDetail
     
+    var components: URLComponents!
+    var urlRequest: URLRequest!
+    
     var authHeader: String? {
         return "Basic \(CBEnvironment.encodedApiKey)"
     }
@@ -21,10 +24,15 @@ final class CBRestoreResource: CBAPIResource {
     var methodPath: String {
         return  "/v2/in_app_subscriptions/\(CBEnvironment.sdkKey)/retrieve"
     }
+    
     private func buildBaseRequest() -> URLRequest {
-        var components = URLComponents(string: baseUrl)
-        components!.path += methodPath
-        var urlRequest = URLRequest(url: components!.url!)
+        if let component = URLComponents(string: baseUrl) {
+            components =  component
+            components.path += methodPath
+        }
+        if let reqUrl = components?.url {
+            urlRequest = URLRequest(url: (reqUrl))
+        }
         if let authHeader = authHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
         }

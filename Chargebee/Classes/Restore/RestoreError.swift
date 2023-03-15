@@ -8,7 +8,6 @@
 
 import StoreKit
 
-
 public enum RestoreError: Error {
     case noReceipt
     case refreshReceiptFailed
@@ -16,6 +15,7 @@ public enum RestoreError: Error {
     case invalidReceiptURL
     case invalidReceiptData
     case noProductsToRestore
+    case serviceError(error: String)
 }
 
 extension RestoreError: LocalizedError {
@@ -29,10 +29,12 @@ extension RestoreError: LocalizedError {
             return "Failed to restore Purchases"
         case .invalidReceiptURL:
             return "Invalid Receipt bundle URL"
-        case .invalidReceiptData:
-            return "Invalid receipt data found or Apple services may be down, please try again later"
         case .noProductsToRestore:
             return "Currently you dont have any active products to restore"
+        case .invalidReceiptData:
+            return "Rceipt data is not valid"
+        case .serviceError(error: let errorMessage):
+           return  errorMessage
         }
     }
 }

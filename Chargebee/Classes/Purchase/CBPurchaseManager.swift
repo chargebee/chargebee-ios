@@ -25,7 +25,7 @@ public class CBPurchase: NSObject {
      var result: ReceiptResult<String>?
      var refreshHandler: RestoreResultCompletion<String>?
 
-   public var includeNonActiveProducts = false
+   public var includeInActiveProducts = false
     var restoreHandlerisActive = false
 
     // MARK: - Init
@@ -124,11 +124,9 @@ public extension CBPurchase {
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    func restorePurchases(includeNonActiveProducts: Bool? = false,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
+    func restorePurchases(includeInActiveProducts:Bool = false ,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
         restoreResponseHandler = handler
-        if let includeProducts = includeNonActiveProducts{
-            self.includeNonActiveProducts = includeProducts
-        }
+        self.includeInActiveProducts = includeInActiveProducts
         restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
