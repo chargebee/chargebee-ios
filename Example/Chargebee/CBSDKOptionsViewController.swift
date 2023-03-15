@@ -206,9 +206,34 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         }
                     }
                 case .failure(let error):
+                    var errorMessage: String?
+                    switch error {
+                    case .noReceipt:
+                        debugPrint("noReceipt",error)
+                        errorMessage = error.localizedDescription
+                    case .refreshReceiptFailed:
+                        debugPrint("refreshReceiptFailed",error)
+                        errorMessage = error.localizedDescription
+                    case .restoreFailed:
+                        debugPrint("restoreFailed",error)
+                        errorMessage = error.localizedDescription
+                    case .invalidReceiptURL:
+                        debugPrint("invalidReceiptURL",error)
+                        errorMessage = error.localizedDescription
+                    case .invalidReceiptData:
+                        debugPrint("invalidReceiptData",error)
+                        errorMessage = error.localizedDescription
+                    case .noProductsToRestore:
+                        debugPrint("noProductsToRestore",error)
+                        errorMessage = error.localizedDescription
+                    case .serviceError(error: let error):
+                        debugPrint("serviceError",error)
+                        errorMessage = error
+                    }
+                   
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
-                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                        let alertController = UIAlertController(title: "Chargebee", message: "\(errorMessage ?? "")", preferredStyle: .alert)
                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alertController, animated: true, completion: nil)
                     }

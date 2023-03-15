@@ -24,13 +24,11 @@ public struct InAppSubscription: Decodable {
     public let subscriptionID: String?
     public let planID: String?
     public let storeStatus: String?
-    public let purchaseType: String?
     
     enum CodingKeys: String, CodingKey {
         case subscriptionID = "subscription_id"
         case planID = "plan_id"
         case storeStatus = "store_status"
-        case purchaseType = "purchase_type"
     }
 }
 
