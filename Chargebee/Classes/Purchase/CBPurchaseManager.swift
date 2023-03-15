@@ -17,7 +17,7 @@ public class CBPurchase: NSObject {
     private var authenticationManager = CBAuthenticationManager()
     var productRequest: SKProductsRequestFactory = SKProductsRequestFactory()
 
-     var restoredPurchasesCount = 0
+    var restoredPurchasesCount = 0
     private var activeProduct: SKProduct?
     var customer: CBCustomer?
     
@@ -25,8 +25,8 @@ public class CBPurchase: NSObject {
      var result: ReceiptResult<String>?
      var refreshHandler: RestoreResultCompletion<String>?
 
-   public var includeInActiveProducts = false
-    var restoreHandlerisActive = false
+     public var includeInActiveProducts = false
+     var restoreHandlerisActive = false
 
     // MARK: - Init
     private override init() {
