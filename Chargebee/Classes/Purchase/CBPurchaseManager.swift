@@ -22,9 +22,7 @@ public class CBPurchase: NSObject {
     var customer: CBCustomer?
     
      var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
-//     var result: ReceiptResult<String>?
      var refreshHandler: RestoreResultCompletion<String>?
-
      var includeInActiveProducts = false
      var restoreHandlerIsActive = false
 
