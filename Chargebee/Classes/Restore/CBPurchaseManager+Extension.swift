@@ -15,13 +15,12 @@ private enum StoreStatus: String {
     case Cancelled  = "cancelled"
 }
 
-public typealias ReceiptResult<Success> = Swift.Result<Success, RestoreError>
-public typealias RestoreResultCompletion<Success> = (ReceiptResult<Success>) -> Void
+ typealias ReceiptResult<Success> = Swift.Result<Success, RestoreError>
+ typealias RestoreResultCompletion<Success> = (ReceiptResult<Success>) -> Void
 
 extension CBPurchase {
-    func receivedRestoredTransaction(_ transaction: SKPaymentTransaction) {
+    func receivedRestoredTransaction() {
         self.restoredPurchasesCount += 1
-        SKPaymentQueue.default().finishTransaction(transaction)
     }
     
     func receiveRestoredTransactionsFinished(_ error: RestoreError?) {
@@ -39,9 +38,10 @@ extension CBPurchase {
     }
     
     func getReceipt(refreshIfEmpty: Bool, _ completion: @escaping RestoreResultCompletion<String>) {
-        let result = self.bundleReceipt()
+        var result: ReceiptResult<String>
+         result = self.bundleReceipt()
         self.refreshHandler = completion
-        
+
         switch result {
         case .success:
             completion(result)
@@ -78,7 +78,6 @@ extension CBPurchase {
         debugPrint("Start refresh receipt")
         let request = SKReceiptRefreshRequest()
         request.delegate = self
-        self.restoreHandlerisActive = true
         request.start()
     }
 }
@@ -154,22 +153,15 @@ extension CBPurchase{
         }
     }
     
-    public func complatedRefresh(error: Error?) {
-        
+     func completedRefresh(error: Error?) {
+        var refreshResult: ReceiptResult<String>
         if let error = error {
             debugPrint("Refresh receipt failed. \(error.localizedDescription)")
-            self.refreshHandler?(.failure(.refreshReceiptFailed))
+            self.refreshHandler?(.failure(.refreshReceiptFailed(error: error.localizedDescription)))
         } else {
             debugPrint("Refresh receipt success.")
-            result = self.bundleReceipt()
-        }
-        switch result {
-        case .success(let receiptString):
-            self.refreshHandler?(.success(receiptString))
-        case .failure(_):
-            self.refreshHandler?(.failure(.refreshReceiptFailed))
-        case .none:
-            print("Default:")
+            refreshResult = self.bundleReceipt()
+            self.refreshHandler?(refreshResult)
         }
     }
     
@@ -177,9 +169,9 @@ extension CBPurchase{
 
 extension CBPurchase: SKRequestDelegate {
     public func requestDidFinish(_ request: SKRequest) {
-        guard request is SKReceiptRefreshRequest else { return }
-        complatedRefresh(error: nil)
-        self.restoreHandlerisActive = false
+        if request is SKReceiptRefreshRequest {
+            completedRefresh(error: nil)
+        }
         request.cancel()
     }
     

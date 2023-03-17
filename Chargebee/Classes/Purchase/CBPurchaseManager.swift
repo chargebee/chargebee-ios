@@ -22,11 +22,11 @@ public class CBPurchase: NSObject {
     var customer: CBCustomer?
     
      var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
-     var result: ReceiptResult<String>?
+//     var result: ReceiptResult<String>?
      var refreshHandler: RestoreResultCompletion<String>?
 
-     public var includeInActiveProducts = false
-     var restoreHandlerisActive = false
+     var includeInActiveProducts = false
+     var restoreHandlerIsActive = false
 
     // MARK: - Init
     private override init() {
@@ -125,9 +125,9 @@ public extension CBPurchase {
     }
     
     func restorePurchases(includeInActiveProducts:Bool = false ,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
-        restoreResponseHandler = handler
+        self.restoreResponseHandler = handler
         self.includeInActiveProducts = includeInActiveProducts
-        restoredPurchasesCount = 0
+        self.restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
@@ -183,13 +183,12 @@ extension CBPurchase: SKProductsRequestDelegate {
 
     public func request(_ request: SKRequest, didFailWithError error: Error) {
         debugPrint("Error: \(error.localizedDescription)")
-        
-        if self.restoreHandlerisActive {
-            self.restoreHandlerisActive = false
-            restoreResponseHandler?(.failure(.refreshReceiptFailed))
+        if request is SKReceiptRefreshRequest {
+            completedRefresh(error: error)
         }else{
             receiveProductsHandler?(.failure(.skRequestFailed))
         }
+        request.cancel()
     }
 }
 
@@ -204,7 +203,8 @@ extension CBPurchase: SKPaymentTransactionObserver {
                     validateReceipt(product, completion: buyProductHandler)
                 }
             case .restored:
-                receivedRestoredTransaction(transaction)
+                SKPaymentQueue.default().finishTransaction(transaction)
+                receivedRestoredTransaction()
             case .failed:
                 if let error = transaction.error as? SKError {
                     print(error)

@@ -9,7 +9,7 @@
 import Foundation
 import StoreKit
 
-final class CBRestoreResource: CBAPIResource {
+final class CBRestorePurchaseResource: CBAPIResource {
     typealias ModelType = CBRestorePurchase
     typealias ErrorType = CBErrorDetail
     

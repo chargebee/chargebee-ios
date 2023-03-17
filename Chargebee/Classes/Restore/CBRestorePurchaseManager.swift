@@ -39,9 +39,11 @@ class CBRestorePurchaseManager{
         logger.info()
         
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, nil)
-        let request = CBAPIRequest(resource: CBRestoreResource(receipt: receipt))
+        let request = CBAPIRequest(resource: CBRestorePurchaseResource(receipt: receipt))
         request.create(withCompletion: { (res: CBRestorePurchase?) in
-            onSuccess(res!)
+            if let response = res{
+                onSuccess(response)
+            }
         }, onError: onError)
     }
 }
