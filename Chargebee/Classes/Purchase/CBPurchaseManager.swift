@@ -24,7 +24,6 @@ public class CBPurchase: NSObject {
      var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
      var refreshHandler: RestoreResultCompletion<String>?
      var includeInActiveProducts = false
-     var restoreHandlerIsActive = false
 
     // MARK: - Init
     private override init() {
