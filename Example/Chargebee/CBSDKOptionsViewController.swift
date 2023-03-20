@@ -175,8 +175,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     if response.count > 0 {
                         print("Purchase products history:",response)
                         for subscription in response {
-                            if let status = subscription.storeStatus {
-                                if status == "active"{
+                                if subscription.storeStatus == "active"{
                                     DispatchQueue.main.async {
                                         self.view.activityStopAnimating()
                                         let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
@@ -192,7 +191,6 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                                         self.present(alertController, animated: true, completion: nil)
                                     }
                                 }
-                            }
                         }
                         
                         

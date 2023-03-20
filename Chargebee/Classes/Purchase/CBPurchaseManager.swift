@@ -157,7 +157,7 @@ extension CBPurchase {
         SKPaymentQueue.default().add(self)
     }
 
-    func stopPaymentQueueObserver() {
+   public func stopPaymentQueueObserver() {
         SKPaymentQueue.default().remove(self)
     }
 
