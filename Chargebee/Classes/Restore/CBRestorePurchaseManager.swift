@@ -13,7 +13,7 @@ public typealias CBRestorePurchaseHandler = (CBResult<CBRestorePurchase>) -> Voi
 // MARK: - CBRestorePurchase
 public struct CBRestorePurchase: Decodable {
     let inAppSubscriptions: [InAppSubscription]
-
+    
     enum CodingKeys: String, CodingKey {
         case inAppSubscriptions = "in_app_subscriptions"
     }

@@ -9,8 +9,8 @@ import Foundation
 import StoreKit
 
 
- typealias ReceiptResult<Success> = Swift.Result<Success, RestoreError>
- typealias RestoreResultCompletion<Success> = (ReceiptResult<Success>) -> Void
+typealias ReceiptResult<Success> = Swift.Result<Success, RestoreError>
+typealias RestoreResultCompletion<Success> = (ReceiptResult<Success>) -> Void
 
 extension CBPurchase {
     func receivedRestoredTransaction() {
@@ -33,9 +33,9 @@ extension CBPurchase {
     
     func getReceipt(refreshIfEmpty: Bool, _ completion: @escaping RestoreResultCompletion<String>) {
         var result: ReceiptResult<String>
-         result = self.bundleReceipt()
+        result = self.bundleReceipt()
         self.refreshHandler = completion
-
+        
         switch result {
         case .success:
             completion(result)
@@ -144,7 +144,7 @@ extension CBPurchase{
         }
     }
     
-     func completedRefresh(error: Error?) {
+    func completedRefresh(error: Error?) {
         var refreshResult: ReceiptResult<String>
         if let error = error {
             debugPrint("Refresh receipt failed. \(error.localizedDescription)")

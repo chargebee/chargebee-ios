@@ -176,21 +176,21 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         print("Purchase products history:",response)
                         for subscription in response {
                             if subscription.storeStatus.rawValue == StoreStatus.Active.rawValue{
-                                    DispatchQueue.main.async {
-                                        self.view.activityStopAnimating()
-                                        let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
-                                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                        self.present(alertController, animated: true, completion: nil)
-                                    }
-                                }else {
-                                    DispatchQueue.main.async {
-                                        self.view.activityStopAnimating()
-                                        
-                                        let alertController = UIAlertController(title: "Chargebee", message: "No Active products to Restore", preferredStyle: .alert)
-                                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                        self.present(alertController, animated: true, completion: nil)
-                                    }
+                                DispatchQueue.main.async {
+                                    self.view.activityStopAnimating()
+                                    let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
+                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    self.present(alertController, animated: true, completion: nil)
                                 }
+                            }else {
+                                DispatchQueue.main.async {
+                                    self.view.activityStopAnimating()
+                                    
+                                    let alertController = UIAlertController(title: "Chargebee", message: "No Active products to Restore", preferredStyle: .alert)
+                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    self.present(alertController, animated: true, completion: nil)
+                                }
+                            }
                         }
                         
                         
@@ -228,7 +228,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         debugPrint("serviceError",error)
                         errorMessage = error
                     }
-                   
+                    
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
                         let alertController = UIAlertController(title: "Chargebee", message: "\(errorMessage ?? "")", preferredStyle: .alert)

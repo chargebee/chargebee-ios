@@ -34,7 +34,7 @@ extension RestoreError: LocalizedError {
         case .invalidReceiptData:
             return "Receipt data is not valid"
         case .serviceError(error: let errorMessage):
-           return  errorMessage
+            return  errorMessage
         }
     }
 }
