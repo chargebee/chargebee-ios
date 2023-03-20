@@ -30,6 +30,10 @@ public class CBPurchase: NSObject {
         super.init()
         startPaymentQueueObserver()
     }
+
+    deinit{
+        stopPaymentQueueObserver()
+    }
 }
 
 public struct CBProduct {
@@ -157,7 +161,7 @@ extension CBPurchase {
         SKPaymentQueue.default().add(self)
     }
 
-   public func stopPaymentQueueObserver() {
+    func stopPaymentQueueObserver() {
         SKPaymentQueue.default().remove(self)
     }
 
