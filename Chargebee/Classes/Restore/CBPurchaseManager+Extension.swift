@@ -9,12 +9,6 @@ import Foundation
 import StoreKit
 
 
-private enum StoreStatus: String {
-    case Active = "active"
-    case InTrail = "in_trial"
-    case Cancelled  = "cancelled"
-}
-
  typealias ReceiptResult<Success> = Swift.Result<Success, RestoreError>
  typealias RestoreResultCompletion<Success> = (ReceiptResult<Success>) -> Void
 
@@ -105,8 +99,8 @@ extension CBPurchase{
                     completion?(.success(restoreResult.inAppSubscriptions))
                 }else{
                     let  activeSubscriptionsList = restoreResult.inAppSubscriptions.filter {
-                        return $0.storeStatus == StoreStatus.Active.rawValue  ||
-                               $0.storeStatus == StoreStatus.InTrail.rawValue
+                        return $0.storeStatus.rawValue == StoreStatus.Active.rawValue  ||
+                        $0.storeStatus.rawValue == StoreStatus.InTrail.rawValue
                     }
                     completion?(.success(activeSubscriptionsList))
                 }
