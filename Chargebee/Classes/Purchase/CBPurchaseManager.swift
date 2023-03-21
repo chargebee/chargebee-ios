@@ -30,8 +30,10 @@ public class CBPurchase: NSObject {
 
 public struct CBProduct {
     public let product: SKProduct
-    public init(product: SKProduct) {
+    public var discount: SKPaymentDiscount?
+    public init(product: SKProduct, discount: SKPaymentDiscount? = nil) {
         self.product = product
+        self.discount = discount
     }
 }
 
@@ -136,7 +138,10 @@ public extension CBPurchase {
         } else {
             authenticationManager.isSDKKeyValid { status in
                 if status {
-                    let payment = SKPayment(product: product.product)
+                    let payment = SKMutablePayment(product: product.product)
+                    if let discount = product.discount {
+                        payment.paymentDiscount = discount
+                    }
                     SKPaymentQueue.default().add(payment)
 
                 } else {
