@@ -15,6 +15,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		71310D779A3AB8915C8B994D /* Pods_Chargebee_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */; };
 		851009C0265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009BE265BDA4B00B6A12E /* CBSDKProductTableViewCell.swift */; };
 		851009C1265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 851009BF265BDA4B00B6A12E /* CBSDKProductTableViewCell.xib */; };
 		851009CB265BE7E000B6A12E /* CBSDKConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851009CA265BE7E000B6A12E /* CBSDKConfigurationViewController.swift */; };
@@ -58,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C218DF26D79BAD52E24597C /* Pods-Chargebee Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee Example.debug.xcconfig"; path = "Target Support Files/Pods-Chargebee Example/Pods-Chargebee Example.debug.xcconfig"; sourceTree = "<group>"; };
 		11D26FE36CF981E946EE2FFA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		20CCB492265ACAAD003E7AAD /* CBSDKProductsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKProductsTableViewController.swift; sourceTree = "<group>"; };
 		20CCB4B4265BB090003E7AAD /* CBSDKSubscriptionStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKSubscriptionStatusViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		90C8D07D26A9CB260004EE81 /* CBSDKItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemTableViewCell.swift; sourceTree = "<group>"; };
 		90C8D07F26A9CDC10004EE81 /* CBSDKItemsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemsTableViewController.swift; sourceTree = "<group>"; };
 		90C8D08526AAA8480004EE81 /* CBSDKItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKItemViewController.swift; sourceTree = "<group>"; };
+		B4938B9769F3B86207C03888 /* Pods-Chargebee Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee Example.release.xcconfig"; path = "Target Support Files/Pods-Chargebee Example/Pods-Chargebee Example.release.xcconfig"; sourceTree = "<group>"; };
 		C7F2A43A1A9BBA92A21E3458 /* Pods-Chargebee_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Tests/Pods-Chargebee_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chargebee_Example.release.xcconfig"; path = "Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example.release.xcconfig"; sourceTree = "<group>"; };
 		D4796B64270ACC0500E8313F /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
@@ -102,6 +105,7 @@
 			files = (
 				2BF2D53629A3C7A500E22D21 /* Chargebee.framework in Frameworks */,
 				FB5363F129BEE4B200E3AC9A /* StoreKit.framework in Frameworks */,
+				71310D779A3AB8915C8B994D /* Pods_Chargebee_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +176,8 @@
 				D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */,
 				372AB47A894F58E78F9AFA7C /* Pods-Chargebee_Tests.debug.xcconfig */,
 				C7F2A43A1A9BBA92A21E3458 /* Pods-Chargebee_Tests.release.xcconfig */,
+				0C218DF26D79BAD52E24597C /* Pods-Chargebee Example.debug.xcconfig */,
+				B4938B9769F3B86207C03888 /* Pods-Chargebee Example.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -353,7 +359,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Chargebee_Example-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Chargebee Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -366,7 +372,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Chargebee Example/Pods-Chargebee Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Chargebee/Chargebee.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -375,7 +381,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chargebee_Example/Pods-Chargebee_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chargebee Example/Pods-Chargebee Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -544,7 +550,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 880524BD03DBC913F225A876 /* Pods-Chargebee_Example.debug.xcconfig */;
+			baseConfigurationReference = 0C218DF26D79BAD52E24597C /* Pods-Chargebee Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -566,7 +572,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D16C7EFA579E1C49742E668F /* Pods-Chargebee_Example.release.xcconfig */;
+			baseConfigurationReference = B4938B9769F3B86207C03888 /* Pods-Chargebee Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
