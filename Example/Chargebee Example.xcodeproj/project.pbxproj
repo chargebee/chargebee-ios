@@ -257,6 +257,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				153FF0938DA9A89FF4740119 /* [CP] Embed Pods Frameworks */,
+				2BFC1E3829CCCB9900805257 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -383,6 +384,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chargebee Example/Pods-Chargebee Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		2BFC1E3829CCCB9900805257 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
