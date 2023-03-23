@@ -14,7 +14,7 @@ final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
     private var items: [CBItemWrapper] = []
     private var plans: [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ]
+    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ,.restore]
 
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -167,6 +167,76 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     debugPrint("Error: \(error.localizedDescription)")
                 }
             }
+        case .restore:
+            self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+            CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
+                switch result {
+                case .success(let response):
+                    if response.count > 0 {
+                        print("Purchase products history:",response)
+                        for subscription in response {
+                            if subscription.storeStatus.rawValue == StoreStatus.Active.rawValue{
+                                DispatchQueue.main.async {
+                                    self.view.activityStopAnimating()
+                                    let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
+                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    self.present(alertController, animated: true, completion: nil)
+                                }
+                            }else {
+                                DispatchQueue.main.async {
+                                    self.view.activityStopAnimating()
+                                    
+                                    let alertController = UIAlertController(title: "Chargebee", message: "No Active products to Restore", preferredStyle: .alert)
+                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    self.present(alertController, animated: true, completion: nil)
+                                }
+                            }
+                        }
+                        
+                        
+                    }else {
+                        DispatchQueue.main.async {
+                            self.view.activityStopAnimating()
+                            
+                            let alertController = UIAlertController(title: "Chargebee", message: "No products to Restore", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    }
+                case .failure(let error):
+                    var errorMessage: String?
+                    switch error {
+                    case .noReceipt:
+                        debugPrint("noReceipt",error)
+                        errorMessage = error.localizedDescription
+                    case .refreshReceiptFailed:
+                        debugPrint("refreshReceiptFailed",error)
+                        errorMessage = error.localizedDescription
+                    case .restoreFailed:
+                        debugPrint("restoreFailed",error)
+                        errorMessage = error.localizedDescription
+                    case .invalidReceiptURL:
+                        debugPrint("invalidReceiptURL",error)
+                        errorMessage = error.localizedDescription
+                    case .invalidReceiptData:
+                        debugPrint("invalidReceiptData",error)
+                        errorMessage = error.localizedDescription
+                    case .noProductsToRestore:
+                        debugPrint("noProductsToRestore",error)
+                        errorMessage = error.localizedDescription
+                    case .serviceError(error: let error):
+                        debugPrint("serviceError",error)
+                        errorMessage = error
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "\(errorMessage ?? "")", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
         }
     }
 }
@@ -200,6 +270,7 @@ enum ClientAction {
     case getItems
     case getItem
     case getEntitlements
+    case restore
 
 }
 
@@ -230,6 +301,8 @@ extension ClientAction {
             return "Get Entitlements"
         case .getProductIDs:
             return "Get Apple Specific Product Identifiers"
+        case .restore:
+            return "Restore Purcahses"
         }
 
     }

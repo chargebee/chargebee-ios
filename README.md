@@ -31,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.18'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.19'
 ```
 
 ### CocoaPods
@@ -184,6 +184,30 @@ The above function will handle the purchase against App Store Connect and send t
 ##### Returns Plan Object
 
 This function returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK method - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+
+#### Restore purchase
+
+The restore purchase method helps to regain your app user's previous purchases without making any payments again. Sometimes, your app user may want to restore their previous purchases after reinstalling your app, switching to a new device, or for any other reason. You can use the `restorePurchases()` method provided by the iOS SDK to allow your app user to easily restore their previous purchases.
+
+To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` method with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` method in your code:
+
+```swift
+CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
+      switch result {
+      case .success(let response):
+        for subscription in response {
+          if subscription.storeStatus.rawValue == StoreStatus.Active.rawValue{
+            print("Successfully restored purchases")
+          }
+        }
+      case .failure(let error):
+        // Handle error here
+        print("Error:",error)
+      }
+    }
+```
+
+In the above code, the `restorePurchases()` method is called with the `includeInActiveProducts` parameter set to `true`. The method returns a result object that contains an array of restored purchases.
 
 #### Get Subscription Status for Existing Subscribers
 

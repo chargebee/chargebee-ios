@@ -25,9 +25,13 @@ public class CBPurchase: NSObject {
     private var authenticationManager = CBAuthenticationManager()
     var productRequest: SKProductsRequestFactory = SKProductsRequestFactory()
 
-    private var restoredPurchasesCount = 0
+    var restoredPurchasesCount = 0
     private var activeProduct: SKProduct?
     var customer: CBCustomer?
+    
+     var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
+     var refreshHandler: RestoreResultCompletion<String>?
+     var includeInActiveProducts = false
     var productType: ProductType?
     var subType: SubscriptionType = .Subscriptions
 
@@ -36,6 +40,10 @@ public class CBPurchase: NSObject {
     private override init() {
         super.init()
         startPaymentQueueObserver()
+    }
+
+    deinit{
+        stopPaymentQueueObserver()
     }
 }
 
@@ -141,10 +149,10 @@ public extension CBPurchase {
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    //Restore the purchase
-    func restorePurchases(completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
-        buyProductHandler = handler
-        restoredPurchasesCount = 0
+    func restorePurchases(includeInActiveProducts:Bool = false ,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
+        self.restoreResponseHandler = handler
+        self.includeInActiveProducts = includeInActiveProducts
+        self.restoredPurchasesCount = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
@@ -223,13 +231,13 @@ extension CBPurchase: SKProductsRequestDelegate {
 
     public func request(_ request: SKRequest, didFailWithError error: Error) {
         debugPrint("Error: \(error.localizedDescription)")
-        receiveProductsHandler?(.failure(.skRequestFailed))
+        if request is SKReceiptRefreshRequest {
+            completedRefresh(error: error)
+        }else{
+            receiveProductsHandler?(.failure(.skRequestFailed))
+        }
+        request.cancel()
     }
-
-    public func requestDidFinish(_ request: SKRequest) {
-        // if needed
-    }
-
 }
 
 // MARK: - SKPaymentTransactionObserver delegates
@@ -248,9 +256,8 @@ extension CBPurchase: SKPaymentTransactionObserver {
                     }
                 }
             case .restored:
-                restoredPurchasesCount += 1
                 SKPaymentQueue.default().finishTransaction(transaction)
-
+                receivedRestoredTransaction()
             case .failed:
                 if let error = transaction.error as? SKError {
                     print(error)
@@ -298,16 +305,12 @@ extension CBPurchase: SKPaymentTransactionObserver {
     }
 
     public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        if restoredPurchasesCount != 0 {
-            buyProductHandler?(.success((true, nil, nil)))
-        } else {
-            buyProductHandler?(.failure(CBPurchaseError.noProductToRestore))
-        }
+        receiveRestoredTransactionsFinished(nil)
     }
 
     public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        if let error = error as? SKError {
-            buyProductHandler?(.failure(error))
+        if let error = error as? RestoreError {
+            receiveRestoredTransactionsFinished(error)
         }
     }
 }
