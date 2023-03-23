@@ -1,16 +1,21 @@
 //
-//  CBValidateReceiptResource.swift
+//  CBValidateNonSubscriptionResource.swift
+//  Chargebee
 //
-//  Created by cb-christopher on 19/04/21.
-//  Copyright © 2021 Chargebee. All rights reserved.
+//  Created by ramesh_g on 14/03/23.
 //
 
 import Foundation
 
+enum SubscriptionType: String {
+    case Subscriptions = "Subscriptions"
+    case NonSubscriptions = "NonSubscriptions"
+}
+
 
 @available(macCatalyst 13.0, *)
-class CBValidateReceiptResource: CBAPIResource {
-    typealias ModelType = CBValidateReceiptWrapper
+class CBValidateNonSubscriptionResource: CBAPIResource {
+    typealias ModelType = CBValidateNonSubscriptionReceiptWrapper
     typealias ErrorType = CBErrorDetail
 
     var authHeader: String? {
@@ -19,7 +24,7 @@ class CBValidateReceiptResource: CBAPIResource {
     var baseUrl: String
     var requestBody: URLEncodedRequestBody?
     var methodPath: String {
-        return "/v2/in_app_subscriptions/\(CBEnvironment.sdkKey)/process_purchase_command"
+            return "/v2/non_subscriptions/\(CBEnvironment.sdkKey)/one_time_purchase"
     }
 
     private func buildBaseRequest() -> URLRequest {
@@ -60,15 +65,15 @@ class CBValidateReceiptResource: CBAPIResource {
 
     init(receipt: CBReceipt ) {
         self.baseUrl = CBEnvironment.baseUrl
-        self.requestBody = PayloadBody(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
+        self.requestBody = Payload(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
                                        price: receipt.price, currencyCode: receipt.currencyCode,
-                                       customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",firstName: receipt.customer?.firstName ?? "",lastName: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "")
+                                       customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",firstName: receipt.customer?.firstName ?? "",lastName: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "",type: receipt.productType?.rawValue ?? "")
 
     }
 
 }
 
-struct PayloadBody: URLEncodedRequestBody {
+struct Payload: URLEncodedRequestBody {
     let receipt: String
     let productId: String
     let name: String
@@ -80,6 +85,7 @@ struct PayloadBody: URLEncodedRequestBody {
     let firstName: String
     let lastName: String
     let email: String
+    let type: String
     func toFormBody() -> [String: String] {
         [
             "receipt": receipt,
@@ -93,6 +99,9 @@ struct PayloadBody: URLEncodedRequestBody {
             "customer[first_name]": firstName,
             "customer[last_name]": lastName,
             "customer[email]": email,
+            "product[type]": type
+
         ]
     }
 }
+

@@ -52,6 +52,7 @@
 		2BF2D50A29A3B8EE00E22D21 /* PurchaseManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D50229A3B8EE00E22D21 /* PurchaseManagerTest.swift */; };
 		2BF2D50B29A3B8EE00E22D21 /* chargebee_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D50329A3B8EE00E22D21 /* chargebee_iosTests.swift */; };
 		2BF2D52629A3C29500E22D21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF2D52529A3C29500E22D21 /* Foundation.framework */; };
+		FB29A4FD29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		2BF2D50229A3B8EE00E22D21 /* PurchaseManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseManagerTest.swift; sourceTree = "<group>"; };
 		2BF2D50329A3B8EE00E22D21 /* chargebee_iosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chargebee_iosTests.swift; sourceTree = "<group>"; };
 		2BF2D52529A3C29500E22D21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBValidateNonSubscriptionResource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 			children = (
 				2BF2D4B929A3B8E300E22D21 /* CBValidateReceiptResource.swift */,
 				2BF2D4BA29A3B8E300E22D21 /* CBReceiptValidationManager.swift */,
+				FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */,
 			);
 			path = ReceiptValidation;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				2BF2D4D829A3B8E300E22D21 /* CBPaymentConfigResource.swift in Sources */,
 				2BF2D4F029A3B8E300E22D21 /* CBItem.swift in Sources */,
 				2BF2D4F329A3B8E300E22D21 /* CBAddon.swift in Sources */,
+				FB29A4FD29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift in Sources */,
 				2BF2D4F829A3B8E300E22D21 /* CBPurchaseError.swift in Sources */,
 				2BF2D4F429A3B8E300E22D21 /* CBAddOnResource.swift in Sources */,
 				2BF2D4E029A3B8E300E22D21 /* CBEnvironment.swift in Sources */,
