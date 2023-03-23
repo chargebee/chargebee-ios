@@ -91,7 +91,7 @@ struct PayloadBody: URLEncodedRequestBody {
             "customer[id]": customerId,
             "customer[first_name]": firstName,
             "customer[last_name]": lastName,
-            "customer[email]": email,
+            "customer[email]": email
         ]
     }
 }

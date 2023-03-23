@@ -27,7 +27,6 @@ public class CBPurchase: NSObject {
     var includeInActiveProducts = false
     var productType: ProductType?
 
-
     // MARK: - Init
     private override init() {
         super.init()
@@ -41,7 +40,6 @@ public class CBPurchase: NSObject {
 
 public struct CBProduct {
     public let product: SKProduct
-    
     public init(product: SKProduct) {
         self.product = product
     }
@@ -120,7 +118,7 @@ public extension CBPurchase {
         self.customer = customer
         self.purchaseProductHandlerForNonSubscriptions(product: product, completion: handler)
     }
-
+    
     //Buy the product
     @available(*, deprecated, message: "This will be removed in upcoming versions, Please use this API func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion)")
     func purchaseProduct(product: CBProduct, customerId : String? = "",completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {

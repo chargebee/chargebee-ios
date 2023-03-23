@@ -31,14 +31,10 @@ public struct NonSubscription: Decodable {
 
 
 struct CBValidateReceiptWrapper: Decodable {
-    let inAppSubscription: CBValidateReceipt?
-    let nonSubscription: NonSubscription?
-
+    let inAppSubscription: CBValidateReceipt
 
     enum CodingKeys: String, CodingKey {
         case inAppSubscription = "in_app_subscription"
-        case nonSubscription = "non_subscription"
-
     }
 }
 
@@ -90,8 +86,8 @@ class CBReceiptValidationManager {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, nil)
         let request = CBAPIRequest(resource: CBValidateReceiptResource(receipt: receipt))
         request.create(withCompletion: { (res: CBValidateReceiptWrapper?) in
-            if let inApp = res!.inAppSubscription {
-                onSuccess(inApp)
+            if let inApp = res?.inAppSubscription {
+             onSuccess(inApp)
             }
         }, onError: onError)
     }

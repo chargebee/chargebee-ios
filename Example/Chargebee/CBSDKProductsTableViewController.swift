@@ -88,31 +88,31 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 }
                 return
             }
-            print("Type:",type.rawValue)
-                CBPurchase.shared.purchaseNonSubscriptionProduct(product: withproduct,customer: customer,productType: type) { result in
-                    print(result)
-                    switch result {
-                    case .success(let result):
-                        print("customerID:",result.customerID)
-                        print("chargeID:",result.chargeID )
-                        print("invoiceID:",result.invoiceID )
-                        
-                        DispatchQueue.main.async {
-                            self.view.activityStopAnimating()
-                            let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
-                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alertController, animated: true, completion: nil)
-                        }
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        DispatchQueue.main.async {
-                            self.view.activityStopAnimating()
-                            let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
-                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alertController, animated: true, completion: nil)
-                        }
+            print("Product Type:",type.rawValue)
+            CBPurchase.shared.purchaseNonSubscriptionProduct(product: withproduct,customer: customer,productType: type) { result in
+                print(result)
+                switch result {
+                case .success(let result):
+                    print("customerID:",result.customerID)
+                    print("chargeID:",result.chargeID )
+                    print("invoiceID:",result.invoiceID )
+                    
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
                     }
                 }
+            }
         }
         
         let alert = UIAlertController(title: "",
@@ -133,7 +133,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 defaultAction.isEnabled = true
                 alert.addAction(defaultAction)
                 alert.addTextField { (textField) in
-                     textField.delegate = self
+                    textField.delegate = self
                 }
                 self.present(alert, animated: true, completion: nil)
                 
@@ -142,13 +142,13 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         defaultAction.isEnabled = true
         alert.addAction(defaultAction)
         alert.addTextField { (textField) in
-             textField.delegate = self
+            textField.delegate = self
         }
         present(alert, animated: true, completion: nil)
     }
     
     func buyProduct(withProduct: CBProduct) {
-
+        
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             let customer = CBCustomer(customerID: customerID,firstName:"",lastName: "",email: "")
@@ -176,7 +176,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 }
             }
         }
-
+        
         let alert = UIAlertController(title: "",
                                       message: "Please enter customerID",
                                       preferredStyle: UIAlertController.Style.alert)
@@ -188,15 +188,15 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         defaultAction.isEnabled = true
         alert.addAction(defaultAction)
         alert.addTextField { (textField) in
-             textField.delegate = self
+            textField.delegate = self
         }
         present(alert, animated: true, completion: nil)
-
+        
     }
     
 
     func buyClicked(withProduct: CBProduct) {
-
+        
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             CBPurchase.shared.purchaseProduct(product: withProduct,customerId: customerID) { result in
@@ -223,7 +223,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 }
             }
         }
-
+        
         let alert = UIAlertController(title: "",
                                       message: "Please enter customerID",
                                       preferredStyle: UIAlertController.Style.alert)
@@ -235,10 +235,10 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         defaultAction.isEnabled = true
         alert.addAction(defaultAction)
         alert.addTextField { (textField) in
-             textField.delegate = self
+            textField.delegate = self
         }
         present(alert, animated: true, completion: nil)
-
+        
     }
 
 }
