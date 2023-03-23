@@ -56,19 +56,19 @@ public extension CBPurchase {
     func retrieveProducts(withProductID productIDs: [String], completion receiveProductsHandler: @escaping (_ result: Result<[CBProduct], CBPurchaseError>) -> Void) {
         self.receiveProductsHandler = receiveProductsHandler
 
-        var _productIDs: [String] = []
+        var internalProductIDs: [String] = []
         if productIDs.count > 0 {
-            _productIDs = productIDs
+            internalProductIDs = productIDs
         } else {
             // Get the product identifiers.
             guard let productIDArray = datasource?.productIDs() else {
                 receiveProductsHandler(.failure(.productIDNotFound))
                 return
             }
-            _productIDs = productIDArray
+            internalProductIDs = productIDArray
         }
 
-        let request = SKProductsRequest(productIdentifiers: Set(_productIDs))
+        let request = SKProductsRequest(productIdentifiers: Set(internalProductIDs))
         request.delegate = self
         request.start()
     }
@@ -232,7 +232,12 @@ extension CBPurchase: SKPaymentTransactionObserver {
 
 // chargebee methods
 public extension CBPurchase {
-    func validateReceipt(for productID: String, name: String, _ price: String, currencyCode: String, customerId: String, completion: ((Result<(status: Bool, subscription: CBSubscriptionStatus?), Error>) -> Void)?) {
+    func validateReceipt(for productID: String,
+                         name: String,
+                         _ price: String,
+                         currencyCode: String,
+                         customerId: String,
+                         completion: ((Result<(status: Bool, subscription: CBSubscriptionStatus?), Error>) -> Void)?) {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
             FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
@@ -245,7 +250,12 @@ public extension CBPurchase {
 //            print("Receipt String is :\(receiptString)")
             debugPrint("Apple Purchase - success")
 
-            CBReceiptValidationManager.validateReceipt(receipt: receiptString, productId: productID, name: name, price: price, currencyCode: currencyCode, customerId: customerID ) {
+            CBReceiptValidationManager.validateReceipt(receipt: receiptString,
+                                                       productId: productID,
+                                                       name: name,
+                                                       price: price,
+                                                       currencyCode: currencyCode,
+                                                       customerId: customerID ) {
                 (receiptResult) in DispatchQueue.main.async {
                     switch receiptResult {
                     case .success(let receipt):
