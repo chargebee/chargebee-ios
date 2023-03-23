@@ -3,7 +3,12 @@ import Foundation
 typealias CBValidateReceiptHandler = (CBResult<CBValidateReceipt>) -> Void
 typealias CBValidateNonSubscriptionHanlder = (CBResult<NonSubscription>) -> Void
 
-
+public enum ProductType: String {
+    case unknown = ""
+    case Consumable = "consumable"
+    case NonConsumable = "non_consumable"
+    case NonRenewingSubscription = "non_renewing_subscription"
+}
 
 struct CBValidateNonSubscriptionReceiptWrapper: Decodable {
     let nonSubscription: NonSubscription
@@ -14,8 +19,8 @@ struct CBValidateNonSubscriptionReceiptWrapper: Decodable {
 }
 
 // MARK: - NonSubscription
-struct NonSubscription: Decodable {
-    let customerID, invoiceID, chargeID: String
+public struct NonSubscription: Decodable {
+   public let customerID, invoiceID, chargeID: String
 
     enum CodingKeys: String, CodingKey {
         case customerID = "customer_id"
@@ -71,7 +76,9 @@ class CBReceiptValidationManager {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, nil)
         let request = CBAPIRequest(resource: CBValidateNonSubscriptionResource(receipt: receipt))
         request.create(withCompletion: { (res: CBValidateNonSubscriptionReceiptWrapper?) in
-            onSuccess(res!.nonSubscription)
+            if let response = res{
+                onSuccess(response.nonSubscription)
+            }
         }, onError: onError)
     }
     

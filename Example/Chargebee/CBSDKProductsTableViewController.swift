@@ -73,12 +73,12 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
             let customer = CBCustomer(customerID: customerID,firstName:"",lastName: "",email: "")
             
             let type: ProductType!
-            if productTypeString == "consumable"{
-                type = .consumable
-            }else if productTypeString == "non_consumable"{
-                type = .non_consumable
-            }else if productTypeString == "non_renewing_subscription"{
-                type = .non_renewing_subscription
+            if productTypeString == ProductType.Consumable.rawValue{
+                type = .Consumable
+            }else if productTypeString == ProductType.NonConsumable.rawValue{
+                type = .NonConsumable
+            }else if productTypeString == ProductType.NonRenewingSubscription.rawValue{
+                type = .NonRenewingSubscription
             }else{
                 DispatchQueue.main.async {
                     self.view.activityStopAnimating()
@@ -93,9 +93,9 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                     print(result)
                     switch result {
                     case .success(let result):
-                        print(result.customerID)
-                        print(result.chargeID ?? "")
-                        print(result.invoiceID ?? "")
+                        print("customerID:",result.customerID)
+                        print("chargeID:",result.chargeID )
+                        print("invoiceID:",result.invoiceID )
                         
                         DispatchQueue.main.async {
                             self.view.activityStopAnimating()

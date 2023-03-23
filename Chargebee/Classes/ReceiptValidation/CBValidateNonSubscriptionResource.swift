@@ -7,17 +7,15 @@
 
 import Foundation
 
-enum SubscriptionType: String {
-    case Subscriptions = "Subscriptions"
-    case NonSubscriptions = "NonSubscriptions"
-}
-
 
 @available(macCatalyst 13.0, *)
 class CBValidateNonSubscriptionResource: CBAPIResource {
     typealias ModelType = CBValidateNonSubscriptionReceiptWrapper
     typealias ErrorType = CBErrorDetail
-
+    
+    var components: URLComponents!
+    var urlRequest: URLRequest!
+    
     var authHeader: String? {
         return "Basic \(CBEnvironment.encodedApiKey)"
     }
@@ -28,9 +26,13 @@ class CBValidateNonSubscriptionResource: CBAPIResource {
     }
 
     private func buildBaseRequest() -> URLRequest {
-        var components = URLComponents(string: baseUrl)
-        components!.path += methodPath
-        var urlRequest = URLRequest(url: components!.url!)
+        if let component = URLComponents(string: baseUrl) {
+            components =  component
+            components.path += methodPath
+        }
+        if let reqUrl = components?.url {
+            urlRequest = URLRequest(url: (reqUrl))
+        }
         if let authHeader = authHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
         }
@@ -68,7 +70,6 @@ class CBValidateNonSubscriptionResource: CBAPIResource {
         self.requestBody = Payload(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
                                        price: receipt.price, currencyCode: receipt.currencyCode,
                                        customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",firstName: receipt.customer?.firstName ?? "",lastName: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "",type: receipt.productType?.rawValue ?? "")
-
     }
 
 }
