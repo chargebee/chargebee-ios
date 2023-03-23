@@ -22,9 +22,9 @@ class CBValidateNonSubscriptionResource: CBAPIResource {
     var baseUrl: String
     var requestBody: URLEncodedRequestBody?
     var methodPath: String {
-            return "/v2/non_subscriptions/\(CBEnvironment.sdkKey)/one_time_purchase"
+        return "/v2/non_subscriptions/\(CBEnvironment.sdkKey)/one_time_purchase"
     }
-
+    
     private func buildBaseRequest() -> URLRequest {
         if let component = URLComponents(string: baseUrl) {
             components =  component
@@ -43,12 +43,12 @@ class CBValidateNonSubscriptionResource: CBAPIResource {
         urlRequest.addValue(platform, forHTTPHeaderField: "platform")
         return urlRequest
     }
-
+    
     func create() -> URLRequest {
         return createRequest()
-
+        
     }
-
+    
     func createRequest() -> URLRequest {
         var urlRequest = buildBaseRequest()
         urlRequest.httpMethod = "post"
@@ -64,14 +64,14 @@ class CBValidateNonSubscriptionResource: CBAPIResource {
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
         return urlRequest
     }
-
+    
     init(receipt: CBReceipt ) {
         self.baseUrl = CBEnvironment.baseUrl
         self.requestBody = Payload(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
-                                       price: receipt.price, currencyCode: receipt.currencyCode,
-                                       customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",firstName: receipt.customer?.firstName ?? "",lastName: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "",type: receipt.productType?.rawValue ?? "")
+                                   price: receipt.price, currencyCode: receipt.currencyCode,
+                                   customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",firstName: receipt.customer?.firstName ?? "",lastName: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "",type: receipt.productType?.rawValue ?? "")
     }
-
+    
 }
 
 struct Payload: URLEncodedRequestBody {
@@ -101,7 +101,7 @@ struct Payload: URLEncodedRequestBody {
             "customer[last_name]": lastName,
             "customer[email]": email,
             "product[type]": type
-
+            
         ]
     }
 }

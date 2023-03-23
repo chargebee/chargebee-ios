@@ -181,7 +181,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                                     self.view.activityStopAnimating()
                                 }
                             }else {
-                                debugPrint("Not a Active prodcut to restore")
+                                debugPrint("Not a active product to restore")
                                 DispatchQueue.main.async {
                                     self.view.activityStopAnimating()
                                 }

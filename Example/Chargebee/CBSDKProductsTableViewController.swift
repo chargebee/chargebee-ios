@@ -88,7 +88,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 }
                 return
             }
-            print("Product Type:",type.rawValue)
+            print("product Type:",type.rawValue)
             CBPurchase.shared.purchaseNonSubscriptionProduct(product: withproduct,customer: customer,productType: type) { result in
                 print(result)
                 switch result {

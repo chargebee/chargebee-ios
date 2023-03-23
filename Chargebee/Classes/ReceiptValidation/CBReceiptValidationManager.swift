@@ -63,12 +63,12 @@ struct CBReceipt {
 }
 
 class CBReceiptValidationManager {
-
+    
     static func validateReceiptForNonSubscriptions(receipt: CBReceipt,
-                      completion handler: @escaping CBValidateNonSubscriptionHanlder) {
+                                                   completion handler: @escaping CBValidateNonSubscriptionHanlder) {
         let logger = CBLogger(name: "buy", action: "one_time_purchase")
         logger.info()
-
+        
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, nil)
         let request = CBAPIRequest(resource: CBValidateNonSubscriptionResource(receipt: receipt))
         request.create(withCompletion: { (res: CBValidateNonSubscriptionReceiptWrapper?) in
@@ -79,15 +79,15 @@ class CBReceiptValidationManager {
     }
     
     static func validateReceipt(receipt: CBReceipt,
-                      completion handler: @escaping CBValidateReceiptHandler) {
+                                completion handler: @escaping CBValidateReceiptHandler) {
         let logger = CBLogger(name: "buy", action: "process_purchase_command")
         logger.info()
-
+        
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, nil)
         let request = CBAPIRequest(resource: CBValidateReceiptResource(receipt: receipt))
         request.create(withCompletion: { (res: CBValidateReceiptWrapper?) in
             if let inApp = res?.inAppSubscription {
-             onSuccess(inApp)
+                onSuccess(inApp)
             }
         }, onError: onError)
     }
