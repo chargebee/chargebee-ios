@@ -30,10 +30,13 @@ opt_in_rules:
   - trailing_semicolon
   - trailing_whitespace
 
+included:
+  - ../Chargebee
+
 excluded:
   - Pods
   - Tests/chargebee-iosTests
-  - Example
+  - Chargebee
 
 file_header:
   required_pattern: |
