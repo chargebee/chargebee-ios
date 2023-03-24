@@ -66,8 +66,89 @@ static func registerCellXib(with tableview: UITableView) {
 }
 
 extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
+    
+    func buyOnetimePurchase(withproduct: CBProduct) {
+        func purchase(customerID: String,productTypeString:String) {
+            self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+            let customer = CBCustomer(customerID: customerID,firstName:"",lastName: "",email: "")
+            
+            let type: ProductType!
+            if productTypeString == ProductType.Consumable.rawValue{
+                type = .Consumable
+            }else if productTypeString == ProductType.NonConsumable.rawValue{
+                type = .NonConsumable
+            }else if productTypeString == ProductType.NonRenewingSubscription.rawValue{
+                type = .NonRenewingSubscription
+            }else{
+                DispatchQueue.main.async {
+                    self.view.activityStopAnimating()
+                    let alertController = UIAlertController(title: "Chargebee", message: "Please enter product type", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                return
+            }
+            print("product Type:",type.rawValue)
+            CBPurchase.shared.purchaseNonSubscriptionProduct(product: withproduct,customer: customer,productType: type) { result in
+                print(result)
+                switch result {
+                case .success(let result):
+                    print("customerID:",result.customerID)
+                    print("chargeID:",result.chargeID )
+                    print("invoiceID:",result.invoiceID )
+                    
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.view.activityStopAnimating()
+                        let alertController = UIAlertController(title: "Chargebee", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        
+        let alert = UIAlertController(title: "",
+                                      message: "Please enter customerID",
+                                      preferredStyle: UIAlertController.Style.alert)
+        let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (_) in
+            if let textFields = alert.textFields, let customerTextField = textFields.first {
+                let alert = UIAlertController(title: "",
+                                              message: "Please enter ProductType",
+                                              preferredStyle: UIAlertController.Style.alert)
+                let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (_) in
+                    if let textFields = alert.textFields, let productTypeField = textFields.first {
+                        if ((productTypeField.text?.isEmpty) != nil) {
+                            purchase(customerID: customerTextField.text ?? "",productTypeString: productTypeField.text ?? "")
+                        }
+                    }
+                }
+                defaultAction.isEnabled = true
+                alert.addAction(defaultAction)
+                alert.addTextField { (textField) in
+                    textField.delegate = self
+                }
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+        }
+        defaultAction.isEnabled = true
+        alert.addAction(defaultAction)
+        alert.addTextField { (textField) in
+            textField.delegate = self
+        }
+        present(alert, animated: true, completion: nil)
+    }
+    
     func buyProduct(withProduct: CBProduct) {
-
+        
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             let customer = CBCustomer(customerID: customerID,firstName:"",lastName: "",email: "")
@@ -95,7 +176,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 }
             }
         }
-
+        
         let alert = UIAlertController(title: "",
                                       message: "Please enter customerID",
                                       preferredStyle: UIAlertController.Style.alert)
@@ -107,15 +188,15 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         defaultAction.isEnabled = true
         alert.addAction(defaultAction)
         alert.addTextField { (textField) in
-             textField.delegate = self
+            textField.delegate = self
         }
         present(alert, animated: true, completion: nil)
-
+        
     }
     
 
     func buyClicked(withProduct: CBProduct) {
-
+        
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             CBPurchase.shared.purchaseProduct(product: withProduct,customerId: customerID) { result in
@@ -142,7 +223,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 }
             }
         }
-
+        
         let alert = UIAlertController(title: "",
                                       message: "Please enter customerID",
                                       preferredStyle: UIAlertController.Style.alert)
@@ -154,9 +235,10 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         defaultAction.isEnabled = true
         alert.addAction(defaultAction)
         alert.addTextField { (textField) in
-             textField.delegate = self
+            textField.delegate = self
         }
         present(alert, animated: true, completion: nil)
-
+        
     }
+
 }

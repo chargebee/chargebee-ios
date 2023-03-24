@@ -1,31 +1,38 @@
 //
-//  CBValidateReceiptResource.swift
+//  CBValidateNonSubscriptionResource.swift
+//  Chargebee
 //
-//  Created by cb-christopher on 19/04/21.
-//  Copyright © 2021 Chargebee. All rights reserved.
+//  Created by ramesh_g on 14/03/23.
 //
 
 import Foundation
 
 
 @available(macCatalyst 13.0, *)
-class CBValidateReceiptResource: CBAPIResource {
-    typealias ModelType = CBValidateReceiptWrapper
+class CBValidateNonSubscriptionResource: CBAPIResource {
+    typealias ModelType = CBValidateNonSubscriptionReceiptWrapper
     typealias ErrorType = CBErrorDetail
-
+    
+    var components: URLComponents!
+    var urlRequest: URLRequest!
+    
     var authHeader: String? {
         return "Basic \(CBEnvironment.encodedApiKey)"
     }
     var baseUrl: String
     var requestBody: URLEncodedRequestBody?
     var methodPath: String {
-        return "/v2/in_app_subscriptions/\(CBEnvironment.sdkKey)/process_purchase_command"
+        return "/v2/non_subscriptions/\(CBEnvironment.sdkKey)/one_time_purchase"
     }
-
+    
     private func buildBaseRequest() -> URLRequest {
-        var components = URLComponents(string: baseUrl)
-        components!.path += methodPath
-        var urlRequest = URLRequest(url: components!.url!)
+        if let component = URLComponents(string: baseUrl) {
+            components =  component
+            components.path += methodPath
+        }
+        if let reqUrl = components?.url {
+            urlRequest = URLRequest(url: (reqUrl))
+        }
         if let authHeader = authHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
         }
@@ -36,12 +43,12 @@ class CBValidateReceiptResource: CBAPIResource {
         urlRequest.addValue(platform, forHTTPHeaderField: "platform")
         return urlRequest
     }
-
+    
     func create() -> URLRequest {
         return createRequest()
-
+        
     }
-
+    
     func createRequest() -> URLRequest {
         var urlRequest = buildBaseRequest()
         urlRequest.httpMethod = "post"
@@ -57,17 +64,17 @@ class CBValidateReceiptResource: CBAPIResource {
         urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
         return urlRequest
     }
-
+    
     init(receipt: CBReceipt ) {
         self.baseUrl = CBEnvironment.baseUrl
-        self.requestBody = PayloadBody(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
-                                       price: receipt.price, currencyCode: receipt.currencyCode,
-                                       customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",firstName: receipt.customer?.firstName ?? "",lastName: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "")
+        self.requestBody = Payload(receipt: receipt.token, productId: receipt.productID, name: receipt.name,
+                                   price: receipt.price, currencyCode: receipt.currencyCode,
+                                   customerId: receipt.customer?.customerID ?? "", period: "\(receipt.period)", periodUnit: "\(receipt.periodUnit)",firstName: receipt.customer?.firstName ?? "",lastName: receipt.customer?.lastName ?? "", email: receipt.customer?.email ?? "",type: receipt.productType?.rawValue ?? "")
     }
-
+    
 }
 
-struct PayloadBody: URLEncodedRequestBody {
+struct Payload: URLEncodedRequestBody {
     let receipt: String
     let productId: String
     let name: String
@@ -79,6 +86,7 @@ struct PayloadBody: URLEncodedRequestBody {
     let firstName: String
     let lastName: String
     let email: String
+    let type: String
     func toFormBody() -> [String: String] {
         [
             "receipt": receipt,
@@ -91,7 +99,10 @@ struct PayloadBody: URLEncodedRequestBody {
             "customer[id]": customerId,
             "customer[first_name]": firstName,
             "customer[last_name]": lastName,
-            "customer[email]": email
+            "customer[email]": email,
+            "product[type]": type
+            
         ]
     }
 }
+

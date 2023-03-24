@@ -176,23 +176,17 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         print("Purchase products history:",response)
                         for subscription in response {
                             if subscription.storeStatus.rawValue == StoreStatus.Active.rawValue{
+                                debugPrint("Successfully restored product with subscriptionId",subscription.subscriptionID)
                                 DispatchQueue.main.async {
                                     self.view.activityStopAnimating()
-                                    let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
-                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                    self.present(alertController, animated: true, completion: nil)
                                 }
                             }else {
+                                debugPrint("Not a active product to restore")
                                 DispatchQueue.main.async {
                                     self.view.activityStopAnimating()
-                                    
-                                    let alertController = UIAlertController(title: "Chargebee", message: "No Active products to Restore", preferredStyle: .alert)
-                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                    self.present(alertController, animated: true, completion: nil)
                                 }
                             }
                         }
-                        
                         
                     }else {
                         DispatchQueue.main.async {
