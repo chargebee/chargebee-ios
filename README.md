@@ -6,7 +6,7 @@ This is the official  Software Development Kit (SDK) for Chargebee iOS. This SDK
 Post-installation, initialization, and authentication with the Chargebee site, this SDK will support the following process.
 
 -   **Sync In-App Subscriptions with Chargebee**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html) with [Apple Store Connect](https://appstoreconnect.apple.com/login) to process in-app purchase subscriptions, and track them on your Chargebee account for a single source of truth for subscriptions across the Web and Apple App Store. Use this if you are selling digital goods or services, or are REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
-    **For SDK methods to work, ensure that** [**prerequisites**](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#configure-prerequisites) **are configured in Chargebee.** To import products configured in Apple App Store and existing subscriptions, read [more](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#import-products).
+    **For SDK funtions to work, ensure that** [**prerequisites**](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#configure-prerequisites) **are configured in Chargebee.** To import products configured in Apple App Store and existing subscriptions, read [more](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#import-products).
 
 -   **Tokenisation of credit card**: Tokenize credit card information while presenting your own user interface. Use this if you are selling physical goods or offline services or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
 
@@ -183,13 +183,42 @@ The above function will handle the purchase against App Store Connect and send t
 
 ##### Returns Plan Object
 
-This function returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK method - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+This function returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+
+#### One-Time Purchases
+
+The `purchaseNonSubscriptionProduct` function handles the one-time purchase against App Store Connect and sends the IAP receipt for server-side receipt verification to your Chargebee account. Post verification a Charge corresponding to this one-time purchase will be created in Chargebee. There are three types of one-time purchases `consumable`, `non_consumable`, and `non_renewing_subscription`.
+
+```swift
+let product = CBProduct(product: SKProduct())
+    let customer = CBCustomer(customerID: "",firstName:"",lastName: "",email: "")
+    let typeOfProduct: productType = .non_consumable
+    CBPurchase.shared.purchaseNonSubscriptionProduct(product: withproduct,customer: customer,productType: typeOfProduct) { result in
+      switch result {
+      case .success(let success):
+        print(result.customerID)
+        print(result.chargeID ?? "")
+        print(result.invoiceID ?? "")
+      case .failure(let failure):
+        //Hanler error here
+      }
+    }
+```
+
+The given code defines a closure-based function named `purchaseNonSubscriptionProduct` in the `CBPurchase` class, which takes three input parameters:
+- `product`: An instance of `CBProduct` class, initialized with a `SKProduct` instance representing the product to be purchased from the Apple App Store.
+- `customer`: An instance of `CBCustomer` class, initialized with the customer's details such as `customerID`, `firstName`, `lastName`, and `email`.
+- `productType`: An enum instance of `productType` type, indicating the type of product to be purchased. It can be either .`consumable`, .`non_consumable`, or .`non_renewing_subscription`.
+
+The function is called asynchronously, and it returns a `Result` object with a `success` or `failure` case, which can be handled in the closure.
+- If the purchase is successful, the closure will be called with the `success` case, which includes the `customerID`, `chargeID`, and `invoiceID` associated with the purchase.
+- If there is any failure during the purchase, the closure will be called with the `failure` case, which includes an error object that can be used to handle the error.
 
 #### Restore purchase
 
-The restore purchase method helps to regain your app user's previous purchases without making any payments again. Sometimes, your app user may want to restore their previous purchases after reinstalling your app, switching to a new device, or for any other reason. You can use the `restorePurchases()` method provided by the iOS SDK to allow your app user to easily restore their previous purchases.
+The restore purchase function helps to regain your app user's previous purchases without making any payments again. Sometimes, your app user may want to restore their previous purchases after reinstalling your app, switching to a new device, or for any other reason. You can use the `restorePurchases()` function provided by the iOS SDK to allow your app user to easily restore their previous purchases.
 
-To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` method with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` method in your code:
+To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` function in your code:
 
 ```swift
 CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
@@ -207,11 +236,11 @@ CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
     }
 ```
 
-In the above code, the `restorePurchases()` method is called with the `includeInActiveProducts` parameter set to `true`. The method returns a result object that contains an array of restored purchases.
+In the above code, the `restorePurchases()` function is called with the `includeInActiveProducts` parameter set to `true`. The function returns a result object that contains an array of restored purchases.
 
 #### Get Subscription Status for Existing Subscribers
 
-The following are methods for checking the subscription status of a subscriber who already purchased the product.
+The following are funtions for checking the subscription status of a subscriber who already purchased the product.
 
 ##### Get Subscription Status for Existing Subscribers using Query Parameters
 
@@ -247,7 +276,7 @@ Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
 
 ##### Returns Plan Object
 
-The above functions return the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK method - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+The above functions return the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
 
 #### Retrieve Entitlements of a Subscription
 
