@@ -52,6 +52,12 @@
 		2BF2D50A29A3B8EE00E22D21 /* PurchaseManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D50229A3B8EE00E22D21 /* PurchaseManagerTest.swift */; };
 		2BF2D50B29A3B8EE00E22D21 /* chargebee_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D50329A3B8EE00E22D21 /* chargebee_iosTests.swift */; };
 		2BF2D52629A3C29500E22D21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF2D52529A3C29500E22D21 /* Foundation.framework */; };
+		FB5363E729BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363E629BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift */; };
+		FB5363E929BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */; };
+		FB5363EB29BEE25600E3AC9A /* CBRestorePurchaseResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EA29BEE25600E3AC9A /* CBRestorePurchaseResource.swift */; };
+		FB5363ED29BEE28200E3AC9A /* RestoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EC29BEE28200E3AC9A /* RestoreError.swift */; };
+		FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */; };
+		FB29A4FD29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +117,12 @@
 		2BF2D50229A3B8EE00E22D21 /* PurchaseManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseManagerTest.swift; sourceTree = "<group>"; };
 		2BF2D50329A3B8EE00E22D21 /* chargebee_iosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chargebee_iosTests.swift; sourceTree = "<group>"; };
 		2BF2D52529A3C29500E22D21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FB5363E629BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPurchaseManager+Extension.swift"; sourceTree = "<group>"; };
+		FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRestorePurchaseManager.swift; sourceTree = "<group>"; };
+		FB5363EA29BEE25600E3AC9A /* CBRestorePurchaseResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRestorePurchaseResource.swift; sourceTree = "<group>"; };
+		FB5363EC29BEE28200E3AC9A /* RestoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreError.swift; sourceTree = "<group>"; };
+		FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundOperationQueue.swift; sourceTree = "<group>"; };
+		FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBValidateNonSubscriptionResource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +191,7 @@
 		2BF2D4A529A3B8E300E22D21 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FB5363E129BB3A2700E3AC9A /* Restore */,
 				2BF2D4A629A3B8E300E22D21 /* Token */,
 				2BF2D4AF29A3B8E300E22D21 /* Configuration */,
 				2BF2D4B229A3B8E300E22D21 /* Result */,
@@ -250,6 +263,7 @@
 			children = (
 				2BF2D4B929A3B8E300E22D21 /* CBValidateReceiptResource.swift */,
 				2BF2D4BA29A3B8E300E22D21 /* CBReceiptValidationManager.swift */,
+				FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */,
 			);
 			path = ReceiptValidation;
 			sourceTree = "<group>";
@@ -351,6 +365,18 @@
 				2BF2D52529A3C29500E22D21 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB5363E129BB3A2700E3AC9A /* Restore */ = {
+			isa = PBXGroup;
+			children = (
+				FB5363E629BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift */,
+				FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */,
+				FB5363EA29BEE25600E3AC9A /* CBRestorePurchaseResource.swift */,
+				FB5363EC29BEE28200E3AC9A /* RestoreError.swift */,
+				FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */,
+			);
+			path = Restore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,6 +489,7 @@
 			files = (
 				2BF2D4E829A3B8E300E22D21 /* CBPlan.swift in Sources */,
 				2BF2D4DF29A3B8E300E22D21 /* Chargebee.swift in Sources */,
+				FB5363ED29BEE28200E3AC9A /* RestoreError.swift in Sources */,
 				2BF2D4E229A3B8E300E22D21 /* CBResult.swift in Sources */,
 				2BF2D4D929A3B8E300E22D21 /* CBPaymentDetail.swift in Sources */,
 				2BF2D4F129A3B8E300E22D21 /* CBItemListResource.swift in Sources */,
@@ -478,10 +505,13 @@
 				2BF2D4EB29A3B8E300E22D21 /* CBNetworkRequest.swift in Sources */,
 				2BF2D4F229A3B8E300E22D21 /* CBItemResource.swift in Sources */,
 				2BF2D4F629A3B8E300E22D21 /* CBProductsV1.swift in Sources */,
+				FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */,
+				FB5363EB29BEE25600E3AC9A /* CBRestorePurchaseResource.swift in Sources */,
 				2BF2D4E629A3B8E300E22D21 /* CBReceiptValidationManager.swift in Sources */,
 				2BF2D4E729A3B8E300E22D21 /* CBPlanResource.swift in Sources */,
 				2BF2D4FA29A3B8E300E22D21 /* CBAuthenticationResource.swift in Sources */,
 				2BF2D4DC29A3B8E300E22D21 /* CBToken.swift in Sources */,
+				FB5363E929BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift in Sources */,
 				2BF2D4DD29A3B8E300E22D21 /* StripeTokenResource.swift in Sources */,
 				2BF2D4EA29A3B8E300E22D21 /* CBAPIRequest.swift in Sources */,
 				2BF2D4EF29A3B8E300E22D21 /* CBEntitlement.swift in Sources */,
@@ -490,6 +520,8 @@
 				2BF2D4D829A3B8E300E22D21 /* CBPaymentConfigResource.swift in Sources */,
 				2BF2D4F029A3B8E300E22D21 /* CBItem.swift in Sources */,
 				2BF2D4F329A3B8E300E22D21 /* CBAddon.swift in Sources */,
+				FB5363E729BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift in Sources */,
+				FB29A4FD29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift in Sources */,
 				2BF2D4F829A3B8E300E22D21 /* CBPurchaseError.swift in Sources */,
 				2BF2D4F429A3B8E300E22D21 /* CBAddOnResource.swift in Sources */,
 				2BF2D4E029A3B8E300E22D21 /* CBEnvironment.swift in Sources */,
@@ -648,7 +680,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -686,7 +718,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
