@@ -30,10 +30,10 @@
 		FA3ECF3524B6FA6C00643E63 /* CBSDKTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */; };
 		FA3ECF3724B6FDE300643E63 /* CBSDKPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */; };
 		FA3ECF3924B6FDED00643E63 /* CBSDKAddonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */; };
+		FB58A28329DDA40A009C5D37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB58A28229DDA40A009C5D37 /* StoreKit.framework */; };
 		FBB59E8329B20B4900B75EF2 /* CBDemoPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB59E8129B20B4900B75EF2 /* CBDemoPersistance.swift */; };
 		FBB59E8629B20B8500B75EF2 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB59E8429B20B8500B75EF2 /* Reachability.swift */; };
 		FBB59E8729B20B8500B75EF2 /* NetworkListner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB59E8529B20B8500B75EF2 /* NetworkListner.swift */; };
-		FB5363F129BEE4B200E3AC9A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5363F029BEE4B200E3AC9A /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,10 +95,10 @@
 		FA3ECF3424B6FA6C00643E63 /* CBSDKTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKTokenViewController.swift; sourceTree = "<group>"; };
 		FA3ECF3624B6FDE300643E63 /* CBSDKPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKPlanViewController.swift; sourceTree = "<group>"; };
 		FA3ECF3824B6FDED00643E63 /* CBSDKAddonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSDKAddonViewController.swift; sourceTree = "<group>"; };
+		FB58A28229DDA40A009C5D37 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FBB59E8129B20B4900B75EF2 /* CBDemoPersistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBDemoPersistance.swift; sourceTree = "<group>"; };
 		FBB59E8429B20B8500B75EF2 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		FBB59E8529B20B8500B75EF2 /* NetworkListner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkListner.swift; sourceTree = "<group>"; };
-		FB5363F029BEE4B200E3AC9A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BF2D53629A3C7A500E22D21 /* Chargebee.framework in Frameworks */,
-				FB5363F129BEE4B200E3AC9A /* StoreKit.framework in Frameworks */,
+				FB58A28329DDA40A009C5D37 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +238,7 @@
 		AAD4F8DC1372EE4D1A09D929 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FB5363F029BEE4B200E3AC9A /* StoreKit.framework */,
+				FB58A28229DDA40A009C5D37 /* StoreKit.framework */,
 				2BF2D52D29A3C6F400E22D21 /* Chargebee.xcodeproj */,
 				2172435AB6EDB8C0EB2804F6 /* Pods_Chargebee_Example.framework */,
 				F7312AE4F79735117B94AC47 /* Pods_Chargebee_Tests.framework */,

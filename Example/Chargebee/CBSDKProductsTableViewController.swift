@@ -10,14 +10,14 @@ import UIKit
 import Chargebee
 
 final class CBSDKProductsTableViewController: UITableViewController, UITextFieldDelegate {
-
+    
     var products: [CBProduct] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         CBSDKProductTableViewCell.registerCellXib(with: self.tableView)
         self.title = "Products"
-
+        self.addNetWorkObserver()
     }
     
     func reachabilityObserver() {
@@ -33,6 +33,22 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
             }
         }
     }
+    func ValidateReceiptForNonSubscriptions(_ product: CBProduct){
+        CBPurchase.shared.validateReceiptForNonSubscriptions(product) { result in
+            switch result {
+            case .success(let result):
+                print(result.chargeID )
+                print(result.invoiceID)
+                print(result.customerID)
+                if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                    CBDemoPersistance.clearPurchaseIDCache()
+                }
+                NetworkReachability.shared.stopNotifier()
+            case .failure(let error):
+                print("error",error.localizedDescription)
+            }
+        }
+    }
     
     func ValidateReceipt(_ product: CBProduct){
         CBPurchase.shared.validateReceipt(product) { result in
@@ -41,24 +57,12 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
                 print(result.status )
                 print(result.subscriptionId ?? "")
                 print(result.planId ?? "")
-                DispatchQueue.main.async {
-                    self.view.activityStopAnimating()
-                    let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
-                }
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
                     CBDemoPersistance.clearPurchaseIDCache()
                 }
                 NetworkReachability.shared.stopNotifier()
             case .failure(let error):
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    self.view.activityStopAnimating()
-                    let alertController = UIAlertController(title: "Chargebee", message: error.localizedDescription, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
-                }
+                print("error",error.localizedDescription)
             }
         }
     }
@@ -67,7 +71,6 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         if let productID = CBDemoPersistance.getProductIDFromCache() {
             // Getting the productID from Cache and with ProductID we will get the product using retrieveProducts API and Validate Receipt
             self.view.activityStartAnimating(activityColor: .gray, backgroundColor: .gray)
-            print("Offline Validation is Going on")
             CBPurchase.shared.retrieveProducts(withProductID: [productID] as! [String]) { result in
                 DispatchQueue.main.async {
                     self.view.activityStopAnimating()
@@ -75,34 +78,36 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
                 switch result {
                 case let .success(products):
                     if let product = products.first {
-                        self.ValidateReceipt(product)
+                        if let _ = product.product.subscriptionPeriod {
+                            self.ValidateReceipt(product)
+                        }else{
+                            self.ValidateReceiptForNonSubscriptions(product)
+                        }
                     }
                 case let .failure(error):
-                    debugPrint("Error: \(error.localizedDescription)")
-                    print("Inside Failure")
-
+                    debugPrint("Error while trying to retreive product on receipt validation: \(error.localizedDescription)")
                 }
             }
         }
     }
     
     private func addNetWorkObserver(){
-         NetworkReachability.shared.startNotifier()
-         self.reachabilityObserver()
-     }
-
+        self.reachabilityObserver()
+        NetworkReachability.shared.startNotifier()
+    }
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return products.count
     }
-
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBSDKProductTableViewCell.self), for: indexPath) as! CBSDKProductTableViewCell
         let product: CBProduct = products[indexPath.row]
         cell.product = product
@@ -119,21 +124,21 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         }
         cell.btnAction.setTitle(buttonTitle, for: .normal)
         return cell
-
+        
     }
-
+    
 }
 
 extension UITableViewCell {
-// Not using static as it wont be possible to override to provide custom storyboardID then
-class var storyboardID: String {
-    return "\(self)"
-  }
-
-static func registerCellXib(with tableview: UITableView) {
-    let nib = UINib(nibName: self.storyboardID, bundle: nil)
-    tableview.register(nib, forCellReuseIdentifier: self.storyboardID)
-  }
+    // Not using static as it wont be possible to override to provide custom storyboardID then
+    class var storyboardID: String {
+        return "\(self)"
+    }
+    
+    static func registerCellXib(with tableview: UITableView) {
+        let nib = UINib(nibName: self.storyboardID, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: self.storyboardID)
+    }
 }
 
 extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
@@ -222,16 +227,16 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-            addNetWorkObserver()
+            if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                CBDemoPersistance.clearPurchaseIDCache()
+            }
+            
+            if !CBDemoPersistance.isPurchaseProductIDAvailable(){
+                CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
+            }
             let customer = CBCustomer(customerID: customerID,firstName:"",lastName: "",email: "")
             CBPurchase.shared.purchaseProduct(product: withProduct,customer: customer) { result in
                 print(result)
-                if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                    CBDemoPersistance.clearPurchaseIDCache()
-                }
-                if !CBDemoPersistance.isPurchaseProductIDAvailable(){
-                    CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
-                }
                 switch result {
                 case .success(let result):
                     print(result.status)
@@ -243,12 +248,10 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alertController, animated: true, completion: nil)
                     }
-                  
                     if CBDemoPersistance.isPurchaseProductIDAvailable(){
                         CBDemoPersistance.clearPurchaseIDCache()
                     }
                     NetworkReachability.shared.stopNotifier()
-                   
                 case .failure(let error):
                     print(error.localizedDescription)
                     
@@ -269,7 +272,11 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                     case .serverNotResponding(errorResponse: let errorResponse):
                         // Retry Validating receipt here with below method in case server is not responding.
                         print("Error:",errorResponse)
-                        self.ValidateReceipt(withProduct)
+                        if let _ = withProduct.product.subscriptionPeriod {
+                            self.ValidateReceipt(withProduct)
+                        }else {
+                            self.ValidateReceiptForNonSubscriptions(withProduct)
+                        }
                     }
                 }
             }
@@ -292,19 +299,19 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         
     }
     
-
+    
     func buyClicked(withProduct: CBProduct) {
         
         func purchase(customerID: String) {
-            addNetWorkObserver()
+            if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                CBDemoPersistance.clearPurchaseIDCache()
+            }
+            if !CBDemoPersistance.isPurchaseProductIDAvailable(){
+                CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
+            }
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             CBPurchase.shared.purchaseProduct(product: withProduct,customerId: customerID) { result in
-                if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                    CBDemoPersistance.clearPurchaseIDCache()
-                }
-                if !CBDemoPersistance.isPurchaseProductIDAvailable(){
-                    CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
-                }
+                
                 print(result)
                 switch result {
                 case .success(let result):
@@ -341,7 +348,13 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                     case .serverNotResponding(errorResponse: let errorResponse):
                         // Retry Validating receipt here with below method in case server is not responding.
                         print("Error:",errorResponse)
-                        self.ValidateReceipt(withProduct)
+                        
+                        if let _ = withProduct.product.subscriptionPeriod {
+                            self.ValidateReceipt(withProduct)
+                        }else{
+                            self.ValidateReceiptForNonSubscriptions(withProduct)
+                        }
+                        
                     }
                 }
             }
@@ -363,5 +376,5 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         present(alert, animated: true, completion: nil)
         
     }
-
+    
 }

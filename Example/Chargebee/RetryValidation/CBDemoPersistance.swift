@@ -41,7 +41,6 @@ public struct CBDemoPersistance: CBPersistanceProtocal {
     
     static func clearPurchaseIDCache(){
         if isPurchaseProductIDAvailable() {
-            debugPrint("Cleared cache")
             CBUserDefaults.removeObject(forKey: Product_Id)
         }
     }

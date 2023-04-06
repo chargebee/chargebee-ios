@@ -19,7 +19,7 @@ public class CBPurchase: NSObject {
     var productRequest: SKProductsRequestFactory = SKProductsRequestFactory()
 
     var restoredPurchasesCount = 0
-    private var activeProduct: SKProduct?
+    private var activeProduct: CBProduct?
     var customer: CBCustomer?
     
     var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
@@ -113,7 +113,7 @@ public extension CBPurchase {
         
     func purchaseNonSubscriptionProduct(product: CBProduct, customer : CBCustomer? = nil ,productType : ProductType? = nil,completion handler: @escaping ((_ result: Result<NonSubscription, Error>) -> Void)) {
         buyNonSubscriptionProductHandler = handler
-        activeProduct = product.product
+        activeProduct = product
         self.productType = productType
         self.customer = customer
         self.purchaseProductHandler(product: product, completion: handler)
@@ -131,7 +131,7 @@ public extension CBPurchase {
     func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product
-            self.customer = customer
+        self.customer = customer
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
@@ -211,7 +211,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 if let product = activeProduct {
-                    if let _ = product.subscriptionPeriod {
+                    if let _ = product.product.subscriptionPeriod {
                         validateReceipt(product, completion: buyProductHandler)
                     }else{
                         validateReceiptForNonSubscriptions(product, completion: buyNonSubscriptionProductHandler)
@@ -280,10 +280,11 @@ extension CBPurchase: SKPaymentTransactionObserver {
 // chargebee methods
 public extension CBPurchase {
     
-    func validateReceiptForNonSubscriptions(_ product: SKProduct?,completion: ((Result<NonSubscription, Error>) -> Void)?) {
+    func validateReceiptForNonSubscriptions(_ product: CBProduct?,completion: ((Result<NonSubscription, Error>) -> Void)?) {
         
-        guard let receipt = getReceipt(product: product) else {
+        guard let receipt = getReceipt(product: product?.product) else {
             debugPrint("Couldn't read receipt data with error")
+            completion?(.failure(CBError.defaultSytemError(statusCode: 0, message: "Could not read receipt data")))
             return
         }
         
@@ -302,10 +303,11 @@ public extension CBPurchase {
         }
     }
     
-    func validateReceipt(_ product: SKProduct?,completion: ((Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)?) {
+    func validateReceipt(_ product: CBProduct?,completion: ((Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)?) {
         
-        guard let receipt = getReceipt(product: product) else {
+        guard let receipt = getReceipt(product: product?.product) else {
             debugPrint("Couldn't read receipt data with error")
+            completion?(.failure(CBError.defaultSytemError(statusCode: 0, message: "Could not read receipt data")))
             return
         }
         
@@ -328,7 +330,7 @@ public extension CBPurchase {
         }
     }
     
-    internal func getReceipt(product: SKProduct?) -> CBReceipt? {
+    private func getReceipt(product: SKProduct?) -> CBReceipt? {
         var receipt: CBReceipt?
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
               FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
@@ -350,29 +352,6 @@ public extension CBPurchase {
         return receipt
         
     }
-    
-    internal func getReceipt(product: SKProduct?) -> CBReceipt? {
-        var receipt: CBReceipt?
-         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-               FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
-             debugPrint("No receipt Exist")
-             return nil
-         }
-         guard let product = product, let currencyCode = product.priceLocale.currencyCode, let period = product.subscriptionPeriod?.numberOfUnits, let unit = product.subscriptionPeriod?.unit.rawValue  else {
-             return nil
-         }
-         do {
-             let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-             
-             let receiptString = receiptData.base64EncodedString(options: [])
-             debugPrint("Apple Purchase - success")
-              receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, period: period, periodUnit: Int(unit),customer: customer)
-         }catch {
-             print("Couldn't read receipt data with error: " + error.localizedDescription)
-         }
-        return receipt
-        
-     }
 }
 
 class SKProductsRequestFactory {

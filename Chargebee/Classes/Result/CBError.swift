@@ -45,7 +45,7 @@ public struct CBErrorDetail: Decodable, ErrorDetail {
     public let type: String?
     public let apiErrorCode: String?
     public let param: String?
-    public let httpStatusCode: Int?
+    public let httpStatusCode: Int
 
     enum CodingKeys: String, CodingKey {
         case message = "message"

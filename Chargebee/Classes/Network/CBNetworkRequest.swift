@@ -22,10 +22,6 @@ extension CBNetworkRequest {
                 onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
                 return
             }
-            if let response = response as? HTTPURLResponse, response.statusCode >= 500 {
-                onError?(self.buildCBError(data, statusCode: response.statusCode))
-                return
-            }
             if let response = response as? HTTPURLResponse, response.statusCode >= 400 {
                 onError?(self.buildCBError(data, statusCode: response.statusCode))
                 return
