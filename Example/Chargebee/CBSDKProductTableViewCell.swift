@@ -9,9 +9,10 @@
 import UIKit
 import Chargebee
 
-protocol ProductTableViewCellDelegate: class {
+protocol ProductTableViewCellDelegate: AnyObject {
     func buyClicked(withProduct: CBProduct)
     func buyProduct(withProduct: CBProduct)
+    func buyOnetimePurchase(withproduct:CBProduct)
 }
 
 final class CBSDKProductTableViewCell: UITableViewCell {
@@ -26,6 +27,11 @@ final class CBSDKProductTableViewCell: UITableViewCell {
     // MARK: IBActions
     @IBAction private func actionBtnClicked(_ sender: Any) {
         guard let product = product else { return }
-        delegate?.buyClicked(withProduct: product)
+        
+        if let _ = product.product.subscriptionPeriod {
+            delegate?.buyClicked(withProduct: product)
+        }else{
+            delegate?.buyOnetimePurchase(withproduct: product)
+        }
     }
 }
