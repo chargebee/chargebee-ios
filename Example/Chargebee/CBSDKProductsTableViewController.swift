@@ -34,6 +34,10 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         }
     }
     func ValidateReceiptForNonSubscriptions(_ product: CBProduct){
+        
+        if let type = CBDemoPersistance.getProductTypeFromCache()  {
+            CBPurchase.shared.productType = type
+        }
         CBPurchase.shared.validateReceiptForNonSubscriptions(product) { result in
             switch result {
             case .success(let result):
@@ -41,7 +45,11 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
                 print(result.invoiceID)
                 print(result.customerID)
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                    CBDemoPersistance.clearPurchaseIDCache()
+                    CBDemoPersistance.clearPurchaseIDFromCache()
+                }
+                if (CBDemoPersistance.getProductTypeFromCache() != nil) {
+                    CBPurchase.shared.productType = nil
+                    CBDemoPersistance.clearPurchaseProductType()
                 }
                 NetworkReachability.shared.stopNotifier()
             case .failure(let error):
@@ -58,7 +66,7 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
                 print(result.subscriptionId ?? "")
                 print(result.planId ?? "")
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                    CBDemoPersistance.clearPurchaseIDCache()
+                    CBDemoPersistance.clearPurchaseIDFromCache()
                 }
                 NetworkReachability.shared.stopNotifier()
             case .failure(let error):
@@ -165,6 +173,15 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 return
             }
             print("product Type:",type.rawValue)
+            
+            if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                CBDemoPersistance.clearPurchaseIDFromCache()
+            }
+            if !CBDemoPersistance.isPurchaseProductIDAvailable(){
+                CBDemoPersistance.saveProductIdentifierOnPurchase(for: withproduct.product.productIdentifier,type: productTypeString)
+            }
+            
+            
             CBPurchase.shared.purchaseNonSubscriptionProduct(product: withproduct,customer: customer,productType: type) { result in
                 print(result)
                 switch result {
@@ -172,6 +189,15 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                     print("customerID:",result.customerID)
                     print("chargeID:",result.chargeID )
                     print("invoiceID:",result.invoiceID )
+                    
+                    if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                        CBDemoPersistance.clearPurchaseIDFromCache()
+                    }
+                    if (CBDemoPersistance.getProductTypeFromCache() != nil) {
+                        CBPurchase.shared.productType = nil
+                        CBDemoPersistance.clearPurchaseProductType()
+                    }
+                    NetworkReachability.shared.stopNotifier()
                     
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
@@ -228,7 +254,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
             if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                CBDemoPersistance.clearPurchaseIDCache()
+                CBDemoPersistance.clearPurchaseIDFromCache()
             }
             
             if !CBDemoPersistance.isPurchaseProductIDAvailable(){
@@ -249,7 +275,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         self.present(alertController, animated: true, completion: nil)
                     }
                     if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                        CBDemoPersistance.clearPurchaseIDCache()
+                        CBDemoPersistance.clearPurchaseIDFromCache()
                     }
                     NetworkReachability.shared.stopNotifier()
                 case .failure(let error):
@@ -304,7 +330,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         
         func purchase(customerID: String) {
             if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                CBDemoPersistance.clearPurchaseIDCache()
+                CBDemoPersistance.clearPurchaseIDFromCache()
             }
             if !CBDemoPersistance.isPurchaseProductIDAvailable(){
                 CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
@@ -325,7 +351,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         self.present(alertController, animated: true, completion: nil)
                     }
                     if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                        CBDemoPersistance.clearPurchaseIDCache()
+                        CBDemoPersistance.clearPurchaseIDFromCache()
                     }
                     NetworkReachability.shared.stopNotifier()
                 case .failure(let error):
