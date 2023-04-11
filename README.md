@@ -216,9 +216,9 @@ The function is called asynchronously, and it returns a `Result` object with a `
 
 #### Restore purchase
 
-The restore purchase function helps to regain your app user's previous purchases without making any payments again. Sometimes, your app user may want to restore their previous purchases after reinstalling your app, switching to a new device, or for any other reason. You can use the `restorePurchases()` function provided by the iOS SDK to allow your app user to easily restore their previous purchases.
+The `restorePurchases()` function helps to recover your app user's previous purchases without making them pay again. Sometimes, your app user may want to restore their previous purchases after switching to a new device or reinstalling your app. You can use the `restorePurchases()` function to allow your app user to easily restore their previous purchases.
 
-To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` function in your code:
+To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` function in your code with the `includeInActiveProducts` parameter set to `true`.
 
 ```swift
 CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
@@ -235,8 +235,28 @@ CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
       }
     }
 ```
+##### Return Subscriptions Object
 
-In the above code, the `restorePurchases()` function is called with the `includeInActiveProducts` parameter set to `true`. The function returns a result object that contains an array of restored purchases.
+The `restorePurchases()` function returns an array of subscription objects and each object holds three attributes `subscription_id`, `plan_id`, and `store_status`. The value of `store_status` can be used to verify subscription status.
+
+##### Error Handling
+
+In the event of any failures during the refresh and validation process or while finding associated subscriptions for the restored items, iOS SDK will return an error, as mentioned in the following table.
+
+###### Error Codes
+
+These are the possible error codes and their descriptions:
+| Error Code                        | Description                                                                                                                 |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `RestoreError.noReceipt`            | This error occurs when the user attempts to restore a purchase, but there is no receipt associated with the purchase.       |
+| `RestoreError.refreshReceiptFailed` | This error occurs when the attempt to refresh the receipt for a purchase fails.                                             |
+| `RestoreError.restoreFailed`        | This error occurs when the attempt to restore a purchase fails for reasons other than a missing or invalid receipt.         |
+| `RestoreError.invalidReceiptURL`    | This error occurs when the URL for the receipt bundle provided during the restore process is invalid or cannot be accessed. |
+| `RestoreError.invalidReceiptData`   | This error occurs when the data contained within the receipt is not valid or cannot be parsed.                              |
+| `RestoreError.noProductsToRestore`  | This error occurs when there are no products available to restore.                                                          |
+| `RestoreError.serviceError`         | This error occurs when there is an error with the Chargebee service during the restore process.                             |
+
+**Note**: These error codes are implemented in our example app. [Learn more](https://github.com/chargebee/chargebee-ios/blob/master/Example/Chargebee/CBSDKOptionsViewController.swift#L202-L224).
 
 #### Get Subscription Status for Existing Subscribers
 
