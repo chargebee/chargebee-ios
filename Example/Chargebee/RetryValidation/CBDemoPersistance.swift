@@ -36,15 +36,21 @@ public struct CBDemoPersistance: CBPersistanceProtocal {
     
     static func saveProductIdentifierOnPurchase(for productId: String, type: String? = "") {
         CBUserDefaults.set(productId.toBase64(), forKey: Product_Id)
+        // if suppose internet is disconnected after the purchase is done and receipt not updated to chargbee.so we can manually revalidate receipt for chargebee to be in sync with appstore.
+        // To validate receipt manually for onetime purchases we need productType along with Product_Id, so here we are saving as string in cache.
         if let typeValue = type{
-            CBUserDefaults.set(typeValue, forKey: "Product_type")
-            debugPrint("Product type saved to cache :",typeValue)
+            if !typeValue.isEmpty{
+                CBUserDefaults.set(typeValue.trimmingCharacters(in: .whitespaces), forKey: "Product_type")
+                debugPrint("Product type saved to cache:\(typeValue.trimmingCharacters(in: .whitespaces))")
+            }
+           
         }
     }
     
     static  func getProductTypeFromCache() -> ProductType? {
+        // Here we are retriving the productType from cache (Which saved as String in cache) and converting into ProductType then returning.
         if let type =  CBUserDefaults.value(forKey: "Product_type") as? String{
-            debugPrint("Retrieving saved Product type value from cache  :",type)
+            debugPrint("Retrieving saved Product type value from cache:\(type)")
             if type == ProductType.Consumable.rawValue {
                 productTypeValue = .Consumable
             }else if type == ProductType.NonConsumable.rawValue{

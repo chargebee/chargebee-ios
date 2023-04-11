@@ -8,8 +8,9 @@
 
 import UIKit
 import Chargebee
+import SwiftyReachability
 
-final class CBSDKProductsTableViewController: UITableViewController, UITextFieldDelegate {
+final class CBSDKProductsTableViewController: UITableViewController, UITextFieldDelegate,SwiftyReachabilityObserver {
     
     var products: [CBProduct] = []
     
@@ -17,22 +18,49 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         super.viewDidLoad()
         CBSDKProductTableViewCell.registerCellXib(with: self.tableView)
         self.title = "Products"
-        self.addNetWorkObserver()
     }
     
-    func reachabilityObserver() {
-        NetworkReachability.shared.reachabilityObserver = {  status in
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startObserving()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopObserving()
+    }
+    
+    func didChangeConnectionStatus(_ status: SwiftyConnectionStatus) {
+        DispatchQueue.main.async {
             switch status {
-            case .connected:
-                print("Reachability: Network available ")
+                case .online:
+                debugPrint("Connected")
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
                     self.validateReceiptOnceInternetIsAvailable()
                 }
-            case .disconnected:
-                print("Reachability: Network unavailable ")
+                case .offline:
+                debugPrint("Offline")
             }
         }
     }
+    
+    func didChangeConnectionType(_ type: SwiftyConnectionType?) {
+        DispatchQueue.main.async {
+            guard let connectionType = type else {
+                return
+            }
+            switch connectionType {
+            case .cellular(_):
+                debugPrint("Cellular Network Connection")
+            case .wifi:
+                debugPrint("Wifi Network Connection")
+            case .ethernet:
+                debugPrint("Ethernet Network Connection")
+              
+            }
+        }
+    }
+
     func ValidateReceiptForNonSubscriptions(_ product: CBProduct){
         
         if let type = CBDemoPersistance.getProductTypeFromCache()  {
@@ -41,9 +69,6 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         CBPurchase.shared.validateReceiptForNonSubscriptions(product) { result in
             switch result {
             case .success(let result):
-                print(result.chargeID )
-                print(result.invoiceID)
-                print(result.customerID)
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
                     CBDemoPersistance.clearPurchaseIDFromCache()
                 }
@@ -51,7 +76,9 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
                     CBPurchase.shared.productType = nil
                     CBDemoPersistance.clearPurchaseProductType()
                 }
-                NetworkReachability.shared.stopNotifier()
+                print(result.chargeID )
+                print(result.invoiceID)
+                print(result.customerID)
             case .failure(let error):
                 print("error",error.localizedDescription)
             }
@@ -68,7 +95,6 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
                     CBDemoPersistance.clearPurchaseIDFromCache()
                 }
-                NetworkReachability.shared.stopNotifier()
             case .failure(let error):
                 print("error",error.localizedDescription)
             }
@@ -98,12 +124,6 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
             }
         }
     }
-    
-    private func addNetWorkObserver(){
-        self.reachabilityObserver()
-        NetworkReachability.shared.startNotifier()
-    }
-    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -173,7 +193,8 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 return
             }
             print("product Type:",type.rawValue)
-            
+            // Note: Make sure we clear the cache after completion of respective task if your trying to validate receipt in offline case
+
             if CBDemoPersistance.isPurchaseProductIDAvailable(){
                 CBDemoPersistance.clearPurchaseIDFromCache()
             }
@@ -197,8 +218,6 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         CBPurchase.shared.productType = nil
                         CBDemoPersistance.clearPurchaseProductType()
                     }
-                    NetworkReachability.shared.stopNotifier()
-                    
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
                         let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
@@ -253,6 +272,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
         
         func purchase(customerID: String) {
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+            // Note: Make sure we clear the cache after completion of respective task if your trying to validate receipt in offline case
             if CBDemoPersistance.isPurchaseProductIDAvailable(){
                 CBDemoPersistance.clearPurchaseIDFromCache()
             }
@@ -277,7 +297,6 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                     if CBDemoPersistance.isPurchaseProductIDAvailable(){
                         CBDemoPersistance.clearPurchaseIDFromCache()
                     }
-                    NetworkReachability.shared.stopNotifier()
                 case .failure(let error):
                     print(error.localizedDescription)
                     
@@ -295,7 +314,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                             self.present(alertController, animated: true, completion: nil)
                         }
-                    case .serverNotResponding(errorResponse: let errorResponse):
+                    case .serverError(let errorResponse):
                         // Retry Validating receipt here with below method in case server is not responding.
                         print("Error:",errorResponse)
                         if let _ = withProduct.product.subscriptionPeriod {
@@ -332,6 +351,8 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
             if CBDemoPersistance.isPurchaseProductIDAvailable(){
                 CBDemoPersistance.clearPurchaseIDFromCache()
             }
+            // Note: Make sure we clear the cache after completion of respective task if your trying to validate receipt in offline case
+
             if !CBDemoPersistance.isPurchaseProductIDAvailable(){
                 CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
             }
@@ -353,7 +374,6 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                     if CBDemoPersistance.isPurchaseProductIDAvailable(){
                         CBDemoPersistance.clearPurchaseIDFromCache()
                     }
-                    NetworkReachability.shared.stopNotifier()
                 case .failure(let error):
                     print(error.localizedDescription)
                     
@@ -371,7 +391,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                             self.present(alertController, animated: true, completion: nil)
                         }
-                    case .serverNotResponding(errorResponse: let errorResponse):
+                    case .serverError(let errorResponse):
                         // Retry Validating receipt here with below method in case server is not responding.
                         print("Error:",errorResponse)
                         

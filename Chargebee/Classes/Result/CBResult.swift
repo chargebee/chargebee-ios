@@ -27,7 +27,7 @@ public enum CBResult<T> {
         case .invalidRequest(let errorResponse),
              .operationFailed(errorResponse: let errorResponse),
              .paymentFailed(errorResponse: let errorResponse),
-             .serverNotResponding(errorResponse: let errorResponse):
+             .serverError(errorResponse: let errorResponse):
             logger?.error(message: errorResponse.message, code: errorResponse.httpStatusCode)
         }
     }
