@@ -24,7 +24,7 @@ public struct CBDemoPersistance: CBPersistanceProtocal {
     //MARK: - CBDemoPersistance struct properties
     static  let Product_Id = "Product_Id"
     static  let Product_type = "Product_type"
-    static  var productTypeValue: ProductType = .unknown
+    static  var productTypeValue: ProductType?
 
     //MARK: - CBDemoPersistance struct functions
     static func isPurchaseProductIDAvailable() -> Bool {
@@ -58,9 +58,8 @@ public struct CBDemoPersistance: CBPersistanceProtocal {
             }else{
                 productTypeValue = .NonRenewingSubscription
             }
-            return productTypeValue
         }
-        return .unknown
+        return productTypeValue
     }
     
    static  func getProductIDFromCache() -> String? {

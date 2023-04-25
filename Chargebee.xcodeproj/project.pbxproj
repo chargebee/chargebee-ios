@@ -52,12 +52,12 @@
 		2BF2D50A29A3B8EE00E22D21 /* PurchaseManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D50229A3B8EE00E22D21 /* PurchaseManagerTest.swift */; };
 		2BF2D50B29A3B8EE00E22D21 /* chargebee_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2D50329A3B8EE00E22D21 /* chargebee_iosTests.swift */; };
 		2BF2D52629A3C29500E22D21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF2D52529A3C29500E22D21 /* Foundation.framework */; };
+		FB29A4FD29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */; };
 		FB5363E729BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363E629BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift */; };
 		FB5363E929BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */; };
 		FB5363EB29BEE25600E3AC9A /* CBRestorePurchaseResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EA29BEE25600E3AC9A /* CBRestorePurchaseResource.swift */; };
 		FB5363ED29BEE28200E3AC9A /* RestoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EC29BEE28200E3AC9A /* RestoreError.swift */; };
 		FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */; };
-		FB29A4FD29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,12 +117,12 @@
 		2BF2D50229A3B8EE00E22D21 /* PurchaseManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseManagerTest.swift; sourceTree = "<group>"; };
 		2BF2D50329A3B8EE00E22D21 /* chargebee_iosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chargebee_iosTests.swift; sourceTree = "<group>"; };
 		2BF2D52529A3C29500E22D21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBValidateNonSubscriptionResource.swift; sourceTree = "<group>"; };
 		FB5363E629BEDF6400E3AC9A /* CBPurchaseManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPurchaseManager+Extension.swift"; sourceTree = "<group>"; };
 		FB5363E829BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRestorePurchaseManager.swift; sourceTree = "<group>"; };
 		FB5363EA29BEE25600E3AC9A /* CBRestorePurchaseResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRestorePurchaseResource.swift; sourceTree = "<group>"; };
 		FB5363EC29BEE28200E3AC9A /* RestoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreError.swift; sourceTree = "<group>"; };
 		FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundOperationQueue.swift; sourceTree = "<group>"; };
-		FB29A4FC29C03DA400D3B78B /* CBValidateNonSubscriptionResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBValidateNonSubscriptionResource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -679,6 +679,7 @@
 		2BF2D49E29A3B81000E22D21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -717,6 +718,7 @@
 		2BF2D49F29A3B81000E22D21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

@@ -61,26 +61,24 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         }
     }
 
-    func ValidateReceiptForNonSubscriptions(_ product: CBProduct){
+    func validateReceiptForNonSubscriptions(_ product: CBProduct){
         
         if let type = CBDemoPersistance.getProductTypeFromCache()  {
-            CBPurchase.shared.productType = type
-        }
-        CBPurchase.shared.validateReceiptForNonSubscriptions(product) { result in
-            switch result {
-            case .success(let result):
-                if CBDemoPersistance.isPurchaseProductIDAvailable(){
-                    CBDemoPersistance.clearPurchaseIDFromCache()
+            CBPurchase.shared.validateReceiptForNonSubscriptions(product,type,true) { result in
+                switch result {
+                case .success(let result):
+                    if CBDemoPersistance.isPurchaseProductIDAvailable(){
+                        CBDemoPersistance.clearPurchaseIDFromCache()
+                    }
+                    if (CBDemoPersistance.getProductTypeFromCache() != nil) {
+                        CBDemoPersistance.clearPurchaseProductType()
+                    }
+                    print(result.chargeID )
+                    print(result.invoiceID)
+                    print(result.customerID)
+                case .failure(let error):
+                    print("error",error.localizedDescription)
                 }
-                if (CBDemoPersistance.getProductTypeFromCache() != nil) {
-                    CBPurchase.shared.productType = nil
-                    CBDemoPersistance.clearPurchaseProductType()
-                }
-                print(result.chargeID )
-                print(result.invoiceID)
-                print(result.customerID)
-            case .failure(let error):
-                print("error",error.localizedDescription)
             }
         }
     }
@@ -115,7 +113,7 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
                         if let _ = product.product.subscriptionPeriod {
                             self.ValidateReceipt(product)
                         }else{
-                            self.ValidateReceiptForNonSubscriptions(product)
+                            self.validateReceiptForNonSubscriptions(product)
                         }
                     }
                 case let .failure(error):
@@ -215,7 +213,6 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         CBDemoPersistance.clearPurchaseIDFromCache()
                     }
                     if (CBDemoPersistance.getProductTypeFromCache() != nil) {
-                        CBPurchase.shared.productType = nil
                         CBDemoPersistance.clearPurchaseProductType()
                     }
                     DispatchQueue.main.async {
@@ -320,7 +317,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         if let _ = withProduct.product.subscriptionPeriod {
                             self.ValidateReceipt(withProduct)
                         }else {
-                            self.ValidateReceiptForNonSubscriptions(withProduct)
+                            self.validateReceiptForNonSubscriptions(withProduct)
                         }
                     }
                 }
@@ -398,7 +395,7 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                         if let _ = withProduct.product.subscriptionPeriod {
                             self.ValidateReceipt(withProduct)
                         }else{
-                            self.ValidateReceiptForNonSubscriptions(withProduct)
+                            self.validateReceiptForNonSubscriptions(withProduct)
                         }
                         
                     }

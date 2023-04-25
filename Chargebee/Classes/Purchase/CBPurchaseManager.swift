@@ -25,7 +25,7 @@ public class CBPurchase: NSObject {
     var restoreResponseHandler: ((Result<[InAppSubscription], RestoreError>) -> Void)?
     var refreshHandler: RestoreResultCompletion<String>?
     var includeInActiveProducts = false
-    public var productType: ProductType?
+    private var productType: ProductType?
 
     // MARK: - Init
     private override init() {
@@ -111,7 +111,7 @@ public extension CBPurchase {
         }
     }
         
-    func purchaseNonSubscriptionProduct(product: CBProduct, customer : CBCustomer? = nil ,productType : ProductType? = nil,completion handler: @escaping ((_ result: Result<NonSubscription, Error>) -> Void)) {
+    func purchaseNonSubscriptionProduct(product: CBProduct, customer : CBCustomer? = nil ,productType : ProductType, completion handler: @escaping ((_ result: Result<NonSubscription, Error>) -> Void)) {
         buyNonSubscriptionProductHandler = handler
         activeProduct = product
         self.productType = productType
@@ -280,7 +280,11 @@ extension CBPurchase: SKPaymentTransactionObserver {
 // chargebee methods
 public extension CBPurchase {
     
-    func validateReceiptForNonSubscriptions(_ product: CBProduct?,completion: ((Result<NonSubscription, Error>) -> Void)?) {
+    func validateReceiptForNonSubscriptions(_ product: CBProduct?,_ typeOfProduct: ProductType? = nil,_ retry: Bool? = false, completion: ((Result<NonSubscription, Error>) -> Void)?) {
+        
+        if retry == true{
+            self.productType = typeOfProduct
+        }
         
         guard let receipt = getReceipt(product: product?.product) else {
             debugPrint("Couldn't read receipt data with error")
