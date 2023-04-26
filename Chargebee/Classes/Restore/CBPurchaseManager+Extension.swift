@@ -138,7 +138,7 @@ extension CBPurchase{
                 if let _ = product.product.subscriptionPeriod {
                     self.validateReceipt(product, completion: nil)
                 }else{
-                    self.validateReceiptForNonSubscriptions(product, completion: nil)
+                    self.validateReceiptForNonSubscriptions(product, .unknown, completion: nil)
                 }
             }
         }

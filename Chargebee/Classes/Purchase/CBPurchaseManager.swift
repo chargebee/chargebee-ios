@@ -214,7 +214,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
                     if let _ = product.product.subscriptionPeriod {
                         validateReceipt(product, completion: buyProductHandler)
                     }else{
-                        validateReceiptForNonSubscriptions(product, completion: buyNonSubscriptionProductHandler)
+                        validateReceiptForNonSubscriptions(product, self.productType, completion: buyNonSubscriptionProductHandler)
                     }
                 }
             case .restored:
@@ -280,11 +280,9 @@ extension CBPurchase: SKPaymentTransactionObserver {
 // chargebee methods
 public extension CBPurchase {
     
-    func validateReceiptForNonSubscriptions(_ product: CBProduct?,_ typeOfProduct: ProductType? = nil,_ retry: Bool? = false, completion: ((Result<NonSubscription, Error>) -> Void)?) {
-        
-        if retry == true{
-            self.productType = typeOfProduct
-        }
+    func validateReceiptForNonSubscriptions(_ product: CBProduct?,_ productType:
+         ProductType?, completion: ((Result<NonSubscription, Error>) -> Void)?) {
+        self.productType = productType
         
         guard let receipt = getReceipt(product: product?.product) else {
             debugPrint("Couldn't read receipt data with error")
