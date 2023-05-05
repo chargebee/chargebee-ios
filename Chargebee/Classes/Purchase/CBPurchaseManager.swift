@@ -222,7 +222,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 receivedRestoredTransaction()
             case .failed:
                 if let error = transaction.error as? SKError{
-                    print(error)
+                    debugPrint("Error :",error)
                     switch  error.errorCode {
                     case 0:
                         self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.unknown)
@@ -235,7 +235,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
                     case 4:
                         self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.paymentNotAllowed)
                     case 5:
-                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.productsNotFound)
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.productNotAvailable)
                     case 7:
                         self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.networkConnectionFailed)
                     case 8:
