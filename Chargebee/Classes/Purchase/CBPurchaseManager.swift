@@ -225,93 +225,37 @@ extension CBPurchase: SKPaymentTransactionObserver {
                     print(error)
                     switch  error.errorCode {
                     case 0:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.unknown))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.unknown))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.unknown)
                     case 1:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.invalidClient))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.invalidClient))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidClient)
                     case 2:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.userCancelled))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.userCancelled))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.userCancelled)
                     case 3:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.paymentFailed))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.paymentFailed))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.paymentFailed)
                     case 4:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.paymentNotAllowed))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.paymentNotAllowed))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.paymentNotAllowed)
                     case 5:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.productsNotFound))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.productsNotFound))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.productsNotFound)
                     case 7:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.networkConnectionFailed))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.networkConnectionFailed))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.networkConnectionFailed)
                     case 8:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.invalidSandbox))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.invalidSandbox))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidSandbox)
                     case 9:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.privacyAcknowledgementRequired))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.privacyAcknowledgementRequired))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.privacyAcknowledgementRequired)
                     case 11:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.invalidOffer))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.invalidOffer))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidOffer)
                     case 12:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.invalidPromoCode))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.invalidPromoCode))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidPromoCode)
                     case 13:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.invalidPromoOffer))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.invalidPromoOffer))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidPromoOffer)
                     case 14:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.invalidPrice))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.invalidPrice))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidPrice)
                     case 15:
-                        if let _ = activeProduct?.product.subscriptionPeriod {
-                            buyProductHandler?(.failure(CBPurchaseError.userCancelled))
-                        }else{
-                            buyNonSubscriptionProductHandler?(.failure(CBPurchaseError.userCancelled))
-                        }
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.userCancelled)
                     default:
                         if let _ = activeProduct?.product.subscriptionPeriod {
                             buyProductHandler?(.failure(error))
-                        }else{
+                        }else {
                             buyNonSubscriptionProductHandler?(.failure(error))
                         }
                     }
@@ -412,7 +356,14 @@ public extension CBPurchase {
             print("Couldn't read receipt data with error: " + error.localizedDescription)
         }
         return receipt
-        
+    }
+    
+    private func invokeProductHandler(forProduct product: SKProduct?, error: CBPurchaseError) {
+        if let _ = product?.subscriptionPeriod {
+            buyProductHandler?(.failure(error))
+        }else {
+            buyNonSubscriptionProductHandler?(.failure(error))
+        }
     }
 }
 
