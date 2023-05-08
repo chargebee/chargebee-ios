@@ -258,6 +258,44 @@ These are the possible error codes and their descriptions:
 
 **Note**: These error codes are implemented in our example app. [Learn more](https://github.com/chargebee/chargebee-ios/blob/master/Example/Chargebee/CBSDKOptionsViewController.swift#L202-L224).
 
+#### Synchronization of Apple App Store Purchases with Chargebee through Receipt Validation
+
+Receipt validation is crucial to ensure that the purchases made by your users are synced with Chargebee. In rare cases, when a purchase is made at the Apple App Store, and the network connection goes off, the purchase details may not be updated in Chargebee. In such cases, you can use a retry mechanism by following these steps:
+-   Add a network observer, as shown in the example project.
+-   Save the product identifier in the cache once the purchase is initiated and clear the cache once the purchase is successful.
+-   When the network connectivity is lost after the purchase is completed at Apple App Store but not synced with Chargebee, retrieve the product ID from the cache once the network connection is back and initiate `validateReceipt()`/`validateReceiptForNonSubscriptions()` by passing `CBProduct` as input. This will validate the purchase receipt and sync the purchase in Chargebee as a subscription or one-time purchase.
+For subscriptions, use the function `validateReceipt()`; for one-time purchases, use the function `validateReceiptForNonSubscriptions()`.
+
+Use the function available for the retry mechanism.
+
+**Function for subscriptions**
+
+```swift
+CBPurchase.shared.validateReceipt(product) { result in
+      switch result {
+      case .success(let result):
+        print(result.status )
+        // Clear persisted product details once the validation succeeds.
+      case .failure(let error):
+        print("error",error.localizedDescription)
+        // Retry based on the error
+      }
+    }
+```
+
+**Function for one-time purchases**
+
+```swift
+CBPurchase.shared.validateReceiptForNonSubscriptions(product,type) { result in
+        switch result {
+        case .success(let result):
+          // Clear persisted product details once the validation succeeds.
+        case .failure(let error):
+       // Retry based on the error
+        }
+      }
+```
+
 #### Get Subscription Status for Existing Subscribers
 
 The following are funtions for checking the subscription status of a subscriber who already purchased the product.
