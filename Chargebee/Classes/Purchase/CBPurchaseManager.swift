@@ -221,39 +221,43 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 SKPaymentQueue.default().finishTransaction(transaction)
                 receivedRestoredTransaction()
             case .failed:
-                if let error = transaction.error as? SKError {
-                    print(error)
+                if let error = transaction.error as? SKError{
+                    debugPrint("Error :",error)
                     switch  error.errorCode {
                     case 0:
-                        buyProductHandler?(.failure(CBPurchaseError.unknown))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.unknown)
                     case 1:
-                        buyProductHandler?(.failure(CBPurchaseError.invalidClient))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidClient)
                     case 2:
-                        buyProductHandler?(.failure(CBPurchaseError.userCancelled))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.userCancelled)
                     case 3:
-                        buyProductHandler?(.failure(CBPurchaseError.paymentFailed))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.paymentFailed)
                     case 4:
-                        buyProductHandler?(.failure(CBPurchaseError.paymentNotAllowed))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.paymentNotAllowed)
                     case 5:
-                        buyProductHandler?(.failure(CBPurchaseError.productNotAvailable))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.productNotAvailable)
                     case 7:
-                        buyProductHandler?(.failure(CBPurchaseError.networkConnectionFailed))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.networkConnectionFailed)
                     case 8:
-                        buyProductHandler?(.failure(CBPurchaseError.invalidSandbox))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidSandbox)
                     case 9:
-                        buyProductHandler?(.failure(CBPurchaseError.privacyAcknowledgementRequired))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.privacyAcknowledgementRequired)
                     case 11:
-                        buyProductHandler?(.failure(CBPurchaseError.invalidOffer))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidOffer)
                     case 12:
-                        buyProductHandler?(.failure(CBPurchaseError.invalidPromoCode))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidPromoCode)
                     case 13:
-                        buyProductHandler?(.failure(CBPurchaseError.invalidPromoOffer))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidPromoOffer)
                     case 14:
-                        buyProductHandler?(.failure(CBPurchaseError.invalidPrice))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.invalidPrice)
                     case 15:
-                        buyProductHandler?(.failure(CBPurchaseError.userCancelled))
+                        self.invokeProductHandler(forProduct: self.activeProduct?.product, error: CBPurchaseError.userCancelled)
                     default:
-                        buyProductHandler?(.failure(error))
+                        if let _ = activeProduct?.product.subscriptionPeriod {
+                            buyProductHandler?(.failure(error))
+                        }else {
+                            buyNonSubscriptionProductHandler?(.failure(error))
+                        }
                     }
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
@@ -352,7 +356,14 @@ public extension CBPurchase {
             print("Couldn't read receipt data with error: " + error.localizedDescription)
         }
         return receipt
-        
+    }
+    
+    private func invokeProductHandler(forProduct product: SKProduct?, error: CBPurchaseError) {
+        if let _ = product?.subscriptionPeriod {
+            buyProductHandler?(.failure(error))
+        }else {
+            buyNonSubscriptionProductHandler?(.failure(error))
+        }
     }
 }
 
