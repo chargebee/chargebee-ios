@@ -26,7 +26,8 @@ public enum CBResult<T> {
         switch error {
         case .invalidRequest(let errorResponse),
              .operationFailed(errorResponse: let errorResponse),
-             .paymentFailed(errorResponse: let errorResponse):
+             .paymentFailed(errorResponse: let errorResponse),
+             .serverError(errorResponse: let errorResponse):
             logger?.error(message: errorResponse.message, code: errorResponse.httpStatusCode)
         }
     }

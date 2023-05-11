@@ -135,7 +135,11 @@ extension CBPurchase{
         var operationQueue: BackgroundOperationQueue? = BackgroundOperationQueue()
         for product in products {
             operationQueue?.addOperation{
-                self.validateReceipt(product.product, completion: nil)
+                if let _ = product.product.subscriptionPeriod {
+                    self.validateReceipt(product, completion: nil)
+                }else{
+                    self.validateReceiptForNonSubscriptions(product, .unknown, completion: nil)
+                }
             }
         }
         operationQueue?.waitUntilAllOperationsAreFinished()
