@@ -293,7 +293,7 @@ public extension CBPurchase {
          ProductType?, completion: ((Result<NonSubscription, Error>) -> Void)?) {
         self.productType = productType
         
-        guard let receipt = getReceipt(product: product?.product) else {
+        guard let receipt = getReceipt(product: product) else {
             debugPrint("Couldn't read receipt data with error")
             completion?(.failure(CBError.defaultSytemError(statusCode: 0, message: "Could not read receipt data")))
             return
@@ -316,7 +316,7 @@ public extension CBPurchase {
     
     func validateReceipt(_ product: CBProduct?,completion: ((Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)?) {
         
-        guard let receipt = getReceipt(product: product?.product) else {
+        guard let receipt = getReceipt(product: product) else {
             debugPrint("Couldn't read receipt data with error")
             completion?(.failure(CBError.defaultSytemError(statusCode: 0, message: "Could not read receipt data")))
             return
@@ -341,23 +341,27 @@ public extension CBPurchase {
         }
     }
     
-    private func getReceipt(product: SKProduct?) -> CBReceipt? {
+    private func getReceipt(product: CBProduct?) -> CBReceipt? {
         var receipt: CBReceipt?
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
               FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
             return nil
         }
-        guard let product = product, let currencyCode = product.priceLocale.currencyCode else {
+        guard let skProduct = product?.product, let currencyCode = skProduct.priceLocale.currencyCode else {
             return nil
         }
         do {
+            let discountId = product?.discount?.identifier
+            debugPrint("DiscountId: \(String(describing: discountId))")
+            let price = skProduct.discounts.first(where: { $0.identifier == discountId })?.price ?? skProduct.price
+            debugPrint("Using price: \(price)")
             let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
             
             let receiptString = receiptData.base64EncodedString(options: [])
             debugPrint("Apple Purchase - success")
-            receipt = CBReceipt(name: product.localizedTitle, token: receiptString, productID: product.productIdentifier, price: "\(product.price)", currencyCode: currencyCode, period: product.subscriptionPeriod?.numberOfUnits ?? 0, periodUnit: Int(product.subscriptionPeriod?.unit.rawValue ?? 0),customer: customer,productType: self.productType ?? .unknown)
-        }catch {
+            receipt = CBReceipt(name: skProduct.localizedTitle, token: receiptString, productID: skProduct.productIdentifier, price: "\(price)", currencyCode: currencyCode, period: skProduct.subscriptionPeriod?.numberOfUnits ?? 0, periodUnit: Int(skProduct.subscriptionPeriod?.unit.rawValue ?? 0), customer: customer, productType: self.productType ?? .unknown)
+        } catch {
             print("Couldn't read receipt data with error: " + error.localizedDescription)
         }
         return receipt
