@@ -163,6 +163,14 @@ public extension CBPurchase {
             }
         }
     }
+    
+    func showManageSubscriptionsSettings() {
+        if #available(iOS 15.0, *) {
+            UIApplication.showManageSubscriptions()
+        } else {
+            // Fallback on earlier versions
+        }
+    }
 }
 
 // MARK: - Private methods

@@ -58,6 +58,7 @@
 		FB5363EB29BEE25600E3AC9A /* CBRestorePurchaseResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EA29BEE25600E3AC9A /* CBRestorePurchaseResource.swift */; };
 		FB5363ED29BEE28200E3AC9A /* RestoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EC29BEE28200E3AC9A /* RestoreError.swift */; };
 		FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */; };
+		FB7B545D2A38666B00FBBCB5 /* UIApplication+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7B545C2A38666B00FBBCB5 /* UIApplication+Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		FB5363EA29BEE25600E3AC9A /* CBRestorePurchaseResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRestorePurchaseResource.swift; sourceTree = "<group>"; };
 		FB5363EC29BEE28200E3AC9A /* RestoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreError.swift; sourceTree = "<group>"; };
 		FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundOperationQueue.swift; sourceTree = "<group>"; };
+		FB7B545C2A38666B00FBBCB5 /* UIApplication+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Settings.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 		2BF2D4A529A3B8E300E22D21 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FB7B545F2A38678700FBBCB5 /* UIApplicationSettings */,
 				FB5363E129BB3A2700E3AC9A /* Restore */,
 				2BF2D4A629A3B8E300E22D21 /* Token */,
 				2BF2D4AF29A3B8E300E22D21 /* Configuration */,
@@ -379,6 +382,14 @@
 			path = Restore;
 			sourceTree = "<group>";
 		};
+		FB7B545F2A38678700FBBCB5 /* UIApplicationSettings */ = {
+			isa = PBXGroup;
+			children = (
+				FB7B545C2A38666B00FBBCB5 /* UIApplication+Settings.swift */,
+			);
+			path = UIApplicationSettings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -494,6 +505,7 @@
 				2BF2D4D929A3B8E300E22D21 /* CBPaymentDetail.swift in Sources */,
 				2BF2D4F129A3B8E300E22D21 /* CBItemListResource.swift in Sources */,
 				2BF2D4F929A3B8E300E22D21 /* CBAuthentication.swift in Sources */,
+				FB7B545D2A38666B00FBBCB5 /* UIApplication+Settings.swift in Sources */,
 				2BF2D4EE29A3B8E300E22D21 /* CBEntitlementResource.swift in Sources */,
 				2BF2D4F529A3B8E300E22D21 /* CBProductsV2.swift in Sources */,
 				2BF2D4E529A3B8E300E22D21 /* CBValidateReceiptResource.swift in Sources */,
