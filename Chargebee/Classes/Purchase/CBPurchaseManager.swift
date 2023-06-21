@@ -168,7 +168,7 @@ public extension CBPurchase {
         if #available(iOS 15.0, *) {
             UIApplication.showManageSubscriptions()
         } else {
-            // Fallback on earlier versions
+            UIApplication.showExternalManageSubscriptions()
         }
     }
 }
