@@ -10,11 +10,13 @@ import UIKit
 import StoreKit
 
 extension UIApplication {
+    //This is to Open Appstore App Account settings Page
     @objc class func openAppleIDSubscriptionsPage() {
         guard let url = URL(string: "https://apps.apple.com/account/subscriptions") else { return }
         self.shared.open(url, options: [:], completionHandler: nil)
     }
     
+    // This opens Subscriptions Management settings
     @available(iOS 15.0, *)
     @objc class func showManageSubscriptions() {
         guard let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
@@ -31,10 +33,4 @@ extension UIApplication {
             }
         }
     }
-    
-    @objc class func openAppStoreSettings() {
-        guard let url = URL(string: "itms-ui://") else { return }
-        self.shared.open(url, options: [:], completionHandler: nil)
-    }
-
 }
