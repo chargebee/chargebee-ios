@@ -232,7 +232,7 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                 }
             }
         case .manageSubscriptions:
-            CBPurchase.shared.showManageSubscriptionsSettings()
+            Chargebee.shared.showManageSubscriptionsSettings()
         }
     }
 }
