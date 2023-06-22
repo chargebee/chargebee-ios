@@ -64,7 +64,7 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
     func validateReceiptForNonSubscriptions(_ product: CBProduct){
         
         if let type = CBDemoPersistance.getProductTypeFromCache()  {
-            CBPurchase.shared.validateReceiptForNonSubscriptions(product,type) { result in
+            CBPurchase.shared.validateReceiptForNonSubscriptions(product,type,customer: nil) { result in
                 switch result {
                 case .success(let result):
                     if CBDemoPersistance.isPurchaseProductIDAvailable(){
@@ -84,7 +84,7 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
     }
     
     func ValidateReceipt(_ product: CBProduct){
-        CBPurchase.shared.validateReceipt(product) { result in
+        CBPurchase.shared.validateReceipt(product,customer: nil) { result in
             switch result {
             case .success(let result):
                 print(result.status )

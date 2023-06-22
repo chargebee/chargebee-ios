@@ -212,9 +212,9 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 SKPaymentQueue.default().finishTransaction(transaction)
                 if let product = activeProduct {
                     if let _ = product.product.subscriptionPeriod {
-                        validateReceipt(product,customer: customer, completion: buyProductHandler)
+                        validateReceipt(product,customer: self.customer, completion: buyProductHandler)
                     }else{
-                        validateReceiptForNonSubscriptions(product, self.productType,customer: customer, completion: buyNonSubscriptionProductHandler)
+                        validateReceiptForNonSubscriptions(product, self.productType,customer: self.customer, completion: buyNonSubscriptionProductHandler)
                     }
                 }
             case .restored:
