@@ -271,7 +271,7 @@ Use the function available for the retry mechanism.
 **Function for subscriptions**
 
 ```swift
-CBPurchase.shared.validateReceipt(product) { result in
+CBPurchase.shared.validateReceipt(product,customer: nil) { result in
       switch result {
       case .success(let result):
         print(result.status )
@@ -286,7 +286,7 @@ CBPurchase.shared.validateReceipt(product) { result in
 **Function for one-time purchases**
 
 ```swift
-CBPurchase.shared.validateReceiptForNonSubscriptions(product,type) { result in
+CBPurchase.shared.validateReceiptForNonSubscriptions(product,,type,customer: nil) { result in
         switch result {
         case .success(let result):
           // Clear persisted product details once the validation succeeds.
