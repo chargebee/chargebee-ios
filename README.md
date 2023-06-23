@@ -263,7 +263,7 @@ These are the possible error codes and their descriptions:
 Receipt validation is crucial to ensure that the purchases made by your users are synced with Chargebee. In rare cases, when a purchase is made at the Apple App Store, and the network connection goes off, the purchase details may not be updated in Chargebee. In such cases, you can use a retry mechanism by following these steps:
 -   Add a network observer, as shown in the example project.
 -   Save the product identifier in the cache once the purchase is initiated and clear the cache once the purchase is successful.
--   When the network connectivity is lost after the purchase is completed at Apple App Store but not synced with Chargebee, retrieve the product ID from the cache once the network connection is back and initiate `validateReceipt()`/`validateReceiptForNonSubscriptions()` by passing `CBProduct` as input. This will validate the purchase receipt and sync the purchase in Chargebee as a subscription or one-time purchase.
+-   When the network connectivity is lost after the purchase is completed at Apple App Store but not synced with Chargebee, retrieve the product ID from the cache once the network connection is back and initiate `validateReceipt()`/`validateReceiptForNonSubscriptions()` by passing `CBProduct` and `CBCustomer(Optional)` as input. This will validate the purchase receipt and sync the purchase in Chargebee as a subscription or one-time purchase.
 For subscriptions, use the function `validateReceipt()`; for one-time purchases, use the function `validateReceiptForNonSubscriptions()`.
 
 Use the function available for the retry mechanism.
