@@ -59,6 +59,7 @@
 		FB5363ED29BEE28200E3AC9A /* RestoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EC29BEE28200E3AC9A /* RestoreError.swift */; };
 		FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */; };
 		FB7B545D2A38666B00FBBCB5 /* UIApplication+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7B545C2A38666B00FBBCB5 /* UIApplication+Settings.swift */; };
+		FB8540C62A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8540C52A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		FB5363EC29BEE28200E3AC9A /* RestoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreError.swift; sourceTree = "<group>"; };
 		FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundOperationQueue.swift; sourceTree = "<group>"; };
 		FB7B545C2A38666B00FBBCB5 /* UIApplication+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Settings.swift"; sourceTree = "<group>"; };
+		FB8540C52A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSubscriptionsSettingsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +360,7 @@
 				2BF2D50129A3B8EE00E22D21 /* CBPlansTest.swift */,
 				2BF2D50229A3B8EE00E22D21 /* PurchaseManagerTest.swift */,
 				2BF2D50329A3B8EE00E22D21 /* chargebee_iosTests.swift */,
+				FB8540C52A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				2BF2D50729A3B8EE00E22D21 /* SubscriptionTest.swift in Sources */,
 				2BF2D50429A3B8EE00E22D21 /* CBItemsTest.swift in Sources */,
 				2BF2D50B29A3B8EE00E22D21 /* chargebee_iosTests.swift in Sources */,
+				FB8540C62A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift in Sources */,
 				2BF2D50929A3B8EE00E22D21 /* CBPlansTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
