@@ -14,7 +14,7 @@ final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
     private var items: [CBItemWrapper] = []
     private var plans: [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ,.restore]
+    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ,.restore,.manageSubscriptions]
 
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -231,6 +231,8 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     }
                 }
             }
+        case .manageSubscriptions:
+            Chargebee.shared.showManageSubscriptionsSettings()
         }
     }
 }
@@ -265,6 +267,7 @@ enum ClientAction {
     case getItem
     case getEntitlements
     case restore
+    case manageSubscriptions
 
 }
 
@@ -297,6 +300,8 @@ extension ClientAction {
             return "Get Apple Specific Product Identifiers"
         case .restore:
             return "Restore Purcahses"
+        case .manageSubscriptions:
+            return "ManageSubscriptions"
         }
 
     }

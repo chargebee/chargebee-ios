@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import StoreKit
 
 public class Chargebee {
     public static let shared = Chargebee()
@@ -102,4 +103,11 @@ public class Chargebee {
         CBToken().tokenize(options: paymentDetail, completion: onSuccess, onError: onError)
     }
     
+   public func showManageSubscriptionsSettings() {
+        if #available(iOS 15.0, *) {
+            UIApplication.showManageSubscriptions()
+        } else {
+            UIApplication.showExternalManageSubscriptions()
+        }
+    }
 }
