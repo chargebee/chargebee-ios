@@ -495,6 +495,19 @@ The following are some endpoints that accept Chargebee tokens for processing sub
 
 Please refer to the [Chargebee API Docs](https://apidocs.chargebee.com/docs/api) for subsequent integration steps.
 
+### Upgrade or Downgrade Subscription
+
+When a user changes their subscription level from a lower price plan to a higher price plan, it's considered an upgrade. On the other hand, when a user switches from a higher-price plan to a lower-price plan, it's considered a downgrade.
+
+In the case of the Apple App Store, you can arrange the subscriptions using the drag-and-drop option in **Edit Subscription Order** in App Store Connect. [Learn more](https://developer.apple.com/app-store/subscriptions/#ranking).
+
+#### Invoke Upgrade or Downgrade Subscription Flow in your App
+
+The `showManageSubscriptionsSettings()` function is designed to invoke the upgrade/downgrade flow in your app using Chargebee's iOS SDKs.
+`Chargebee.shared.showManageSubscriptionsSettings()`, opens the App Store App subscriptions settings page.
+
+**Note**: Upgrades and downgrades are handled through [Apple App Store Server Notifications](https://apidocs.chargebee.com/docs/api/in_app_purchase_events?prod_cat_ver=2#app_store_notifications) in Chargebee.
+
 License
 -------
 
