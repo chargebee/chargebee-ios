@@ -330,8 +330,6 @@ Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
 }
 ```
 
-##### Returns Plan Object
-
 The above functions return the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
 
 #### Retrieve Entitlements of a Subscription
