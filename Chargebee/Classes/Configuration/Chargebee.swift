@@ -39,10 +39,10 @@ public class Chargebee {
         CBSubscriptionManager().retrieveSubscription(network: request, logger: logger, handler: handler)
     }
    
-    public func retrieveSubscriptions(queryParams: [String: String]? = nil, handler: @escaping SubscriptionHandler) {
+    public func retrieveSubscriptions(queryParams: [String: String]? = nil, handler: @escaping SubscriptionHandler2) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription using customerId")
         logger.info()
-
+        
         let request = CBAPIRequest(resource: SubscriptionResource(queryParams: queryParams))
         CBSubscriptionManager().retrieveSubscriptions(network: request, logger: logger, handler: handler)
     }

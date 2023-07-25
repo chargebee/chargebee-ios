@@ -19,7 +19,7 @@ public struct SubscriptionList: Codable {
 
 public struct CBSubscriptionWrapper: Codable {
     public let list: [SubscriptionList]
-    public  let nextOffset: [String]?
+    public  let nextOffset: String?
     enum CodingKeys: String, CodingKey {
         case nextOffset = "next_offset"
         case list
@@ -58,6 +58,8 @@ public struct Subscription: Codable {
 
 public typealias CBSubscriptionHandler = (CBResult<Subscription>) -> Void
 public typealias SubscriptionHandler   = (CBResult<[SubscriptionList]>) -> Void
+public typealias SubscriptionHandler2   = (CBResult<CBSubscriptionWrapper>) -> Void
+
 
 class CBSubscriptionManager {
     func retrieveSubscription<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping CBSubscriptionHandler) {
@@ -69,20 +71,30 @@ class CBSubscriptionManager {
         }, onError: onError)
     }
    
-    func retrieveSubscriptions<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping SubscriptionHandler) {
+    func retrieveSubscriptions<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping SubscriptionHandler2) {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         network.load(withCompletion: { status in
             if let data = status as? CBSubscriptionWrapper {
                 if data.list.isEmpty {
                     onError(CBError.defaultSytemError(statusCode: 404, message: "Subscription Not found"))
                 }else {
-                    onSuccess(data.list)
+                    onSuccess(CBSubscriptionWrapper.init(list: data.list, nextOffset: data.nextOffset))
                 }
             } else {
                 onError(CBError.defaultSytemError(statusCode: 480, message: "json serialization failure"))
             }
 
         }, onError: onError)
+    }
+
+    func queryParamSanitizer(queryParam:[String:String]) -> [String:String] {
+        var params = [String:String]()
+        if queryParam.isEmpty{
+            for (key, value) in queryParam {
+                debugPrint("Key:\(key) , value:\(value)")
+            }
+        }
+        return params
     }
 
 }
