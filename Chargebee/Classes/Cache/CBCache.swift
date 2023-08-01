@@ -38,14 +38,12 @@ struct CBCache: CacheProtocal {
     }
     
     func createTime() -> Date {
-        
         let currentDate = Date()
         let newDate = NSDate(timeInterval: 86400, since: currentDate)
         return newDate as Date
     }
     
     func readConfigDetails(key: String,logger: CBLogger, handler: @escaping CBAuthenticationHandler){
-        
         let (onSuccess, _) = CBResult.buildResultHandlers(handler, logger)
         if let data = UserDefaults.standard.object(forKey: key) as? Data,
            let config = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
@@ -56,12 +54,10 @@ struct CBCache: CacheProtocal {
     }
     
     func saveAuthenticationDetails(key: String,data: CBAuthenticationStatus) {
-        
         if let appId = data.details.appId,let status = data.details.status , let version = data.details.version{
             let configDetails = CBAuthentication.init(appId: appId, status: status, version: version)
             self.writeConfigDetails(key:key,object: configDetails)
         }
-        
     }
     
     func isCacheDataAvailable(key:String)-> Bool {
@@ -82,7 +78,6 @@ struct CBCache: CacheProtocal {
     }
     
     func clearCacheFromMemory(key:String){
-        
         if let data = UserDefaults.standard.object(forKey: key) as? Data,
            let config = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
             if (config.config.appId != nil) || (config.config.status != nil) {
