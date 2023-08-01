@@ -60,6 +60,7 @@
 		FB5363EF29BEE29800E3AC9A /* BackgroundOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */; };
 		FB7B545D2A38666B00FBBCB5 /* UIApplication+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7B545C2A38666B00FBBCB5 /* UIApplication+Settings.swift */; };
 		FB8540C62A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8540C52A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift */; };
+		FBAD3EC22A78CC0A00FFD672 /* CBCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD3EC12A78CC0A00FFD672 /* CBCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,7 @@
 		FB5363EE29BEE29800E3AC9A /* BackgroundOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundOperationQueue.swift; sourceTree = "<group>"; };
 		FB7B545C2A38666B00FBBCB5 /* UIApplication+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Settings.swift"; sourceTree = "<group>"; };
 		FB8540C52A49C06600DF535D /* ManageSubscriptionsSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSubscriptionsSettingsTests.swift; sourceTree = "<group>"; };
+		FBAD3EC12A78CC0A00FFD672 /* CBCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 		2BF2D4A529A3B8E300E22D21 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FBAD3EC02A78CBEC00FFD672 /* Cache */,
 				FB7B545F2A38678700FBBCB5 /* UIApplicationSettings */,
 				FB5363E129BB3A2700E3AC9A /* Restore */,
 				2BF2D4A629A3B8E300E22D21 /* Token */,
@@ -393,6 +396,14 @@
 			path = UIApplicationSettings;
 			sourceTree = "<group>";
 		};
+		FBAD3EC02A78CBEC00FFD672 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				FBAD3EC12A78CC0A00FFD672 /* CBCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -526,6 +537,7 @@
 				2BF2D4E729A3B8E300E22D21 /* CBPlanResource.swift in Sources */,
 				2BF2D4FA29A3B8E300E22D21 /* CBAuthenticationResource.swift in Sources */,
 				2BF2D4DC29A3B8E300E22D21 /* CBToken.swift in Sources */,
+				FBAD3EC22A78CC0A00FFD672 /* CBCache.swift in Sources */,
 				FB5363E929BEE1BC00E3AC9A /* CBRestorePurchaseManager.swift in Sources */,
 				2BF2D4DD29A3B8E300E22D21 /* StripeTokenResource.swift in Sources */,
 				2BF2D4EA29A3B8E300E22D21 /* CBAPIRequest.swift in Sources */,
