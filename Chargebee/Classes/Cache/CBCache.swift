@@ -30,7 +30,6 @@ struct CBCache: CacheProtocal {
     var todaysDate = NSDate()
     
     internal func writeConfigDetails(key:String, object configObject:CBAuthentication) {
-        debugPrint("Time created for 1 mint: \(createTime())")
         let configObj: ConfigCacheModel = ConfigCacheModel(config: configObject, date: createTime())
         if let encoded = try? JSONEncoder().encode(configObj) {
             UserDefaults.standard.set(encoded, forKey: key)
