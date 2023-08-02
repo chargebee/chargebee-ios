@@ -8,65 +8,65 @@
 import Foundation
 
 
-struct ConfigCacheModel: Codable {
+private struct ConfigCacheModel: Codable {
     var config: CBAuthentication
-    var date: Date
-    init(config: CBAuthentication, date: Date) {
+    var savedDate: Date
+    init(config: CBAuthentication, savedDate: Date) {
         self.config = config
-        self.date = date
+        self.savedDate = savedDate
     }
 }
 
-protocol CacheProtocal {
-    func writeConfigDetails(key:String,object:CBAuthentication)
-    func readConfigDetails(key:String,logger: CBLogger, handler: @escaping CBAuthenticationHandler)
-    func saveAuthenticationDetails(key:String,data: CBAuthenticationStatus)
-    func isCacheDataAvailable(key:String)-> Bool
+protocol CacheProtocol {
+    func writeConfigDetails(object:CBAuthentication)
+    func readConfigDetails(logger: CBLogger, handler: @escaping CBAuthenticationHandler)
+    func saveAuthenticationDetails(data: CBAuthenticationStatus)
+    func isCacheDataAvailable()-> Bool
 }
 
-struct CBCache: CacheProtocal {
-    
+internal struct CBCache: CacheProtocol {
+    var uniqueIdKey = "chargebee_config"
     static let shared = CBCache()
     var todaysDate = NSDate()
     
-    internal func writeConfigDetails(key:String, object configObject:CBAuthentication) {
-        let configObj: ConfigCacheModel = ConfigCacheModel(config: configObject, date: createTime())
+    internal func writeConfigDetails(object configObject:CBAuthentication) {
+        let configObj: ConfigCacheModel = ConfigCacheModel(config: configObject, savedDate: createTime())
         if let encoded = try? JSONEncoder().encode(configObj) {
-            UserDefaults.standard.set(encoded, forKey: key)
+            UserDefaults.standard.set(encoded, forKey: getFormattedkey())
         }
     }
     
-    func createTime() -> Date {
+    private func createTime() -> Date {
         let currentDate = Date()
         let newDate = NSDate(timeInterval: 86400, since: currentDate)
         return newDate as Date
     }
     
-    func readConfigDetails(key: String,logger: CBLogger, handler: @escaping CBAuthenticationHandler){
+    internal func readConfigDetails(logger: CBLogger, handler: @escaping CBAuthenticationHandler){
         let (onSuccess, _) = CBResult.buildResultHandlers(handler, logger)
-        if let data = UserDefaults.standard.object(forKey: key) as? Data,
-           let config = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
-            let cacheObj = ConfigCacheModel(config: config.config, date: config.date)
+        if let data = UserDefaults.standard.object(forKey: getFormattedkey()) as? Data,
+           let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
+            let cacheObj = ConfigCacheModel(config: cacheModel.config, savedDate: cacheModel.savedDate)
             let auth = CBAuthenticationStatus.init(details: cacheObj.config)
             onSuccess(auth)
         }
     }
     
-    func saveAuthenticationDetails(key: String,data: CBAuthenticationStatus) {
+    internal func saveAuthenticationDetails(data: CBAuthenticationStatus) {
         if let appId = data.details.appId,let status = data.details.status , let version = data.details.version{
             let configDetails = CBAuthentication.init(appId: appId, status: status, version: version)
-            self.writeConfigDetails(key:key,object: configDetails)
+            self.writeConfigDetails(object: configDetails)
         }
     }
     
-    func isCacheDataAvailable(key:String)-> Bool {
-        if let data = UserDefaults.standard.object(forKey: key) as? Data,
-           let config = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
-            if let appID = config.config.appId ,let status = config.config.status {
+    internal func isCacheDataAvailable()-> Bool {
+        if let data = UserDefaults.standard.object(forKey: getFormattedkey()) as? Data,
+           let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
+            if let appID = cacheModel.config.appId ,let status = cacheModel.config.status {
                 if !appID.isEmpty && !status.isEmpty {
-                    let waitingDate:NSDate = config.date as NSDate
+                    let waitingDate:NSDate = cacheModel.savedDate as NSDate
                     if (self.todaysDate.compare(waitingDate as Date) == ComparisonResult.orderedDescending) {
-                        self.clearCacheFromMemory(key: key)
+                        UserDefaults.standard.removeObject(forKey: getFormattedkey())
                         return false
                     }
                 }
@@ -76,12 +76,17 @@ struct CBCache: CacheProtocal {
         return false
     }
     
-    func clearCacheFromMemory(key:String){
-        if let data = UserDefaults.standard.object(forKey: key) as? Data,
-           let config = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
-            if (config.config.appId != nil) || (config.config.status != nil) {
-                UserDefaults.standard.removeObject(forKey: key)
-            }
+    private func getBundleID() ->String{
+        var bundleID = ""
+        if let id = Bundle.main.bundleIdentifier {
+            bundleID = id
         }
+        return bundleID
+    }
+    
+    private func getFormattedkey() -> String {
+        return getBundleID().appending("_").appending(uniqueIdKey)
     }
 }
+
+
