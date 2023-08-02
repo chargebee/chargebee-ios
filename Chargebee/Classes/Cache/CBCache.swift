@@ -10,14 +10,14 @@ import Foundation
 
 private struct ConfigCacheModel: Codable {
     var config: CBAuthentication
-    var savedDate: Date
-    init(config: CBAuthentication, savedDate: Date) {
+    var validTill: Date
+    init(config: CBAuthentication, validTill: Date) {
         self.config = config
-        self.savedDate = savedDate
+        self.validTill = validTill
     }
 }
 
-protocol CacheProtocol {
+private protocol CacheProtocol {
     func writeConfigDetails(object:CBAuthentication)
     func readConfigDetails(logger: CBLogger, handler: @escaping CBAuthenticationHandler)
     func saveAuthenticationDetails(data: CBAuthenticationStatus)
@@ -25,12 +25,11 @@ protocol CacheProtocol {
 }
 
 internal struct CBCache: CacheProtocol {
-    var uniqueIdKey = "chargebee_config"
+    private let uniqueIdKey = "chargebee_config"
     static let shared = CBCache()
-    var todaysDate = NSDate()
     
     internal func writeConfigDetails(object configObject:CBAuthentication) {
-        let configObj: ConfigCacheModel = ConfigCacheModel(config: configObject, savedDate: createTime())
+        let configObj: ConfigCacheModel = ConfigCacheModel(config: configObject, validTill: createTime())
         if let encoded = try? JSONEncoder().encode(configObj) {
             UserDefaults.standard.set(encoded, forKey: getFormattedkey())
         }
@@ -46,7 +45,7 @@ internal struct CBCache: CacheProtocol {
         let (onSuccess, _) = CBResult.buildResultHandlers(handler, logger)
         if let data = UserDefaults.standard.object(forKey: getFormattedkey()) as? Data,
            let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
-            let cacheObj = ConfigCacheModel(config: cacheModel.config, savedDate: cacheModel.savedDate)
+            let cacheObj = ConfigCacheModel(config: cacheModel.config, validTill: cacheModel.validTill)
             let auth = CBAuthenticationStatus.init(details: cacheObj.config)
             onSuccess(auth)
         }
@@ -64,8 +63,8 @@ internal struct CBCache: CacheProtocol {
            let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
             if let appID = cacheModel.config.appId ,let status = cacheModel.config.status {
                 if !appID.isEmpty && !status.isEmpty {
-                    let waitingDate:NSDate = cacheModel.savedDate as NSDate
-                    if (self.todaysDate.compare(waitingDate as Date) == ComparisonResult.orderedDescending) {
+                    let waitingDate:NSDate = cacheModel.validTill as NSDate
+                    if (Date().compare(waitingDate as Date) == ComparisonResult.orderedDescending) {
                         UserDefaults.standard.removeObject(forKey: getFormattedkey())
                         return false
                     }
