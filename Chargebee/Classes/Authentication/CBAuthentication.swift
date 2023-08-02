@@ -49,6 +49,9 @@ extension CBAuthenticationManager {
         if CBCache.shared.isCacheDataAvailable() {
             CBCache.shared.readConfigDetails(logger: logger) { status in
                 handler(status)
+            } onError: { error in
+                let request = CBAPIRequest(resource: CBAuthenticationResource(key: key, bundleId: bundleId, appName: appName))
+                self.authenticateRestClient(network: request, logger: logger, handler: handler)
             }
         }else{
             let request = CBAPIRequest(resource: CBAuthenticationResource(key: key, bundleId: bundleId, appName: appName))
