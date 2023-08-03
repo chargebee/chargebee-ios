@@ -30,24 +30,17 @@ internal struct CBCache: CacheProtocol {
     
     func readConfigDetails(logger: CBLogger, withCompletion completion: @escaping (CBResult<CBAuthenticationStatus>) -> Void, onError: ErrorHandler?) {
         let (onSuccess, _) = CBResult.buildResultHandlers(completion, logger)
-        if let data = UserDefaults.standard.object(forKey: getFormattedkey()) as? Data,
-           let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
-            let cacheObj = ConfigCacheModel(config: cacheModel.config, validTill: cacheModel.validTill)
-            let auth = CBAuthenticationStatus.init(details: cacheObj.config)
-            if ((auth.details.appId?.isEmpty) != nil) || ((auth.details.status?.isEmpty) != nil){
-                onSuccess(auth)
-            }else{
-                onError?(CBError.defaultSytemError(statusCode: 400, message:"Empty data found"))
-            }
+        if let cacheModel = getCacheObject() {
+            let auth = CBAuthenticationStatus.init(details: cacheModel.config)
+            onSuccess(auth)
         }else{
             onError?(CBError.defaultSytemError(statusCode: 400, message:"Failed to read config details from Cache"))
         }
     }
     
     internal func writeConfigDetails(object configObject:CBAuthentication) {
-        if let data = UserDefaults.standard.object(forKey: getFormattedkey()) as? Data,
-           let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
-            if ((cacheModel.config.appId?.isEmpty) != nil) {
+        if let cacheModel = getCacheObject() {
+            if cacheModel.config.appId != nil{
                 UserDefaults.standard.removeObject(forKey: getFormattedkey())
             }
         }
@@ -71,8 +64,7 @@ internal struct CBCache: CacheProtocol {
     }
     
     internal func isCacheDataAvailable()-> Bool {
-        if let data = UserDefaults.standard.object(forKey: getFormattedkey()) as? Data,
-           let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
+        if let cacheModel = getCacheObject() {
             if let appID = cacheModel.config.appId ,let status = cacheModel.config.status {
                 if !appID.isEmpty && !status.isEmpty {
                     let waitingDate:NSDate = cacheModel.validTill as NSDate
@@ -87,7 +79,15 @@ internal struct CBCache: CacheProtocol {
         return false
     }
     
-    private func getBundleID() ->String{
+    fileprivate func getCacheObject()-> ConfigCacheModel? {
+        if let data = UserDefaults.standard.object(forKey: getFormattedkey()) as? Data,
+           let cacheModel = try? JSONDecoder().decode(ConfigCacheModel.self, from: data) {
+            return cacheModel
+        }
+        return nil
+    }
+    
+    private func getBundleID()-> String{
         var bundleID = ""
         if let id = Bundle.main.bundleIdentifier {
             bundleID = id
@@ -95,7 +95,7 @@ internal struct CBCache: CacheProtocol {
         return bundleID
     }
     
-    private func getFormattedkey() -> String {
+    private func getFormattedkey()-> String {
         return getBundleID().appending("_").appending(uniqueIdKey)
     }
 }
