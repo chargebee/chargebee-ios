@@ -19,7 +19,7 @@ private struct ConfigCacheModel: Codable {
 
 private protocol CacheProtocol {
     func writeConfigDetails(object:CBAuthentication)
-    func readConfigDetails(logger: CBLogger, withCompletion completion: @escaping (CBResult<CBAuthenticationStatus>) -> Void, onError: ErrorHandler?)
+    func readConfigDetails(logger: CBLogger, withCompletion completion: @escaping (CBResult<CBAuthenticationStatus>) -> Void, onError: ErrorHandler)
     func saveAuthenticationDetails(data: CBAuthenticationStatus)
     func isCacheDataAvailable()-> Bool
 }
@@ -28,13 +28,13 @@ internal struct CBCache: CacheProtocol {
     private let uniqueIdKey = "chargebee_config"
     static let shared = CBCache()
     
-    func readConfigDetails(logger: CBLogger, withCompletion completion: @escaping (CBResult<CBAuthenticationStatus>) -> Void, onError: ErrorHandler?) {
+    func readConfigDetails(logger: CBLogger, withCompletion completion: @escaping (CBResult<CBAuthenticationStatus>) -> Void, onError: ErrorHandler) {
         let (onSuccess, _) = CBResult.buildResultHandlers(completion, logger)
         if let cacheModel = getCacheObject() {
             let auth = CBAuthenticationStatus.init(details: cacheModel.config)
             onSuccess(auth)
         }else{
-            onError?(CBError.defaultSytemError(statusCode: 400, message:"Failed to read config details from Cache"))
+            onError(CBError.defaultSytemError(statusCode: 400, message:"Failed to read config details from Cache"))
         }
     }
     
