@@ -31,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.25'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.26'
 ```
 
 ### CocoaPods
@@ -211,7 +211,7 @@ let product = CBProduct(product: SKProduct())
         print(result.chargeID ?? "")
         print(result.invoiceID ?? "")
       case .failure(let failure):
-        //Hanler error here
+        // Handle error here
       }
     }
 ```
@@ -288,7 +288,7 @@ CBPurchase.shared.validateReceipt(product,customer: nil) { result in
         print(result.status )
         // Clear persisted product details once the validation succeeds.
       case .failure(let error):
-        print("error",error.localizedDescription)
+        print("error", error.localizedDescription)
         // Retry based on the error
       }
     }
@@ -302,7 +302,7 @@ CBPurchase.shared.validateReceiptForNonSubscriptions(product,type,customer: nil)
         case .success(let result):
           // Clear persisted product details once the validation succeeds.
         case .failure(let error):
-       // Retry based on the error
+          // Retry based on the error
         }
       }
 ```
