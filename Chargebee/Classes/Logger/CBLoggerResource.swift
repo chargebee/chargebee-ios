@@ -24,13 +24,7 @@ var osVersion: String {
 }
 
 var sdkVersion: String {
-
-    if let version = Bundle(for: Chargebee.self).infoDictionary?["CFBundleShortVersionString"] as? String, let build = Bundle(for: Chargebee.self).infoDictionary?["CFBundleVersion"] as? String {
-
-        return "\(version)-(\(build))"
-      }
-
-    return ""
+    return "1.0.26"
 }
 
 class CBLoggerResource: CBAPIResource {
