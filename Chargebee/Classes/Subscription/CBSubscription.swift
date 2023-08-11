@@ -76,7 +76,7 @@ class CBSubscriptionManager {
         network.load(withCompletion: { status in
             if let data = status as? CBSubscriptionWrapper {
                 if data.list.isEmpty {
-                    onError(CBError.defaultSytemError(statusCode: 480, message: "Subscription Not found"))
+                    onError(CBError.defaultSytemError(statusCode: 404, message: "Subscription Not found"))
                 }else{
                     onSuccess(data.list)
                 }
@@ -92,7 +92,7 @@ class CBSubscriptionManager {
         network.load(withCompletion: { status in
             if let data = status as? CBSubscriptionWrapper {
                 if data.list.isEmpty {
-                    onError(CBError.defaultSytemError(statusCode: 480, message: "Subscription Not found"))
+                    onError(CBError.defaultSytemError(statusCode: 404, message: "Subscription Not found"))
                 }else {
                     onSuccess(CBSubscriptionWrapper.init(list: data.list, nextOffset: data.nextOffset))
                 }
