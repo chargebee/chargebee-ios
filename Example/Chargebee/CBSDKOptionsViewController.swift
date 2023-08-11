@@ -14,7 +14,7 @@ final class CBSDKOptionsViewController: UIViewController, UITextFieldDelegate {
     private var items: [CBItemWrapper] = []
     private var plans: [CBPlan] = []
 
-    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ,.restore]
+    private lazy var actions: [ClientAction] = [.initializeInApp, .getAllPlan, .getPlan, .getItems, .getItem, .getEntitlements, .getAddon, .createToken, .getProductIDs, .getProducts, .getSubscriptionStatus ,.restore,.manageSubscriptions]
 
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -176,23 +176,17 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                         print("Purchase products history:",response)
                         for subscription in response {
                             if subscription.storeStatus.rawValue == StoreStatus.Active.rawValue{
+                                debugPrint("Successfully restored product with subscriptionId",subscription.subscriptionID)
                                 DispatchQueue.main.async {
                                     self.view.activityStopAnimating()
-                                    let alertController = UIAlertController(title: "Chargebee", message: "Successfully restored purchases", preferredStyle: .alert)
-                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                    self.present(alertController, animated: true, completion: nil)
                                 }
                             }else {
+                                debugPrint("Not a active product to restore")
                                 DispatchQueue.main.async {
                                     self.view.activityStopAnimating()
-                                    
-                                    let alertController = UIAlertController(title: "Chargebee", message: "No Active products to Restore", preferredStyle: .alert)
-                                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                    self.present(alertController, animated: true, completion: nil)
                                 }
                             }
                         }
-                        
                         
                     }else {
                         DispatchQueue.main.async {
@@ -237,6 +231,8 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
                     }
                 }
             }
+        case .manageSubscriptions:
+            Chargebee.shared.showManageSubscriptionsSettings()
         }
     }
 }
@@ -271,6 +267,7 @@ enum ClientAction {
     case getItem
     case getEntitlements
     case restore
+    case manageSubscriptions
 
 }
 
@@ -303,6 +300,8 @@ extension ClientAction {
             return "Get Apple Specific Product Identifiers"
         case .restore:
             return "Restore Purcahses"
+        case .manageSubscriptions:
+            return "ManageSubscriptions"
         }
 
     }

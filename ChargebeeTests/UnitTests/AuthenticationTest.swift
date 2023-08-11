@@ -54,13 +54,13 @@ class AuthenticationTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        Chargebee.configure(site: "test.com", apiKey: "12345", sdkKey: "6789", allowErrorLogging: true)
+        Chargebee.configure(site: "test", apiKey: "12345", sdkKey: "6789", allowErrorLogging: true)
 
     }
 
     func testEnvironmentValues() {
-        XCTAssertEqual(CBEnvironment.site, "test.com")
-        XCTAssertEqual(CBEnvironment.baseUrl, "https://test.com/api")
+        XCTAssertEqual(CBEnvironment.site, "test")
+        XCTAssertEqual(CBEnvironment.baseUrl, "https://test.chargebee.com/api")
         XCTAssertEqual(CBEnvironment.apiKey, "12345")
         XCTAssertEqual(CBEnvironment.sdkKey, "6789")
         XCTAssertEqual(CBAuthenticationManager.isSDKKeyPresent(), true)

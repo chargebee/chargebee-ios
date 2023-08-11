@@ -11,6 +11,8 @@ public enum CBError: Error {
     case operationFailed(errorResponse: CBErrorDetail)
     case invalidRequest(errorResponse: CBErrorDetail)
     case paymentFailed(errorResponse: CBErrorDetail)
+    case serverError(errorResponse: CBErrorDetail)
+
 
     static func defaultSytemError(statusCode: Int, message: String = "") -> CBError {
         let errorDetail = CBErrorDetail(message: message, type: "", apiErrorCode: "", param: "", httpStatusCode: statusCode)
@@ -27,8 +29,11 @@ extension CBError: LocalizedError {
             return errorResponse.message
         case .paymentFailed(let errorResponse):
             return errorResponse.message
+        case .serverError(let errorResponse):
+            return errorResponse.message
         }
     }
+    
     public var httpStatusCode: Int {
         switch self {
         case .operationFailed(let errorResponse):
@@ -37,8 +42,10 @@ extension CBError: LocalizedError {
             return errorResponse.httpStatusCode
         case .paymentFailed(let errorResponse):
             return errorResponse.httpStatusCode
+        case .serverError(let errorResponse):
+            return errorResponse.httpStatusCode
         }
-    } 
+    }
 }
 
 protocol ErrorDetail {
@@ -65,6 +72,8 @@ public struct CBErrorDetail: Decodable, ErrorDetail {
         switch statusCode {
         case (400...499):
             return CBError.invalidRequest(errorResponse: self)
+        case (500...599):
+            return CBError.serverError(errorResponse: self)
         default:
             return CBError.operationFailed(errorResponse: self)
         }

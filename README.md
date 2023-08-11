@@ -6,7 +6,7 @@ This is the official  Software Development Kit (SDK) for Chargebee iOS. This SDK
 Post-installation, initialization, and authentication with the Chargebee site, this SDK will support the following process.
 
 -   **Sync In-App Subscriptions with Chargebee**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html) with [Apple Store Connect](https://appstoreconnect.apple.com/login) to process in-app purchase subscriptions, and track them on your Chargebee account for a single source of truth for subscriptions across the Web and Apple App Store. Use this if you are selling digital goods or services, or are REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
-    **For SDK methods to work, ensure that** [**prerequisites**](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#configure-prerequisites) **are configured in Chargebee.** To import products configured in Apple App Store and existing subscriptions, read [more](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#import-products).
+    **For SDK funtions to work, ensure that** [**prerequisites**](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#configure-prerequisites) **are configured in Chargebee.** To import products configured in Apple App Store and existing subscriptions, read [more](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#import-products).
 
 -   **Tokenisation of credit card**: Tokenize credit card information while presenting your own user interface. Use this if you are selling physical goods or offline services or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
 
@@ -31,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.19'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.26'
 ```
 
 ### CocoaPods
@@ -181,15 +181,55 @@ Pass the `CBProduct` and  `CBCustomer` objects to the following function when th
 
 The above function will handle the purchase against App Store Connect and send the IAP receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function, to check for Subscription status on Chargebee and confirm the access - granted or denied.
 
-##### Returns Plan Object
+This function also returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
 
-This function returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK method - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+#### Upgrade or Downgrade Subscription
+
+When a user changes their subscription level from a lower price plan to a higher price plan, it's considered an upgrade. On the other hand, when a user switches from a higher-price plan to a lower-price plan, it's considered a downgrade.
+
+In the case of the Apple App Store, you can arrange the subscriptions using the drag-and-drop option in **Edit Subscription Order** in App Store Connect. [Learn more](https://developer.apple.com/app-store/subscriptions/#ranking).
+
+##### Invoke Upgrade or Downgrade Subscription Flow in your App
+
+The `showManageSubscriptionsSettings()` function is designed to invoke the upgrade/downgrade flow in your app using Chargebee's iOS SDKs.
+`Chargebee.shared.showManageSubscriptionsSettings()`, opens the App Store App subscriptions settings page.
+
+**Note**: Upgrades and downgrades are handled through [Apple App Store Server Notifications](https://apidocs.chargebee.com/docs/api/in_app_purchase_events?prod_cat_ver=2#app_store_notifications) in Chargebee.
+
+#### One-Time Purchases
+
+The `purchaseNonSubscriptionProduct` function handles the one-time purchase against App Store Connect and sends the IAP receipt for server-side receipt verification to your Chargebee account. Post verification a Charge corresponding to this one-time purchase will be created in Chargebee. There are three types of one-time purchases `consumable`, `non_consumable`, and `non_renewing_subscription`.
+
+```swift
+let product = CBProduct(product: SKProduct())
+    let customer = CBCustomer(customerID: "",firstName:"",lastName: "",email: "")
+    let typeOfProduct: productType = .non_consumable
+    CBPurchase.shared.purchaseNonSubscriptionProduct(product: withproduct,customer: customer,productType: typeOfProduct) { result in
+      switch result {
+      case .success(let success):
+        print(result.customerID)
+        print(result.chargeID ?? "")
+        print(result.invoiceID ?? "")
+      case .failure(let failure):
+        // Handle error here
+      }
+    }
+```
+
+The given code defines a closure-based function named `purchaseNonSubscriptionProduct` in the `CBPurchase` class, which takes three input parameters:
+- `product`: An instance of `CBProduct` class, initialized with a `SKProduct` instance representing the product to be purchased from the Apple App Store.
+- `customer`: An instance of `CBCustomer` class, initialized with the customer's details such as `customerID`, `firstName`, `lastName`, and `email`.
+- `productType`: An enum instance of `productType` type, indicating the type of product to be purchased. It can be either .`consumable`, .`non_consumable`, or .`non_renewing_subscription`.
+
+The function is called asynchronously, and it returns a `Result` object with a `success` or `failure` case, which can be handled in the closure.
+- If the purchase is successful, the closure will be called with the `success` case, which includes the `customerID`, `chargeID`, and `invoiceID` associated with the purchase.
+- If there is any failure during the purchase, the closure will be called with the `failure` case, which includes an error object that can be used to handle the error.
 
 #### Restore purchase
 
-The restore purchase method helps to regain your app user's previous purchases without making any payments again. Sometimes, your app user may want to restore their previous purchases after reinstalling your app, switching to a new device, or for any other reason. You can use the `restorePurchases()` method provided by the iOS SDK to allow your app user to easily restore their previous purchases.
+The `restorePurchases()` function helps to recover your app user's previous purchases without making them pay again. Sometimes, your app user may want to restore their previous purchases after switching to a new device or reinstalling your app. You can use the `restorePurchases()` function to allow your app user to easily restore their previous purchases.
 
-To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` method with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` method in your code:
+To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` function in your code with the `includeInActiveProducts` parameter set to `true`.
 
 ```swift
 CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
@@ -206,12 +246,70 @@ CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
       }
     }
 ```
+##### Return Subscriptions Object
 
-In the above code, the `restorePurchases()` method is called with the `includeInActiveProducts` parameter set to `true`. The method returns a result object that contains an array of restored purchases.
+The `restorePurchases()` function returns an array of subscription objects and each object holds three attributes `subscription_id`, `plan_id`, and `store_status`. The value of `store_status` can be used to verify subscription status.
+
+##### Error Handling
+
+In the event of any failures during the refresh and validation process or while finding associated subscriptions for the restored items, iOS SDK will return an error, as mentioned in the following table.
+
+###### Error Codes
+
+These are the possible error codes and their descriptions:
+| Error Code                        | Description                                                                                                                 |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `RestoreError.noReceipt`            | This error occurs when the user attempts to restore a purchase, but there is no receipt associated with the purchase.       |
+| `RestoreError.refreshReceiptFailed` | This error occurs when the attempt to refresh the receipt for a purchase fails.                                             |
+| `RestoreError.restoreFailed`        | This error occurs when the attempt to restore a purchase fails for reasons other than a missing or invalid receipt.         |
+| `RestoreError.invalidReceiptURL`    | This error occurs when the URL for the receipt bundle provided during the restore process is invalid or cannot be accessed. |
+| `RestoreError.invalidReceiptData`   | This error occurs when the data contained within the receipt is not valid or cannot be parsed.                              |
+| `RestoreError.noProductsToRestore`  | This error occurs when there are no products available to restore.                                                          |
+| `RestoreError.serviceError`         | This error occurs when there is an error with the Chargebee service during the restore process.                             |
+
+**Note**: These error codes are implemented in our example app. [Learn more](https://github.com/chargebee/chargebee-ios/blob/master/Example/Chargebee/CBSDKOptionsViewController.swift#L202-L224).
+
+#### Synchronization of Apple App Store Purchases with Chargebee through Receipt Validation
+
+Receipt validation is crucial to ensure that the purchases made by your users are synced with Chargebee. In rare cases, when a purchase is made at the Apple App Store, and the network connection goes off, the purchase details may not be updated in Chargebee. In such cases, you can use a retry mechanism by following these steps:
+-   Add a network observer, as shown in the example project.
+-   Save the product identifier in the cache once the purchase is initiated and clear the cache once the purchase is successful.
+-   When the network connectivity is lost after the purchase is completed at Apple App Store but not synced with Chargebee, retrieve the product ID from the cache once the network connection is back and initiate `validateReceipt()`/`validateReceiptForNonSubscriptions()` by passing `CBProduct` and `CBCustomer(Optional)` as input. This will validate the purchase receipt and sync the purchase in Chargebee as a subscription or one-time purchase.
+For subscriptions, use the function `validateReceipt()`; for one-time purchases, use the function `validateReceiptForNonSubscriptions()`.
+
+Use the function available for the retry mechanism.
+
+**Function for subscriptions**
+
+```swift
+CBPurchase.shared.validateReceipt(product,customer: nil) { result in
+      switch result {
+      case .success(let result):
+        print(result.status )
+        // Clear persisted product details once the validation succeeds.
+      case .failure(let error):
+        print("error", error.localizedDescription)
+        // Retry based on the error
+      }
+    }
+```
+
+**Function for one-time purchases**
+
+```swift
+CBPurchase.shared.validateReceiptForNonSubscriptions(product,type,customer: nil) { result in
+        switch result {
+        case .success(let result):
+          // Clear persisted product details once the validation succeeds.
+        case .failure(let error):
+          // Retry based on the error
+        }
+      }
+```
 
 #### Get Subscription Status for Existing Subscribers
 
-The following are methods for checking the subscription status of a subscriber who already purchased the product.
+The following are funtions for checking the subscription status of a subscriber who already purchased the product.
 
 ##### Get Subscription Status for Existing Subscribers using Query Parameters
 
@@ -245,9 +343,7 @@ Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
 }
 ```
 
-##### Returns Plan Object
-
-The above functions return the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK method - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+The above functions return the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
 
 #### Retrieve Entitlements of a Subscription
 
