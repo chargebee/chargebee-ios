@@ -58,7 +58,7 @@ public struct Subscription: Codable {
 
 public typealias CBSubscriptionHandler = (CBResult<Subscription>) -> Void
 public typealias SubscriptionHandler   = (CBResult<[SubscriptionList]>) -> Void
-public typealias SubscriptionHandler2   = (CBResult<CBSubscriptionWrapper>) -> Void
+public typealias RetrieveSubscriptionHandler   = (CBResult<CBSubscriptionWrapper>) -> Void
 
 
 class CBSubscriptionManager {
@@ -71,12 +71,28 @@ class CBSubscriptionManager {
         }, onError: onError)
     }
    
-    func retrieveSubscriptions<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping SubscriptionHandler2) {
+    func retrieveSubscriptions<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping SubscriptionHandler) {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         network.load(withCompletion: { status in
             if let data = status as? CBSubscriptionWrapper {
                 if data.list.isEmpty {
-                    onError(CBError.defaultSytemError(statusCode: 404, message: "Subscription Not found"))
+                    onError(CBError.defaultSytemError(statusCode: 480, message: "Subscription Not found"))
+                }else{
+                    onSuccess(data.list)
+                }
+            } else {
+                onError(CBError.defaultSytemError(statusCode: 480, message: "json serialization failure"))
+            }
+
+        }, onError: onError)
+    }
+
+    func retrieveSubscriptions<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping RetrieveSubscriptionHandler) {
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+        network.load(withCompletion: { status in
+            if let data = status as? CBSubscriptionWrapper {
+                if data.list.isEmpty {
+                    onError(CBError.defaultSytemError(statusCode: 480, message: "Subscription Not found"))
                 }else {
                     onSuccess(CBSubscriptionWrapper.init(list: data.list, nextOffset: data.nextOffset))
                 }
@@ -86,17 +102,6 @@ class CBSubscriptionManager {
 
         }, onError: onError)
     }
-
-    func queryParamSanitizer(queryParam:[String:String]) -> [String:String] {
-        var params = [String:String]()
-        if queryParam.isEmpty{
-            for (key, value) in queryParam {
-                debugPrint("Key:\(key) , value:\(value)")
-            }
-        }
-        return params
-    }
-
 }
 
 extension String {
