@@ -205,6 +205,7 @@ extension CBPurchase: SKProductsRequestDelegate {
 
 // MARK: - SKPaymentTransactionObserver delegates
 extension CBPurchase: SKPaymentTransactionObserver {
+    // swiftlint:disable:next cyclomatic_complexity
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach { (transaction) in
             switch transaction.transactionState {
