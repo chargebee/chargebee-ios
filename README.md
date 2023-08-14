@@ -31,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.26'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.27'
 ```
 
 ### CocoaPods
@@ -317,12 +317,13 @@ Use query parameters - Subscription ID, Customer ID, or Status for checking the 
 
 ```swift
 Chargebee.shared.retrieveSubscriptions(queryParams :["String" : "String"]") { result in
-    switch result {
-    case let .success(resultarray):
-        print("Status \(resultarray.first.subscription.status)")
-    case let .error(error):
-        // Handle error here
-    }
+  switch result {
+  case let .success(result):
+    print("Next offset \(result.nextOffset)")
+    print("Subscriptions: \(result.list)")
+  case let .error(error):
+    // Handle error here
+  }
 }
 ```
 

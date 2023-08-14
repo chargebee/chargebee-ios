@@ -57,36 +57,84 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
     }
 
     @IBAction func getStatusUsingCustomerId(_ sender: Any) {
-        self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-        
+        callRetreiveSubscriptions()
+    }
+    
+    func callRetreiveSubscriptions(){
+        self.activityStartAnimating()
         guard let id = subscriptioniDTextField.text, id.isNotEmpty else {
             return
         }
-        //Sample Query Params
-        //subscription_id ="id"
-        //status = "active"
-        Chargebee.shared.retrieveSubscriptions(queryParams: ["customer_id": id]) { result in
+        Chargebee.shared.retrieveSubscriptions(queryParams: ["customer_id": id,"offset":""]) { result in
+            switch result {
+            case let .success(result):
+                debugPrint("Subscription Status Fetched: \(result)")
+                if let value = result.nextOffset {
+                    let offset = value
+                    DispatchQueue.main.async {
+                        self.getSubcription(offset: offset)
+                    }
+                }else{
+                    DispatchQueue.main.async {
+                        if  let status = result.list.first?.subscription.status, let amount = result.list.first?.subscription.planAmount {
+                            let alertController = UIAlertController(title: "Chargebee", message: "Status :\(status)\n Plan amount:\(amount).", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    }
+                }
+                self.activityStopAnimating()
+            case let .error(error):
+                debugPrint("Error Fetched: \(error)")
+                self.showError(error: error)
+            }
+        }
+    }
+    
+    func getSubcription(offset: String){
+        self.activityStartAnimating()
+        guard let id = subscriptioniDTextField.text, id.isNotEmpty else {
+            return
+        }
+        
+        Chargebee.shared.retrieveSubscriptions(queryParams: ["customer_id": id,"offset":offset]) { result in
             switch result {
             case let .success(result):
                 debugPrint("Subscription Status Fetched: \(result)")
                 DispatchQueue.main.async {
-                    if  let status = result.first?.subscription.status, let amount = result.first?.subscription.planAmount {
+                    if  let status = result.list.first?.subscription.status, let amount = result.list.first?.subscription.planAmount {
                         let alertController = UIAlertController(title: "Chargebee", message: "Status :\(status)\n Plan amount:\(amount).", preferredStyle: .alert)
                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alertController, animated: true, completion: nil)
                     }
-                    self.view.activityStopAnimating()
                 }
+                self.activityStopAnimating()
             case let .error(error):
                 debugPrint("Error Fetched: \(error)")
-                DispatchQueue.main.async {
-                    self.view.activityStopAnimating()
-                    self.statusLabel.text = error.localizedDescription
-                    self.subscriptioniDTextField.resignFirstResponder()
-                    
-                }
+                self.showError(error: error)
+                
             }
         }
+    }
+    
+    func activityStartAnimating(){
+        DispatchQueue.main.async {
+            self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+        }
+    }
+    func activityStopAnimating(){
+        DispatchQueue.main.async {
+            self.view.activityStopAnimating()
+        }
+    }
+    
+    func showError(error:Error){
+        DispatchQueue.main.async {
+            self.view.activityStopAnimating()
+            self.statusLabel.text = error.localizedDescription
+            self.subscriptioniDTextField.resignFirstResponder()
+        }
+        self.activityStopAnimating()
     }
     @IBAction private func textFieldDidEndEdit(_ sender: UITextField) {
         enableFetchButton(shouldEnable: sender.isNotEmpty)
