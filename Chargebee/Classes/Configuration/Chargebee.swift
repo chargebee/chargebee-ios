@@ -40,7 +40,7 @@ public class Chargebee {
     }
    
     
-    @available(*, deprecated, message: "This will be removed in upcoming versions, Please use this API func retrieveSubscriptionsList(queryParams: [String: String]? = nil, handler: @escaping RetrieveSubscriptionHandler)")
+    @available(*, deprecated, message: "This will be removed in upcoming versions, Please use this API func retrieveSubscriptions(queryParams: [String: String]? = nil, handler: @escaping RetrieveSubscriptionHandler)")
     public func retrieveSubscriptions(queryParams: [String: String]? = nil, handler: @escaping SubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription using customerId")
         logger.info()
