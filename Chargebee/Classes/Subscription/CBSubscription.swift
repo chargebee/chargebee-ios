@@ -94,7 +94,7 @@ class CBSubscriptionManager {
                 if data.list.isEmpty {
                     onError(CBError.defaultSytemError(statusCode: 404, message: "Subscription Not found"))
                 }else {
-                    onSuccess(CBSubscriptionWrapper.init(list: data.list, nextOffset: data.nextOffset))
+                    onSuccess(data)
                 }
             } else {
                 onError(CBError.defaultSytemError(statusCode: 480, message: "json serialization failure"))
