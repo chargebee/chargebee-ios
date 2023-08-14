@@ -65,7 +65,7 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
         guard let id = subscriptioniDTextField.text, id.isNotEmpty else {
             return
         }
-        Chargebee.shared.retrieveSubscriptionsList(queryParams: ["customer_id": id,"offset":""]) { result in
+        Chargebee.shared.retrieveSubscriptions(queryParams: ["customer_id": id,"offset":""]) { result in
             switch result {
             case let .success(result):
                 debugPrint("Subscription Status Fetched: \(result)")
@@ -97,7 +97,7 @@ final class CBSDKSubscriptionStatusViewController: UIViewController {
             return
         }
         
-        Chargebee.shared.retrieveSubscriptionsList(queryParams: ["customer_id": id,"offset":offset]) { result in
+        Chargebee.shared.retrieveSubscriptions(queryParams: ["customer_id": id,"offset":offset]) { result in
             switch result {
             case let .success(result):
                 debugPrint("Subscription Status Fetched: \(result)")

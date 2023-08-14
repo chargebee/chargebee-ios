@@ -49,7 +49,7 @@ public class Chargebee {
         CBSubscriptionManager().retrieveSubscriptions(network: request, logger: logger, handler: handler)
     }
 
-    public func retrieveSubscriptionsList(queryParams: [String: String]? = nil, handler: @escaping RetrieveSubscriptionHandler) {
+    public func retrieveSubscriptions(queryParams: [String: String]? = nil, handler: @escaping RetrieveSubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription using customerId")
         logger.info()
         
