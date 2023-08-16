@@ -12,7 +12,7 @@ public class CBPurchase: NSObject {
     public static let shared = CBPurchase()
     private var productIDs: [String] = []
     public var receiveProductsHandler: ((_ result: Result<[CBProduct], CBPurchaseError>) -> Void)?
-    public var buyProductHandler: ((Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)?
+    public var buyProductHandler: ((Result<(status:Bool, subscriptionId:String?, planId:String?,customerId:String?), Error>) -> Void)?
     private var buyNonSubscriptionProductHandler: ((Result<NonSubscription, Error>) -> Void)?
 
     private var authenticationManager = CBAuthenticationManager()
@@ -26,6 +26,7 @@ public class CBPurchase: NSObject {
     var refreshHandler: RestoreResultCompletion<String>?
     var includeInActiveProducts = false
     private var productType: ProductType?
+    var restoreCustomer: CBCustomer?
 
     // MARK: - Init
     private override init() {
@@ -121,24 +122,25 @@ public extension CBPurchase {
     
     //Buy the product
     @available(*, deprecated, message: "This will be removed in upcoming versions, Please use this API func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion)")
-    func purchaseProduct(product: CBProduct, customerId : String? = "",completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId : String? = "",completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?,customerId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product
         self.customer = CBCustomer(customerID: customerId ?? "")
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?,customerId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product
         self.customer = customer
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    func restorePurchases(includeInActiveProducts:Bool = false ,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
+    func restorePurchases(includeInActiveProducts:Bool = false ,customer: CBCustomer ,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
         self.restoreResponseHandler = handler
         self.includeInActiveProducts = includeInActiveProducts
         self.restoredPurchasesCount = 0
+        self.restoreCustomer = customer
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
@@ -309,7 +311,7 @@ public extension CBPurchase {
         }
     }
     
-    func validateReceipt(_ product: CBProduct?,customer: CBCustomer? = nil,completion: ((Result<(status:Bool, subscriptionId:String?, planId:String?), Error>) -> Void)?) {
+    func validateReceipt(_ product: CBProduct?,customer: CBCustomer? = nil,completion: ((Result<(status:Bool, subscriptionId:String?, planId:String?, customerId:String?), Error>) -> Void)?) {
         
         guard let receipt = getReceipt(product: product?.product,customer: customer) else {
             debugPrint("Couldn't read receipt data with error")
@@ -327,7 +329,7 @@ public extension CBPurchase {
                         return
                     }
                     self.activeProduct = nil
-                    completion?(.success((true, receipt.subscriptionId, receipt.planId)))
+                    completion?(.success((true, receipt.subscriptionId, receipt.planId,receipt.customerId)))
                 case .error(let error):
                     debugPrint(" Chargebee - Receipt Upload - Failure")
                     completion?(.failure(error))

@@ -169,7 +169,9 @@ extension CBSDKOptionsViewController: UITableViewDelegate, UITableViewDataSource
             }
         case .restore:
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-            CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
+            //Ex: customer_id is mandatory field for restoring purchases so please pass customer object as shown example below
+            let customer = CBCustomer(customerID: "Test123",firstName: "CB",lastName: "Test",email: "cbTest@charebee.com")
+            CBPurchase.shared.restorePurchases(includeInActiveProducts: true, customer: customer) { result in
                 switch result {
                 case .success(let response):
                     if response.count > 0 {
