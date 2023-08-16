@@ -362,7 +362,6 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                     print(result.status)
                     print(result.subscriptionId ?? "")
                     print(result.planId ?? "")
-                    print(result.customerId ?? "")
 
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
