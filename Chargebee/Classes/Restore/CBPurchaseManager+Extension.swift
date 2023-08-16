@@ -136,9 +136,13 @@ extension CBPurchase{
         for product in products {
             operationQueue?.addOperation{
                 if let _ = product.product.subscriptionPeriod {
-                    self.validateReceipt(product,customer: self.restoreCustomer, completion: nil)
+                    if let customer = self.restoreCustomer {
+                        self.validateReceipt(product,customer: customer, completion: nil)
+                    }
                 }else{
-                    self.validateReceiptForNonSubscriptions(product, .unknown, customer: self.restoreCustomer, completion: nil)
+                    if let customer = self.restoreCustomer {
+                        self.validateReceiptForNonSubscriptions(product, .unknown, customer: customer, completion: nil)
+                    }
                 }
             }
         }
