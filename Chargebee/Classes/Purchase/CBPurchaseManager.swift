@@ -12,7 +12,7 @@ public class CBPurchase: NSObject {
     public static let shared = CBPurchase()
     private var productIDs: [String] = []
     public var receiveProductsHandler: ((_ result: Result<[CBProduct], CBPurchaseError>) -> Void)?
-    public var buyProductHandler: ((Result<(status:Bool, subscriptionId:String?, planId:String?,customerId:String?), Error>) -> Void)?
+    public var buyProductHandler: ((Result<(status:Bool, subscriptionId:String?, planId:String?, customerId:String?), Error>) -> Void)?
     private var buyNonSubscriptionProductHandler: ((Result<NonSubscription, Error>) -> Void)?
 
     private var authenticationManager = CBAuthenticationManager()
@@ -122,21 +122,21 @@ public extension CBPurchase {
     
     //Buy the product
     @available(*, deprecated, message: "This will be removed in upcoming versions, Please use this API func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion)")
-    func purchaseProduct(product: CBProduct, customerId : String? = "",completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?,customerId:String?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId : String? = "",completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?, customerId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product
         self.customer = CBCustomer(customerID: customerId ?? "")
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?,customerId:String?), Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion handler: @escaping ((_ result: Result<(status:Bool, subscriptionId:String?, planId:String?, customerId:String?), Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product
         self.customer = customer
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    func restorePurchases(includeInActiveProducts:Bool = false ,customer: CBCustomer ,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
+    func restorePurchases(includeInActiveProducts:Bool = false, customer: CBCustomer, completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
         self.restoreResponseHandler = handler
         self.includeInActiveProducts = includeInActiveProducts
         self.restoredPurchasesCount = 0
@@ -214,7 +214,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 SKPaymentQueue.default().finishTransaction(transaction)
                 if let product = activeProduct {
                     if let _ = product.product.subscriptionPeriod {
-                        validateReceipt(product,customer: self.customer, completion: buyProductHandler)
+                        validateReceipt(product, customer: self.customer, completion: buyProductHandler)
                     }else{
                         validateReceiptForNonSubscriptions(product, self.productType,customer: self.customer, completion: buyNonSubscriptionProductHandler)
                     }
