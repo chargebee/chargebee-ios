@@ -108,7 +108,7 @@ extension CBPurchase{
                 let productIdsList = restoreResult.inAppSubscriptions.map { planID in
                     return planID.planID
                 }
-                if productIdsList.count > 0 {
+                if !productIdsList.isEmpty {
                     self.getPruchaseProductsList(productIds: productIdsList)
                 }
             case .error(let error):

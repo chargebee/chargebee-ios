@@ -1,6 +1,7 @@
 use_frameworks!
 
-target 'Chargebee_Example' do
+target 'Chargebee Example' do
   pod 'Chargebee', :path => '../'
+  pod 'SwiftLint'
 
 end
