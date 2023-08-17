@@ -136,7 +136,7 @@ public extension CBPurchase {
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    func restorePurchases(includeInActiveProducts:Bool = false, customer: CBCustomer, completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
+    func restorePurchases(includeInActiveProducts:Bool = false, customer: CBCustomer? = nil, completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
         self.restoreResponseHandler = handler
         self.includeInActiveProducts = includeInActiveProducts
         self.restoredPurchasesCount = 0
