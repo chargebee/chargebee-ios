@@ -26,6 +26,7 @@ public class CBPurchase: NSObject {
     var refreshHandler: RestoreResultCompletion<String>?
     var includeInActiveProducts = false
     private var productType: ProductType?
+    var restoreCustomer: CBCustomer?
 
     // MARK: - Init
     private override init() {
@@ -135,10 +136,11 @@ public extension CBPurchase {
         self.purchaseProductHandler(product: product, completion: handler)
     }
     
-    func restorePurchases(includeInActiveProducts:Bool = false ,completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
+    func restorePurchases(includeInActiveProducts:Bool = false, customer: CBCustomer? = nil, completion handler: @escaping ((_ result: Result<[InAppSubscription], RestoreError>) -> Void)) {
         self.restoreResponseHandler = handler
         self.includeInActiveProducts = includeInActiveProducts
         self.restoredPurchasesCount = 0
+        self.restoreCustomer = customer
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
@@ -212,7 +214,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
                 SKPaymentQueue.default().finishTransaction(transaction)
                 if let product = activeProduct {
                     if let _ = product.product.subscriptionPeriod {
-                        validateReceipt(product,customer: self.customer, completion: buyProductHandler)
+                        validateReceipt(product, customer: self.customer, completion: buyProductHandler)
                     }else{
                         validateReceiptForNonSubscriptions(product, self.productType,customer: self.customer, completion: buyNonSubscriptionProductHandler)
                     }

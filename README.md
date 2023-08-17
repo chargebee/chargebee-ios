@@ -31,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.27'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.28'
 ```
 
 ### CocoaPods
@@ -231,8 +231,12 @@ The `restorePurchases()` function helps to recover your app user's previous purc
 
 To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` function in your code with the `includeInActiveProducts` parameter set to `true`.
 
+CBCustomer - Optional object. Although this is an optional object, we recommend passing the necessary customer details, such as customerId, firstName, lastName, and email if it is available before the user subscribes to your App. This ensures that the customer details in your database match the customer details in Chargebee. If the customerId is not passed in the customer’s details, then the value of customerId will be the same as the SubscriptionId created in Chargebee. Also, the restored subscriptions will not be associate with existing customerId.
+
 ```swift
-CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
+
+let customer = CBCustomer(customerID: "Test123",firstName: "CB",lastName: "Test",email: "cbTest@chargebee.com")
+CBPurchase.shared.restorePurchases(includeInActiveProducts: true, customer: customer) { result in
       switch result {
       case .success(let response):
         for subscription in response {
