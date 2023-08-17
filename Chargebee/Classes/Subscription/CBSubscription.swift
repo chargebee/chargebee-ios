@@ -19,7 +19,7 @@ public struct SubscriptionList: Codable {
 
 public struct CBSubscriptionWrapper: Codable {
     public let list: [SubscriptionList]
-    public  let nextOffset: [String]?
+    public  let nextOffset: String?
     enum CodingKeys: String, CodingKey {
         case nextOffset = "next_offset"
         case list
@@ -58,6 +58,8 @@ public struct Subscription: Codable {
 
 public typealias CBSubscriptionHandler = (CBResult<Subscription>) -> Void
 public typealias SubscriptionHandler   = (CBResult<[SubscriptionList]>) -> Void
+public typealias RetrieveSubscriptionHandler   = (CBResult<CBSubscriptionWrapper>) -> Void
+
 
 class CBSubscriptionManager {
     func retrieveSubscription<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping CBSubscriptionHandler) {
@@ -75,7 +77,7 @@ class CBSubscriptionManager {
             if let data = status as? CBSubscriptionWrapper {
                 if data.list.isEmpty {
                     onError(CBError.defaultSytemError(statusCode: 404, message: "Subscription Not found"))
-                }else {
+                }else{
                     onSuccess(data.list)
                 }
             } else {
@@ -85,6 +87,21 @@ class CBSubscriptionManager {
         }, onError: onError)
     }
 
+    func retrieveSubscriptions<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping RetrieveSubscriptionHandler) {
+        let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
+        network.load(withCompletion: { status in
+            if let data = status as? CBSubscriptionWrapper {
+                if data.list.isEmpty {
+                    onError(CBError.defaultSytemError(statusCode: 404, message: "Subscription Not found"))
+                }else {
+                    onSuccess(data)
+                }
+            } else {
+                onError(CBError.defaultSytemError(statusCode: 480, message: "json serialization failure"))
+            }
+
+        }, onError: onError)
+    }
 }
 
 extension String {
