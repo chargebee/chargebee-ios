@@ -1,4 +1,4 @@
-name: Swift
+name: Swift Build
 
 on:
   push:
@@ -9,9 +9,21 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Build
+      - name: Checkout Source
+        uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cocoapods-cache
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - name: CocoaPods
+        if: steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
-          swift build -v -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios11.2-simulator"
+          pod install --project-directory=Example
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_14.2.app && /usr/bin/xcodebuild -version
+      - name: Run unit tests
+        run: xcodebuild build test -scheme Chargebee -workspace 'Example/Chargebee Example.xcworkspace' -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2' | xcpretty && exit ${PIPESTATUS[0]}
