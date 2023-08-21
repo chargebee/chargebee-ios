@@ -59,7 +59,7 @@ class AuthenticationTest: XCTestCase {
     }
 
     func testEnvironmentValues() {
-        XCTAssertEqual(CBEnvironment.site, "test1")
+        XCTAssertEqual(CBEnvironment.site, "test")
         XCTAssertEqual(CBEnvironment.baseUrl, "https://test.chargebee.com/api")
         XCTAssertEqual(CBEnvironment.apiKey, "12345")
         XCTAssertEqual(CBEnvironment.sdkKey, "6789")
