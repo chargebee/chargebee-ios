@@ -38,7 +38,7 @@ struct CBValidateReceiptWrapper: Decodable {
     }
 }
 
-struct CBValidateReceipt: Decodable {
+public struct CBValidateReceipt: Decodable {
     public let subscriptionId: String
     public let customerId: String
     public let planId: String
