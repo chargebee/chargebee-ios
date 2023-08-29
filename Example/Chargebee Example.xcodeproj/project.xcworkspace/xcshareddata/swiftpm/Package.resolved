@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftyreachability",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/antonio-war/SwiftyReachability",
+      "state" : {
+        "revision" : "726839ecab67923a02974fb63b52294de2beb39b",
+        "version" : "1.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}

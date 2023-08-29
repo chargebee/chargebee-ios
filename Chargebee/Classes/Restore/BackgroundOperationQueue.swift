@@ -29,7 +29,7 @@ class BackgroundOperationQueue: OperationQueue {
     
     func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutableRawPointer) {
         if let operationPath = keyPath, operationPath == BackgroundOperationQueue.operationsKeyPath {
-            if self.operations.count == 0 {
+            if self.operations.isEmpty {
                 OperationQueue.main.addOperation({
                     self.completionBlock?()
                 })

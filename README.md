@@ -31,7 +31,7 @@ Choose from the following options to install Chargeee iOS SDK.
 Add the following snippet to the Podfile to install directly from Github.
 
 ```swift
-pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.22'
+pod 'Chargebee', :git => 'https://github.com/chargebee/chargebee-ios', :tag => '1.0.28'
 ```
 
 ### CocoaPods
@@ -181,9 +181,20 @@ Pass the `CBProduct` and  `CBCustomer` objects to the following function when th
 
 The above function will handle the purchase against App Store Connect and send the IAP receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function, to check for Subscription status on Chargebee and confirm the access - granted or denied.
 
-##### Returns Plan Object
+This function also returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
 
-This function returns the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
+#### Upgrade or Downgrade Subscription
+
+When a user changes their subscription level from a lower price plan to a higher price plan, it's considered an upgrade. On the other hand, when a user switches from a higher-price plan to a lower-price plan, it's considered a downgrade.
+
+In the case of the Apple App Store, you can arrange the subscriptions using the drag-and-drop option in **Edit Subscription Order** in App Store Connect. [Learn more](https://developer.apple.com/app-store/subscriptions/#ranking).
+
+##### Invoke Upgrade or Downgrade Subscription Flow in your App
+
+The `showManageSubscriptionsSettings()` function is designed to invoke the upgrade/downgrade flow in your app using Chargebee's iOS SDKs.
+`Chargebee.shared.showManageSubscriptionsSettings()`, opens the App Store App subscriptions settings page.
+
+**Note**: Upgrades and downgrades are handled through [Apple App Store Server Notifications](https://apidocs.chargebee.com/docs/api/in_app_purchase_events?prod_cat_ver=2#app_store_notifications) in Chargebee.
 
 #### One-Time Purchases
 
@@ -200,7 +211,7 @@ let product = CBProduct(product: SKProduct())
         print(result.chargeID ?? "")
         print(result.invoiceID ?? "")
       case .failure(let failure):
-        //Hanler error here
+        // Handle error here
       }
     }
 ```
@@ -220,8 +231,12 @@ The `restorePurchases()` function helps to recover your app user's previous purc
 
 To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInActiveProducts` parameter set to `true`. If you only want to restore active subscriptions, set the parameter to `false`. Here is an example of how to use the `restorePurchases()` function in your code with the `includeInActiveProducts` parameter set to `true`.
 
+CBCustomer - Optional object. Although this is an optional object, we recommend passing the necessary customer details, such as customerId, firstName, lastName, and email if it is available before the user subscribes to your App. This ensures that the customer details in your database match the customer details in Chargebee. If the customerId is not passed in the customer’s details, then the value of customerId will be the same as the SubscriptionId created in Chargebee. Also, the restored subscriptions will not be associate with existing customerId.
+
 ```swift
-CBPurchase.shared.restorePurchases(includeInActiveProducts: true) { result in
+
+let customer = CBCustomer(customerID: "Test123",firstName: "CB",lastName: "Test",email: "cbTest@chargebee.com")
+CBPurchase.shared.restorePurchases(includeInActiveProducts: true, customer: customer) { result in
       switch result {
       case .success(let response):
         for subscription in response {
@@ -263,7 +278,7 @@ These are the possible error codes and their descriptions:
 Receipt validation is crucial to ensure that the purchases made by your users are synced with Chargebee. In rare cases, when a purchase is made at the Apple App Store, and the network connection goes off, the purchase details may not be updated in Chargebee. In such cases, you can use a retry mechanism by following these steps:
 -   Add a network observer, as shown in the example project.
 -   Save the product identifier in the cache once the purchase is initiated and clear the cache once the purchase is successful.
--   When the network connectivity is lost after the purchase is completed at Apple App Store but not synced with Chargebee, retrieve the product ID from the cache once the network connection is back and initiate `validateReceipt()`/`validateReceiptForNonSubscriptions()` by passing `CBProduct` as input. This will validate the purchase receipt and sync the purchase in Chargebee as a subscription or one-time purchase.
+-   When the network connectivity is lost after the purchase is completed at Apple App Store but not synced with Chargebee, retrieve the product ID from the cache once the network connection is back and initiate `validateReceipt()`/`validateReceiptForNonSubscriptions()` by passing `CBProduct` and `CBCustomer(Optional)` as input. This will validate the purchase receipt and sync the purchase in Chargebee as a subscription or one-time purchase.
 For subscriptions, use the function `validateReceipt()`; for one-time purchases, use the function `validateReceiptForNonSubscriptions()`.
 
 Use the function available for the retry mechanism.
@@ -271,13 +286,13 @@ Use the function available for the retry mechanism.
 **Function for subscriptions**
 
 ```swift
-CBPurchase.shared.validateReceipt(product) { result in
+CBPurchase.shared.validateReceipt(product,customer: nil) { result in
       switch result {
       case .success(let result):
         print(result.status )
         // Clear persisted product details once the validation succeeds.
       case .failure(let error):
-        print("error",error.localizedDescription)
+        print("error", error.localizedDescription)
         // Retry based on the error
       }
     }
@@ -286,12 +301,12 @@ CBPurchase.shared.validateReceipt(product) { result in
 **Function for one-time purchases**
 
 ```swift
-CBPurchase.shared.validateReceiptForNonSubscriptions(product,type) { result in
+CBPurchase.shared.validateReceiptForNonSubscriptions(product,type,customer: nil) { result in
         switch result {
         case .success(let result):
           // Clear persisted product details once the validation succeeds.
         case .failure(let error):
-       // Retry based on the error
+          // Retry based on the error
         }
       }
 ```
@@ -306,12 +321,13 @@ Use query parameters - Subscription ID, Customer ID, or Status for checking the 
 
 ```swift
 Chargebee.shared.retrieveSubscriptions(queryParams :["String" : "String"]") { result in
-    switch result {
-    case let .success(resultarray):
-        print("Status \(resultarray.first.subscription.status)")
-    case let .error(error):
-        // Handle error here
-    }
+  switch result {
+  case let .success(result):
+    print("Next offset \(result.nextOffset)")
+    print("Subscriptions: \(result.list)")
+  case let .error(error):
+    // Handle error here
+  }
 }
 ```
 
@@ -331,8 +347,6 @@ Chargebee.shared.retrieveSubscription(forID: "SubscriptionID") { result in
     }
 }
 ```
-
-##### Returns Plan Object
 
 The above functions return the plan ID associated with a subscription. You can associate JSON metadata with the Apple App Store plans in Chargebee and retrieve the same by passing plan ID to the SDK function - [retrievePlan](https://github.com/chargebee/chargebee-ios#get-plan-details)(PC 1.0) or [retrieveItem](https://github.com/chargebee/chargebee-ios#get-item-details)(PC 2.0).
 

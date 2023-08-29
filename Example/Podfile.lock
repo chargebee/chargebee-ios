@@ -1,16 +1,23 @@
 PODS:
-  - Chargebee (1.0.5)
+  - Chargebee (1.0.19)
+  - SwiftLint (0.50.3)
 
 DEPENDENCIES:
   - Chargebee (from `../`)
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - SwiftLint
 
 EXTERNAL SOURCES:
   Chargebee:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Chargebee: b2d0e391cee23c019a69e9315710085f6ae7dc94
+  Chargebee: ea68cc06a7e806fc5bd319c435e079690fd0b3c0
+  SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
 
-PODFILE CHECKSUM: 77557d41e3cf386682df6c3bcbe52a22ff0c898c
+PODFILE CHECKSUM: 69e5230dbd3b9821c28c620fcedf2f5e626375c3
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.3

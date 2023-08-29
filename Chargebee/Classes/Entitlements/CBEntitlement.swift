@@ -12,10 +12,10 @@ public typealias EntitlementHandler = (CBResult<CBEntitlementWrapper>) -> Void
 
 // MARK: - SubscriptionEntitlement
 public struct Entitlement: Codable {
-    let subscriptionID, featureID, featureName, featureDescription: String
-    let featureType, value, name: String
-    let isOverridden, isEnabled: Bool
-    let object: String
+    public let subscriptionID, featureID, featureName, featureDescription: String
+    public let featureType, value, name: String
+    public let isOverridden, isEnabled: Bool
+    public let object: String
 
     enum CodingKeys: String, CodingKey {
         case subscriptionID = "subscription_id"
@@ -31,7 +31,7 @@ public struct Entitlement: Codable {
 }
 
 public struct EntitlementList: Codable {
-    let entitlement: Entitlement
+    public let entitlement: Entitlement
     enum CodingKeys: String, CodingKey {
         case entitlement = "subscription_entitlement"
     }
