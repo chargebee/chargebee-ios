@@ -87,9 +87,8 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         CBPurchase.shared.validateReceipt(product,customer: nil) { result in
             switch result {
             case .success(let result):
-                print(result.subscriptionId )
-                print(result.planId)
-                print(result.customerId)
+                print(result.status)
+                print(result.subscriptionDetails)
 
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
                     CBDemoPersistance.clearPurchaseIDFromCache()
@@ -283,9 +282,8 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 print(result)
                 switch result {
                 case .success(let result):
-                    print(result.subscriptionId)
-                    print(result.planId)
-                    print(result.customerId)
+                    print(result.status)
+                    print(result.subscriptionDetails)
 
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
@@ -361,9 +359,8 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 print(result)
                 switch result {
                 case .success(let result):
-                    print(result.subscriptionId)
-                    print(result.planId)
-                    print(result.customerId)
+                    print(result.status)
+                    print(result.subscriptionDetails)
                     
 
                     DispatchQueue.main.async {

@@ -37,6 +37,11 @@ struct CBValidateReceiptWrapper: Decodable {
         case inAppSubscription = "in_app_subscription"
     }
 }
+// MARK: - Subscription
+public struct PurchaseSubscription: Decodable {
+    public let status: Bool
+    public let subscriptionDetails: CBValidateReceipt
+}
 
 public struct CBValidateReceipt: Decodable {
     public let subscriptionId: String

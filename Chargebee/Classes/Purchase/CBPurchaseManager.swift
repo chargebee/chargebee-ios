@@ -12,7 +12,7 @@ public class CBPurchase: NSObject {
     public static let shared = CBPurchase()
     private var productIDs: [String] = []
     public var receiveProductsHandler: ((_ result: Result<[CBProduct], CBPurchaseError>) -> Void)?
-    private var buyProductHandler: ((Result<CBValidateReceipt, Error>) -> Void)?
+    private var buyProductHandler: ((Result<PurchaseSubscription, Error>) -> Void)?
     private var buyNonSubscriptionProductHandler: ((Result<NonSubscription, Error>) -> Void)?
 
     private var authenticationManager = CBAuthenticationManager()
@@ -119,14 +119,14 @@ public extension CBPurchase {
     }
 
     @available(*, deprecated, message: "This will be removed in upcoming versions, Please use this API func purchaseProduct(product: CBProduct, customer : CBCustomer? = nil, completion)")
-    func purchaseProduct(product: CBProduct, customerId: String? = "", completion handler: @escaping ((_ result: Result<CBValidateReceipt, Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customerId: String? = "", completion handler: @escaping ((_ result: Result<PurchaseSubscription, Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product
         self.customer = CBCustomer(customerID: customerId ?? "")
         self.purchaseProductHandler(product: product, completion: handler)
     }
 
-    func purchaseProduct(product: CBProduct, customer: CBCustomer? = nil, completion handler: @escaping ((_ result: Result<CBValidateReceipt, Error>) -> Void)) {
+    func purchaseProduct(product: CBProduct, customer: CBCustomer? = nil, completion handler: @escaping ((_ result: Result<PurchaseSubscription, Error>) -> Void)) {
         buyProductHandler = handler
         activeProduct = product
         self.customer = customer
@@ -308,7 +308,7 @@ public extension CBPurchase {
         }
     }
 
-    func validateReceipt(_ product: CBProduct?, customer: CBCustomer? = nil, completion: ((Result<CBValidateReceipt, Error>) -> Void)?) {
+    func validateReceipt(_ product: CBProduct?, customer: CBCustomer? = nil, completion: ((Result<PurchaseSubscription, Error>) -> Void)?) {
 
         guard let receipt = getReceipt(product: product?.product, customer: customer) else {
             debugPrint("Couldn't read receipt data with error")
@@ -325,7 +325,7 @@ public extension CBPurchase {
                         return
                     }
                     self.activeProduct = nil
-                    completion?(.success(result))
+                    completion?(.success(PurchaseSubscription(status: true, subscriptionDetails: result)))
                 case .error(let error):
                     debugPrint(" Chargebee - Receipt Upload - Failure")
                     completion?(.failure(error))
