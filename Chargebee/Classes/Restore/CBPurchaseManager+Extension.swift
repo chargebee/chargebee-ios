@@ -17,7 +17,7 @@ extension CBPurchase {
         self.restoredPurchasesCount += 1
     }
     
-    func receiveRestoredTransactionsFinished(_ error: RestoreError?) {
+    func receiveRestoredTransactionsFinished(_ error: Error?) {
         if let error = error {
             debugPrint("Failed to restore purchases: \(error.localizedDescription)")
             self.restoreResponseHandler?(.failure(.restoreFailed))
