@@ -3,10 +3,10 @@ Chargebee iOS
 
 This is the official  Software Development Kit (SDK) for Chargebee iOS. This SDK makes it efficient and comfortable to build an impressive subscription experience in your iOS app.
 
-Post-installation, initialization, and authentication with the Chargebee site, this SDK will support the following process.
+Post-installation, initialization, and authentication with the Chargebee site, this SDK will support the following capabilities.
 
 -   **Sync In-App Subscriptions with Chargebee**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html) with [Apple Store Connect](https://appstoreconnect.apple.com/login) to process in-app purchase subscriptions, and track them on your Chargebee account for a single source of truth for subscriptions across the Web and Apple App Store. Use this if you are selling digital goods or services, or are REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
-    **For SDK funtions to work, ensure that** [**prerequisites**](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#configure-prerequisites) **are configured in Chargebee.** To import products configured in Apple App Store and existing subscriptions, read [more](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#import-products).
+    For SDK functions to work seamlessly, ensure that products configured in the Apple App Store and existing subscriptions are successfuly [imported](https://www.chargebee.com/docs/2.0/mobile-app-store-product-iap.html#import-products) into Chargebee.
 
 -   **Tokenisation of credit card**: Tokenize credit card information while presenting your own user interface. Use this if you are selling physical goods or offline services or are NOT REQUIRED to use Apple's in-app purchases as per their [app review guidelines](https://developer.apple.com/app-store/review/guidelines/).
 
@@ -88,7 +88,7 @@ import Chargebee
 
 Chargebee.configure(site: "your-site",
                     apiKey: "publishable_api_key",
-                    sdkKey: "ResourceID/SDK Key")
+                    sdkKey: "SDK Key")
 }
 ```
 
@@ -109,7 +109,7 @@ Chargebee.configure(site: "your-site", apiKey: "publishable_api_key")
 SDK Integration Processes
 -------------------------
 
-This section describes the SDK integration processes.
+This section describes the SDK integration capabilities.
 
 -   Integrating In-App Purchases
 
