@@ -278,9 +278,7 @@ extension CBPurchase: SKPaymentTransactionObserver {
     }
 
     public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        if let error = error as? RestoreError {
-            receiveRestoredTransactionsFinished(error)
-        }
+        receiveRestoredTransactionsFinished(error)
     }
 }
 
