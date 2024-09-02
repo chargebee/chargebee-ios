@@ -27,12 +27,7 @@ public class CBLogger {
 
     private func postLog(_ type: LogType, _ message: String? = nil, _ code: Int? = nil) {
         if CBEnvironment.allowErrorLogging {
-            let request = CBAPIRequest(resource: CBLoggerResource(
-                action: action,
-                type: type,
-                errorMessage: message,
-                errorCode: code))
-            request.create()
+            print("SDK Action: \(action)") 
         }
     }
 
