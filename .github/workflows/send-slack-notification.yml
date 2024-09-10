@@ -1,0 +1,15 @@
+name: Trigger Slack Notification on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  notify_slack:
+    if: github.event.pull_request.merged == true
+    uses: chargebee/cb-cicd-pipelines/.github/workflows/send-slack-notification.yml@v2.35.0
+    secrets: inherit
+  send_notification:
+    uses: chargebee/cb-idp/.github/workflows/deployment-notification-call.yml@main
