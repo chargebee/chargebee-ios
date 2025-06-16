@@ -2,7 +2,7 @@
 =========
 **Chargebee iOS Sdk** is part of Chargebee's legacy Mobile Subscription Solution and may not include the latest enhancements. We recommend using Chargebee's new [Omnichannel Subscription](https://www.chargebee.com/docs/billing/2.0/mobile-subscriptions/omnichannel-subscription-overview) solution for improved reliability and unified mobile subscription experience. 
 
-If you’re a new customer, or considering to migrate new solution, please reach out to support@chargebee.com or contact your Technical Success Manager (TSM) for guidance.
+If you are a new customer, or considering to migrate new solution, please reach out to support@chargebee.com or contact your Technical Success Manager (TSM) for guidance.
 
 Chargebee iOS (Legacy)
 =============
