@@ -1,0 +1,29 @@
+## CHANGELOG
+REPLACE_ME_WITH_CHANGELOG
+
+## SUMMARY
+REPLACE_ME_WITH_SUMMARY_OF_THE_CHANGES
+
+## FUNCTIONAL AUTOMATION CHANGES PR
+- [ ] Yes
+  - If Yes, PR : 
+- [ ] No
+  - If No, Reason: 
+
+## AUTOMATION TEST REPORT URL
+REPLACE_ME_WITH_TEST_REPORT_URL
+
+## AREAS OF IMPACT
+REPLACE_ME_WITH_AREAS_OF_IMPACT_OR_NA
+
+## TYPE OF CHANGE
+- [ ] 🐞 Bugfix
+- [ ] 🌟 Feature
+- [ ] ✨ Enhancement
+- [ ] 🧪 Unit Test Cases
+- [ ] 📔 Documentation
+- [ ] ⚙️ Chore - Build Related / Configuration / Others
+
+
+## DOCUMENTATION
+REPLACE_ME_WITH_DOCUMENTATION_LINK_OR_NA

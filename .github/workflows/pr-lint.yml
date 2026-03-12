@@ -1,0 +1,13 @@
+name: Common PR Lint
+
+on:
+  pull_request:
+    branches: [master, main,staging, dev,develop]
+    types: [ready_for_review, reopened, review_requested, review_request_removed, opened, edited]
+
+jobs:
+  pr-lint:
+    name: Common PR Lint Checks
+    if: github.base_ref == 'main' || github.base_ref == 'master'
+    uses: chargebee/cb-cicd-pipelines/.github/workflows/pr-lint.yml@main
+    secrets: inherit

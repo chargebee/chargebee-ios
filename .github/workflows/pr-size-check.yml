@@ -1,0 +1,60 @@
+name: PR Size Check
+on:
+  pull_request:
+    types: [ reopened, opened, synchronize, edited, labeled, unlabeled ]
+    branches:
+      - develop/**
+      - dev
+
+
+jobs:
+  pre-approval-comment:
+    name: Announce pending bypass approval
+    if: ${{ github.event.pull_request.user.login != 'distributed-gitflow-app[bot]' &&
+      !startsWith(github.head_ref, 'revert-') &&
+      !startsWith(github.head_ref, 'parent-branch-sync/') &&
+      contains(github.event.pull_request.labels.*.name, 'pr-size-exception') }}
+    runs-on: graviton-small-runner
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue_number = context.payload.pull_request.number;
+            
+            const marker = '<!-- pr-size-bypass-pending -->';
+            const pending = `${marker}
+              🛑 The \`pr-size-exception\` label is present. This workflow is **waiting for approvals** from the **[cb-Billing-CAB-reviewers](https://github.com/orgs/chargebee/teams/cb-billing-cab-approvers)**.`;
+            
+            // create a new comment when the workflow runs
+            await github.rest.issues.createComment({ owner, repo, issue_number, body: pending });
+  pr-size-check:
+    name: Check PR size
+    if: ${{ (github.base_ref == 'dev' || startsWith(github.base_ref, 'develop/')) && github.event.pull_request.user.login != 'distributed-gitflow-app[bot]' && !startsWith(github.head_ref, 'revert-') && !startsWith(github.head_ref, 'parent-branch-sync/') }}
+    runs-on: graviton-small-runner
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      BYPASS_LABEL: pr-size-exception
+    environment: ${{ contains(github.event.pull_request.labels.*.name, 'pr-size-exception') && 'cb-billing-reviewers' || '' }}
+    steps:
+      - uses: chargebee/cb-cicd-pipelines/.github/actions/pr-size-check@v4.20.3
+        if: ${{ !contains(github.event.pull_request.labels.*.name, env.BYPASS_LABEL) }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          errorSize: 250
+          warningSize: 200
+          excludePaths: |
+            .github/**
+            .cursor/**
+            
+            
+      - name: Ensure required check passes when bypassed
+        if: ${{ contains(github.event.pull_request.labels.*.name, env.BYPASS_LABEL) }}
+        run: echo "Bypass active — marking job successful."
