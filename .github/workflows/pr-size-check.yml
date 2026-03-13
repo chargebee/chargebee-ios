@@ -3,8 +3,7 @@ on:
   pull_request:
     types: [ reopened, opened, synchronize, edited, labeled, unlabeled ]
     branches:
-      - develop/**
-      - dev
+      - master
 
 
 jobs:
@@ -35,7 +34,7 @@ jobs:
             await github.rest.issues.createComment({ owner, repo, issue_number, body: pending });
   pr-size-check:
     name: Check PR size
-    if: ${{ (github.base_ref == 'dev' || startsWith(github.base_ref, 'develop/')) && github.event.pull_request.user.login != 'distributed-gitflow-app[bot]' && !startsWith(github.head_ref, 'revert-') && !startsWith(github.head_ref, 'parent-branch-sync/') }}
+    if: ${{ (github.base_ref == 'master') && github.event.pull_request.user.login != 'distributed-gitflow-app[bot]' && !startsWith(github.head_ref, 'revert-') && !startsWith(github.head_ref, 'parent-branch-sync/') }}
     runs-on: graviton-small-runner
     permissions:
       contents: read
