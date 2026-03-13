@@ -1,0 +1,82 @@
+name: PR Size Check
+on:
+  pull_request:
+    types: [ reopened, opened, synchronize, edited, labeled, unlabeled ]
+    branches:
+      - develop/**
+      - dev
+
+
+jobs:
+  pre-approval-comment:
+    name: Announce pending bypass approval
+    if: ${{ github.event.pull_request.user.login != 'distributed-gitflow-app[bot]' &&
+      !startsWith(github.head_ref, 'revert-') &&
+      !startsWith(github.head_ref, 'parent-branch-sync/') &&
+      contains(github.event.pull_request.labels.*.name, 'pr-size-exception') }}
+    runs-on: graviton-small-runner
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue_number = context.payload.pull_request.number;
+            
+            const marker = '<!-- pr-size-bypass-pending -->';
+            const pending = `${marker}
+              🛑 The \`pr-size-exception\` label is present. This workflow is **waiting for approvals** from the **[cb-Billing-CAB-reviewers](https://github.com/orgs/chargebee/teams/cb-billing-cab-approvers)**.`;
+            
+            // create a new comment when the workflow runs
+            await github.rest.issues.createComment({ owner, repo, issue_number, body: pending });
+  pr-size-check:
+    name: Check PR size
+    if: ${{ (github.base_ref == 'dev' || startsWith(github.base_ref, 'develop/')) && github.event.pull_request.user.login != 'distributed-gitflow-app[bot]' && !startsWith(github.head_ref, 'revert-') && !startsWith(github.head_ref, 'parent-branch-sync/') }}
+    runs-on: graviton-small-runner
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    env:
+      BYPASS_LABEL: pr-size-exception
+    environment: ${{ contains(github.event.pull_request.labels.*.name, 'pr-size-exception') && 'cb-billing-reviewers' || '' }}
+    steps:
+      - uses: chargebee/cb-cicd-pipelines/.github/actions/pr-size-check@v4.20.3
+        if: ${{ !contains(github.event.pull_request.labels.*.name, env.BYPASS_LABEL) }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          errorSize: 250
+          warningSize: 200
+          excludePaths: |
+            .github/**
+            .cursor/**
+            
+            
+      - name: Ensure required check passes when bypassed
+        if: ${{ contains(github.event.pull_request.labels.*.name, env.BYPASS_LABEL) }}
+        run: echo "Bypass active — marking job successful."
+
+      - name: Configure OIDC authentication
+        if: ${{ contains(github.event.pull_request.labels.*.name, env.BYPASS_LABEL) }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::127322177288:role/OIDC_S3
+          role-session-name: GithubActionsSession
+          role-duration-seconds: 900
+          aws-region: us-east-1
+
+      - name: Record bypass approval to S3
+        if: ${{ contains(github.event.pull_request.labels.*.name, env.BYPASS_LABEL) }}
+        run: |
+          REPO="${{ github.repository }}"
+          PR_LINK="https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+          DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          WF_ID="${{ github.run_id }}"
+          S3_KEY="${REPO}/datas/${WF_ID}.json"
+          printf '{"repo":"%s","date":"%s","pr_link":"%s","wf_id":"%s"}\n' "$REPO" "$DATE" "$PR_LINK" "$WF_ID" | \
+            aws s3 cp - "s3://prsizebypassdata/${S3_KEY}" --content-type application/json
+          echo "Recorded to s3://prsizebypassdata/${S3_KEY}"
