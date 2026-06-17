@@ -45,7 +45,7 @@ extension CBAuthenticationManager {
         guard key.isNotEmpty else {
             return onError(CBError.defaultSytemError(statusCode: 400, message: "SDK Key is empty"))
         }
-        
+
         if CBCache.shared.isCacheDataAvailable() {
             CBCache.shared.readConfigDetails(logger: logger) { status in
                 handler(status)
@@ -53,12 +53,12 @@ extension CBAuthenticationManager {
                 let request = CBAPIRequest(resource: CBAuthenticationResource(key: key, bundleId: bundleId, appName: appName))
                 self.authenticateRestClient(network: request, logger: logger, handler: handler)
             }
-        }else{
+        } else {
             let request = CBAPIRequest(resource: CBAuthenticationResource(key: key, bundleId: bundleId, appName: appName))
             authenticateRestClient(network: request, logger: logger, handler: handler)
         }
     }
-    
+
     func authenticateRestClient<T: CBNetworkRequest>(network: T, logger: CBLogger, handler: @escaping CBAuthenticationHandler) {
         let (onSuccess, onError) = CBResult.buildResultHandlers(handler, logger)
         network.load(withCompletion: { status in

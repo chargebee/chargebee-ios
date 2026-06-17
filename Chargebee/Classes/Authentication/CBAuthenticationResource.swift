@@ -37,8 +37,7 @@ final class CBAuthenticationResource: CBAPIResource {
         return urlRequest
     }
 
-    init(key: String, bundleId: String,
-         appName: String) {
+    init(key: String, bundleId: String, appName: String) {
         self.baseUrl = CBEnvironment.baseUrl
         self.requestBody = CBAuthenticationBody.init(key: key, bundleId: bundleId, appName: appName)
     }

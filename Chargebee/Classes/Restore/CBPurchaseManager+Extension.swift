@@ -16,26 +16,26 @@ extension CBPurchase {
     func receivedRestoredTransaction() {
         self.restoredPurchasesCount += 1
     }
-    
+
     func receiveRestoredTransactionsFinished(_ error: RestoreError?) {
         if let error = error {
             debugPrint("Failed to restore purchases: \(error.localizedDescription)")
             self.restoreResponseHandler?(.failure(.restoreFailed))
             return
         }
-        
+
         if self.restoredPurchasesCount == 0 {
             debugPrint("Successfully restored zero purchases.")
         }
-        
+
         self.validateReceipt(refreshIfEmpty: true)
     }
-    
+
     func getReceipt(refreshIfEmpty: Bool, _ completion: @escaping RestoreResultCompletion<String>) {
         var result: ReceiptResult<String>
         result = self.bundleReceipt()
         self.refreshHandler = completion
-        
+
         switch result {
         case .success:
             completion(result)
@@ -45,13 +45,13 @@ extension CBPurchase {
                 self.refreshReceipt(completion)
             } else {
                 completion(result)
-                self.refreshReceipt{_ in}
+                self.refreshReceipt {_ in}
             }
         }
     }
-    
+
     func bundleReceipt() -> ReceiptResult<String> {
-        
+
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
               FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else {
             debugPrint("No receipt Exist")
@@ -61,12 +61,12 @@ extension CBPurchase {
             let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
             let receiptString = receiptData.base64EncodedString(options: [])
             return .success(receiptString)
-        }catch{
+        } catch {
             debugPrint("Couldn't read receipt data with error: " + error.localizedDescription)
             return .failure(.invalidReceiptData)
         }
     }
-    
+
     private func refreshReceipt(_ completion: @escaping RestoreResultCompletion<String>) {
         self.refreshHandler = completion
         debugPrint("Start refresh receipt")
@@ -76,35 +76,35 @@ extension CBPurchase {
     }
 }
 
-extension CBPurchase{
+extension CBPurchase {
     public func validateReceipt(refreshIfEmpty: Bool) {
-        
+
         getReceipt(refreshIfEmpty: refreshIfEmpty) { receiptString in
             switch receiptString {
             case .success(let receiptString):
                 self.receiptVerification(receipt: receiptString, self.restoreResponseHandler)
             case .failure(let error):
-                debugPrint("Error While trying to fetch receipt",error)
+                debugPrint("Error While trying to fetch receipt", error)
                 self.restoreResponseHandler?(.failure(error))
             }
         }
     }
-    
+
     func receiptVerification(receipt: String, _ completion: ((Result<[InAppSubscription], RestoreError>) -> Void)?) {
-        
+
         CBRestorePurchaseManager().restorePurchases(receipt: receipt) { result in
-            switch result{
+            switch result {
             case .success(let restoreResult):
-                if self.includeInActiveProducts{
+                if self.includeInActiveProducts {
                     completion?(.success(restoreResult.inAppSubscriptions))
-                }else{
+                } else {
                     let  activeSubscriptionsList = restoreResult.inAppSubscriptions.filter {
                         return $0.storeStatus.rawValue == StoreStatus.Active.rawValue  ||
                         $0.storeStatus.rawValue == StoreStatus.InTrail.rawValue
                     }
                     completion?(.success(activeSubscriptionsList))
                 }
-                
+
                 let productIdsList = restoreResult.inAppSubscriptions.map { planID in
                     return planID.planID
                 }
@@ -112,32 +112,32 @@ extension CBPurchase{
                     self.getPruchaseProductsList(productIds: productIdsList)
                 }
             case .error(let error):
-                debugPrint("Error While Restoring:",error.localizedDescription)
+                debugPrint("Error While Restoring:", error.localizedDescription)
                 completion?(.failure(.serviceError(error: error.localizedDescription)))
             }
         }
     }
-    
-    func getPruchaseProductsList(productIds:[String]) {
-        
-        self.retrieveProducts(withProductID:productIds) { result in
+
+    func getPruchaseProductsList(productIds: [String]) {
+
+        self.retrieveProducts(withProductID: productIds) { result in
             switch result {
             case .success(let products):
                 self.syncPurhcasesWithChargebee(products: products)
             case.failure(let error):
-                debugPrint("Error While retriving products to sync with Chargebeee:",error)
+                debugPrint("Error While retriving products to sync with Chargebeee:", error)
             }
         }
     }
-    
-    func syncPurhcasesWithChargebee(products:[CBProduct]) {
-        
+
+    func syncPurhcasesWithChargebee(products: [CBProduct]) {
+
         var operationQueue: BackgroundOperationQueue? = BackgroundOperationQueue()
         for product in products {
-            operationQueue?.addOperation{
+            operationQueue?.addOperation {
                 if let _ = product.product.subscriptionPeriod {
-                        self.validateReceipt(product,customer: self.restoreCustomer, completion: nil)
-                }else{
+                        self.validateReceipt(product, customer: self.restoreCustomer, completion: nil)
+                } else {
                     self.validateReceiptForNonSubscriptions(product, .unknown, customer: self.restoreCustomer, completion: nil)
                 }
             }
@@ -147,7 +147,7 @@ extension CBPurchase{
             operationQueue = nil
         }
     }
-    
+
     func completedRefresh(error: Error?) {
         var refreshResult: ReceiptResult<String>
         if let error = error {
@@ -159,7 +159,7 @@ extension CBPurchase{
             self.refreshHandler?(refreshResult)
         }
     }
-    
+
 }
 
 extension CBPurchase: SKRequestDelegate {
@@ -169,6 +169,4 @@ extension CBPurchase: SKRequestDelegate {
         }
         request.cancel()
     }
-    
 }
-

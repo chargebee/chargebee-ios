@@ -87,9 +87,9 @@ final class CBSDKProductsTableViewController: UITableViewController, UITextField
         CBPurchase.shared.validateReceipt(product,customer: nil) { result in
             switch result {
             case .success(let result):
-                print(result.status )
-                print(result.subscriptionId ?? "")
-                print(result.planId ?? "")
+                print(result.status)
+                print(result.subscriptionDetails)
+
                 if CBDemoPersistance.isPurchaseProductIDAvailable(){
                     CBDemoPersistance.clearPurchaseIDFromCache()
                 }
@@ -283,8 +283,8 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 switch result {
                 case .success(let result):
                     print(result.status)
-                    print(result.subscriptionId ?? "")
-                    print(result.planId ?? "")
+                    print(result.subscriptionDetails)
+
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
                         let alertController = UIAlertController(title: "Chargebee", message: "success", preferredStyle: .alert)
@@ -354,14 +354,14 @@ extension CBSDKProductsTableViewController: ProductTableViewCellDelegate {
                 CBDemoPersistance.saveProductIdentifierOnPurchase(for: withProduct.product.productIdentifier)
             }
             self.view.activityStartAnimating(activityColor: UIColor.white, backgroundColor: UIColor.black.withAlphaComponent(0.5))
-            CBPurchase.shared.purchaseProduct(product: withProduct,customerId: customerID) { result in
+            CBPurchase.shared.purchaseProduct(product: withProduct, customerId: customerID) { result in
                 
                 print(result)
                 switch result {
                 case .success(let result):
                     print(result.status)
-                    print(result.subscriptionId ?? "")
-                    print(result.planId ?? "")
+                    print(result.subscriptionDetails)
+                    
 
                     DispatchQueue.main.async {
                         self.view.activityStopAnimating()
