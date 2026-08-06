@@ -15,11 +15,25 @@ public protocol CBNetworkRequest {
 
 @available(macCatalyst 13.0, *)
 extension CBNetworkRequest {
-    func load(_ session: URLSession = URLSession.shared, urlRequest: URLRequest, withCompletion completion: SuccessHandler<ModelType>? = nil, onError: ErrorHandler? = nil) {
+    func load(_ session: URLSession = URLSession.shared, urlRequest: URLRequest, withCompletion completion: SuccessHandler<ModelType>? = nil, onError: ErrorHandler? = nil, allowRetry: Bool = true) {
 
         let task = CBEnvironment.session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             if let error = error {
                 onError?(CBError.defaultSytemError(statusCode: 400, message: error.localizedDescription))
+                return
+            }
+            // Mobile token expired/revoked: fetch a fresh token from the merchant backend and retry once.
+            if let response = response as? HTTPURLResponse, response.statusCode == 401,
+               allowRetry, CBEnvironment.tokenProvider != nil {
+                CBEnvironment.refreshMobileToken { success in
+                    guard success else {
+                        onError?(self.buildCBError(data, statusCode: 401))
+                        return
+                    }
+                    var retryRequest = urlRequest
+                    retryRequest.setValue("Basic \(CBEnvironment.encodedMobileToken)", forHTTPHeaderField: "Authorization")
+                    self.load(session, urlRequest: retryRequest, withCompletion: completion, onError: onError, allowRetry: false)
+                }
                 return
             }
             if let response = response as? HTTPURLResponse, response.statusCode >= 400 {
