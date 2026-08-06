@@ -30,6 +30,14 @@ public class Chargebee {
                 }
             }
         }
+
+    /// Configures the SDK using a mobile token instead of a publishable API key.
+    /// The `tokenProvider` is called to obtain a token from the merchant's backend, both now and
+    /// whenever a request is rejected with a 401 (expired/revoked token).
+    public static func configure(site: String, sdkKey: String? = nil, allowErrorLogging: Bool = true, tokenProvider: @escaping CBMobileTokenProvider, handler: @escaping CBAuthenticationHandler) {
+        CBEnvironment.environment = self.environment
+        CBEnvironment().configure(site: site, sdkKey: sdkKey, allowErrorLogging: allowErrorLogging, tokenProvider: tokenProvider, handler: handler)
+    }
     
     public func retrieveSubscription(forSubscriptionID id: String, handler: @escaping CBSubscriptionHandler) {
         let logger = CBLogger(name: "Subscription", action: "Fetch Subscription")

@@ -43,6 +43,15 @@ extension CBAPIResource {
         buildBaseRequest()
     }
 
+    // When a mobile token is configured we send it as `Authorization: Basic base64(token)` for every
+    // request (same scheme as the publishable key). Otherwise we fall back to the resource's own header.
+    var resolvedAuthHeader: String? {
+        if CBEnvironment.mobileToken.isNotEmpty {
+            return "Basic \(CBEnvironment.encodedMobileToken)"
+        }
+        return authHeader
+    }
+
     func create() -> URLRequest {
         var urlRequest = buildBaseRequest()
         urlRequest.httpMethod = "post"
@@ -64,7 +73,7 @@ extension CBAPIResource {
         }
 
         var urlRequest = URLRequest(url: components!.url!)
-        if let authHeader = authHeader {
+        if let authHeader = resolvedAuthHeader {
             urlRequest.addValue(authHeader, forHTTPHeaderField: "Authorization")
         }
         header?.forEach({ (key, value) in
